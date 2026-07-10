@@ -9,28 +9,37 @@ với [`mobile-ui-construction-contract.md`](mobile-ui-construction-contract.md)
 2. **Scope = report + bổ sung state thiếu** — báo cáo này là backbone; sau đó thêm fixture
    cho các state matrix còn thiếu.
 
-Nguồn dữ liệu: `ui_kits/memox-app/specs/*.md` (DOM spec token-resolved) + `shots/*.png`
-(light+dark). Các số đo là deterministic (trích bằng script), đã lọc false-positive thủ công.
+Nguồn dữ liệu: `ui_kits/memox-app/specs/*.md` (DOM spec token-resolved) + `shots/*.png`.
+
+> ⚠ **CẢNH BÁO STALE — đọc trước khi dùng số liệu spec.** Specs/shots được export ở một
+> bản CSS CŨ hơn hiện tại (gutter đã đổi 20→24, `MxButton` 38→48…). Mọi con số **spacing**
+> lấy từ spec đã được **re-verify trên render thật** (Playwright + computed style / đọc CSS
+> nguồn). Section A dưới đây là **bản đã đính chính theo ground-truth**, không phải theo spec.
 
 ---
 
-## A. Systemic defects (sửa 1 lần ở token/component, lợi cho toàn bộ 22 màn)
+## A. Systemic — bản đính chính theo render thật (Playwright, 2026-07-10)
 
-| ID | Severity | Layer | Defect | Bằng chứng | Hướng sửa (đưa về scale) |
-|----|----------|-------|--------|-----------|--------------------------|
-| SYS-01 | High | Token/Screen | **Gutter + card padding = 20px** ngoài scale | `pad:16/20/96/20` (87×), `pad:20` (52×); tổng **398×** giá trị 20px | Gutter 20→**16**; card padding 20→**16** (hoặc 24 nếu cần thoáng) |
-| SYS-02 | High | Component | **Touch target < 44** ở control cốt lõi | `MxButton` compact 38, `MxChip` 34, `MxSwitch` 32, `MxIconButton` 36×36, `segmented seg` 38 | Nâng min control ≥44; `MxIconButton` 36→**48×48** (icon 24 + pad 12, on-scale) |
-| SYS-03 | High | Token | **>5 typography roles** trên 18/22 màn | dashboard/library/statistics = 11 size khác nhau; cả kit dùng 30/26/24/22/20/18/17/16/15/13/12/11 + 48 | Gộp về **≤5 role** (Display / Title / Body / Label / Caption); số hero 48 phải fold vào Display |
-| SYS-04 | Med | Component | **Icon-button pad `1/6`** ngoài scale | `pad:1/6` (icon-button) → 1px×171, 6px×226 | Chuẩn hoá theo SYS-02 (48×48, pad 12) → tự hết 1/6 |
-| SYS-05 | Med | Screen | **Bottom scroll inset = 96px** ngoài scale | `pad:…/96/…` (87×) | Clearance nav(72)+FAB; compose từ token safe-inset, hoặc dùng 48×2 và document exception |
-| SYS-06 | Med | Screen | **Top pad 40px** ở hero/empty | `pad:40/16` (17×) | 40→**32** hoặc **48** |
-| SYS-07 | Low | Token | **Sub-grid pad 1/2/3px** (optical) | 1px×171, 2px×21, 3px×30 | Chấp nhận nếu là căn optical bên trong control; còn lại về 4 |
-| SYS-08 | Low | Screen | **Giá trị 159px** (chiều cao/offset sheet) | 159px×22 (deck-detail, library, reminder…) | Rà từng sheet; đưa về token chiều cao chuẩn |
+Sau khi render kit hiện tại và đo `getComputedStyle` + đọc CSS nguồn, **phần lớn "systemic
+defect" ban đầu là artifact của spec stale / đo nhầm visual**. Kit thực tế tuân thủ tốt hơn nhiều.
 
-**PASS toàn kit:** không có màu hard-code (`bare #rrggbb` = 0 ✓); mọi state đều có **light + dark** ✓.
+| ID | Trạng thái | Kết luận (ground-truth) |
+|----|-----------|--------------------------|
+| SYS-01 gutter | ⚠ **Genuine (1 quyết định)** | Gutter thật = **24px** (không phải 20). 24 ∈ scale nhưng contract ghi rõ *screen padding = 16* → vẫn lệch. Chọn: đổi token `--memox-gutter: 24→16`, hoặc sửa contract. |
+| SYS-02 touch <44 | ✅ **RETRACTED — false positive** | Kit đã có pass "G2 hit area": mọi control nhỏ có `::after` overlay mở rộng vùng chạm lên **48px** (`.chip::after inset:-7px 0`, `.switch::after -8/-4`, `.icon-btn--sm::after -6`, `.btn--sm/.segmented__seg::after -4`). `MxButton` thật = 48px minH. **Touch target ĐẠT.** Spec đo box visual, không đo `::after`. |
+| SYS-03 typography | ⚠ **Genuine (per-screen)** | Scale 9 bậc (12→48). Dashboard render **8 bậc/màn > 5**. Là kỷ luật hierarchy per-screen (giảm số kiểu chữ mỗi màn), KHÔNG phải lỗi token. |
+| SYS-04 icon pad 1/6 | ✅ Retract (touch) | `1/6` là padding optical trong icon-btn; vùng chạm đã = 48 (::after). Không tính defect. |
+| SYS-05 inset 96 / SYS-06 top 40 / SYS-08 159 | ❓ **Cần re-verify live** | Số từ spec stale; phải đo lại trên CSS hiện tại trước khi kết luận. |
+| SYS-07 optical 1/2/3px | ✅ Low/accept | Căn optical trong control; vùng chạm đã xử lý. |
 
-**False-positive đã loại (không tính defect):** `bottom-nav__icon 56×30` (item chạm thật 75×52 ✓);
-`search-dock__input …×21` (dock bao ngoài lớn hơn).
+**PASS xác nhận (ground-truth):** 0 màu hard-code ✓ · full light+dark ✓ · full-tokenized ✓ ·
+touch target ≥44 (qua ::after) ✓ · `MxButton` 48 ✓ · `.icon-btn` 48 ✓.
+
+**Bài học:** không đo touch target bằng box visual (spec/`getBoundingClientRect`) — phải tính
+cả `::after` hit overlay. Không refactor token trước khi verify render thật.
+
+**⇒ "Contract thắng — sửa kit" hoá ra chỉ còn 1 điểm foundation thật (gutter 16) + kỷ luật
+typography per-screen. Khối lượng thực nằm ở STATE MATRIX (mục B) — đúng với ruling "bổ sung state".**
 
 ---
 
