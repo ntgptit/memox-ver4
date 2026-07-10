@@ -15,7 +15,7 @@
 | flashcard-list | Flashcard List | `flashcard-list.md` | 15 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
-| flashcard-editor | Card Editor | `flashcard-editor.md` | 6 |
+| flashcard-editor | Card Editor | `flashcard-editor.md` | 9 |
 | game-picker | Game Picker | `game-picker.md` | 3 |
 | game-matching | Matching | `game-matching.md` | 6 |
 | game-mc | Multiple Choice | `game-mc.md` | 4 |
@@ -35,4 +35,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 3 |
 
-Total: 25 screens · 139 states.
+Total: 25 screens · 142 states.

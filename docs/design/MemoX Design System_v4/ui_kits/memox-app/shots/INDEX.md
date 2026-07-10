@@ -95,8 +95,11 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | edit | `flashcard-editor--edit--light.png` | `flashcard-editor--edit--dark.png` |
 | validation | `flashcard-editor--validation--light.png` | `flashcard-editor--validation--dark.png` |
 | duplicate | `flashcard-editor--duplicate--light.png` | `flashcard-editor--duplicate--dark.png` |
-| multi meaning | `flashcard-editor--multi-meaning--light.png` | `flashcard-editor--multi-meaning--dark.png` |
-| audio | `flashcard-editor--audio--light.png` | `flashcard-editor--audio--dark.png` |
+| additional translation | `flashcard-editor--additional-translation--light.png` | `flashcard-editor--additional-translation--dark.png` |
+| audio generating | `flashcard-editor--audio-generating--light.png` | `flashcard-editor--audio-generating--dark.png` |
+| submitting | `flashcard-editor--submitting--light.png` | `flashcard-editor--submitting--dark.png` |
+| submit error | `flashcard-editor--submit-error--light.png` | `flashcard-editor--submit-error--dark.png` |
+| submit success | `flashcard-editor--submit-success--light.png` | `flashcard-editor--submit-success--dark.png` |
 
 ## game-picker — Game Picker
 

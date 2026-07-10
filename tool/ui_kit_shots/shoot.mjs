@@ -61,7 +61,7 @@ const REGISTRY = {
   'flashcard-list': { g: 'FlashcardList', states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
   'deck-settings': { g: 'DeckSettings', states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
   'deck-content-choice': { g: 'DeckContentChoice', states: ['default'] },
-  'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
+  'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
   'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },
   'game-matching': { g: 'GameMatching', states: ['playing', 'complete'] },
   'game-mc': { g: 'GameMultipleChoice', states: ['waiting', 'complete'] },

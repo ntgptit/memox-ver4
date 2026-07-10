@@ -48,7 +48,7 @@
     }, [collapsedProp, variant]);
     const collapsed = collapsedProp !== undefined ? collapsedProp : auto;
 
-    const scrolled = collapsed || variant === 'root-standard' || variant === 'nested' || variant === 'selection';
+    const scrolled = collapsed || variant === 'root-standard' || variant === 'nested' || variant === 'selection' || variant === 'focused';
     const cls = ['cappbar', 'cappbar--' + variant, scrolled ? 'cappbar--scrolled' : 'cappbar--top', className].filter(Boolean).join(' ');
 
     // Leading slot: explicit, else a sensible default per variant.

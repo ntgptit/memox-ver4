@@ -179,6 +179,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+/* Focused form bar: the title is a fixed page label centered between the leading
+   (close) and trailing (Save) actions, so it never shifts across form/submit states. */
+.cappbar--focused .cappbar__title { text-align: center; }
 .cappbar__title,
 .cappbar__context {
   animation: cappbar-label-in var(--memox-duration-base) var(--memox-ease-standard);
@@ -1084,3 +1087,22 @@
 }
 .card-more::after { content: ''; position: absolute; inset: -14px 0; } /* raw-ok: (48-20)/2 — derived hit inset */
 .card-more:hover { text-decoration: underline; }
+
+/* Disabled icon button (e.g. Play while audio is generating) */
+.icon-btn:disabled { opacity: var(--memox-opacity-muted); pointer-events: none; }
+
+/* ============================================================
+   Spinner — a semantic indeterminate loading indicator (audio generating, etc.).
+   A rotating ring, NOT a static sync glyph; a captured frame still reads as loading.
+   ============================================================ */
+.spinner {
+  width: var(--memox-icon-size-md);
+  height: var(--memox-icon-size-md);
+  border: var(--memox-stroke-emphasis) solid var(--memox-divider);
+  border-top-color: var(--memox-accent);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: mx-spin 0.8s linear infinite; /* raw-ok: animation duration, not a visual token */
+}
+@keyframes mx-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }

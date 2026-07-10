@@ -102,7 +102,7 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **dashboard**: GoalCard, GreetingHeader, OnboardingHero, OnboardingStep, StreakCard, TodaySummary
 - **drawer**: DrawerItem, DrawerPanel, LangCard, RemoveLanguageDialog
 - **export**: ExportingCard, FormatList
-- **flashcard-editor**: DupBanner, Field
+- **flashcard-editor**: AudioRow, DupBanner, Field
 - **flashcard-list**: AddCardSheet, cardFixtures
 - **library**: FilterRow, LibraryCreateSheet, SubdeckCard, libFixtures
 - **subdeck-list**: CreateSubdeckSheet, subdeckFixtures
