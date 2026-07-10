@@ -69,7 +69,7 @@
   --memox-state-selected: rgba(79, 70, 229, 0.1);
   --memox-state-disabled: rgba(29, 34, 64, 0.26);
   --memox-focus-ring: rgba(79, 70, 229, 0.42);
-  --memox-overlay: rgba(18, 20, 45, 0.45);
+  --memox-overlay: rgba(18, 20, 45, 0.38);
   --memox-scrim: rgba(29, 34, 64, 0.04);
 }
 
@@ -134,7 +134,7 @@
   --memox-state-selected: rgba(125, 116, 240, 0.24);
   --memox-state-disabled: rgba(236, 237, 247, 0.26);
   --memox-focus-ring: rgba(125, 116, 240, 0.6);
-  --memox-overlay: rgba(0, 0, 0, 0.66);
+  --memox-overlay: rgba(0, 0, 0, 0.55);
   --memox-scrim: rgba(255, 255, 255, 0.04);
 }
 

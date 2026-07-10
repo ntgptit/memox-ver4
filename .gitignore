@@ -46,3 +46,6 @@ example
 tool/ui_kit_shots/out/
 .playwright-mcp/
 *.jpeg
+
+# stray preview screenshots at repo root
+/*.png

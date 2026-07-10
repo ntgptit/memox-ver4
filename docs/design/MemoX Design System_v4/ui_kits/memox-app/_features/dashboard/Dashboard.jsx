@@ -144,8 +144,12 @@ function Dashboard({ state = 'loaded' }) {
       {/* Deck rows are LIST ITEMS — group them with an item gap (12), not the body's
           section gap (24), so the list is tighter and the first deck surfaces sooner. */}
       <div data-mx-node="dashboard/decks" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
-        <MxSectionHeader title="Recent decks" action="See all" node="dashboard/decks-head" />
+        {/* No right-aligned "See all" action here: the FAB floats over the bottom-right
+            and must never sit on top of another interactive control. Full library is one
+            tap away on the Library tab; a "See all decks" row can live at the list end. */}
+        <MxSectionHeader title="Recent decks" node="dashboard/decks-head" />
         {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
+        <MxButton variant="ghost" icon="arrow_forward" block node="dashboard/see-all-decks">See all decks</MxButton>
       </div>
     </MxScaffold>
   );
@@ -170,6 +174,7 @@ function CreateSheet() {
         <MenuItem icon="note_add" label="Add card" node="dashboard/create-card" />
         <MenuItem icon="library_add" label="Create deck" node="dashboard/create-deck" />
         <MenuItem icon="create_new_folder" label="Create folder" node="dashboard/create-folder" />
+        <div style={{ height: 'var(--memox-stroke-hairline)', background: 'var(--memox-divider)', margin: 'var(--memox-space-2) var(--memox-space-2)' }} />
         <MenuItem icon="upload_file" label="Import cards" node="dashboard/create-import" />
       </Sheet>
     </Scrim>
