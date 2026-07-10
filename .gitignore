@@ -41,3 +41,11 @@ example
 # generated native folders
 /ios
 /android
+
+# UI-kit screenshot harness output (generated)
+tool/ui_kit_shots/out/
+.playwright-mcp/
+*.jpeg
+
+# stray preview screenshots at repo root
+/*.png

@@ -1,0 +1,28 @@
+/* ============================================================
+   MemoX — Spacing scale  (Layer 1)  · 4px base. Names frozen.
+   ============================================================ */
+
+:root {
+  --memox-space-0: 0;
+  --memox-space-05: 2px;
+  --memox-space-1: 4px;
+  --memox-space-2: 8px;
+  --memox-space-3: 12px;
+  --memox-space-4: 16px;
+  --memox-space-5: 20px;
+  --memox-space-6: 24px;
+  --memox-space-7: 32px;
+  --memox-space-8: 40px;
+  --memox-space-9: 48px;
+  --memox-space-10: 64px;
+  --memox-space-11: 80px;
+  --memox-space-12: 96px;
+
+  /* layout rhythm */
+  --memox-gutter: 16px; /* screen edge padding (phone) — contract: screen horizontal padding = 16 */
+  --memox-appbar-height: 64px;
+  --memox-appbar-lg-height: 112px;
+  --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */
+  --memox-fab-size: 56px; /* M3 standard FAB */
+  --memox-touch-min: 48px;
+}

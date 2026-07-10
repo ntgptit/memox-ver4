@@ -1,0 +1,295 @@
+<!-- @dsCard group="MemoX App" viewport="920x880" name="Screen gallery" subtitle="Mobile · 390×780 portrait · every state · light + dark" -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MemoX — App UI Kit</title>
+<link rel="stylesheet" href="../../styles.css" />
+<link rel="stylesheet" href="../../theme-override.css" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..40,400,0,0" />
+<style>
+  html, body { margin: 0; }
+  body {
+    background: #e9edf4;
+    font-family: var(--memox-font-sans);
+    color: #1c2540;
+    padding: 28px 24px 60px;
+  }
+  .mxg-head { max-width: 880px; margin: 0 auto 26px; }
+  .mxg-head h1 { font-size: 26px; font-weight: 800; letter-spacing: -.02em; margin: 0; }
+  .mxg-head p { font-size: 14px; color: #59617e; margin: 6px 0 0; max-width: 560px; line-height: 1.5; }
+  .mxg-gallery { display: flex; flex-direction: column; gap: 28px; max-width: 880px; margin: 0 auto; }
+
+  .mxg-row { background: #ffffff; border-radius: 24px; padding: 22px; box-shadow: 0 10px 30px rgba(40, 55, 95, .08), 0 2px 4px rgba(40, 55, 95, .06); }
+  .mxg-row__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+  .mxg-row__title { font-size: 17px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; }
+  .mxg-row__sub { font-size: 12.5px; color: #8089a3; margin-top: 2px; }
+
+  .mxg-stepper { display: inline-flex; align-items: center; gap: 6px; background: #f0f3f9; border-radius: 999px; padding: 5px; }
+  .mxg-stepper button { width: 34px; height: 34px; border: none; border-radius: 999px; background: #ffffff; color: #2a3357; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 1px 2px rgba(40,55,95,.12); transition: transform .12s ease, background .15s ease; }
+  .mxg-stepper button:hover { background: #5569ff; color: #fff; }
+  .mxg-stepper button:active { transform: scale(.9); }
+  .mxg-stepper .mxg-label { min-width: 96px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .02em; text-transform: capitalize; color: #2a3357; }
+
+  .mxg-frames { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
+  .mxg-frame-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .mxg-frame {
+    position: relative;
+    width: 390px; height: 780px;
+    border-radius: 44px;
+    overflow: hidden;
+    background: var(--memox-bg);
+    box-shadow: 0 0 0 9px #11152b, 0 0 0 11px #2a2f4a, 0 22px 48px rgba(20, 28, 56, .32);
+  }
+  .mxg-frame[data-theme="dark"] { box-shadow: 0 0 0 9px #05081a, 0 0 0 11px #232a47, 0 22px 48px rgba(0, 0, 0, .5); }
+  .mxg-frame > .app { width: 100%; height: 100%; }
+  .mxg-cap { font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: #8089a3; }
+  .mxg-cap[data-theme="dark"] { color: #7b84a3; }
+
+  /* skeleton shimmer — resolves per-theme via tokens */
+  @keyframes mxg-pulse { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+  .mxg-skel { background: var(--memox-surface-sunken); animation: mxg-pulse var(--memox-duration-pulse) ease-in-out infinite; }
+  .material-symbols-rounded { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; user-select: none; }
+</style>
+</head>
+<body>
+<div class="mxg-head">
+  <h1>MemoX — App UI Kit</h1>
+  <p>Every screen assembled only from <strong>Mx*</strong> components, rendered through each of its states in light and dark. Step through states with the controls on each row.</p>
+</div>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="../../_ds_bundle.js"></script>
+<!-- Core primitives authored in runtime style (not yet in the bundle) — extend the NS namespace. -->
+<script type="text/babel-src" src="../../components/core/MxLink.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxContextualAppBar.jsx"></script>
+<!-- Shared helpers load before any screen entry (screens read them at render). -->
+<script type="text/babel-src" src="kit-helpers.jsx"></script>
+<!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->
+<script type="text/babel-src" src="_shared/ConfirmDialog.jsx"></script>
+<script type="text/babel-src" src="_shared/StatusCardRow.jsx"></script>
+<script type="text/babel-src" src="_shared/ActionCallout.jsx"></script>
+<script type="text/babel-src" src="_shared/SelectSheet.jsx"></script>
+<script type="text/babel-src" src="_shared/ProfileCard.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckCard.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckList.jsx"></script>
+<!-- Screen entries: one per feature folder (_features/<screen>/<ScreenName>.jsx). -->
+<script type="text/babel-src" src="_features/dashboard/components/GreetingHeader.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/components/TodaySummary.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/components/GoalCard.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/components/StreakCard.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/components/OnboardingHero.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/components/OnboardingStep.jsx"></script>
+<script type="text/babel-src" src="_features/dashboard/Dashboard.jsx"></script>
+<script type="text/babel-src" src="_features/library/components/libFixtures.jsx"></script>
+<script type="text/babel-src" src="_features/library/components/SubdeckCard.jsx"></script>
+<script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
+<script type="text/babel-src" src="_features/library/components/LibraryCreateSheet.jsx"></script>
+<script type="text/babel-src" src="_features/library/Library.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/components/DeckHeader.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/components/FlashcardRow.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/components/SubDeckCard.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/components/DeckMenu.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/components/DeleteConfirmDialog.jsx"></script>
+<script type="text/babel-src" src="_features/deck-detail/DeckDetail.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-editor/components/Field.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-editor/components/DupBanner.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-editor/FlashcardEditor.jsx"></script>
+<script type="text/babel-src" src="_features/game-picker/components/GameOption.jsx"></script>
+<script type="text/babel-src" src="_features/game-picker/components/ScopeCard.jsx"></script>
+<script type="text/babel-src" src="_features/game-picker/components/ScopeSheet.jsx"></script>
+<script type="text/babel-src" src="_features/game-picker/GamePicker.jsx"></script>
+<script type="text/babel-src" src="_features/game-matching/components/Tile.jsx"></script>
+<script type="text/babel-src" src="_features/game-matching/GameMatching.jsx"></script>
+<script type="text/babel-src" src="_features/game-mc/components/McPromptCard.jsx"></script>
+<script type="text/babel-src" src="_features/game-mc/GameMultipleChoice.jsx"></script>
+<script type="text/babel-src" src="_features/game-recall/components/RecallTermCard.jsx"></script>
+<script type="text/babel-src" src="_features/game-recall/components/MeaningPanel.jsx"></script>
+<script type="text/babel-src" src="_features/game-recall/GameRecall.jsx"></script>
+<script type="text/babel-src" src="_features/game-typing/components/CharCompare.jsx"></script>
+<script type="text/babel-src" src="_features/game-typing/components/InputBox.jsx"></script>
+<script type="text/babel-src" src="_features/game-typing/GameTyping.jsx"></script>
+<script type="text/babel-src" src="_features/review/components/MeaningCard.jsx"></script>
+<script type="text/babel-src" src="_features/review/components/TermCard.jsx"></script>
+<script type="text/babel-src" src="_features/review/Review.jsx"></script>
+<script type="text/babel-src" src="_features/player/components/Dots.jsx"></script>
+<script type="text/babel-src" src="_features/player/components/PlayerCard.jsx"></script>
+<script type="text/babel-src" src="_features/player/Player.jsx"></script>
+<script type="text/babel-src" src="_features/study-result/components/ResultHero.jsx"></script>
+<script type="text/babel-src" src="_features/study-result/components/StreakGoalCard.jsx"></script>
+<script type="text/babel-src" src="_features/study-result/components/Cta.jsx"></script>
+<script type="text/babel-src" src="_features/study-result/components/FinalizingView.jsx"></script>
+<script type="text/babel-src" src="_features/study-result/StudyResult.jsx"></script>
+<script type="text/babel-src" src="_features/search/components/ResultRow.jsx"></script>
+<script type="text/babel-src" src="_features/search/components/Chips.jsx"></script>
+<script type="text/babel-src" src="_features/search/Search.jsx"></script>
+<script type="text/babel-src" src="_features/statistics/components/Bars.jsx"></script>
+<script type="text/babel-src" src="_features/statistics/components/Heatmap.jsx"></script>
+<script type="text/babel-src" src="_features/statistics/components/Donut.jsx"></script>
+<script type="text/babel-src" src="_features/statistics/Statistics.jsx"></script>
+<script type="text/babel-src" src="_features/reminder/components/TimeCol.jsx"></script>
+<script type="text/babel-src" src="_features/reminder/components/TimePickerSheet.jsx"></script>
+<script type="text/babel-src" src="_features/reminder/Reminder.jsx"></script>
+<script type="text/babel-src" src="_features/account-sync/components/SyncBlock.jsx"></script>
+<script type="text/babel-src" src="_features/account-sync/components/SignInCard.jsx"></script><script type="text/babel-src" src="_features/account-sync/AccountSync.jsx"></script>
+<script type="text/babel-src" src="_features/theme/components/PreviewCard.jsx"></script>
+<script type="text/babel-src" src="_features/theme/components/AccentPicker.jsx"></script>
+<script type="text/babel-src" src="_features/theme/Theme.jsx"></script>
+<script type="text/babel-src" src="_features/import/components/Table.jsx"></script>
+<script type="text/babel-src" src="_features/import/components/SourceCard.jsx"></script>
+<script type="text/babel-src" src="_features/import/Import.jsx"></script>
+<script type="text/babel-src" src="_features/export/components/ExportingCard.jsx"></script>
+<script type="text/babel-src" src="_features/export/components/FormatList.jsx"></script>
+<script type="text/babel-src" src="_features/export/Export.jsx"></script>
+<script type="text/babel-src" src="_features/drawer/components/DrawerItem.jsx"></script>
+<script type="text/babel-src" src="_features/drawer/components/LangCard.jsx"></script>
+<script type="text/babel-src" src="_features/drawer/components/DrawerPanel.jsx"></script>
+<script type="text/babel-src" src="_features/drawer/components/RemoveLanguageDialog.jsx"></script>
+<script type="text/babel-src" src="_features/drawer/Drawer.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/PromptCard.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageReview.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageMatching.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageChoice.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageRecall.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageTyping.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/ExitDialog.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/AnswerSaveErrorDialog.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/ResumeErrorState.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/StudySession.jsx"></script><script type="text/babel-src" src="_features/settings/components/ValuePickerSheet.jsx"></script>
+<script type="text/babel-src" src="_features/settings/Settings.jsx"></script>
+<script type="text/babel-src" src="_features/app-bar/AppBar.jsx"></script>
+<script type="text/babel-gallery">
+const SCREENS = [
+  { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
+  { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'dense', 'deck-detail', 'empty', 'empty-deck', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
+  { id: 'deck-detail', title: 'Deck Detail (node)', Comp: () => window.DeckDetail, states: ['loaded', 'min-data', 'dense-data', 'long-text', 'search', 'no-results', 'empty', 'add-menu', 'card-actions', 'delete-confirm', 'reset-confirm', 'deck-menu', 'deck-delete-confirm', 'move', 'loading', 'error'] },
+  { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
+  { id: 'game-picker', title: 'Game Picker', Comp: () => window.GamePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
+  { id: 'game-matching', title: 'Matching', Comp: () => window.GameMatching, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },
+  { id: 'game-mc', title: 'Multiple Choice', Comp: () => window.GameMultipleChoice, states: ['waiting', 'correct', 'wrong', 'complete'] },
+  { id: 'game-recall', title: 'Recall', Comp: () => window.GameRecall, states: ['before-reveal', 'revealed', 'forgot', 'remembered', 'complete'] },
+  { id: 'game-typing', title: 'Typing', Comp: () => window.GameTyping, states: ['waiting', 'typing', 'hint', 'correct', 'wrong', 'complete'] },
+  { id: 'review', title: 'Review', Comp: () => window.Review, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },
+  { id: 'player', title: 'Player', Comp: () => window.Player, states: ['playing', 'paused', 'speed', 'error', 'end'] },
+  { id: 'study-result', title: 'Study Result', Comp: () => window.StudyResult, states: ['standard', 'goal-met', 'goal-missed', 'many-wrong', 'finalizing', 'retry-finalize', 'finalize-error'] },
+  { id: 'search', title: 'Search', Comp: () => window.Search, states: ['empty-recent', 'results', 'filtered', 'no-results', 'loading'] },
+  { id: 'statistics', title: 'Stats', Comp: () => window.Statistics, states: ['loaded', 'scope-switch', 'insufficient', 'loading', 'error'] },
+  { id: 'reminder', title: 'Reminders', Comp: () => window.Reminder, states: ['on', 'off', 'time-picker'] },
+  { id: 'account-sync', title: 'Account & Sync', Comp: () => window.AccountSync, states: ['signed-out', 'signed-in', 'syncing', 'conflict', 'offline'] },
+  { id: 'theme', title: 'Theme', Comp: () => window.Theme, states: ['light', 'dark', 'accent-size'] },
+  { id: 'import', title: 'Import', Comp: () => window.Import, states: ['source', 'mapping', 'preview', 'dup-warning', 'importing', 'import-error', 'done'] },
+  { id: 'export', title: 'Export', Comp: () => window.Export, states: ['config', 'exporting', 'export-error', 'done'] },
+  { id: 'drawer', title: 'Drawer & Languages', Comp: () => window.Drawer, states: ['open', 'add-language', 'remove-language'] },
+  { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-matching', 'stage3-choice', 'stage4-recall', 'stage5-typing', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
+  { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
+  { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'root-long', 'root-standard', 'nested', 'nested-overflow', 'search', 'selection', 'focused'] },
+];
+
+// A single screen failing (compile error, runtime throw, or not loaded — e.g.
+// opened over file:// where Babel can't fetch the .jsx) must NOT blank the whole
+// gallery. Each frame is isolated and degrades to a visible message instead.
+class ErrorBoundary extends React.Component {
+  constructor(props) { super(props); this.state = { err: null }; }
+  static getDerivedStateFromError(err) { return { err }; }
+  render() {
+    if (this.state.err) {
+      return <div style={{ padding: '16px', color: 'var(--memox-error)', fontSize: '13px', fontWeight: 600 }}>⚠ {String(this.state.err && this.state.err.message || this.state.err)}</div>;
+    }
+    return this.props.children;
+  }
+}
+
+function Frame({ theme, Comp, state }) {
+  return (
+    <div className="mxg-frame-wrap">
+      <div className="mxg-frame" data-theme={theme}>
+        <ErrorBoundary>
+          {typeof Comp === 'function'
+            ? <Comp state={state} />
+            : <div style={{ padding: '16px', color: 'var(--memox-text-tertiary)', fontSize: '13px' }}>Screen not loaded — serve over http:// (e.g. <code>node tool/preview/kit-server.mjs</code>), not file://.</div>}
+        </ErrorBoundary>
+      </div>
+      <div className="mxg-cap" data-theme={theme}>{theme}</div>
+    </div>
+  );
+}
+
+function Row({ screen }) {
+  const [i, setI] = React.useState(0);
+  const states = screen.states;
+  const st = states[i];
+  const Comp = screen.Comp();
+  const go = (d) => setI((p) => (p + d + states.length) % states.length);
+  return (
+    <section className="mxg-row" data-screen-label={screen.id}>
+      <div className="mxg-row__head">
+        <div>
+          <div className="mxg-row__title">{screen.title}</div>
+          <div className="mxg-row__sub">{states.length} state{states.length > 1 ? 's' : ''} · light + dark</div>
+        </div>
+        <div className="mxg-stepper">
+          <button onClick={() => go(-1)} aria-label="Previous state"><span className="material-symbols-rounded">chevron_left</span></button>
+          <div className="mxg-label">{st.replace('-', ' ')}</div>
+          <button onClick={() => go(1)} aria-label="Next state"><span className="material-symbols-rounded">chevron_right</span></button>
+        </div>
+      </div>
+      <div className="mxg-frames">
+        <Frame theme="light" Comp={Comp} state={st} />
+        <Frame theme="dark" Comp={Comp} state={st} />
+      </div>
+    </section>
+  );
+}
+
+function Gallery() {
+  return <div className="mxg-gallery">{SCREENS.map((s) => <Row key={s.id} screen={s} />)}</div>;
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<Gallery />);
+</script>
+<script>
+/* Local preview fix: the kit's feature files end with a compiler-only
+   `export const X = ...` line and register their component on a window
+   registry via an IIFE. Loaded as a classic <script>, that top-level
+   `export` is a parse error, so the whole file aborts and the page falls
+   back to the (separately broken) bundled copies. Here we load each file
+   ourselves, strip the ESM line, transpile, and run in document order so
+   the real per-file components register and win. */
+(function () {
+  function strip(code) {
+    return code
+      .replace(/^[ \t]*export[ \t].*$/gm, '')
+      .replace(/^[ \t]*import[ \t].*$/gm, '');
+  }
+  function run(code, label) {
+    var out = Babel.transform(code, { presets: ['react'], filename: label }).code;
+    var s = document.createElement('script');
+    s.textContent = out + '\n//# sourceURL=' + label;
+    document.head.appendChild(s);
+  }
+  async function boot() {
+    var srcs = Array.prototype.slice.call(
+      document.querySelectorAll('script[type="text/babel-src"]')
+    ).map(function (t) { return t.getAttribute('src'); });
+    // Fetch every file in parallel, then execute in document order.
+    var texts = await Promise.all(srcs.map(function (src) {
+      return fetch(src).then(function (r) { return r.text(); })
+        .catch(function (e) { console.error('kit fetch failed:', src, e); return ''; });
+    }));
+    for (var i = 0; i < srcs.length; i++) {
+      if (!texts[i]) continue;
+      try { run(strip(texts[i]), srcs[i]); }
+      catch (e) { console.error('kit run failed:', srcs[i], e); }
+    }
+    var g = document.querySelector('script[type="text/babel-gallery"]');
+    if (g) run(strip(g.textContent), 'gallery.jsx');
+  }
+  boot();
+})();
+</script>
+</body>
+</html>

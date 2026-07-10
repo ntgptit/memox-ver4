@@ -1,0 +1,56 @@
+#!/bin/sh
+# pre-push — last gate before code leaves the machine.
+#
+#  design sync — if the push includes changes under the design-kit localDir
+#  (.design-sync/config.json), push that delta to the Claude Design project via
+#  tool/parity/sync-design.mjs (drives the design-authorized `claude` CLI).
+#
+# Server-side PR merges + agent pushes (MEMOX_SKIP_DESIGN_SYNC=1) skip this hook;
+# `.githooks/post-merge` catches kit changes when the default branch updates and
+# syncs them.
+#
+# Bypass design sync with `MEMOX_SKIP_DESIGN_SYNC=1 git push` or `git push --no-verify`.
+set -e
+
+if ! command -v node >/dev/null 2>&1; then
+  echo "pre-push: node not found; skipping checks." >&2
+  exit 0
+fi
+
+# code gate ------------------------------------------------------------------
+# Last local safety net before code leaves the machine, IF this repo ships a
+# verifier (tool/verify/run.mjs). This design-kit setup does not include one yet,
+# so the block is a no-op until a verifier is added. Skipped for automated pushes
+# (MEMOX_SKIP_DESIGN_SYNC=1) or via an explicit MEMOX_SKIP_VERIFY=1 bypass.
+if [ -f tool/verify/run.mjs ] && [ "$MEMOX_SKIP_VERIFY" != "1" ] && [ "$MEMOX_SKIP_DESIGN_SYNC" != "1" ]; then
+  echo "pre-push: running verify (--quick)…"
+  node tool/verify/run.mjs --quick
+fi
+
+# design sync on push --------------------------------------------------------
+[ "$MEMOX_SKIP_DESIGN_SYNC" = "1" ] && exit 0
+[ -f .design-sync/config.json ] || exit 0
+if ! command -v claude >/dev/null 2>&1; then
+  echo "pre-push: \`claude\` CLI not found; skipping design sync (run \`node tool/parity/sync-design.mjs\` from a design-authorized CLI)." >&2
+  exit 0
+fi
+
+LOCALDIR=$(node -e "try{process.stdout.write((JSON.parse(require('fs').readFileSync('.design-sync/config.json','utf8')).localDir)||'')}catch(e){}")
+[ -n "$LOCALDIR" ] || exit 0
+
+zero=0000000000000000000000000000000000000000
+# git feeds ref updates on stdin: <local ref> <local sha> <remote ref> <remote sha>
+while read -r local_ref local_sha remote_ref remote_sha; do
+  [ "$local_sha" = "$zero" ] && continue                 # branch deletion
+  if [ "$remote_sha" = "$zero" ]; then
+    echo "pre-push: new branch — syncing design delta since last recorded sync…"
+    node tool/parity/sync-design.mjs --no-record
+  else
+    if [ -n "$(git diff --name-only "$remote_sha".."$local_sha" -- "$LOCALDIR")" ]; then
+      echo "pre-push: design kit changed in ${remote_sha}..${local_sha} — pushing to Claude Design…"
+      node tool/parity/sync-design.mjs "$remote_sha" --no-record
+    fi
+  fi
+done
+
+exit 0
