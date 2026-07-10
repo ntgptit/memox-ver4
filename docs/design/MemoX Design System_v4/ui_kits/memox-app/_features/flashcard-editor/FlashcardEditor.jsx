@@ -11,16 +11,20 @@ function FlashcardEditor({ state = 'create' }) {
   const title = state === 'create' ? 'New card' : 'Edit card';
   const termErr = state === 'validation' ? 'Term is required' : null;
   const meaningErr = state === 'validation' ? 'Meaning is required' : null;
+  const submitting = state === 'submitting';
+  const saveDisabled = state === 'create' || submitting;
 
   const bar = (
     <MxAppBar node="flashcard-editor/appbar" title={title}
-      leading={<MxButton variant="ghost" node="flashcard-editor/cancel">Cancel</MxButton>}
-      trailing={<MxButton variant="primary" size="sm" disabled={state === 'create'} node="flashcard-editor/save">Save</MxButton>} />
+      leading={<MxButton variant="ghost" disabled={submitting} node="flashcard-editor/cancel">Cancel</MxButton>}
+      trailing={<MxButton variant="primary" size="sm" disabled={saveDisabled} node="flashcard-editor/save">{submitting ? 'Saving…' : 'Save'}</MxButton>} />
   );
 
   return (
     <MxScaffold node="flashcard-editor/screen" appBar={bar}>
       {state === 'duplicate' ? <DupBanner /> : null}
+      {state === 'submit-error' ? <div data-mx-node="flashcard-editor/save-error"><window.Note tone="error" icon="error" text="Couldn't save the card. Check your connection and try again." /></div> : null}
+      {state === 'submit-success' ? <div data-mx-node="flashcard-editor/save-success"><window.Note tone="success" icon="check_circle" text="Card saved." /></div> : null}
 
       <Field label="Term (Korean)" required node="flashcard-editor/term"
         value={blank ? '' : '안녕하세요'} placeholder="Enter a word…" error={termErr} />

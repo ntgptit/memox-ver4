@@ -215,3 +215,11 @@ không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font
 - **Verify** (192 combos): các state mới không thêm defect. long-text: term vừa 1 dòng, meaning
   dài truncate ellipsis (chuẩn list-row preview), layout không vỡ.
 - Chỉ còn `appbar__title` "Korean Basics" cắt ở **w320** (accepted class — width nhỏ nhất).
+
+### ✅ flashcard-editor (FORM) — ĐẠT (đủ chuỗi submit)
+- Contract form states: `disabled-submit` (= 'create', Save disabled + blank), `validation-error`
+  (='validation'). **Thêm mới**: `submitting` (Save "Saving…" disabled, Cancel disabled),
+  `submit-error` (banner đỏ + Save enabled retry), `submit-success` (banner xanh "Card saved").
+- **Verify** (216 combos, 0 render error): các state mới render đúng — banner Note tone
+  error/success, form filled, Save state đúng, layout không vỡ.
+- Chỉ còn `appbar__title` cắt ở **large-font** (accepted; title cạnh Cancel+Save text button).
