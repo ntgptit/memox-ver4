@@ -21,6 +21,16 @@ function Export({ state = 'config' }) {
     );
   }
 
+  if (state === 'export-error') {
+    return (
+      <MxScaffold node="export/screen" appBar={bar}>
+        <window.EmptyState node="export/error" icon="error" tone="error" title="Export failed"
+          text="Something went wrong creating the file. Check available storage and try again."
+          action={<MxButton variant="primary" icon="refresh" block node="export/retry">Try again</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   if (state === 'done') {
     return (
       <MxScaffold node="export/screen" appBar={bar}>

@@ -223,3 +223,12 @@ không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font
 - **Verify** (216 combos, 0 render error): các state mới render đúng — banner Note tone
   error/success, form filled, Save state đúng, layout không vỡ.
 - Chỉ còn `appbar__title` cắt ở **large-font** (accepted; title cạnh Cancel+Save text button).
+
+### ✅ import & export (FLOW) — ĐẠT (đủ vòng lifecycle)
+- **import**: thêm `importing` (card "Importing…" + ProgressBar 62% + "77/124 cards") và
+  `import-error` (EmptyState tone error "Import failed" + Try again). Vòng: source→mapping→
+  preview→dup-warning→importing→import-error→done.
+- **export**: thêm `export-error` (EmptyState "Export failed" + Try again). Đã có exporting(loading)
+  + done(success). Vòng: config→exporting→export-error→done.
+- **Verify**: 0 render error; các state mới render đúng (đã xem screenshot importing + export-error),
+  layout không vỡ.

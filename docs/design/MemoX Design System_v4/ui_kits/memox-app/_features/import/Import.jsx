@@ -18,6 +18,30 @@ const SectionLabel = window.SectionLabel;
 function Import({ state = 'source' }) {
   const bar = <MxAppBar title="Import cards" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;
 
+  if (state === 'importing') {
+    return (
+      <MxScaffold node="import/screen" appBar={bar}>
+        <MxCard node="import/importing">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+            <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>Importing…</div>
+            <window.ProgressBar value={62} node="import/importing-bar" />
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>77 / 124 cards · don’t close this screen</div>
+          </div>
+        </MxCard>
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'import-error') {
+    return (
+      <MxScaffold node="import/screen" appBar={bar}>
+        <window.EmptyState node="import/error" icon="error" tone="error" title="Import failed"
+          text="Couldn’t read the file at row 78. Check the format and try again."
+          action={<MxButton variant="primary" icon="refresh" node="import/retry">Try again</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   if (state === 'done') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
