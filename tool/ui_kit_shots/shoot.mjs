@@ -48,7 +48,7 @@ const serve = (root) => createServer(async (req, res) => {
 // screen -> window global + full state list (mirrors index.html SCREENS)
 const REGISTRY = {
   dashboard: { g: 'Dashboard', states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'empty', 'loading'] },
-  library: { g: 'Library', states: ['loaded', 'empty', 'loading', 'error'] },
+  library: { g: 'Library', states: ['loaded', 'min-data', 'dense-data', 'long-text', 'empty', 'loading', 'error'] },
   'deck-detail': { g: 'DeckDetail', states: ['loaded', 'no-results', 'empty', 'loading', 'error'] },
   'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio'] },
   'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },

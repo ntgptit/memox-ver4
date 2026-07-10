@@ -22,17 +22,25 @@ const TREE = [
   { icon: 'style', tone: null, name: 'Daily Conversation', meta: '150 words · mastered', due: 0, progress: 100 },
 ];
 
-function Tree() {
-  return TREE.map((d, i) => (
+// Edge-data fixtures (contract step 6-7): minimum, dense, and long-text.
+const MIN = [TREE[0]];
+const DENSE = Array.from({ length: 12 }, (_, i) => ({ ...TREE[i % TREE.length], name: TREE[i % TREE.length].name + (i >= TREE.length ? ' ' + (Math.floor(i / TREE.length) + 1) : '') }));
+const LONG = [
+  { icon: 'style', tone: 'accent', name: 'TOPIK II — Advanced Vocabulary & Idiomatic Expressions, Hanja Roots and Formal Register (2024 Workbook)', meta: '1,280 words · 340 due · shared with study group · last reviewed Tuesday', due: 340, progress: 57 },
+  ...TREE.slice(1),
+];
+
+function Tree({ decks = TREE }) {
+  return decks.map((d, i) => (
     <MxCard key={i} padding="sm" interactive node={'library/node-' + i}><window.DeckRow {...d} /></MxCard>
   ));
 }
 
-function base() {
+function base(decks) {
   return (
     <MxScaffold node="library/screen" appBar={<LibraryHeader />} bottomNav={<MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />} fab={<MxFab icon="add" label="New" node="library/create" />}>
       <ContextBar />
-      <Tree />
+      <Tree decks={decks} />
     </MxScaffold>
   );
 }
@@ -130,6 +138,10 @@ function Library({ state = 'loaded' }) {
   if (state === 'drawer') {
     return <React.Fragment>{base()}<window.Drawer state="open" /></React.Fragment>;
   }
+
+  if (state === 'min-data') return base(MIN);
+  if (state === 'dense-data') return base(DENSE);
+  if (state === 'long-text') return base(LONG);
 
   return base();
 }

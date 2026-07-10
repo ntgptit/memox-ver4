@@ -179,3 +179,32 @@ không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font
 
 > Trạng thái responsive tổng: **1560 combos, 0 overflow/clip thật** ngoài app-bar title (đã
 > accepted). Kit đạt contract step 7 (responsive/large-font/narrow) ở mức thực tế cao nhất.
+
+---
+
+## E. Per-screen contract pass (làm lần lượt)
+
+### Cách đếm typography role (SYS-03) — áp dụng nhất quán
+"Typography role của một màn" = **text-style mà màn TỰ áp lên content của nó**, KHÔNG tính:
+- **Icon glyph** (Material Symbols — sized bằng font-size nhưng là iconography, không phải chữ).
+- **Typography nội bộ của shared `Mx*`** (MxBadge, MxBottomNav, MxAppBar…) — do component sở hữu.
+- **Chrome cố định** (bottom-nav label, app-bar) — không phải content của màn.
+
+Đo bằng render thật (Playwright, computed style), không tin spec.
+
+### ✅ dashboard — ĐẠT
+- **Spacing**: on-scale (SYS-01 ✓). **Touch**: ✓ (::after 48). **Responsive**: 144 combos, 0 finding ✓.
+  **Dark**: ✓. **States**: loading/loaded/empty + domain (not-studied/goal-met/streak-reset) ✓.
+- **Typography**: 8 size render = 2 icon (28/24) + 1 shared (badge/nav 12) + **5 authored role**
+  (30 greeting·số today / 22 số streak·mastered / 17 title card / 15 tên deck·body / 13 eyebrow·label)
+  → **≤5 ĐẠT**. Hierarchy sạch, không cần gộp.
+- Gap nhỏ (không chặn): min/dense-data cho list "Continue studying" — ưu tiên thấp (màn summary).
+
+### ✅ library — ĐẠT (thêm 3 state)
+- **Typography**: 2 authored role (15 tên deck / 13 meta) → ≤5 ✓. **Touch/spacing/dark**: ✓.
+- **States**: đã có 10 (gồm loading/empty/error + overlays). **Thêm mới** theo contract step 6-7:
+  `min-data` (1 deck), `dense-data` (12 deck), `long-text` (tên deck rất dài + meta dài).
+- **Verify** (168 combos): long-text render đúng — tên deck truncate 1 dòng (chuẩn list-row),
+  meta wrap 3 dòng hiện đủ, card giãn theo, **không vỡ**. dense/min sạch.
+- Residual nhỏ (không chặn, pre-existing): `library/screen +9px` ở loaded/w320 — clip vô hình
+  bởi overflow-hidden, không vỡ UX thấy được, chỉ ở width nhỏ nhất.
