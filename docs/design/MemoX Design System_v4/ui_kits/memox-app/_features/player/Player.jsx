@@ -10,10 +10,7 @@ function Player({ state = 'playing' }) {
   const bar = (
     <MxAppBar node="player/appbar" title="TOPIK I — Vocabulary"
       leading={<MxIconButton icon="arrow_back" node="player/back" />}
-      trailing={<React.Fragment>
-        <MxIconButton icon="format_size" node="player/text-size" />
-        <MxIconButton icon="more_vert" node="player/options" />
-      </React.Fragment>} />
+      trailing={<MxIconButton icon="more_vert" node="player/options" />} />
   );
 
   if (state === 'end') {

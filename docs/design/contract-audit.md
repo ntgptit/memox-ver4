@@ -160,3 +160,22 @@ kit (tăng thời gian paint / retry sẽ hết).
 
 **Mọi màn/state/config khác: 0 overflow, 0 clip** — kit đã responsive tốt (nhờ hệ token +
 hit-area + fix `MxBottomNav` dùng chung).
+
+### 2026-07-10 · Fix app-bar title truncation + harness race
+
+- **player** (nặng nhất): gộp action phụ `format_size` vào overflow menu (trail còn 1 icon
+  `more_vert`) — đúng contract step-1 "≤2 secondary action hiển thị". Trả ~48px cho title.
+  **Verify:** font thường (fs1.0) giờ title hiện đủ ở w360/390/430 (trước: cắt cả 3). Còn cắt
+  ở **w320** (+31px) và **font 1.3/1.5 narrow** — giới hạn vật lý (title 19 ký tự × 1.5 trên
+  320px không thể 1 dòng cạnh back+menu).
+- **Harness race fix**: chờ `window[Comp]` trước khi render mỗi màn (combo đầu từng blank).
+
+**Quyết định class (app-bar title):** ellipsis trên title động dài ở **width nhỏ nhất (320) và/
+hoặc font accessibility (1.3/1.5)** là **hành vi chuẩn mobile** (iOS/Android app-bar đều truncate),
+layout KHÔNG vỡ, tên deck là contextual (user vừa từ đó vào). → **ACCEPTED exception**, cùng nhóm
+với ::after hit-overlay và scroll-inset. Fix thực thụ ở tầng RN là `adjustsFontSizeToFit`/wrap,
+không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font thường trên width phổ biến**
+(như player trước fix, deck-detail) — trim trailing action như trên.
+
+> Trạng thái responsive tổng: **1560 combos, 0 overflow/clip thật** ngoài app-bar title (đã
+> accepted). Kit đạt contract step 7 (responsive/large-font/narrow) ở mức thực tế cao nhất.

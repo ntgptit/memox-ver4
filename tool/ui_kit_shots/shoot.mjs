@@ -107,6 +107,9 @@ const run = async () => {
   const report = [];
   for (const { id, states } of targets) {
     const g = REGISTRY[id].g;
+    // wait for this screen's global to be compiled/registered before rendering it
+    // (babel compiles the script graph async — the first combo used to blank otherwise)
+    await page.waitForFunction((name) => !!window[name], g, { timeout: 20000 }).catch(() => {});
     for (const state of states) {
       for (const theme of THEMES) {
         for (const w of WIDTHS) {
