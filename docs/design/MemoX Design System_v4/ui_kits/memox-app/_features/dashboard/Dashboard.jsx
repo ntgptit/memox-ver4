@@ -181,8 +181,7 @@ function CreateSheet() {
     <Scrim align="end" node="dashboard/create-scrim">
       <Sheet title="Create" node="dashboard/create-sheet">
         <MenuItem icon="note_add" label="Add card" node="dashboard/create-card" />
-        <MenuItem icon="library_add" label="Create deck" node="dashboard/create-deck" />
-        <MenuItem icon="create_new_folder" label="Create folder" node="dashboard/create-folder" />
+        <MenuItem icon="stacks" label="Create deck" node="dashboard/create-deck" />
         <div style={{ height: 'var(--memox-stroke-hairline)', background: 'var(--memox-divider)', margin: 'var(--memox-space-2) var(--memox-space-2)' }} />
         <MenuItem icon="upload_file" label="Import cards" node="dashboard/create-import" />
       </Sheet>
