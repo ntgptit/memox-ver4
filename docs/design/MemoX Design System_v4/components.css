@@ -523,6 +523,7 @@
   justify-content: center;
   gap: var(--memox-comp-nav-item-gap);
   flex: 1;
+  min-width: 0; /* allow 5 items to shrink to fit narrow (320px) frames */
   border: none;
   background: transparent;
   color: var(--memox-text-secondary); /* idle label needs AA at label size (M3-2) */
@@ -539,7 +540,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: var(--memox-comp-nav-pill-width);
+  width: 100%;
+  max-width: var(--memox-comp-nav-pill-width); /* shrinks with the item on narrow frames */
   height: var(--memox-comp-nav-pill-height);
   border-radius: var(--memox-radius-pill);
   transition: background var(--memox-duration-fast) var(--memox-ease-standard);

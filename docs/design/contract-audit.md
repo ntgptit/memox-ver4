@@ -107,3 +107,26 @@ screenshots, defect report, kết quả fix, và guard/test tương ứng.
 > ⚠ Lưu ý kỹ thuật: kit là HTML/CSS prototype render ở khung 390px cố định. Các state
 > Large-font / Narrow-device / Keyboard-open **chưa render được** nếu không dựng harness
 > (nhiều viewport width + font-scale). Đây là điều kiện tiên quyết cho bước 2–4.
+
+---
+
+## D. Remediation log
+
+### 2026-07-10 · Harness đa cấu hình
+- Thêm `tool/ui_kit_shots/shoot.mjs` (Playwright): render mỗi screen×state ở
+  **4 width (320/360/390/430) × 3 font-scale (1.0/1.3/1.5) × light/dark**, screenshot +
+  tự phát hiện overflow ngang / clip nội dung quan trọng. Đây là công cụ verify contract
+  step 7–8 cho cả 22 màn. Output `tool/ui_kit_shots/out/` (gitignored).
+
+### 2026-07-10 · SYS-01 spacing → contract scale (đã nêu mục A). ✅
+
+### 2026-07-10 · dashboard — narrow/large-font pass ✅
+Harness phát hiện & đã fix (verify lại: **144 combos, 0 finding**):
+- **D-01 (shared)** `MxBottomNav` tràn ngang ở 320px (5 item × pill 56px cố định = 348px,
+  "Profile" bị cắt). Fix: `.bottom-nav__item{min-width:0}` + `.bottom-nav__icon{width:100%;
+  max-width:56px}` → item/pill co vừa 320px ở mọi font-scale. **Lợi cho MỌI màn có nav.**
+- **D-02** `dashboard/mastered` (grid 2 cột) tràn 4–9px ở 320px×1.5. Fix:
+  `gridTemplateColumns: minmax(0,1fr)…` + inner flex `minWidth:0; flexWrap:wrap`.
+
+> Còn tồn đọng (chưa làm): SYS-03 typography ≤5/màn; và chạy harness + bổ sung state
+> data (min/dense/error/form-submit) cho 21 màn còn lại, theo đúng vòng render→defect→fix→re-shoot.

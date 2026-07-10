@@ -90,10 +90,10 @@ function Dashboard({ state = 'loaded' }) {
 
       <GoalCard pct={goalPct} met={met} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
+      <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--memox-space-3)' }}>
         <StreakCard streak={streak} />
         <MxCard variant="muted" padding="sm" node="dashboard/mastered">
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minWidth: 0, flexWrap: 'wrap' }}>
             <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)', color: 'var(--memox-success)' }}>verified</span>
             <window.Stat align="start" n="55%" l="mastered" />
           </div>
