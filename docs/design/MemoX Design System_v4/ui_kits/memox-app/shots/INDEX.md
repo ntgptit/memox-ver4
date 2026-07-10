@@ -23,11 +23,7 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | --- | --- | --- |
 | loaded | `library--loaded--light.png` | `library--loaded--dark.png` |
 | dense | `library--dense--light.png` | `library--dense--dark.png` |
-| deck detail | `library--deck-detail--light.png` | `library--deck-detail--dark.png` |
 | empty | `library--empty--light.png` | `library--empty--dark.png` |
-| empty deck | `library--empty-deck--light.png` | `library--empty-deck--dark.png` |
-| subdeck loading | `library--subdeck-loading--light.png` | `library--subdeck-loading--dark.png` |
-| subdeck selection | `library--subdeck-selection--light.png` | `library--subdeck-selection--dark.png` |
 | create sheet | `library--create-sheet--light.png` | `library--create-sheet--dark.png` |
 | search active | `library--search-active--light.png` | `library--search-active--dark.png` |
 | search results | `library--search-results--light.png` | `library--search-results--dark.png` |
@@ -38,23 +34,58 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | loading | `library--loading--light.png` | `library--loading--dark.png` |
 | offline | `library--offline--light.png` | `library--offline--dark.png` |
 
-## deck-detail — Deck Detail (node)
+## subdeck-list — Subdeck List
 
 | State | Light | Dark |
 | --- | --- | --- |
-| loaded | `deck-detail--loaded--light.png` | `deck-detail--loaded--dark.png` |
-| search | `deck-detail--search--light.png` | `deck-detail--search--dark.png` |
-| no results | `deck-detail--no-results--light.png` | `deck-detail--no-results--dark.png` |
-| empty | `deck-detail--empty--light.png` | `deck-detail--empty--dark.png` |
-| add menu | `deck-detail--add-menu--light.png` | `deck-detail--add-menu--dark.png` |
-| card actions | `deck-detail--card-actions--light.png` | `deck-detail--card-actions--dark.png` |
-| delete confirm | `deck-detail--delete-confirm--light.png` | `deck-detail--delete-confirm--dark.png` |
-| reset confirm | `deck-detail--reset-confirm--light.png` | `deck-detail--reset-confirm--dark.png` |
-| deck menu | `deck-detail--deck-menu--light.png` | `deck-detail--deck-menu--dark.png` |
-| deck delete-confirm | `deck-detail--deck-delete-confirm--light.png` | `deck-detail--deck-delete-confirm--dark.png` |
-| move | `deck-detail--move--light.png` | `deck-detail--move--dark.png` |
-| loading | `deck-detail--loading--light.png` | `deck-detail--loading--dark.png` |
-| error | `deck-detail--error--light.png` | `deck-detail--error--dark.png` |
+| loaded | `subdeck-list--loaded--light.png` | `subdeck-list--loaded--dark.png` |
+| dense | `subdeck-list--dense--light.png` | `subdeck-list--dense--dark.png` |
+| deep | `subdeck-list--deep--light.png` | `subdeck-list--deep--dark.png` |
+| empty | `subdeck-list--empty--light.png` | `subdeck-list--empty--dark.png` |
+| search | `subdeck-list--search--light.png` | `subdeck-list--search--dark.png` |
+| no results | `subdeck-list--no-results--light.png` | `subdeck-list--no-results--dark.png` |
+| selection | `subdeck-list--selection--light.png` | `subdeck-list--selection--dark.png` |
+| create sheet | `subdeck-list--create-sheet--light.png` | `subdeck-list--create-sheet--dark.png` |
+| subdeck actions | `subdeck-list--subdeck-actions--light.png` | `subdeck-list--subdeck-actions--dark.png` |
+| loading | `subdeck-list--loading--light.png` | `subdeck-list--loading--dark.png` |
+| offline | `subdeck-list--offline--light.png` | `subdeck-list--offline--dark.png` |
+| error | `subdeck-list--error--light.png` | `subdeck-list--error--dark.png` |
+
+## flashcard-list — Flashcard List
+
+| State | Light | Dark |
+| --- | --- | --- |
+| loaded | `flashcard-list--loaded--light.png` | `flashcard-list--loaded--dark.png` |
+| dense | `flashcard-list--dense--light.png` | `flashcard-list--dense--dark.png` |
+| minimum data | `flashcard-list--minimum-data--light.png` | `flashcard-list--minimum-data--dark.png` |
+| long text | `flashcard-list--long-text--light.png` | `flashcard-list--long-text--dark.png` |
+| empty | `flashcard-list--empty--light.png` | `flashcard-list--empty--dark.png` |
+| search | `flashcard-list--search--light.png` | `flashcard-list--search--dark.png` |
+| no results | `flashcard-list--no-results--light.png` | `flashcard-list--no-results--dark.png` |
+| filter applied | `flashcard-list--filter-applied--light.png` | `flashcard-list--filter-applied--dark.png` |
+| selection | `flashcard-list--selection--light.png` | `flashcard-list--selection--dark.png` |
+| add sheet | `flashcard-list--add-sheet--light.png` | `flashcard-list--add-sheet--dark.png` |
+| card actions | `flashcard-list--card-actions--light.png` | `flashcard-list--card-actions--dark.png` |
+| delete confirm | `flashcard-list--delete-confirm--light.png` | `flashcard-list--delete-confirm--dark.png` |
+| loading | `flashcard-list--loading--light.png` | `flashcard-list--loading--dark.png` |
+| offline | `flashcard-list--offline--light.png` | `flashcard-list--offline--dark.png` |
+| error | `flashcard-list--error--light.png` | `flashcard-list--error--dark.png` |
+
+## deck-settings — Deck Settings
+
+| State | Light | Dark |
+| --- | --- | --- |
+| action sheet | `deck-settings--action-sheet--light.png` | `deck-settings--action-sheet--dark.png` |
+| rename | `deck-settings--rename--light.png` | `deck-settings--rename--dark.png` |
+| move | `deck-settings--move--light.png` | `deck-settings--move--dark.png` |
+| reset confirm | `deck-settings--reset-confirm--light.png` | `deck-settings--reset-confirm--dark.png` |
+| delete confirm | `deck-settings--delete-confirm--light.png` | `deck-settings--delete-confirm--dark.png` |
+
+## deck-content-choice — Deck Content Choice
+
+| State | Light | Dark |
+| --- | --- | --- |
+| default | `deck-content-choice--default--light.png` | `deck-content-choice--default--dark.png` |
 
 ## flashcard-editor — Card Editor
 

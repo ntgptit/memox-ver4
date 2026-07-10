@@ -8,10 +8,17 @@ drawer:
 
 | Composite | Spec | Used by |
 | --- | --- | --- |
-| `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, deck-detail, drawer (6 sites) |
-| `StatusCardRow` (`window.StatusCardRow`) | `StatusCardRow.md` | deck-detail, search |
+| `Breadcrumb` (`window.Breadcrumb`) | `../specs/subdeck-list.md` | subdeck-list, flashcard-list (multi-level deck path) |
+| `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, flashcard-list, deck-settings, drawer |
+| `StatusCardRow` (`window.StatusCardRow`) | `StatusCardRow.md` | flashcard-list, search |
+| `DeckCard` (`window.DeckCard`) | — | library, dashboard, subdeck-list (via SubdeckCard) |
+| `DeckContentChoice` (`window.DeckContentChoice`) | `../specs/deck-content-choice.md` | deck-content-choice screen |
+| `DeckActionsSheet` (`window.DeckActionsSheet`) | — | deck-settings (opened from subdeck-list / flashcard-list More) |
+| `DeckMoveSheet` (`window.DeckMoveSheet`) | — | deck-settings |
+| `DeckResetConfirmDialog` (`window.DeckResetConfirmDialog`) | — | deck-settings |
+| `DeckDeleteConfirmDialog` (`window.DeckDeleteConfirmDialog`) | — | deck-settings |
 | `ActionCallout` (`window.ActionCallout`) | `ActionCallout.md` | import, game-picker |
-| `SelectSheet` (`window.SelectSheet`) | `SelectSheet.md` | game-picker (ScopeSheet), library (SortSheet), settings (ValuePickerSheet) |
+| `SelectSheet` (`window.SelectSheet`) | `SelectSheet.md` | game-picker (ScopeSheet), settings (ValuePickerSheet) |
 | `ProfileCard` (`window.ProfileCard`) | `ProfileCard.md` | settings, account-sync |
 
 ## Admission rule (strict)

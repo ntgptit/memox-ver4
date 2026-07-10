@@ -67,6 +67,7 @@
 <!-- Core primitives authored in runtime style (not yet in the bundle) — extend the NS namespace. -->
 <script type="text/babel-src" src="../../components/core/MxLink.jsx"></script>
 <script type="text/babel-src" src="../../components/surfaces/MxContextualAppBar.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxList.jsx"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
 <script type="text/babel-src" src="kit-helpers.jsx"></script>
 <!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->
@@ -76,7 +77,12 @@
 <script type="text/babel-src" src="_shared/SelectSheet.jsx"></script>
 <script type="text/babel-src" src="_shared/ProfileCard.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckCard.jsx"></script>
-<script type="text/babel-src" src="_shared/DeckList.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckActionsSheet.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckMoveSheet.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckResetConfirmDialog.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckDeleteConfirmDialog.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckContentChoice.jsx"></script>
+<script type="text/babel-src" src="_shared/Breadcrumb.jsx"></script>
 <!-- Screen entries: one per feature folder (_features/<screen>/<ScreenName>.jsx). -->
 <script type="text/babel-src" src="_features/dashboard/components/GreetingHeader.jsx"></script>
 <script type="text/babel-src" src="_features/dashboard/components/TodaySummary.jsx"></script>
@@ -90,12 +96,13 @@
 <script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/LibraryCreateSheet.jsx"></script>
 <script type="text/babel-src" src="_features/library/Library.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/components/DeckHeader.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/components/FlashcardRow.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/components/SubDeckCard.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/components/DeckMenu.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/components/DeleteConfirmDialog.jsx"></script>
-<script type="text/babel-src" src="_features/deck-detail/DeckDetail.jsx"></script>
+<script type="text/babel-src" src="_features/subdeck-list/components/subdeckFixtures.jsx"></script>
+<script type="text/babel-src" src="_features/subdeck-list/components/CreateSubdeckSheet.jsx"></script>
+<script type="text/babel-src" src="_features/subdeck-list/SubdeckList.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-list/components/cardFixtures.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-list/components/AddCardSheet.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-list/FlashcardList.jsx"></script>
+<script type="text/babel-src" src="_features/deck-settings/DeckSettings.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/components/Field.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/components/DupBanner.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/FlashcardEditor.jsx"></script>
@@ -165,8 +172,15 @@
 <script type="text/babel-gallery">
 const SCREENS = [
   { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
-  { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'dense', 'deck-detail', 'empty', 'empty-deck', 'subdeck-loading', 'subdeck-selection', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
-  { id: 'deck-detail', title: 'Deck Detail (node)', Comp: () => window.DeckDetail, states: ['loaded', 'min-data', 'dense-data', 'long-text', 'search', 'no-results', 'empty', 'add-menu', 'card-actions', 'delete-confirm', 'reset-confirm', 'deck-menu', 'deck-delete-confirm', 'move', 'loading', 'error'] },
+  { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
+  // Subdeck List — browse and manage subdecks inside the current deck (subdecks only).
+  { id: 'subdeck-list', title: 'Subdeck List', Comp: () => window.SubdeckList, states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'loading', 'offline', 'error'] },
+  // Flashcard List — browse, filter and manage flashcards in the current final deck (cards only).
+  { id: 'flashcard-list', title: 'Flashcard List', Comp: () => window.FlashcardList, states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
+  // Deck Settings — manage deck metadata and lifecycle actions (no content list).
+  { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
+  // Deck Content Choice — decide how a new, empty deck is organised (subdecks vs cards).
+  { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'game-picker', title: 'Game Picker', Comp: () => window.GamePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'game-matching', title: 'Matching', Comp: () => window.GameMatching, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },

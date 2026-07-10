@@ -97,13 +97,15 @@ Namespace for `@dsCard` / kit HTML: `window.MemoXDesignSystem_2ffa54`.
 
 Feature-local composites used by the app UI kit's Screen gallery. One directory per screen; every composite is registered on a `window.MemoX*` namespace for the kit page and re-exported as ESM for the compiler.
 
-- **_shared**: ActionCallout, ConfirmDialog, ProfileCard, SelectSheet, StatusCardRow
+- **_shared**: ActionCallout, ConfirmDialog, DeckActionsSheet, DeckCard, DeckContentChoice, DeckDeleteConfirmDialog, DeckMoveSheet, DeckResetConfirmDialog, ProfileCard, SelectSheet, StatusCardRow
 - **account-sync**: SignInCard, SyncBlock
-- **dashboard**: ContinueCard, GoalCard, GreetingHeader, OnboardingHero, OnboardingStep, StreakCard, TodaySummary
-- **deck-detail**: DeckHeader, DeckMenu, DeleteConfirmDialog, FlashcardRow, SubDeckCard
+- **dashboard**: GoalCard, GreetingHeader, OnboardingHero, OnboardingStep, StreakCard, TodaySummary
 - **drawer**: DrawerItem, DrawerPanel, LangCard, RemoveLanguageDialog
 - **export**: ExportingCard, FormatList
 - **flashcard-editor**: DupBanner, Field
+- **flashcard-list**: AddCardSheet, cardFixtures
+- **library**: FilterRow, LibraryCreateSheet, SubdeckCard, libFixtures
+- **subdeck-list**: CreateSubdeckSheet, subdeckFixtures
 - **game-matching**: Tile
 - **game-mc**: McPromptCard
 - **game-picker**: GameOption, ScopeCard, ScopeSheet

@@ -14,6 +14,7 @@
 // Usage: node tool/parity/build-manifest.mjs
 
 import { readFile, writeFile, readdir } from 'node:fs/promises';
+import { existsSync } from 'node:fs';
 import { join, relative, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -49,8 +50,18 @@ const added = components.filter((c) => !prev.has(c.sourcePath)).map((c) => c.nam
 const removed = [...prev].filter((p) => !next.has(p)).map((p) => basename(p, '.jsx'));
 
 manifest.components = components;
+
+// Drop gallery `cards` whose .card.html thumbnail no longer exists (deleted features).
+let droppedCards = [];
+if (Array.isArray(manifest.cards)) {
+  const keep = manifest.cards.filter((c) => existsSync(join(KIT, c.path)));
+  droppedCards = manifest.cards.filter((c) => !existsSync(join(KIT, c.path))).map((c) => c.path);
+  manifest.cards = keep;
+}
+
 await writeFile(MANIFEST, JSON.stringify(manifest));
 
 console.log(`manifest components: ${prev.size} → ${components.length}`);
 if (added.length) console.log(`  + added:   ${added.join(', ')}`);
 if (removed.length) console.log(`  - removed: ${removed.join(', ')}`);
+if (droppedCards.length) console.log(`  - dropped cards: ${droppedCards.join(', ')}`);

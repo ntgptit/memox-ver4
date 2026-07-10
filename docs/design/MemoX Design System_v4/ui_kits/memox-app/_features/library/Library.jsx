@@ -1,7 +1,9 @@
 /* MemoX — Library. Domain: Library › Deck › Subdeck › Card — a deck holds subdecks;
    there is no separate top-level grouping level.
-   16 states, each light+dark. Orchestrates shared chrome (MxContextualAppBar,
-   MxBottomNav, MxFab, Scrim/Sheet, EmptyState) + shared DeckCard/DeckList (standard
+   12 states, each light+dark. Top-level decks only — opening a deck navigates to the
+   Subdeck List (subdecks) or Flashcard List (cards) screens, not an inline nested view.
+   Orchestrates shared chrome (MxContextualAppBar,
+   MxBottomNav, MxFab, Scrim/Sheet, EmptyState) + shared DeckCard + MxList (standard
    spacing) + library-local components (SubdeckCard, FilterRow, LibraryCreateSheet,
    fixtures) from _features/library/components/. */
 (function () {
@@ -21,7 +23,7 @@ const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ar
 function Library({ state = 'loaded' }) {
   const LIB = window.MemoXLibrary;
   const { DECKS, DENSE, SUBDECKS, deckMeta, Status, SubdeckCard, FilterRow } = LIB;
-  const DeckCard = window.DeckCard, DeckList = window.DeckList;
+  const DeckCard = window.DeckCard, MxList = NS.MxList;
 
   const nav = <MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />;
   const fab = <MxFab icon="add" node="library/create" ariaLabel="Create" />;
@@ -38,7 +40,7 @@ function Library({ state = 'loaded' }) {
     return (
       <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav}>
         <Skeleton h={40} r={999} />
-        <DeckList>{[0, 1, 2, 3, 4].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={48} h={48} r={16} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</DeckList>
+        <MxList>{[0, 1, 2, 3, 4].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={48} h={48} r={16} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</MxList>
       </MxScaffold>
     );
   }
@@ -67,7 +69,7 @@ function Library({ state = 'loaded' }) {
           <MxLink size="sm" trailingIcon={null} node="library/offline-retry">Retry</MxLink>
         </div>
         <FilterRow />
-        <DeckList>{DECKS.map((d, i) => deckCard(d, i))}</DeckList>
+        <MxList>{DECKS.map((d, i) => deckCard(d, i))}</MxList>
       </MxScaffold>
     );
   }
@@ -82,7 +84,7 @@ function Library({ state = 'loaded' }) {
     );
     let body;
     if (state === 'search-active') {
-      body = <React.Fragment><SectionLabel>RECENT</SectionLabel><DeckList>{['korean topik', 'grammar', 'hanja'].map((r, i) => <MxCard key={i} padding="sm" interactive node={'library/recent-' + i}><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}><span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>history</span><span>{r}</span></div></MxCard>)}</DeckList></React.Fragment>;
+      body = <React.Fragment><SectionLabel>RECENT</SectionLabel><MxList>{['korean topik', 'grammar', 'hanja'].map((r, i) => <MxCard key={i} padding="sm" interactive node={'library/recent-' + i}><div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)' }}><span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>history</span><span>{r}</span></div></MxCard>)}</MxList></React.Fragment>;
     } else if (state === 'search-no-results') {
       body = <EmptyState node="library/no-results" icon="search_off" tone="warning" title={'No results for “business Korean”'} text="Try another keyword or clear your filters." action={<MxButton variant="secondary" icon="close" node="library/clear-search">Clear search</MxButton>} />;
     } else {
@@ -90,10 +92,10 @@ function Library({ state = 'loaded' }) {
         <React.Fragment>
           <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>4 results for “korean”</div>
           <SectionLabel>DECKS</SectionLabel>
-          <DeckList>{deckCard(DECKS[0], 0)}</DeckList>
+          <MxList>{deckCard(DECKS[0], 0)}</MxList>
           <SectionLabel>SUBDECKS</SectionLabel>
           {/* subdeck results show their PARENT deck instead of the status line */}
-          <DeckList>{[SUBDECKS[0], SUBDECKS[2]].map((s, i) => <SubdeckCard key={i} s={s} index={'sr-' + i} meta={<span>in Korean TOPIK I · {s.cards} cards</span>} />)}</DeckList>
+          <MxList>{[SUBDECKS[0], SUBDECKS[2]].map((s, i) => <SubdeckCard key={i} s={s} index={'sr-' + i} meta={<span>in Korean TOPIK I · {s.cards} cards</span>} />)}</MxList>
         </React.Fragment>
       );
     }
@@ -110,69 +112,15 @@ function Library({ state = 'loaded' }) {
         </React.Fragment>} />
     );
     const sel = [true, false, true, true, false, false];
-    return <MxScaffold node="library/screen" appBar={bar} bottomNav={nav}><DeckList>{DECKS.map((d, i) => deckCard(d, i, sel[i]))}</DeckList></MxScaffold>;
+    return <MxScaffold node="library/screen" appBar={bar} bottomNav={nav}><MxList>{DECKS.map((d, i) => deckCard(d, i, sel[i]))}</MxList></MxScaffold>;
   }
 
-  /* LIB-03 / LIB-05 deck detail (nested; shows subdecks) */
-  if (state === 'deck-detail' || state === 'empty-deck') {
-    const bar = <MxContextualAppBar variant="nested" node="library/appbar" title="Korean TOPIK I" actions={<MxIconButton icon="more_vert" size="sm" node="library/deck-more" ariaLabel="Manage deck" />} />;
-    const deckFab = <MxFab icon="add" node="library/deck-create" ariaLabel="Create" />;
-    if (state === 'empty-deck') {
-      return (
-        <MxScaffold node="library/screen" appBar={bar} fab={deckFab}>
-          <EmptyState node="library/empty-deck" icon="style" title="No subdecks yet"
-            text="Create a subdeck to organize this deck, or add cards directly."
-            action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
-              <MxButton variant="primary" icon="library_add" block node="library/ed-subdeck">Create subdeck</MxButton>
-              <MxButton variant="secondary" icon="note_add" block node="library/ed-card">Add card</MxButton>
-            </div>} />
-        </MxScaffold>
-      );
-    }
-    return (
-      <MxScaffold node="library/screen" appBar={bar} fab={deckFab}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>5 subdecks · 217 cards · 48 due</div>
-        <SectionLabel>SUBDECKS</SectionLabel>
-        <DeckList>{SUBDECKS.map((s, i) => <SubdeckCard key={i} s={s} index={i} />)}</DeckList>
-      </MxScaffold>
-    );
-  }
-
-  /* LIB-14 subdeck loading (deck-detail context) */
-  if (state === 'subdeck-loading') {
-    const bar = <MxContextualAppBar variant="nested" node="library/appbar" title="Korean TOPIK I" actions={<MxIconButton icon="more_vert" size="sm" node="library/deck-more" ariaLabel="Manage deck" />} />;
-    return (
-      <MxScaffold node="library/screen" appBar={bar} fab={<MxFab icon="add" node="library/deck-create" ariaLabel="Create" />}>
-        <Skeleton w="55%" h={13} />
-        <DeckList>{[0, 1, 2, 3].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={40} h={40} r={999} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</DeckList>
-      </MxScaffold>
-    );
-  }
-
-  /* LIB-15 subdeck selection (within a deck) */
-  if (state === 'subdeck-selection') {
-    const bar = (
-      <MxContextualAppBar variant="selection" node="library/appbar" count={2}
-        actions={<React.Fragment>
-          <MxIconButton icon="select_all" size="sm" node="library/sub-sel-all" ariaLabel="Select all" />
-          <MxIconButton icon="more_vert" size="sm" node="library/sub-sel-more" ariaLabel="More actions" />
-        </React.Fragment>} />
-    );
-    const sel = [true, false, true, false, false];
-    return (
-      <MxScaffold node="library/screen" appBar={bar}>
-        <SectionLabel>SUBDECKS</SectionLabel>
-        <DeckList>{SUBDECKS.map((s, i) => <SubdeckCard key={i} s={s} index={i} selected={sel[i]} />)}</DeckList>
-      </MxScaffold>
-    );
-  }
-
-  /* LIB-16 create sheet (root context) */
+  /* LIB-03 create sheet (root context) */
   if (state === 'create-sheet') {
     const { LibraryCreateSheet } = LIB;
     return (
       <React.Fragment>
-        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><DeckList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</DeckList></MxScaffold>
+        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><MxList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</MxList></MxScaffold>
         <LibraryCreateSheet />
       </React.Fragment>
     );
@@ -188,7 +136,7 @@ function Library({ state = 'loaded' }) {
           <span style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{matched.length} decks match · Due only</span>
           <MxLink size="sm" trailingIcon={null} node="library/clear-filters">Clear all</MxLink>
         </div>
-        <DeckList>{matched.map((d, i) => deckCard(d, i))}</DeckList>
+        <MxList>{matched.map((d, i) => deckCard(d, i))}</MxList>
       </MxScaffold>
     );
   }
@@ -198,7 +146,7 @@ function Library({ state = 'loaded' }) {
     const item = (icon, label, s, n) => <MenuItem icon={icon} label={label} selected={s} node={'library/fs-' + n} />;
     return (
       <React.Fragment>
-        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><DeckList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</DeckList></MxScaffold>
+        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><MxList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</MxList></MxScaffold>
         <Scrim align="end" node="library/fs-scrim">
           <Sheet title="Sort & filter" node="library/filter-sheet">
             <SectionLabel style={{ margin: '0 0 var(--memox-space-1) var(--memox-space-2)' }}>SORT</SectionLabel>
@@ -225,7 +173,7 @@ function Library({ state = 'loaded' }) {
   return (
     <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}>
       <FilterRow />
-      <DeckList>{decks.map((d, i) => deckCard(d, i))}</DeckList>
+      <MxList>{decks.map((d, i) => deckCard(d, i))}</MxList>
     </MxScaffold>
   );
 }

@@ -3,17 +3,17 @@
 A centered confirm overlay: `Scrim` (dimmed backdrop) + `Dialog` (icon, title,
 body, action row). Carries no copy of its own — the caller passes every string,
 node id and action. Lives in `_shared/` because it is used by **6 sites across 3
-screens** (study-session exit + save-error; deck-detail delete / reset /
+screens** (study-session exit + save-error; deck-settings delete / reset /
 deck-delete; drawer remove-language).
 
 ```jsx
-<window.ConfirmDialog align="center" scrimNode="deck-detail/delete-scrim"
+<window.ConfirmDialog align="center" scrimNode="deck-settings/delete-scrim"
   icon="delete" tone="error" title="Delete this card?"
   text="The card will be removed from this deck. This can't be undone."
-  dialogNode="deck-detail/delete-dialog"
+  dialogNode="deck-settings/delete-dialog"
   actions={<React.Fragment>
-    <MxButton variant="ghost" block node="deck-detail/delete-cancel">Cancel</MxButton>
-    <MxButton variant="primary" danger block node="deck-detail/delete-ok">Delete</MxButton>
+    <MxButton variant="ghost" block node="deck-settings/delete-cancel">Cancel</MxButton>
+    <MxButton variant="primary" danger block node="deck-settings/delete-ok">Delete</MxButton>
   </React.Fragment>} />
 ```
 
