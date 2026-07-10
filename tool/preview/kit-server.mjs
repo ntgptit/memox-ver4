@@ -30,7 +30,12 @@ const MIME = {
 createServer(async (req, res) => {
   try {
     let p = decodeURIComponent(req.url.split('?')[0]);
-    if (p === '/' || p.endsWith('/')) p += 'index.html';
+    // The gallery lives at KIT_PATH and loads its screen .jsx via paths relative to
+    // that URL, so send the bare root there (a redirect keeps those relative paths valid).
+    if (p === '/' || p === '/index.html') {
+      res.writeHead(302, { location: KIT_PATH }); res.end(); return;
+    }
+    if (p.endsWith('/')) p += 'index.html';
     const fp = normalize(join(ROOT, p));
     if (!fp.startsWith(normalize(ROOT))) { res.writeHead(403).end('forbidden'); return; }
     const data = await readFile(fp);

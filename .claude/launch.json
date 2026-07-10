@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "kit",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["tool/preview/kit-server.mjs", "5170"],
+      "port": 5170
+    }
+  ]
+}
