@@ -1,13 +1,13 @@
 # StatusCardRow — shared composite
 
 A term + meaning row (optional `deck` line) with a trailing status badge. Owns
-the single `new` / `due` / `mastered` → label+tone map that `deck-detail`
-(FlashcardRow) and `search` (ResultRow) previously duplicated verbatim.
+the single `new` / `due` / `mastered` → label+tone map that `flashcard-list`
+(the Flashcard List) and `search` (ResultRow) previously duplicated verbatim.
 
 ```jsx
-// deck-detail: tight term + one-line ellipsised meaning
+// flashcard-list: tight term + one-line ellipsised meaning
 <window.StatusCardRow term="안녕하세요" meaning="Hello (formal)" status="due"
-  node="deck-detail/card-0" tightTerm truncateMeaning />
+  node="flashcard-list/card-0" tightTerm truncateMeaning />
 
 // search: adds a deck line, default term/meaning
 <window.StatusCardRow term="공부하다" meaning="to study" deck="TOPIK I — Vocabulary"
@@ -20,8 +20,8 @@ the single `new` / `due` / `mastered` → label+tone map that `deck-detail`
 - `status` — `new` | `due` | `mastered` → badge label + tone (internal map).
 - `hidden` — dims the row to 50% and shows a `visibility_off` glyph.
 - `node` / `onClick` — `data-mx-node` id + optional tap handler.
-- `tightTerm` — tightens the term letter-spacing (deck-detail).
-- `truncateMeaning` — clips the meaning to one line with ellipsis (deck-detail).
+- `tightTerm` — tightens the term letter-spacing (flashcard-list).
+- `truncateMeaning` — clips the meaning to one line with ellipsis (flashcard-list).
 
 ## Rules
 - The two boolean variants encode the ONLY visual differences between callers;

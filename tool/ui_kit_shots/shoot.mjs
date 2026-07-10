@@ -56,8 +56,11 @@ const serve = (root) => createServer(async (req, res) => {
 // screen -> window global + full state list (mirrors index.html SCREENS)
 const REGISTRY = {
   dashboard: { g: 'Dashboard', states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
-  library: { g: 'Library', states: ['loaded', 'dense', 'deck-detail', 'empty', 'empty-deck', 'subdeck-loading', 'subdeck-selection', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
-  'deck-detail': { g: 'DeckDetail', states: ['loaded', 'min-data', 'dense-data', 'long-text', 'no-results', 'empty', 'loading', 'error'] },
+  library: { g: 'Library', states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
+  'subdeck-list': { g: 'SubdeckList', states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'loading', 'offline', 'error'] },
+  'flashcard-list': { g: 'FlashcardList', states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
+  'deck-settings': { g: 'DeckSettings', states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
+  'deck-content-choice': { g: 'DeckContentChoice', states: ['default'] },
   'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
   'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },
   'game-matching': { g: 'GameMatching', states: ['playing', 'complete'] },

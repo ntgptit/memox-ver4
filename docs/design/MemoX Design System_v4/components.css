@@ -1018,3 +1018,69 @@
 .segmented__seg::after { inset: -4px 0; }   /* raw-ok: (48-40)/2 — derived hit inset */
 .section-head__action::after { inset: -14px 0; } /* raw-ok: (48-20)/2 — derived hit inset */
 .accent-swatch::after { inset: -4px; }      /* raw-ok: (48-40)/2 — derived hit inset */
+
+/* ============================================================
+   Breadcrumb  ·  .breadcrumb  (shared nested-deck path widget)
+   Ancestor crumbs = muted tappable buttons; current = bold page label;
+   chevron separators; the row scrolls horizontally when the path is wide.
+   ============================================================ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-1);
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.breadcrumb::-webkit-scrollbar { display: none; }
+.breadcrumb > * { flex-shrink: 0; }
+.breadcrumb__crumb {
+  position: relative;
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: var(--memox-font-size-sm);
+  font-weight: var(--memox-font-weight-medium);
+  color: var(--memox-text-secondary);
+  white-space: nowrap;
+  cursor: pointer;
+}
+.breadcrumb__crumb::after {                  /* >=48px tap target; visual stays compact */
+  content: '';
+  position: absolute;
+  inset: -14px 0;                            /* raw-ok: (48-20)/2 — derived hit inset */
+}
+.breadcrumb__crumb:hover { color: var(--memox-text); text-decoration: underline; }
+.breadcrumb__sep {
+  color: var(--memox-text-tertiary);
+  font-size: var(--memox-icon-size-sm);
+}
+.breadcrumb__current {
+  font-size: var(--memox-font-size-sm);
+  font-weight: var(--memox-font-weight-semibold);
+  color: var(--memox-text);
+  white-space: nowrap;
+}
+
+/* ============================================================
+   Card "Show more / less" — the collapsible-meaning toggle (StatusCardRow). Compact accent
+   text; a ::after overlay gives it a >=48px tap target without inflating the card.
+   ============================================================ */
+.card-more {
+  position: relative;
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0;
+  margin-top: var(--memox-space-1);
+  font-family: inherit;
+  font-size: var(--memox-font-size-sm);
+  font-weight: var(--memox-font-weight-semibold);
+  color: var(--memox-accent);
+  cursor: pointer;
+}
+.card-more::after { content: ''; position: absolute; inset: -14px 0; } /* raw-ok: (48-20)/2 — derived hit inset */
+.card-more:hover { text-decoration: underline; }

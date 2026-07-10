@@ -16,12 +16,13 @@ const DENSE = Array.from({ length: 22 }, (_, i) => {
     cards: i === 1 ? 1280 : b.cards, due: i === 0 ? 128 : b.due,
   };
 });
+// A subdeck IS a deck one level down — same shape as a top-level deck (icon + tone + …).
 const SUBDECKS = [
-  { name: 'Greetings & introductions', cards: 42, due: 8, progress: 82 },
-  { name: 'Numbers & counting', cards: 55, upToDate: true, progress: 100 },
-  { name: 'Family & relationships', cards: 38, new: 6, progress: 24 },
-  { name: 'Food & dining', cards: 47, due: 15, progress: 51 },
-  { name: 'Directions & transport', cards: 35, upToDate: true, progress: 100 },
+  { icon: 'waving_hand', tone: 'accent', name: 'Greetings & introductions', cards: 42, due: 8, progress: 82 },
+  { icon: 'numbers', tone: 'accent', name: 'Numbers & counting', cards: 55, upToDate: true, progress: 100 },
+  { icon: 'diversity_3', tone: 'accent', name: 'Family & relationships', cards: 38, new: 6, progress: 24 },
+  { icon: 'restaurant', tone: 'accent', name: 'Food & dining', cards: 47, due: 15, progress: 51 },
+  { icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, progress: 100 },
 ];
 
 // Semantic status text: Due→warning, New→info(accent), Up-to-date→success.

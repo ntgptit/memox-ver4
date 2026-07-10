@@ -4,12 +4,12 @@
    section (not a floating button). `caught-up` = no cards due → the review CTA is
    replaced by an all-caught-up message. `empty` = first-run (no decks). Surfaces are
    kept to ~2 levels: Today is a flat inline strip (not a card); only Daily goal and the
-   deck rows are cards. Recent decks use the shared _shared/DeckCard + DeckList (standard
+   deck rows are cards. Recent decks use the shared _shared/DeckCard + MxList (standard
    spacing). Feature-local components: components/{GreetingHeader,GoalCard,OnboardingHero,
    OnboardingStep}.jsx (TodaySummary/StreakCard/ContinueCard retired). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar, MxLink, MxBadge } = NS;
+const { MxScaffold, MxContextualAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar, MxLink, MxBadge, MxList } = NS;
 
 // Bottom nav holds DESTINATIONS only — "Add" is an action, so it lives in the FAB,
 // not as a fake tab (correct nav semantics; keeps 4 comfortable tap targets).
@@ -156,15 +156,15 @@ function Dashboard({ state = 'loaded' }) {
             and must never sit on top of another interactive control. Full library is one
             tap away on the Library tab; a "See all decks" row can live at the list end. */}
         <MxSectionHeader title="Recent decks" node="dashboard/decks-head" />
-        {/* Shared DeckCard + DeckList (standard 12px gap) so Library and Dashboard never
+        {/* Shared DeckCard + MxList (standard 12px gap) so Library and Dashboard never
             drift. Dashboard shows progress + a due badge; other screens vary the trailing. */}
-        <window.DeckList>
+        <MxList>
           {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => (
             <window.DeckCard key={i} icon={d.icon} tone={d.tone} title={d.name} meta={d.meta} progress={d.progress}
               trailing={<MxBadge tone={d.due > 0 ? undefined : 'success'} soft>{d.due > 0 ? d.due : <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xs)' }}>check</span>}</MxBadge>}
               node={'dashboard/deck-' + i} />
           ))}
-        </window.DeckList>
+        </MxList>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <MxLink node="dashboard/see-all-decks">See all decks</MxLink>
         </div>
