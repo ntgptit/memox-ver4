@@ -77,7 +77,7 @@ How MemoX writes copy:
 - **`components/`**
   - `surfaces/` — **MxScaffold** (`app`), **MxAppBar** (`appbar`/`appbar-lg`), **MxCard** (`card`), **MxSectionHeader** (`section-head`), **MxIconTile** (`icon-tile`)
   - `navigation/` — **MxBottomNav** (`bottom-nav`), **MxFab** (`fab`), **MxSearchDock** (`search-dock`), **MxIconButton** (`icon-btn`)
-  - `core/` — **MxButton** (`btn` + primary/secondary/outline/ghost), **MxTextField** (`field`), **MxChip** (`chip`), **MxBadge** (`badge`), **MxSwitch** (`switch`), **MxSegmentedControl** (`segmented`), **MxAvatar** (`avatar`)
+  - `core/` — **MxButton** (`btn` + primary/secondary/outline/ghost), **MxLink** (`link` — text/nav link button), **MxTextField** (`field`), **MxChip** (`chip`), **MxBadge** (`badge`), **MxSwitch** (`switch`), **MxSegmentedControl** (`segmented`), **MxAvatar** (`avatar`)
 - **`guidelines/`** — foundation specimen cards (Colors / Type / Spacing) shown on the Design System tab.
 - **`ui_kits/memox-app/`** — the screen gallery (22 screens × states × light/dark).
 - **`fonts/`** — Plus Jakarta Sans variable TTF.

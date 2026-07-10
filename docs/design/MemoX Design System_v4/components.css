@@ -315,6 +315,40 @@
 .btn.ghost:hover {
   background: var(--memox-state-hover);
 }
+
+/* ============================================================
+   MxLink  ·  .link  (text / navigation link button)
+   ============================================================ */
+.link {
+  display: inline-flex;
+  align-self: flex-start; /* never stretch to full width inside a flex column */
+  align-items: center;
+  gap: var(--memox-space-1);
+  min-height: var(--memox-touch-min); /* >=48 tap target; text stays visually compact */
+  padding: 0 var(--memox-space-1);
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: var(--memox-font-size-base);
+  font-weight: var(--memox-font-weight-bold);
+  color: var(--memox-accent);
+  text-decoration: none;
+  border-radius: var(--memox-radius-control);
+  cursor: pointer;
+  transition: opacity var(--memox-duration-fast) var(--memox-ease-standard);
+}
+.link:hover {
+  text-decoration: underline;
+}
+.link:active {
+  opacity: 0.7;
+}
+.link--sm {
+  font-size: var(--memox-font-size-sm);
+}
+.link .material-symbols-rounded {
+  font-size: var(--memox-font-size-md);
+}
 /* destructive modifier (composes with above) */
 .btn.danger {
   background: var(--memox-error);

@@ -64,6 +64,8 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="../../_ds_bundle.js"></script>
+<!-- Core primitive authored in runtime style (not yet in the bundle) — extends the NS namespace. -->
+<script type="text/babel-src" src="../../components/core/MxLink.jsx"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
 <script type="text/babel-src" src="kit-helpers.jsx"></script>
 <!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->

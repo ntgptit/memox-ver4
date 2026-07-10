@@ -8,7 +8,7 @@
    ContinueCard,OnboardingHero,OnboardingStep}.jsx (TodaySummary/StreakCard retired). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar } = NS;
+const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar, MxLink } = NS;
 
 // Bottom nav holds DESTINATIONS only — "Add" is an action, so it lives in the FAB,
 // not as a fake tab (correct nav semantics; keeps 4 comfortable tap targets).
@@ -156,12 +156,7 @@ function Dashboard({ state = 'loaded' }) {
             tap away on the Library tab; a "See all decks" row can live at the list end. */}
         <MxSectionHeader title="Recent decks" node="dashboard/decks-head" />
         {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
-        {/* A text/link button (ghost, content-width) — a "see all" affordance doesn't warrant
-            a full-width filled/block button. The flex wrapper keeps it left-aligned instead of
-            stretching in the column. */}
-        <div style={{ display: 'flex' }}>
-          <MxButton variant="ghost" size="sm" trailingIcon="chevron_right" node="dashboard/see-all-decks">See all decks</MxButton>
-        </div>
+        <MxLink node="dashboard/see-all-decks">See all decks</MxLink>
       </div>
     </MxScaffold>
   );
