@@ -1,0 +1,44 @@
+#!/bin/sh
+# post-merge — after the default branch updates (git pull / merge), push any kit
+# changes that landed on it to the Claude Design project.
+#
+# Why this exists (the gap pre-push can't cover): PRs are merged server-side on
+# GitHub and agent pushes bypass the pre-push hook (MEMOX_SKIP_DESIGN_SYNC=1),
+# so kit edits reach the default branch without ever syncing to Claude Design.
+# This hook fires when the local default branch receives those commits and closes
+# the loop — comparing against the recorded `lastSyncedCommit`, not just this
+# merge, so it catches everything still unsynced.
+#
+# Direction: PUSH (repo kit -> Claude Design), same as pre-push, via
+# tool/parity/sync-design.mjs — but in RECORD mode so it advances
+# lastSyncedCommit and won't re-push next pull.
+#
+# Bypass: MEMOX_SKIP_DESIGN_SYNC=1 git pull   (agent sessions without a
+# design-authorized TTY MUST use this, or the nested `claude` hangs).
+set -e
+
+[ "$MEMOX_SKIP_DESIGN_SYNC" = "1" ] && exit 0
+command -v node >/dev/null 2>&1 || exit 0
+[ -f .design-sync/config.json ] || exit 0
+
+# only on the default branch — feature-branch merges/pulls are not the sync point
+branch=$(git symbolic-ref --short -q HEAD 2>/dev/null || echo '')
+[ "$branch" = "main" ] || [ "$branch" = "master" ] || exit 0
+
+LOCALDIR=$(node -e "try{process.stdout.write((JSON.parse(require('fs').readFileSync('.design-sync/config.json','utf8')).localDir)||'')}catch(e){}")
+LAST=$(node -e "try{process.stdout.write((JSON.parse(require('fs').readFileSync('.design-sync/config.json','utf8')).lastSyncedCommit)||'')}catch(e){}")
+[ -n "$LOCALDIR" ] || exit 0
+[ -n "$LAST" ] || exit 0
+
+# nothing to do unless the kit changed since the last recorded sync
+[ -n "$(git diff --name-only "$LAST"..HEAD -- "$LOCALDIR" 2>/dev/null)" ] || exit 0
+
+if ! command -v claude >/dev/null 2>&1; then
+  echo "post-merge: ⚠ kit changed on ${branch} since last Claude Design sync ($LAST) but \`claude\` CLI not found." >&2
+  echo "post-merge:   run \`node tool/parity/sync-design.mjs\` from a design-authorized terminal to push it up." >&2
+  exit 0
+fi
+
+echo "post-merge: kit changed on ${branch} since $LAST — pushing to Claude Design…"
+node tool/parity/sync-design.mjs   # record mode: advances lastSyncedCommit
+exit 0
