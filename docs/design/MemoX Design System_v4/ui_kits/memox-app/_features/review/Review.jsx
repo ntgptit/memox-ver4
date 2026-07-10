@@ -16,6 +16,27 @@ function Review({ state = 'browsing' }) {
       </React.Fragment>} />
   );
 
+  if (state === 'loading') {
+    const S = window.Skeleton;
+    return (
+      <MxScaffold node="review/screen" appBar={bar}>
+        <S h={12} r={999} />
+        <S h={220} r={20} style={{ marginTop: 'var(--memox-space-4)' }} />
+        <S h={260} r={20} style={{ marginTop: 'var(--memox-space-4)' }} />
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'error') {
+    return (
+      <MxScaffold node="review/screen" appBar={bar}>
+        <window.EmptyState node="review/error" icon="cloud_off" tone="error" title="Couldn't load review"
+          text="Something went wrong loading your cards. Check your connection and try again."
+          action={<MxButton variant="primary" icon="refresh" node="review/retry">Try again</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   if (state === 'end') {
     return (
       <MxScaffold node="review/screen" appBar={bar}>

@@ -13,6 +13,16 @@ function Player({ state = 'playing' }) {
       trailing={<MxIconButton icon="more_vert" node="player/options" />} />
   );
 
+  if (state === 'error') {
+    return (
+      <MxScaffold node="player/screen" appBar={bar}>
+        <window.EmptyState node="player/error" icon="volume_off" tone="error" title="Playback failed"
+          text="Couldn't load the audio for this deck. Check your connection and try again."
+          action={<MxButton variant="primary" icon="refresh" node="player/retry">Try again</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   if (state === 'end') {
     return (
       <MxScaffold node="player/screen" appBar={bar}>

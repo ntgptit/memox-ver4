@@ -2,7 +2,7 @@
    Feature-local components: components/{Bars,Heatmap,Donut}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl } = NS;
+const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl, MxButton } = NS;
 const { Bars, Heatmap, Donut } = window.MemoXStatistics;
 
 const NAV = [
@@ -37,6 +37,17 @@ function Statistics({ state = 'loaded' }) {
         {scope}
         <window.EmptyState node="statistics/insufficient" icon="bar_chart" title="Not enough data"
           text="Study a few more sessions and MemoX will chart your progress, streaks and due forecast." />
+      </MxScaffold>
+    );
+  }
+
+  if (state === 'error') {
+    return (
+      <MxScaffold node="statistics/screen" appBar={bar} bottomNav={nav}>
+        {scope}
+        <window.EmptyState node="statistics/error" icon="bar_chart" tone="error" title="Couldn't load stats"
+          text="Something went wrong loading your statistics. Check your connection and try again."
+          action={<MxButton variant="primary" icon="refresh" node="statistics/retry">Try again</MxButton>} />
       </MxScaffold>
     );
   }

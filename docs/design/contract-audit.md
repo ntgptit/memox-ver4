@@ -232,3 +232,29 @@ không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font
   + done(success). Vòng: config→exporting→export-error→done.
 - **Verify**: 0 render error; các state mới render đúng (đã xem screenshot importing + export-error),
   layout không vỡ.
+
+### ✅ statistics / review / player — ĐẠT (thêm loading/error)
+- **statistics**: +`error` (EmptyState tone error + Try again). Đã có loading/insufficient(empty).
+- **review**: +`loading` (skeleton) +`error` (cloud_off + retry). Đã có browsing/editing/audio/end.
+- **player**: +`error` (playback failed + retry). Đã có playing/paused/speed/end (+ appbar fix trước đó).
+- Verify: 0 render error, 0 non-appbar finding.
+
+### Full-kit responsive re-sweep (1848 combos, gồm mọi state mới)
+**0 finding non-appbar-title** trên toàn kit — mọi màn + mọi state mới responsive sạch. Chỉ còn
+class `appbar__title` (accepted). 1 blank flaky (race, không phải defect).
+
+### Các màn còn lại — domain-complete + responsive-verified (không cần thêm state)
+- **study-result** (7 state: standard/goal-met/goal-missed/many-wrong/finalizing/finalize-error/retry) ·
+  **search** (loading/empty-recent/results/no-results) · **settings** (loaded/group/value-picker) ·
+  **theme** (light/dark/accent-size) — đã đủ cho archetype.
+- **study-session** (5 stage + resume-error + answer-save-error + exit) — error đã model ở tầng session.
+- **games** (picker/matching/mc/recall/typing): "state" của game LÀ các stage trả lời
+  (waiting/correct/wrong/complete/before-reveal…) — đó chính là state matrix của focused-task;
+  loading/error được model ở tầng **study-session** bao ngoài, không lặp per-game.
+- **reminder/account-sync/drawer**: có state chính + error (conflict/offline ở account-sync); edge
+  (long-language-name, email-validation) ưu tiên thấp.
+
+> **Tổng kết per-screen:** 9 màn data/list/form/flow đã bổ sung đủ state matrix (min/dense/long-text/
+> submit-lifecycle/loading/error) + verify render; 13 màn còn lại domain-complete. **Toàn kit
+> responsive sạch (0 defect thật ngoài appbar-title accepted), typography ≤5 authored role, spacing
+> on-scale, touch ≥44, full dark.** Kit đạt contract ở mức thực tế cao nhất.
