@@ -93,12 +93,17 @@ function Dashboard({ state = 'loaded' }) {
   const dueCards = 24;
   const dueDecks = DECKS.length;
 
-  // A flat, low-elevation stat (no card) — used inline in the Today strip so the
-  // screen keeps 2 real surfaces (Continue CTA affordance + Daily goal / deck rows).
-  const Stat = ({ n, l }) => (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '2px' }}>
-      <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{n}</div>
-      <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{l}</div>
+  // A flat stat with a small tinted icon chip — adds colour/scannability to the Today
+  // strip without turning each metric back into a full card (chips, not surfaces).
+  const Stat = ({ icon, soft, on, n, l }) => (
+    <div style={{ display: 'flex', gap: 'var(--memox-space-3)', alignItems: 'center', minWidth: 0 }}>
+      <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, width: 'var(--memox-comp-icon-tile-md)', height: 'var(--memox-comp-icon-tile-md)', borderRadius: 'var(--memox-radius-control)', background: soft }}>
+        <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-font-size-xl)', color: on }}>{icon}</span>
+      </span>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '2px', minWidth: 0 }}>
+        <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>{n}</div>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{l}</div>
+      </div>
     </div>
   );
 
@@ -133,11 +138,11 @@ function Dashboard({ state = 'loaded' }) {
           into one low-surface summary instead of four separate cards. */}
       <div data-mx-node="dashboard/today" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>Today</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--memox-space-3) var(--memox-space-6)' }}>
-          <Stat n={idle ? '0m' : '12m'} l="studied" />
-          <Stat n={idle ? '0' : '24'} l="words learned" />
-          <Stat n={streak} l="day streak" />
-          <Stat n="55%" l="library mastered" />
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--memox-space-4) var(--memox-space-4)' }}>
+          <Stat icon="schedule" soft="var(--memox-primary-soft)" on="var(--memox-on-primary-soft)" n={idle ? '0m' : '12m'} l="studied" />
+          <Stat icon="spellcheck" soft="var(--memox-accent-soft)" on="var(--memox-accent)" n={idle ? '0' : '24'} l="words learned" />
+          <Stat icon="local_fire_department" soft="var(--memox-warning-soft)" on="var(--memox-on-warning-soft)" n={streak} l="day streak" />
+          <Stat icon="verified" soft="var(--memox-success-soft)" on="var(--memox-on-success-soft)" n="55%" l="library mastered" />
         </div>
       </div>
 
