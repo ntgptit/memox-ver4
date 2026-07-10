@@ -6,12 +6,13 @@ const { MxCard } = NS;
 function GoalCard({ pct, met, minutes = 14, goal = 20 }) {
   const left = Math.max(0, goal - minutes);
   return (
-    <MxCard node="dashboard/goal">
+    <MxCard padding="sm" node="dashboard/goal">
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>
         <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
-        <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-lg)', color: 'var(--memox-primary)' }}>{pct}%</div>
+        {/* primary-strong (not primary): the dark `primary` token is muted, so `70%` needs the bright variant to keep contrast on the dark card */}
+        <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-lg)', color: 'var(--memox-primary-strong)' }}>{pct}%</div>
       </div>
-      <div style={{ marginTop: 'var(--memox-space-3)' }}><window.ProgressBar value={pct} height={10} node="dashboard/goal-bar" /></div>
+      <div style={{ marginTop: 'var(--memox-space-2)' }}><window.ProgressBar value={pct} height={10} node="dashboard/goal-bar" /></div>
       <div style={{ marginTop: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>
         {met ? '20 of 20 minutes · goal complete' : `${minutes} of ${goal} minutes · ${left} minutes left`}
       </div>

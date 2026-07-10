@@ -102,7 +102,7 @@ function Dashboard({ state = 'loaded' }) {
     </div>
   );
 
-  return (
+  const screen = (
     <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav}
       fab={<MxFabAdd />}>
       {greeting}
@@ -133,26 +133,47 @@ function Dashboard({ state = 'loaded' }) {
           into one low-surface summary instead of four separate cards. */}
       <div data-mx-node="dashboard/today" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>Today</div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--memox-space-4) var(--memox-space-6)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: 'var(--memox-space-3) var(--memox-space-6)' }}>
           <Stat n={idle ? '0m' : '12m'} l="studied" />
           <Stat n={idle ? '0' : '24'} l="words learned" />
-          <Stat n={`${streak}-day`} l="streak" />
+          <Stat n={streak} l="day streak" />
           <Stat n="55%" l="library mastered" />
         </div>
       </div>
 
-      <MxSectionHeader title="Recent decks" action="See all" node="dashboard/decks-head" />
-      {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
+      {/* Deck rows are LIST ITEMS — group them with an item gap (12), not the body's
+          section gap (24), so the list is tighter and the first deck surfaces sooner. */}
+      <div data-mx-node="dashboard/decks" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+        <MxSectionHeader title="Recent decks" action="See all" node="dashboard/decks-head" />
+        {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
+      </div>
     </MxScaffold>
   );
+
+  if (state === 'create-sheet') return <React.Fragment>{screen}<CreateSheet /></React.Fragment>;
+  return screen;
 }
 
-// Extended FAB — the label makes the global create action legible ("+ Add") instead of
-// a bare "+" whose intent is ambiguous. Opens a create sheet (Add card / Create deck /
-// Import) in the real app.
+// Round FAB (covers less of the list than an extended one). Its meaning is made explicit
+// by the create sheet it opens — see the `create-sheet` state (Add card / Create deck /
+// Create folder / Import cards) — rather than by a label.
 function MxFabAdd() {
   const { MxFab } = NS;
-  return <MxFab icon="add" label="Add" node="dashboard/add" />;
+  return <MxFab icon="add" node="dashboard/add" />;
+}
+
+function CreateSheet() {
+  const { Scrim, Sheet, MenuItem } = window;
+  return (
+    <Scrim align="end" node="dashboard/create-scrim">
+      <Sheet title="Create" node="dashboard/create-sheet">
+        <MenuItem icon="note_add" label="Add card" node="dashboard/create-card" />
+        <MenuItem icon="library_add" label="Create deck" node="dashboard/create-deck" />
+        <MenuItem icon="create_new_folder" label="Create folder" node="dashboard/create-folder" />
+        <MenuItem icon="upload_file" label="Import cards" node="dashboard/create-import" />
+      </Sheet>
+    </Scrim>
+  );
 }
 
 window.Dashboard = Dashboard;
