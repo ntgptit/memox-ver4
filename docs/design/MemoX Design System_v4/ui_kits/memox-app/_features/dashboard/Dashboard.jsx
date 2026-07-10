@@ -156,7 +156,9 @@ function Dashboard({ state = 'loaded' }) {
             tap away on the Library tab; a "See all decks" row can live at the list end. */}
         <MxSectionHeader title="Recent decks" node="dashboard/decks-head" />
         {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
-        <MxLink node="dashboard/see-all-decks">See all decks</MxLink>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <MxLink node="dashboard/see-all-decks">See all decks</MxLink>
+        </div>
       </div>
     </MxScaffold>
   );

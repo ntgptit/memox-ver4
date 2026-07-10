@@ -337,8 +337,8 @@
   cursor: pointer;
   transition: opacity var(--memox-duration-fast) var(--memox-ease-standard);
 }
-.link:hover {
-  text-decoration: underline;
+.link:hover span:not(.material-symbols-rounded) {
+  text-decoration: underline; /* underline the label only — not the trailing chevron/icons */
 }
 .link:active {
   opacity: 0.7;
