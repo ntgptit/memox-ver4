@@ -105,6 +105,7 @@
 <script type="text/babel-src" src="_features/deck-settings/DeckSettings.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/components/Field.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/components/DupBanner.jsx"></script>
+<script type="text/babel-src" src="_features/flashcard-editor/components/AudioRow.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/FlashcardEditor.jsx"></script>
 <script type="text/babel-src" src="_features/game-picker/components/GameOption.jsx"></script>
 <script type="text/babel-src" src="_features/game-picker/components/ScopeCard.jsx"></script>
@@ -181,7 +182,7 @@ const SCREENS = [
   { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
   // Deck Content Choice — decide how a new, empty deck is organised (subdecks vs cards).
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
-  { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
+  { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'game-picker', title: 'Game Picker', Comp: () => window.GamePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'game-matching', title: 'Matching', Comp: () => window.GameMatching, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },
   { id: 'game-mc', title: 'Multiple Choice', Comp: () => window.GameMultipleChoice, states: ['waiting', 'correct', 'wrong', 'complete'] },
