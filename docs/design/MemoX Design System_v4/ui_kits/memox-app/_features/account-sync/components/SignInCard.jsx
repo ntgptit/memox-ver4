@@ -5,7 +5,7 @@ const { MxCard, MxButton, MxIconTile } = NS;
 
 function SignInCard() {
   return (
-    <MxCard node="account/signin" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-5)' }}>
+    <MxCard node="account/signin" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-6)' }}>
       <MxIconTile icon="cloud_sync" tone="accent" size="lg" />
       <div>
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>Sync across devices</div>

@@ -19,7 +19,7 @@
   --memox-space-12: 96px;
 
   /* layout rhythm */
-  --memox-gutter: 24px; /* screen edge padding (phone) — 24 for breathing room (focus rings bleed 3px outward) */
+  --memox-gutter: 16px; /* screen edge padding (phone) — contract: screen horizontal padding = 16 */
   --memox-appbar-height: 64px;
   --memox-appbar-lg-height: 112px;
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */

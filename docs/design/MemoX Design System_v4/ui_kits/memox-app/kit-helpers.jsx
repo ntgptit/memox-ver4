@@ -41,7 +41,7 @@ function Skeleton({ w = '100%', h = 16, r = 8, style }) {
 function EmptyState({ icon, tone, title, text, action, node }) {
   const { MxIconTile } = NS;
   return (
-    <div data-mx-node={node} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-8) var(--memox-space-4)' }}>
+    <div data-mx-node={node} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-4)' }}>
       <MxIconTile icon={icon} tone={tone} size="lg" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', maxWidth: 'var(--memox-size-3xl)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
@@ -115,7 +115,7 @@ function Scrim({ children, align = 'end', node }) {
 /* Bottom action sheet surface. */
 function Sheet({ title, children, node }) {
   return (
-    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-5) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
+    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-6) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-divider)', margin: '0 auto var(--memox-space-4)' }} />
       {title ? <SectionLabel uppercase style={{ margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</SectionLabel> : null}
       {children}
