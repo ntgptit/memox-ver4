@@ -1,0 +1,150 @@
+/* ============================================================
+   MemoX — Color tokens  (Layer 1)
+   VALUES sampled from the Tokyo palette:
+     light  → PureLightTheme     (primary #5569ff on #f2f5f9)
+     dark   → NebulaFighterTheme  (primary #8C7CF0 on #070C27)
+   Token NAMES are a frozen contract: --memox-<role>. Additive only.
+   Switch theme by setting [data-theme="dark"] on any ancestor.
+   ============================================================ */
+
+:root,
+[data-theme='light'] {
+  /* --- canvas & surfaces · neutrals tinted toward the indigo brand
+         so background + buttons read as one family --- */
+  --memox-bg: #f3f4fb;
+  --memox-surface: #ffffff;
+  --memox-surface-muted: #ecedf8;
+  --memox-surface-raised: #ffffff;
+  --memox-surface-sunken: #e3e5f4;
+
+  /* --- text (indigo-navy) --- */
+  --memox-text: #1d2240;
+  --memox-text-secondary: rgba(29, 34, 64, 0.66);
+  --memox-text-tertiary: rgba(29, 34, 64, 0.55);
+
+  /* --- primary (brand · refined indigo) --- */
+  --memox-primary: #4f46e5;
+  --memox-primary-strong: #3f37c4;
+  --memox-on-primary: #ffffff;
+  --memox-primary-soft: #e6e6fb;
+  --memox-on-primary-soft: #382fb4;
+
+  /* --- accent (cyan) --- */
+  --memox-accent: #1fa9d6;
+  --memox-on-accent: #04303f;
+  --memox-accent-soft: #ddf2fa;
+
+  /* --- structural --- */
+  --memox-border: #e4e4f2;
+  --memox-border-strong: #cccce8;
+  --memox-divider: rgba(29, 34, 64, 0.08);
+
+  /* --- semantic: success --- */
+  --memox-success: #1a7d31;
+  --memox-on-success: #ffffff;
+  --memox-success-soft: #e0f4e2;
+  --memox-on-success-soft: #1f7a33;
+
+  /* --- semantic: warning --- */
+  --memox-warning: #f5920b;
+  --memox-on-warning: #3a2200;
+  --memox-warning-soft: #fdecca;
+  --memox-on-warning-soft: #93570a;
+
+  /* --- semantic: error --- */
+  --memox-error: #d91e44;
+  --memox-on-error: #ffffff;
+  --memox-error-soft: #fce0e5;
+  --memox-on-error-soft: #c20f32;
+
+  /* --- semantic: info --- */
+  --memox-info: #1fa9d6;
+  --memox-on-info: #04303f;
+  --memox-info-soft: #ddf2fa;
+  --memox-on-info-soft: #0a6f93;
+
+  /* --- interaction states --- */
+  --memox-state-hover: rgba(29, 34, 64, 0.045);
+  --memox-state-pressed: rgba(29, 34, 64, 0.09);
+  --memox-state-selected: rgba(79, 70, 229, 0.1);
+  --memox-state-disabled: rgba(29, 34, 64, 0.26);
+  --memox-focus-ring: rgba(79, 70, 229, 0.42);
+  --memox-overlay: rgba(18, 20, 45, 0.45);
+  --memox-scrim: rgba(29, 34, 64, 0.04);
+}
+
+[data-theme='dark'] {
+  /* --- canvas & surfaces · indigo-tinted dark neutrals; elevation by lightness --- */
+  --memox-bg: #0a0c1e;
+  --memox-surface: #181c34;
+  --memox-surface-muted: #14182f;
+  --memox-surface-raised: #242a47;
+  --memox-surface-sunken: #070817;
+
+  /* --- text --- */
+  --memox-text: #ecedf7;
+  --memox-text-secondary: #a7abc6;
+  --memox-text-tertiary: rgba(167, 171, 198, 0.70);
+
+  /* --- primary (brand) · deep indigo surface, white text;
+         'soft' = dark tonal container with light text (standard dark mode) --- */
+  --memox-primary: #4b42b8;
+  --memox-primary-strong: #8b83f4;
+  --memox-on-primary: #ffffff;
+  --memox-primary-soft: #232452;
+  --memox-on-primary-soft: #c7c4f8;
+
+  /* --- accent (cyan) --- */
+  --memox-accent: #33c2ff;
+  --memox-on-accent: #04303f;
+  --memox-accent-soft: #123544;
+
+  /* --- structural --- */
+  --memox-border: #2b3052;
+  --memox-border-strong: #3c4068;
+  --memox-divider: rgba(255, 255, 255, 0.08);
+
+  /* --- semantic: success --- */
+  --memox-success: #57ca22;
+  --memox-on-success: #06320f;
+  --memox-success-soft: #173620;
+  --memox-on-success-soft: #8ee06a;
+
+  /* --- semantic: warning --- */
+  --memox-warning: #ffa319;
+  --memox-on-warning: #2a1a00;
+  --memox-warning-soft: #382909;
+  --memox-on-warning-soft: #ffc25c;
+
+  /* --- semantic: error --- */
+  --memox-error: #ff1943;
+  --memox-on-error: #ffffff;
+  --memox-error-soft: #3b1622;
+  --memox-on-error-soft: #ff8a9c;
+
+  /* --- semantic: info --- */
+  --memox-info: #33c2ff;
+  --memox-on-info: #04303f;
+  --memox-info-soft: #123544;
+  --memox-on-info-soft: #82d6fb;
+
+  /* --- interaction states --- */
+  --memox-state-hover: rgba(255, 255, 255, 0.06);
+  --memox-state-pressed: rgba(255, 255, 255, 0.11);
+  --memox-state-selected: rgba(125, 116, 240, 0.24);
+  --memox-state-disabled: rgba(236, 237, 247, 0.26);
+  --memox-focus-ring: rgba(125, 116, 240, 0.6);
+  --memox-overlay: rgba(0, 0, 0, 0.66);
+  --memox-scrim: rgba(255, 255, 255, 0.04);
+}
+
+/* --- accent palette · the selectable accent colors offered by the Theme
+       picker. Theme-independent (the user picks an absolute hue), additive. --- */
+:root {
+  --memox-palette-indigo: #5569ff;
+  --memox-palette-violet: #7c5cff;
+  --memox-palette-green: #2bb673;
+  --memox-palette-coral: #ff6b6b;
+  --memox-palette-amber: #ff9f43;
+  --memox-palette-cyan: #22a3c3;
+}

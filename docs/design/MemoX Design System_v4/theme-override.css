@@ -1,0 +1,159 @@
+/* ============================================================
+   MemoX — THEME OVERRIDE (preview)
+   Maps the new --mx-color-* palette onto the frozen --memox-* token
+   contract so the kit re-themes without touching the components.
+   Link this AFTER styles.css. For the durable change, port these
+   values into tokens/colors.css in the repo and re-run /design-sync.
+
+   Palette identity: deep-violet brand (#4b3a8c) on near-black/off-white
+   canvases; bright violet (#a88fff / #7355d6) as the accent highlight.
+   ============================================================ */
+
+:root,
+[data-theme='light'] {
+  /* canvas & surfaces */
+  --memox-bg: #f6f5fc;              /* background-app */
+  --memox-surface: #ffffff;         /* surface-card */
+  --memox-surface-muted: #f1eff9;   /* action-secondary */
+  --memox-surface-raised: #ffffff;  /* surface-elevated */
+  --memox-surface-sunken: #eae8f4;  /* sunken tint */
+
+  /* text */
+  --memox-text: #1b1a26;            /* text-primary */
+  --memox-text-secondary: #67647a;  /* text-secondary */
+  --memox-text-tertiary: #9793a8;   /* text-tertiary */
+
+  /* primary (brand · deep violet) */
+  --memox-primary: #4b3a8c;             /* action-primary */
+  --memox-primary-strong: #3b2d72;      /* action-primaryPressed */
+  --memox-on-primary: #ffffff;          /* text-onAction */
+  --memox-primary-soft: #f1eff9;        /* action-secondary */
+  --memox-on-primary-soft: #4b3a8c;     /* action-onSecondary */
+
+  /* accent (bright violet highlight) */
+  --memox-accent: #7355d6;              /* srs-mastered */
+  --memox-on-accent: #ffffff;
+  --memox-accent-soft: #efeafb;
+
+  /* structural */
+  --memox-border: rgba(28,24,45,0.11);        /* border-default */
+  --memox-border-strong: rgba(28,24,45,0.22); /* border-strong */
+  --memox-divider: rgba(28,24,45,0.08);       /* divider-default */
+
+  /* success (correct) */
+  --memox-success: #159a5f;                 /* feedback-correct */
+  --memox-on-success: #ffffff;
+  --memox-success-soft: rgba(21,154,95,0.12);
+  --memox-on-success-soft: #159a5f;
+
+  /* warning */
+  --memox-warning: #c77b12;                 /* feedback-warning */
+  --memox-on-warning: #ffffff;
+  --memox-warning-soft: rgba(199,123,18,0.12);
+  --memox-on-warning-soft: #c77b12;
+
+  /* error / destructive */
+  --memox-error: #db3e44;                   /* feedback-wrong */
+  --memox-on-error: #ffffff;
+  --memox-error-soft: rgba(219,62,68,0.1);
+  --memox-on-error-soft: #db3e44;
+
+  /* info */
+  --memox-info: #4b3a8c;                     /* feedback-info */
+  --memox-on-info: #ffffff;
+  --memox-info-soft: rgba(75,58,140,0.1);
+  --memox-on-info-soft: #4b3a8c;
+
+  /* interaction states */
+  --memox-state-hover: rgba(28,24,45,0.05);
+  --memox-state-pressed: rgba(28,24,45,0.07);   /* state-pressedSurface */
+  --memox-state-selected: rgba(75,58,140,0.1);  /* state-selectedSurface */
+  --memox-state-disabled: #bebccb;              /* text-disabled */
+  --memox-focus-ring: #4b3a8c;                  /* action-focusRing */
+  --memox-overlay: rgba(28,24,45,0.42);         /* overlay-scrim */
+  --memox-scrim: rgba(28,24,45,0.04);           /* state-disabledSurface */
+}
+
+[data-theme='dark'] {
+  /* canvas & surfaces */
+  --memox-bg: #141220;              /* background-app */
+  --memox-surface: #252338;         /* surface-card */
+  --memox-surface-muted: #1c1a2b;   /* surface-base */
+  --memox-surface-raised: #302d46;  /* surface-elevated */
+  --memox-surface-sunken: #141220;  /* app / sunken */
+
+  /* text */
+  --memox-text: #f4f2fb;            /* text-primary */
+  --memox-text-secondary: #bdb9d2;  /* text-secondary */
+  --memox-text-tertiary: #8a86a3;   /* text-tertiary */
+
+  /* primary (brand · deep violet) */
+  --memox-primary: #4b3a8c;             /* action-primary */
+  --memox-primary-strong: #3b2d72;      /* action-primaryPressed */
+  --memox-on-primary: #ffffff;          /* text-onAction */
+  --memox-primary-soft: #302d46;        /* action-secondary */
+  --memox-on-primary-soft: #b4aadd;     /* action-onSecondary */
+
+  /* accent (bright violet highlight) */
+  --memox-accent: #a88fff;              /* srs-mastered */
+  --memox-on-accent: #141220;
+  --memox-accent-soft: rgba(168,143,255,0.16);
+
+  /* structural */
+  --memox-border: rgba(255,255,255,0.13);        /* border-default */
+  --memox-border-strong: rgba(255,255,255,0.24); /* border-strong */
+  --memox-divider: rgba(255,255,255,0.1);        /* divider-default */
+
+  /* success (correct) */
+  --memox-success: #4fd08f;                 /* feedback-correct */
+  --memox-on-success: #06320f;
+  --memox-success-soft: rgba(34,181,115,0.16);
+  --memox-on-success-soft: #4fd08f;
+
+  /* warning */
+  --memox-warning: #ffc76f;                 /* feedback-warning */
+  --memox-on-warning: #2a1a00;
+  --memox-warning-soft: rgba(255,199,111,0.2);
+  --memox-on-warning-soft: #ffc76f;
+
+  /* error / destructive */
+  --memox-error: #ff8a8a;                   /* feedback-wrong */
+  --memox-on-error: #3b1622;
+  --memox-error-soft: rgba(240,85,90,0.16);
+  --memox-on-error-soft: #ff8a8a;
+
+  /* info */
+  --memox-info: #8a79e0;                     /* feedback-info */
+  --memox-on-info: #141220;
+  --memox-info-soft: rgba(138,121,224,0.18);
+  --memox-on-info-soft: #8a79e0;
+
+  /* interaction states */
+  --memox-state-hover: rgba(255,255,255,0.06);
+  --memox-state-pressed: rgba(255,255,255,0.10);   /* state-pressedSurface */
+  --memox-state-selected: rgba(138,121,224,0.22);  /* state-selectedSurface */
+  --memox-state-disabled: #5c5975;                 /* text-disabled */
+  --memox-focus-ring: #b4aadd;                     /* action-focusRing */
+  --memox-overlay: rgba(8,6,16,0.7);               /* overlay-scrim */
+  --memox-scrim: rgba(255,255,255,0.04);           /* state-disabledSurface */
+}
+
+/* ---- elevation / shadows: retint the brand-cast + dark hairlines
+        off the old indigo (#4f46e5 / #2b3052) onto the new violet.
+        (--memox-ring-focus already tracks --memox-focus-ring above.) ---- */
+:root,
+[data-theme='light'] {
+  --memox-shadow-sm: 0 2px 3px rgba(120,112,158,0.18), 0 1px 1px rgba(120,112,158,0.3);
+  --memox-shadow-card: 0 9px 16px rgba(120,112,158,0.18), 0 2px 2px rgba(120,112,158,0.28);
+  --memox-shadow-lg: 0 18px 40px rgba(75,58,140,0.18), 0 4px 8px rgba(120,112,158,0.24);
+  --memox-shadow-fab: 0 8px 18px rgba(75,58,140,0.38);
+  --memox-shadow-nav: 0 -2px 14px rgba(120,112,158,0.2);
+}
+
+[data-theme='dark'] {
+  --memox-shadow-sm: 0 0 0 1px rgba(255,255,255,0.09);
+  --memox-shadow-card: 0 2px 8px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
+  --memox-shadow-lg: 0 20px 48px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.08);
+  --memox-shadow-fab: 0 6px 16px rgba(138,121,224,0.3);
+  --memox-shadow-nav: 0 -2px 16px rgba(0,0,0,0.55), 0 -1px 0 rgba(255,255,255,0.06);
+}
