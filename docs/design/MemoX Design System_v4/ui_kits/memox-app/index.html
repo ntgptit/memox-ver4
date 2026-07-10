@@ -64,8 +64,9 @@
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="../../_ds_bundle.js"></script>
-<!-- Core primitive authored in runtime style (not yet in the bundle) — extends the NS namespace. -->
+<!-- Core primitives authored in runtime style (not yet in the bundle) — extend the NS namespace. -->
 <script type="text/babel-src" src="../../components/core/MxLink.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxContextualAppBar.jsx"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
 <script type="text/babel-src" src="kit-helpers.jsx"></script>
 <!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->
@@ -161,6 +162,7 @@
 <script type="text/babel-src" src="_features/study-session/components/ResumeErrorState.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/StudySession.jsx"></script><script type="text/babel-src" src="_features/settings/components/ValuePickerSheet.jsx"></script>
 <script type="text/babel-src" src="_features/settings/Settings.jsx"></script>
+<script type="text/babel-src" src="_features/app-bar/AppBar.jsx"></script>
 <script type="text/babel-gallery">
 const SCREENS = [
   { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
@@ -185,6 +187,7 @@ const SCREENS = [
   { id: 'drawer', title: 'Drawer & Languages', Comp: () => window.Drawer, states: ['open', 'add-language', 'remove-language'] },
   { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-matching', 'stage3-choice', 'stage4-recall', 'stage5-typing', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
   { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
+  { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'root-long', 'root-standard', 'nested', 'nested-overflow', 'search', 'selection', 'focused'] },
 ];
 
 // A single screen failing (compile error, runtime throw, or not loaded — e.g.

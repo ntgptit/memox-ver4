@@ -126,6 +126,136 @@
 }
 
 /* ============================================================
+   MxContextualAppBar  ·  .cappbar   (shared context-aware top bar)
+   ============================================================ */
+.cappbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-3);
+  min-height: var(--memox-appbar-height); /* 64 (56-64 spec) */
+  padding: 0 var(--memox-gutter);          /* same horizontal grid as content */
+  color: var(--memox-text);
+  flex-shrink: 0;
+  border-bottom: var(--memox-stroke-hairline) solid transparent;
+  transition: background var(--memox-duration-base) var(--memox-ease-standard),
+    border-color var(--memox-duration-base) var(--memox-ease-standard);
+}
+/* State A — at top: blends into the screen hero, no surface/divider */
+.cappbar--top {
+  background: transparent;
+}
+/* State B — scrolled/collapsed: surface + subtle divider so content can't show through */
+.cappbar--scrolled {
+  background: var(--memox-surface);
+  border-bottom-color: var(--memox-divider);
+}
+.cappbar__lead,
+.cappbar__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-2);
+  flex-shrink: 0;
+}
+.cappbar__main {
+  flex: 1;
+  min-width: 0;
+}
+.cappbar__context {
+  font-size: var(--memox-font-size-base);      /* 15, medium — below the screen heading */
+  font-weight: var(--memox-font-weight-medium);
+  color: var(--memox-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cappbar__title {
+  font-size: var(--memox-font-size-lg);         /* 20, semibold */
+  font-weight: var(--memox-font-weight-semibold);
+  letter-spacing: var(--memox-letter-spacing-tight);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cappbar__title,
+.cappbar__context {
+  animation: cappbar-label-in var(--memox-duration-base) var(--memox-ease-standard);
+}
+@keyframes cappbar-label-in {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: none; }
+}
+/* notification action + badge */
+.cappbar__notif {
+  position: relative;
+  display: inline-flex;
+}
+.cappbar__badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  min-width: 16px;
+  height: 16px;
+  padding: 0 4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--memox-radius-pill);
+  background: var(--memox-error);
+  color: var(--memox-on-error);
+  font-size: 10px;
+  font-weight: var(--memox-font-weight-bold);
+  line-height: 1;
+  border: 2px solid var(--memox-surface); /* rings the badge off the bell */
+  pointer-events: none;
+}
+.cappbar--top .cappbar__badge {
+  border-color: var(--memox-bg);
+}
+.cappbar__badge--dot {
+  min-width: 10px;
+  height: 10px;
+  padding: 0;
+  top: 7px;
+  right: 7px;
+}
+/* search variant */
+.cappbar__search {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-2);
+  height: 40px;
+  padding: 0 var(--memox-space-3);
+  background: var(--memox-surface-sunken);
+  border-radius: var(--memox-radius-pill);
+}
+.cappbar__search-icon {
+  font-size: var(--memox-icon-size-md);
+  color: var(--memox-text-secondary);
+}
+.cappbar__search-input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-family: inherit;
+  font-size: var(--memox-font-size-base);
+  color: var(--memox-text);
+}
+.cappbar__search-input::placeholder {
+  color: var(--memox-text-tertiary);
+}
+@media (prefers-reduced-motion: reduce) {
+  .cappbar { transition: none; }
+  .cappbar__title,
+  .cappbar__context { animation: none; }
+}
+
+/* ============================================================
    MxCard  ·  .card
    ============================================================ */
 .card {

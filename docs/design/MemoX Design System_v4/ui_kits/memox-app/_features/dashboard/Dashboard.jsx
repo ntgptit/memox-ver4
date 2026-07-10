@@ -8,7 +8,7 @@
    ContinueCard,OnboardingHero,OnboardingStep}.jsx (TodaySummary/StreakCard retired). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar, MxLink } = NS;
+const { MxScaffold, MxContextualAppBar, MxBottomNav, MxCard, MxSectionHeader, MxButton, MxIconButton, MxAvatar, MxLink } = NS;
 
 // Bottom nav holds DESTINATIONS only — "Add" is an action, so it lives in the FAB,
 // not as a fake tab (correct nav semantics; keeps 4 comfortable tap targets).
@@ -38,16 +38,16 @@ const Note = window.Note;
 function Dashboard({ state = 'loaded' }) {
   const { GoalCard, ContinueCard, GreetingHeader } = window.MemoXDashboard;
   const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
-  // Slim bar: actions only. The date + greeting live in the scroll body
-  // (GreetingHeader) so they scroll away with content.
+  // Shared contextual app bar (root-contextual): shows the date as the context label at
+  // the top and collapses to the "Today" destination title on scroll. The date lives ONLY
+  // here — the greeting below drops its eyebrow so nothing is duplicated (contract §6).
   const bar = (
-    <MxAppBar node="dashboard/appbar"
-      trailing={<React.Fragment>
-        <MxIconButton icon="notifications" node="dashboard/notifications" />
-        <MxAvatar name="Linh Tran" size="sm" />
-      </React.Fragment>} />
+    <MxContextualAppBar variant="root-contextual" node="dashboard/appbar"
+      context="Saturday · 27 Jun" title="Today"
+      notification={{ dot: true }}
+      avatar={<MxAvatar name="Linh Tran" size="sm" />} />
   );
-  const greeting = <GreetingHeader eyebrow="Saturday · 27 Jun" title="Good evening, Linh" node="dashboard/greeting" />;
+  const greeting = <GreetingHeader title="Good evening, Linh" node="dashboard/greeting" />;
 
   if (state === 'loading') {
     const S = window.Skeleton;
