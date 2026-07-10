@@ -208,3 +208,10 @@ không phải defect CSS của kit. Chỉ can thiệp khi title cắt ở **font
   meta wrap 3 dòng hiện đủ, card giãn theo, **không vỡ**. dense/min sạch.
 - Residual nhỏ (không chặn, pre-existing): `library/screen +9px` ở loaded/w320 — clip vô hình
   bởi overflow-hidden, không vỡ UX thấy được, chỉ ở width nhỏ nhất.
+
+### ✅ deck-detail — ĐẠT (thêm 3 state)
+- **States** đã có 13 (search/no-results/empty/loading/error + menu/dialog). **Thêm**: `min-data`
+  (1 card), `dense-data` (16 card), `long-text` (term Hàn dài + meaning rất dài).
+- **Verify** (192 combos): các state mới không thêm defect. long-text: term vừa 1 dòng, meaning
+  dài truncate ellipsis (chuẩn list-row preview), layout không vỡ.
+- Chỉ còn `appbar__title` "Korean Basics" cắt ở **w320** (accepted class — width nhỏ nhất).

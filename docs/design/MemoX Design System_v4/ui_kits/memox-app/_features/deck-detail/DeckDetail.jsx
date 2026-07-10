@@ -21,6 +21,14 @@ const CARDS = [
   { term: '어렵다', meaning: 'difficult, hard', status: 'new', hidden: true },
 ];
 
+// Edge-data fixtures (contract step 6-7)
+const MIN_CARDS = [CARDS[0]];
+const DENSE_CARDS = Array.from({ length: 16 }, (_, i) => CARDS[i % CARDS.length]);
+const LONG_CARDS = [
+  { term: '전화번호부에 등록되지 않은 사람', meaning: 'a person who is not registered in the phone directory; someone whose contact details are unavailable — used when explaining why a call could not be completed', status: 'due' },
+  ...CARDS.slice(1),
+];
+
 const SectionLabel = window.SectionLabel;
 
 function DeckDetail({ state = 'loaded' }) {
@@ -92,6 +100,7 @@ function DeckDetail({ state = 'loaded' }) {
     );
   }
 
+  const cards = state === 'min-data' ? MIN_CARDS : state === 'dense-data' ? DENSE_CARDS : state === 'long-text' ? LONG_CARDS : CARDS;
   const base = (
     <MxScaffold node="deck-detail/screen" appBar={<DeckHeader />} fab={fab}>
       <MxSearchDock placeholder="Search in deck" node="deck-detail/search-dock"
@@ -101,7 +110,7 @@ function DeckDetail({ state = 'loaded' }) {
         <SubDeckCard key={'s' + i} deck={d} index={i} />
       ))}
       <SectionLabel>CARDS</SectionLabel>
-      {CARDS.map((c, i) => (
+      {cards.map((c, i) => (
         <MxCard key={i} padding="sm" interactive node={'deck-detail/card-' + i}><FlashcardRow {...c} /></MxCard>
       ))}
     </MxScaffold>
