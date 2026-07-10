@@ -23,6 +23,6 @@
   --memox-appbar-height: 64px;
   --memox-appbar-lg-height: 112px;
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */
-  --memox-fab-size: 60px;
+  --memox-fab-size: 56px; /* M3 standard FAB */
   --memox-touch-min: 48px;
 }

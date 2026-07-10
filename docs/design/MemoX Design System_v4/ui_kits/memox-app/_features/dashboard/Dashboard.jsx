@@ -25,6 +25,14 @@ const DECKS = [
   { icon: 'record_voice_over', tone: 'success', name: 'Daily Conversation', meta: '150 cards · 6 due', due: 6, progress: 88 },
 ];
 
+// Separate fixture for the caught-up state — 0 due everywhere, so the deck rows can
+// never contradict the "no cards due" hero (each row shows an up-to-date ✓, not a count).
+const CAUGHT_DECKS = [
+  { icon: 'translate', tone: 'accent', name: 'TOPIK I — Vocabulary', meta: '320 cards · up to date', due: 0, progress: 100 },
+  { icon: 'menu_book', tone: 'warning', name: 'Basic Grammar', meta: '180 cards · up to date', due: 0, progress: 100 },
+  { icon: 'record_voice_over', tone: 'success', name: 'Daily Conversation', meta: '150 cards · up to date', due: 0, progress: 100 },
+];
+
 const Note = window.Note;
 
 function Dashboard({ state = 'loaded' }) {
@@ -105,9 +113,12 @@ function Dashboard({ state = 'loaded' }) {
       {/* PRIMARY: continue studying — the CTA is attached to the section, not floating.
           When nothing is due, the Review CTA is replaced by an all-caught-up message. */}
       {caught ? (
-        <div data-mx-node="dashboard/continue" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
-          <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>You're all caught up</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>No cards due right now — explore a deck or add new cards.</div>
+        <div data-mx-node="dashboard/continue" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
+            <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>You're all caught up</div>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>No cards due right now.</div>
+          </div>
+          <MxButton variant="secondary" icon="explore" block node="dashboard/explore">Explore decks</MxButton>
         </div>
       ) : (
         <div data-mx-node="dashboard/continue" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
@@ -131,14 +142,17 @@ function Dashboard({ state = 'loaded' }) {
       </div>
 
       <MxSectionHeader title="Recent decks" action="See all" node="dashboard/decks-head" />
-      {DECKS.map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
+      {(caught ? CAUGHT_DECKS : DECKS).map((d, i) => <ContinueCard key={i} deck={d} index={i} />)}
     </MxScaffold>
   );
 }
 
+// Extended FAB — the label makes the global create action legible ("+ Add") instead of
+// a bare "+" whose intent is ambiguous. Opens a create sheet (Add card / Create deck /
+// Import) in the real app.
 function MxFabAdd() {
   const { MxFab } = NS;
-  return <MxFab icon="add" node="dashboard/add" />;
+  return <MxFab icon="add" label="Add" node="dashboard/add" />;
 }
 
 window.Dashboard = Dashboard;
