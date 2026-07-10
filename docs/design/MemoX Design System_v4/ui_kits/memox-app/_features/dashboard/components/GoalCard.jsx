@@ -5,16 +5,20 @@ const { MxCard } = NS;
 
 function GoalCard({ pct, met, minutes = 14, goal = 20 }) {
   const left = Math.max(0, goal - minutes);
+  // Custom padding: 32px horizontal (VIS-021), 16px vertical. Internal spacing comes from
+  // the card's own flex gap (12) — the previous marginTop stacked ON TOP of that gap
+  // (12+8=20 each), inflating the card; removing it drops height ~16px without shrinking
+  // any font or the progress bar.
   return (
-    <MxCard padding="sm" node="dashboard/goal">
+    <MxCard node="dashboard/goal" style={{ padding: 'var(--memox-space-4) var(--memox-space-7)' }}>
       <div style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>
         <div style={{ fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-md)' }}>Daily goal</div>
         {/* The metric uses primary TEXT (bright in both themes) — the accent/purple lives on
             the progress bar below. Primary-tinted numerals read as dim on the dark card. */}
         <div style={{ fontWeight: 'var(--memox-font-weight-extrabold)', fontSize: 'var(--memox-font-size-lg)', color: 'var(--memox-text)' }}>{pct}%</div>
       </div>
-      <div style={{ marginTop: 'var(--memox-space-2)' }}><window.ProgressBar value={pct} height={10} node="dashboard/goal-bar" /></div>
-      <div style={{ marginTop: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>
+      <window.ProgressBar value={pct} height={10} node="dashboard/goal-bar" />
+      <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>
         {met ? '20 of 20 minutes · goal complete' : `${minutes} of ${goal} minutes · ${left} minutes left`}
       </div>
     </MxCard>
