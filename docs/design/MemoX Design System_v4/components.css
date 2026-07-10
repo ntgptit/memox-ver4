@@ -270,11 +270,11 @@
   padding: 0 var(--memox-space-7);
   font-size: var(--memox-font-size-md);
 }
-/* primary */
+/* primary — flat (no elevation glow). An inline button is not a floating layer; the
+   solid fill is affordance enough, and the coloured shadow read as an unwanted halo. */
 .btn.primary {
   background: var(--memox-primary);
   color: var(--memox-on-primary);
-  box-shadow: var(--memox-shadow-fab);
 }
 .btn.primary:hover {
   background: var(--memox-primary-strong);
@@ -308,7 +308,9 @@
 /* ghost (text) */
 .btn.ghost {
   background: transparent;
-  color: var(--memox-primary-strong);
+  /* accent (bright) not primary-strong (a dark pressed colour) so ghost labels keep
+     contrast on dark surfaces. */
+  color: var(--memox-accent);
 }
 .btn.ghost:hover {
   background: var(--memox-state-hover);
@@ -398,7 +400,9 @@
 }
 .icon-tile--accent {
   background: var(--memox-accent-soft);
-  color: var(--memox-on-accent);
+  /* accent (bright violet) — the glyph sits on the SOFT tint, so it needs the bright
+     accent, not on-accent (a near-black colour meant for a SOLID accent fill). */
+  color: var(--memox-accent);
 }
 .icon-tile--success {
   background: var(--memox-success-soft);
