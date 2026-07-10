@@ -48,8 +48,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   - node: div
     id: drawer/panel
     box:
-      abs: [0,0 352x820]
-      rel: [0,0 352x820]
+      abs: [0,0 352x780]
+      rel: [0,0 352x780]
     layout: flex:col
     spacing: pad:20/16
     size: maxw:320
@@ -98,8 +98,8 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
           style: font:17/700 color:text
     - node: div
       box:
-        abs: [16,91 320x709]
-        rel: [16,91 320x709]
+        abs: [16,91 320x669]
+        rel: [16,91 320x669]
       flex: grow:1 basis:0 layout_hint:expanded
       repeat: x10(unit=1)
       position: layout_hint:scroll
