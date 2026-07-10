@@ -178,7 +178,7 @@ function Dashboard({ state = 'loaded' }) {
 
 // Round FAB (covers less of the list than an extended one). Its meaning is made explicit
 // by the create sheet it opens — see the `create-sheet` state (Add card / Create deck /
-// Create folder / Import cards) — rather than by a label.
+// Import cards) — rather than by a label.
 function MxFabAdd() {
   const { MxFab } = NS;
   return <MxFab icon="add" node="dashboard/add" />;

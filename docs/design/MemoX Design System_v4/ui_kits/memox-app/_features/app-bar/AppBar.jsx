@@ -52,7 +52,7 @@ function AppBar({ state = 'root-top' }) {
         actions={<MxIconButton icon="search" size="sm" node="app-bar/search-open" ariaLabel="Search" />}
         avatar={AV} />
     );
-    return <MxScaffold node="app-bar/screen" appBar={bar} bottomNav={nav}><Body sub="Your decks and folders" /></MxScaffold>;
+    return <MxScaffold node="app-bar/screen" appBar={bar} bottomNav={nav}><Body sub="Your decks and subdecks" /></MxScaffold>;
   }
 
   if (state === 'nested' || state === 'nested-overflow') {

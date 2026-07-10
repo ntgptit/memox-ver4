@@ -1,6 +1,6 @@
 /* LibraryCreateSheet — context-aware create sheet (§6). Root: Add card / Create deck /
    Import. Deck detail (`deck` truthy): Add card / Create subdeck / Import into this deck.
-   Never a "Create folder" — subdecks always have a parent deck. */
+   A subdeck always has a parent deck — there is no top-level grouping to create. */
 (function () {
 function LibraryCreateSheet({ deck }) {
   const { Scrim, Sheet, MenuItem } = window;
