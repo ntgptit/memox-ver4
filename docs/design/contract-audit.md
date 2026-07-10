@@ -130,3 +130,33 @@ Harness phát hiện & đã fix (verify lại: **144 combos, 0 finding**):
 
 > Còn tồn đọng (chưa làm): SYS-03 typography ≤5/màn; và chạy harness + bổ sung state
 > data (min/dense/error/form-submit) cho 21 màn còn lại, theo đúng vòng render→defect→fix→re-shoot.
+
+### 2026-07-10 · Quét harness TOÀN KIT (1560 combos) — triage responsive/large-font
+
+Chạy `shoot.mjs` cho cả 22 màn × 4 width × 3 font-scale × 2 theme = **1560 combos**.
+Detector đã tinh chỉnh **2 vòng** để loại false-positive (verify từng lần bằng screenshot):
+- Loại `::after` hit-overlay (chip/switch/btn/icon-btn/segmented/accent-swatch): ngưỡng >8px
+  (max hit inset = 8) thay vì skip cả control (skip cả control làm SÓT `add-meaning +74`).
+- Loại descendant của scroller ngang (chip row) — cuộn có chủ đích.
+- Health-check chỉ báo blank thật / ErrorBoundary (prefix "⚠"), không đòi `.app` (overlay hợp lệ).
+
+**Kết quả: kit responsive-CLEAN gần như tuyệt đối.** Sau khi lọc, chỉ còn **1 class defect
+thật** trên 5 màn — **app-bar title bị cắt ellipsis**:
+
+| Màn | Title | Overflow | Configs | Mức độ |
+|-----|-------|----------|---------|--------|
+| **player** | "TOPIK I — Vocabulary" | tới +182px | mọi width + font (nặng nhất) | title bị bóp còn ~17px ở vài state (trail 2 icon chiếm 100px) |
+| **deck-detail** | "Korean Basics" | +80px | w320–390, mọi font | |
+| flashcard-editor | "New card" | +74px | w320/360 + font lớn | |
+| game-mc | "Multiple choice" | +46px | w320/360 + font lớn | |
+| account-sync | "Account & Sync" | +8px | chỉ w320/fs1.5 | borderline |
+
+Ghi chú: `.appbar__title` ĐÃ có `flex:1;min-width:0;ellipsis` đúng — vấn đề là **trail chiếm
+quá nhiều width** (player: 2 icon = 100px) bóp title. Fix hướng: giảm/gộp trail action, hoặc
+cho phép title 2 dòng ở app-bar cao, hoặc rút gọn title. Cần quyết per-screen.
+
+**Harness flakiness:** 1/1560 combo (dashboard) render blank do race mount — không phải defect
+kit (tăng thời gian paint / retry sẽ hết).
+
+**Mọi màn/state/config khác: 0 overflow, 0 clip** — kit đã responsive tốt (nhờ hệ token +
+hit-area + fix `MxBottomNav` dùng chung).

@@ -126,30 +126,53 @@ const run = async () => {
               return null; // measured after paint below
             }, { g, state, theme, w, fs });
 
-            await page.waitForTimeout(120); // let it paint
+            await page.waitForTimeout(250); // let it paint (babel + fonts)
 
             const measured = await page.evaluate(() => {
               const frame = document.getElementById('mxh-frame');
-              const fw = frame.clientWidth;
+              const fr = frame.getBoundingClientRect();
               const out = { hOverflow: [], clipped: [] };
+              // render-health: only flag a TRUE blank (nothing mounted) or the gallery
+              // ErrorBoundary fallback (its text starts with "⚠"). Overlays (drawer) that
+              // have no .app scaffold are valid, so we don't require .app.
+              const rootEl = frame.firstElementChild;
+              const boundary = [...frame.querySelectorAll('div')].find((d) => (d.textContent || '').trim().startsWith('⚠'));
+              if (!rootEl || rootEl.querySelectorAll('*').length < 3) out.renderError = 'blank render';
+              else if (boundary) out.renderError = 'ErrorBoundary: ' + (boundary.textContent || '').slice(0, 80);
+
+              // Only skip descendants of an INTENDED horizontal scroller (chip rows, etc.).
+              // Do NOT skip hit-controls by class: their ::after hit overlay is a fixed 6-8px,
+              // so a >8px threshold filters that artifact while still catching real text overflow.
+              const TH = 8; // px — above the max ::after hit inset (chip/switch = 7/8)
+              const inHScroller = (el) => {
+                let n = el.parentElement;
+                while (n && n !== frame) {
+                  const ov = getComputedStyle(n).overflowX;
+                  if (ov === 'auto' || ov === 'scroll') return true;
+                  n = n.parentElement;
+                }
+                return false;
+              };
+              const label = (el) => el.getAttribute('data-mx-node') || (typeof el.className === 'string' && el.className.split(/\s+/)[0]) || el.tagName.toLowerCase();
               frame.querySelectorAll('*').forEach((el) => {
+                if (el.id === 'mxh-frame' || inHScroller(el)) return;
                 const s = getComputedStyle(el);
-                // horizontal overflow of content beyond its own box (not an intended scroller)
-                if (el.scrollWidth > el.clientWidth + 1 && s.overflowX !== 'auto' && s.overflowX !== 'scroll') {
-                  const node = el.getAttribute('data-mx-node');
-                  if (node || el.scrollWidth > fw + 1) out.hOverflow.push({ node: node || el.className || el.tagName, extra: el.scrollWidth - el.clientWidth });
+                const txt = (el.textContent || '').trim();
+                // ellipsis actually truncating real text (title/label) — any element, not just data-mx-node
+                if (s.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 4 && txt.length > 1 && el.children.length === 0) {
+                  out.clipped.push({ node: label(el), text: txt.slice(0, 40), extra: el.scrollWidth - el.clientWidth });
                 }
-                // important content truncated by ellipsis
-                if (s.textOverflow === 'ellipsis' && el.scrollWidth > el.clientWidth + 1) {
-                  const node = el.getAttribute('data-mx-node');
-                  if (node) out.clipped.push({ node, text: (el.textContent || '').slice(0, 40) });
-                }
-                // element bleeding past the right frame edge
+                // content clipped by the device frame (overflow:hidden -> invisible), real magnitude only.
+                // Flag text-bearing leaves/controls (direct text node) — not big layout containers.
                 const r = el.getBoundingClientRect();
-                const fr = frame.getBoundingClientRect();
-                if (r.right > fr.right + 1) {
-                  const node = el.getAttribute('data-mx-node');
-                  if (node) out.hOverflow.push({ node, extra: Math.round(r.right - fr.right), edge: true });
+                const past = Math.max(r.right - fr.right, fr.left - r.left);
+                const hasDirectText = [...el.childNodes].some((n) => n.nodeType === 3 && n.textContent.trim().length);
+                if (past > TH && hasDirectText) {
+                  out.hOverflow.push({ node: label(el), extra: Math.round(past), edge: true });
+                }
+                // content overflows its own non-scroll box, real magnitude
+                if (el.getAttribute('data-mx-node') && el.scrollWidth > el.clientWidth + TH && s.overflowX !== 'auto' && s.overflowX !== 'scroll') {
+                  out.hOverflow.push({ node: el.getAttribute('data-mx-node'), extra: el.scrollWidth - el.clientWidth });
                 }
               });
               // dedupe
@@ -161,7 +184,7 @@ const run = async () => {
 
             const name = `${id}--${state}--${theme}--w${w}--fs${String(fs).replace('.', '_')}`;
             await page.locator('#mxh-frame').screenshot({ path: join(OUT, name + '.png') });
-            const hasIssue = measured.hOverflow.length || measured.clipped.length;
+            const hasIssue = measured.hOverflow.length || measured.clipped.length || measured.renderError;
             if (hasIssue) report.push({ shot: name, ...measured });
             if (findings?.error) report.push({ shot: name, error: findings.error });
           }
