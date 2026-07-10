@@ -1,5 +1,6 @@
-/* MemoX — Library. Domain: Library › Deck › Subdeck › Card (NO folders).
-   13 states, each light+dark. Orchestrates shared chrome (MxContextualAppBar,
+/* MemoX — Library. Domain: Library › Deck › Subdeck › Card — a deck holds subdecks;
+   there is no separate top-level grouping level.
+   16 states, each light+dark. Orchestrates shared chrome (MxContextualAppBar,
    MxBottomNav, MxFab, Scrim/Sheet, EmptyState) + shared DeckCard/DeckList (standard
    spacing) + library-local components (SubdeckCard, FilterRow, LibraryCreateSheet,
    fixtures) from _features/library/components/. */
@@ -134,6 +135,46 @@ function Library({ state = 'loaded' }) {
         <SectionLabel>SUBDECKS</SectionLabel>
         <DeckList>{SUBDECKS.map((s, i) => <SubdeckCard key={i} s={s} index={i} />)}</DeckList>
       </MxScaffold>
+    );
+  }
+
+  /* LIB-14 subdeck loading (deck-detail context) */
+  if (state === 'subdeck-loading') {
+    const bar = <MxContextualAppBar variant="nested" node="library/appbar" title="Korean TOPIK I" actions={<MxIconButton icon="more_vert" size="sm" node="library/deck-more" ariaLabel="Manage deck" />} />;
+    return (
+      <MxScaffold node="library/screen" appBar={bar} fab={<MxFab icon="add" node="library/deck-create" ariaLabel="Create" />}>
+        <Skeleton w="55%" h={13} />
+        <DeckList>{[0, 1, 2, 3].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={40} h={40} r={999} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</DeckList>
+      </MxScaffold>
+    );
+  }
+
+  /* LIB-15 subdeck selection (within a deck) */
+  if (state === 'subdeck-selection') {
+    const bar = (
+      <MxContextualAppBar variant="selection" node="library/appbar" count={2}
+        actions={<React.Fragment>
+          <MxIconButton icon="select_all" size="sm" node="library/sub-sel-all" ariaLabel="Select all" />
+          <MxIconButton icon="more_vert" size="sm" node="library/sub-sel-more" ariaLabel="More actions" />
+        </React.Fragment>} />
+    );
+    const sel = [true, false, true, false, false];
+    return (
+      <MxScaffold node="library/screen" appBar={bar}>
+        <SectionLabel>SUBDECKS</SectionLabel>
+        <DeckList>{SUBDECKS.map((s, i) => <SubdeckCard key={i} s={s} index={i} selected={sel[i]} />)}</DeckList>
+      </MxScaffold>
+    );
+  }
+
+  /* LIB-16 create sheet (root context) */
+  if (state === 'create-sheet') {
+    const { LibraryCreateSheet } = LIB;
+    return (
+      <React.Fragment>
+        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><DeckList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</DeckList></MxScaffold>
+        <LibraryCreateSheet />
+      </React.Fragment>
     );
   }
 

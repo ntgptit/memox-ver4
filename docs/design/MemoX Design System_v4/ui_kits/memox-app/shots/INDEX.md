@@ -22,15 +22,21 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | State | Light | Dark |
 | --- | --- | --- |
 | loaded | `library--loaded--light.png` | `library--loaded--dark.png` |
-| search active | `library--search-active--light.png` | `library--search-active--dark.png` |
-| pair picker | `library--pair-picker--light.png` | `library--pair-picker--dark.png` |
-| sort menu | `library--sort-menu--light.png` | `library--sort-menu--dark.png` |
-| overflow menu | `library--overflow-menu--light.png` | `library--overflow-menu--dark.png` |
-| play sheet | `library--play-sheet--light.png` | `library--play-sheet--dark.png` |
-| drawer | `library--drawer--light.png` | `library--drawer--dark.png` |
+| dense | `library--dense--light.png` | `library--dense--dark.png` |
+| deck detail | `library--deck-detail--light.png` | `library--deck-detail--dark.png` |
 | empty | `library--empty--light.png` | `library--empty--dark.png` |
+| empty deck | `library--empty-deck--light.png` | `library--empty-deck--dark.png` |
+| subdeck loading | `library--subdeck-loading--light.png` | `library--subdeck-loading--dark.png` |
+| subdeck selection | `library--subdeck-selection--light.png` | `library--subdeck-selection--dark.png` |
+| create sheet | `library--create-sheet--light.png` | `library--create-sheet--dark.png` |
+| search active | `library--search-active--light.png` | `library--search-active--dark.png` |
+| search results | `library--search-results--light.png` | `library--search-results--dark.png` |
+| search no results | `library--search-no-results--light.png` | `library--search-no-results--dark.png` |
+| filter applied | `library--filter-applied--light.png` | `library--filter-applied--dark.png` |
+| filter sheet | `library--filter-sheet--light.png` | `library--filter-sheet--dark.png` |
+| selection | `library--selection--light.png` | `library--selection--dark.png` |
 | loading | `library--loading--light.png` | `library--loading--dark.png` |
-| error | `library--error--light.png` | `library--error--dark.png` |
+| offline | `library--offline--light.png` | `library--offline--dark.png` |
 
 ## deck-detail — Deck Detail (node)
 

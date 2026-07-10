@@ -32,6 +32,14 @@ const WIDTHS = [320, 360, 390, 430];
 const FONT_SCALES = [1.0, 1.3, 1.5];
 const THEMES = ['light', 'dark'];
 
+// Canonical mode (MXH_CANON=1): one representative image per state×theme at the 390px
+// design width / font-scale 1, written into the kit's shots/ dir with a stable name (no
+// matrix suffix) to refresh the reference PNGs. The gate still runs to catch regressions.
+const CANON = !!process.env.MXH_CANON;
+const SHOT_W = CANON ? [390] : WIDTHS;
+const SHOT_FS = CANON ? [1.0] : FONT_SCALES;
+const SHOTS_DIR = join(KIT, 'ui_kits', 'memox-app', 'shots');
+
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.jsx': 'text/plain', '.json': 'application/json', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg' };
 const serve = (root) => createServer(async (req, res) => {
   try {
@@ -48,7 +56,7 @@ const serve = (root) => createServer(async (req, res) => {
 // screen -> window global + full state list (mirrors index.html SCREENS)
 const REGISTRY = {
   dashboard: { g: 'Dashboard', states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
-  library: { g: 'Library', states: ['loaded', 'dense', 'deck-detail', 'empty', 'empty-deck', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
+  library: { g: 'Library', states: ['loaded', 'dense', 'deck-detail', 'empty', 'empty-deck', 'subdeck-loading', 'subdeck-selection', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
   'deck-detail': { g: 'DeckDetail', states: ['loaded', 'min-data', 'dense-data', 'long-text', 'no-results', 'empty', 'loading', 'error'] },
   'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'multi-meaning', 'audio', 'submitting', 'submit-error', 'submit-success'] },
   'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },
@@ -82,6 +90,7 @@ function parseArgs() {
 
 const run = async () => {
   await mkdir(OUT, { recursive: true });
+  if (CANON) await mkdir(SHOTS_DIR, { recursive: true });
   const server = serve(KIT).listen(PORT);
   const browser = await chromium.launch();
   const page = await browser.newPage({ deviceScaleFactor: 2 });
@@ -104,6 +113,16 @@ const run = async () => {
     window.__root = null;
   });
 
+  // Warm the Material Symbols icon font before measuring — otherwise the FIRST rendered
+  // combo shows unresolved ligature TEXT ("arrow_back"), far wider than the glyph, and
+  // trips a false overflow. document.fonts.load fetches it once up front.
+  await page.evaluate(async () => {
+    try {
+      await Promise.all(['20px', '24px', '40px'].map((sz) => document.fonts.load(sz + ' "Material Symbols Rounded"')));
+      await document.fonts.ready;
+    } catch {}
+  });
+
   const targets = parseArgs();
   const report = [];
   for (const { id, states } of targets) {
@@ -113,8 +132,8 @@ const run = async () => {
     await page.waitForFunction((name) => !!window[name], g, { timeout: 20000 }).catch(() => {});
     for (const state of states) {
       for (const theme of THEMES) {
-        for (const w of WIDTHS) {
-          for (const fs of FONT_SCALES) {
+        for (const w of SHOT_W) {
+          for (const fs of SHOT_FS) {
             const findings = await page.evaluate(({ g, state, theme, w, fs }) => {
               const host = document.getElementById('mxh-host');
               // frame box at target width, phone height, clipped like a device
@@ -135,7 +154,7 @@ const run = async () => {
             const measured = await page.evaluate(() => {
               const frame = document.getElementById('mxh-frame');
               const fr = frame.getBoundingClientRect();
-              const out = { hOverflow: [], clipped: [] };
+              const out = { hOverflow: [], clipped: [], vOverflow: [] };
               // render-health: only flag a TRUE blank (nothing mounted) or the gallery
               // ErrorBoundary fallback (its text starts with "⚠"). Overlays (drawer) that
               // have no .app scaffold are valid, so we don't require .app.
@@ -152,6 +171,17 @@ const run = async () => {
                 let n = el.parentElement;
                 while (n && n !== frame) {
                   const ov = getComputedStyle(n).overflowX;
+                  if (ov === 'auto' || ov === 'scroll') return true;
+                  n = n.parentElement;
+                }
+                return false;
+              };
+              // vertical analog: .app__body scrolls (overflow-y:auto), so list content
+              // below the fold is legitimately scrollable and must NOT be flagged.
+              const inVScroller = (el) => {
+                let n = el.parentElement;
+                while (n && n !== frame) {
+                  const ov = getComputedStyle(n).overflowY;
                   if (ov === 'auto' || ov === 'scroll') return true;
                   n = n.parentElement;
                 }
@@ -178,17 +208,32 @@ const run = async () => {
                 if (el.getAttribute('data-mx-node') && el.scrollWidth > el.clientWidth + TH && s.overflowX !== 'auto' && s.overflowX !== 'scroll') {
                   out.hOverflow.push({ node: el.getAttribute('data-mx-node'), extra: el.scrollWidth - el.clientWidth });
                 }
+                // VERTICAL: content clipped by the device frame top/bottom — chrome or an
+                // overlay (sheet) taller than the viewport, esp. at large font-scale. List
+                // rows sit in the .app__body scroller and are skipped. Intended multi-line
+                // clamp (—webkit-line-clamp) is not a defect, so skip clamped leaves.
+                const pastV = Math.max(r.bottom - fr.bottom, fr.top - r.top);
+                if (pastV > TH && hasDirectText && !inVScroller(el) && s.getPropertyValue('-webkit-line-clamp') === 'none') {
+                  out.vOverflow.push({ node: label(el), extra: Math.round(pastV), edge: true });
+                }
+                // own-box vertical clip: a fixed-height box cutting off its content.
+                if (el.getAttribute('data-mx-node') && el.scrollHeight > el.clientHeight + TH && s.overflowY !== 'auto' && s.overflowY !== 'scroll') {
+                  out.vOverflow.push({ node: el.getAttribute('data-mx-node'), extra: el.scrollHeight - el.clientHeight });
+                }
               });
               // dedupe
               const uniq = (arr, key) => [...new Map(arr.map((x) => [key(x), x])).values()];
               out.hOverflow = uniq(out.hOverflow, (x) => x.node + (x.edge ? ':edge' : '')).slice(0, 20);
+              out.vOverflow = uniq(out.vOverflow, (x) => x.node + (x.edge ? ':vedge' : '')).slice(0, 20);
               out.clipped = uniq(out.clipped, (x) => x.node).slice(0, 20);
               return out;
             });
 
-            const name = `${id}--${state}--${theme}--w${w}--fs${String(fs).replace('.', '_')}`;
-            await page.locator('#mxh-frame').screenshot({ path: join(OUT, name + '.png') });
-            const hasIssue = measured.hOverflow.length || measured.clipped.length || measured.renderError;
+            const name = CANON
+              ? `${id}--${state}--${theme}`
+              : `${id}--${state}--${theme}--w${w}--fs${String(fs).replace('.', '_')}`;
+            await page.locator('#mxh-frame').screenshot({ path: join(CANON ? SHOTS_DIR : OUT, name + '.png') });
+            const hasIssue = measured.hOverflow.length || measured.vOverflow.length || measured.clipped.length || measured.renderError;
             if (hasIssue) report.push({ shot: name, ...measured });
             if (findings?.error) report.push({ shot: name, error: findings.error });
           }
@@ -199,8 +244,31 @@ const run = async () => {
   }
 
   await writeFile(join(OUT, 'report.json'), JSON.stringify(report, null, 2));
-  const combos = targets.reduce((n, t) => n + t.states.length * THEMES.length * WIDTHS.length * FONT_SCALES.length, 0);
+  const combos = targets.reduce((n, t) => n + t.states.length * THEMES.length * SHOT_W.length * SHOT_FS.length, 0);
   console.log(`\n${combos} combos shot · ${report.length} with overflow/clip findings → out/report.json`);
+
+  // ── Gate (contract step 7): fail the process on any unaccepted finding, so CI /
+  // pre-commit can block. ACCEPTED = known non-defects (intended app-bar title
+  // truncation; the notifications-badge scrollWidth artifact). Set MXH_NO_GATE=1 to
+  // shoot without gating (e.g. when regenerating canonical images).
+  const ACCEPTED = [/cappbar__title/, /cappbar__context/, /appbar__title/, /shell\/notifications/];
+  const accepted = (n) => ACCEPTED.some((re) => re.test(n || ''));
+  const bad = (arr) => (arr || []).filter((x) => !accepted(x.node));
+  const failing = report.filter((r) => r.error || r.renderError || bad(r.hOverflow).length || bad(r.vOverflow).length || bad(r.clipped).length);
+  if (failing.length) {
+    const tag = process.env.MXH_NO_GATE ? '⚠ GATE SKIPPED (MXH_NO_GATE)' : '✗ GATE FAILED';
+    console.error(`\n${tag} — ${failing.length} shot(s) with unaccepted findings:`);
+    for (const f of failing.slice(0, 50)) {
+      const bits = [f.error, f.renderError,
+        ...bad(f.hOverflow).map((x) => `h:${x.node}+${x.extra}`),
+        ...bad(f.vOverflow).map((x) => `v:${x.node}+${x.extra}`),
+        ...bad(f.clipped).map((x) => `clip:${x.node}`)].filter(Boolean);
+      console.error(`  · ${f.shot} — ${bits.join(', ')}`);
+    }
+    if (!process.env.MXH_NO_GATE) process.exitCode = 1;
+  } else {
+    console.log(`\n✓ GATE PASSED — no unaccepted overflow/clip/render findings across ${combos} combos.`);
+  }
   await browser.close();
   server.close();
 };
