@@ -148,6 +148,17 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
+  /* play — the Study chooser (session vs single mode), opened from a subdeck's Study
+     (bolt) action or the "Study subdeck" row; "Single mode" is the entry into Mode Picker */
+  if (state === 'play') {
+    return (
+      <React.Fragment>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <window.DeckPlaySheet title="Greetings & introductions" />
+      </React.Fragment>
+    );
+  }
+
   /* deep — a subdeck several levels down; the breadcrumb collapses its middle */
   if (state === 'deep') {
     const deepBar = (

@@ -1,5 +1,5 @@
 /**
- * Game-picker card-source selector: opens the source sheet, showing the current
+ * Mode-picker card-source selector: opens the source sheet, showing the current
  * source label.
  *
  * The kit renders this as a **static fixture** — it hardcodes the sample label

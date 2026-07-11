@@ -57,7 +57,7 @@ const serve = (root) => createServer(async (req, res) => {
 const REGISTRY = {
   dashboard: { g: 'Dashboard', states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
   library: { g: 'Library', states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
-  'subdeck-list': { g: 'SubdeckList', states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'loading', 'offline', 'error'] },
+  'subdeck-list': { g: 'SubdeckList', states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'play', 'loading', 'offline', 'error'] },
   'flashcard-list': { g: 'FlashcardList', states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
   'deck-settings': { g: 'DeckSettings', states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
   'deck-content-choice': { g: 'DeckContentChoice', states: ['default'] },

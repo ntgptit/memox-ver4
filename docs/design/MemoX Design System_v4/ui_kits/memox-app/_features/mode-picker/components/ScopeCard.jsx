@@ -1,4 +1,4 @@
-/* MemoX — Game-picker local: ScopeCard (card-source selector that opens ScopeSheet). */
+/* MemoX — Mode-picker local: ScopeCard (card-source selector that opens ScopeSheet). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54 || {};
 const { MxCard, MxIconTile } = NS;

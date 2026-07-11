@@ -83,6 +83,7 @@
 <script type="text/babel-src" src="_shared/ProfileCard.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckCard.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckActionsSheet.jsx"></script>
+<script type="text/babel-src" src="_shared/DeckPlaySheet.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckMoveSheet.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckResetConfirmDialog.jsx"></script>
 <script type="text/babel-src" src="_shared/DeckDeleteConfirmDialog.jsx"></script>
@@ -180,7 +181,7 @@ const SCREENS = [
   { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
   { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
   // Subdeck List — browse and manage subdecks inside the current deck (subdecks only).
-  { id: 'subdeck-list', title: 'Subdeck List', Comp: () => window.SubdeckList, states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'loading', 'offline', 'error'] },
+  { id: 'subdeck-list', title: 'Subdeck List', Comp: () => window.SubdeckList, states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'play', 'loading', 'offline', 'error'] },
   // Flashcard List — browse, filter and manage flashcards in the current final deck (cards only).
   { id: 'flashcard-list', title: 'Flashcard List', Comp: () => window.FlashcardList, states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
   // Deck Settings — manage deck metadata and lifecycle actions (no content list).
