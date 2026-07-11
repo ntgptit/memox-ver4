@@ -19,10 +19,11 @@ Flashcard List.
 - **App bar** — `MxContextualAppBar variant="focused"`: `Close(✕) · centered title · —`. The
   top-right is intentionally empty; **Save moved to a sticky bottom bar** so it is reachable
   one-handed. Title fixed ("New card" / "Edit card"), centered.
-- **Sticky Save bar** — a bottom action bar (`SaveBar`, via `MxScaffold bottomNav`) with a
-  full-width `MxButton` block. States: Disabled (create / validation / submit-success) ·
-  Enabled · `Saving…` (submitting, disabled) · `Done` (success, disabled). Never active on a
-  blank/invalid/pristine form. Width/label stable → no layout shift.
+- **Sticky Save bar** — a bottom action bar (`SaveBar`, via `MxScaffold bottomNav`) holding a
+  **"Create another card after saving"** checkbox (`KeepAdding`) above a full-width `MxButton`
+  block. Save states: Disabled (create / validation / submit-success) · Enabled · `Saving…`
+  (submitting, disabled) · `Done` (success, disabled). Never active on a blank/invalid/pristine
+  form. Width/label stable → no layout shift.
 - **Deck context** — a **prominent pill** (`folder` icon · "Deck" · **bold deck name**) under
   the bar; anchors the target deck without outweighing the title.
 - **Language labels are DECK-DRIVEN** — never hard-coded. `Term · <termLang>`,
@@ -79,6 +80,12 @@ Flashcard List.
 - **Runtime keyboard/focus (production, annotated in the kit):** Term gets the term-language
   keyboard (`lang`/`inputMode`) and `autoFocus` on Create; `enterKeyHint="next"` flows Term →
   Meaning → Translation, switching keyboard language per field.
+- **"Create another card after saving" (`KeepAdding`, production behaviour):**
+  - **checked** → Save → persist card → transient success **toast** → **clear all inputs** →
+    **refocus Term** (rapid consecutive entry, no re-navigation).
+  - **unchecked** → Save → persist card → **close** the editor (navigate back to the card list).
+  - **State persistence** — remember the last checked/unchecked choice across cards so the
+    learner ticks it once and keeps adding (annotated `data-persist="last-choice"`).
 - Dirty Close/Cancel → shared `ConfirmDialog` ("Discard changes? / Keep editing · Discard") —
   same reference as Deck Settings; not a 10th top-level state. No prompt when pristine/empty or
   after success.

@@ -80,11 +80,28 @@ function VisibilityRow({ disabled }) {
   );
 }
 
+// "Keep adding" option — a checkbox that changes what Save does (see spec / runtime notes):
+// checked → save, transient toast, clear the form, refocus Term (rapid entry); unchecked →
+// save and return to the card list. Production persists the last choice so it's a one-time tick.
+function KeepAdding({ initial, disabled }) {
+  const [on, setOn] = React.useState(!!initial);
+  return (
+    <button type="button" role="checkbox" aria-checked={on} onClick={() => setOn((v) => !v)}
+      data-mx-node="flashcard-editor/keep-adding" data-persist="last-choice" disabled={disabled}
+      style={{ display: 'inline-flex', alignItems: 'center', gap: 'var(--memox-space-2)', alignSelf: 'flex-start', padding: 'var(--memox-space-1) 0', border: 'none', background: 'transparent', cursor: 'pointer', opacity: disabled ? 'var(--memox-opacity-muted)' : 1 }}>
+      <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-md)', color: on ? 'var(--memox-primary)' : 'var(--memox-text-tertiary)' }}>{on ? 'check_box' : 'check_box_outline_blank'}</span>
+      <span style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)' }}>Create another card after saving</span>
+    </button>
+  );
+}
+
 // Sticky bottom action bar — the single primary CTA, full-width, always reachable one-handed
 // even with the keyboard open. Width/label stable so it never shifts across submit states.
-function SaveBar({ label, disabled }) {
+// Carries the "keep adding" checkbox above Save, where the option is applied.
+function SaveBar({ label, disabled, keepAdding }) {
   return (
-    <div data-mx-node="flashcard-editor/save-bar" style={{ display: 'flex', padding: 'var(--memox-space-3) var(--memox-space-4) var(--memox-space-4)', borderTop: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' }}>
+    <div data-mx-node="flashcard-editor/save-bar" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-3) var(--memox-space-4) var(--memox-space-4)', borderTop: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' }}>
+      <KeepAdding initial={keepAdding} disabled={disabled} />
       <MxButton variant="primary" block disabled={disabled} node="flashcard-editor/save">{label}</MxButton>
     </div>
   );
@@ -114,7 +131,7 @@ function FlashcardEditor({ state = 'create' }) {
   );
 
   return (
-    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={<SaveBar label={saveLabel} disabled={saveDisabled} />}>
+    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={<SaveBar label={saveLabel} disabled={saveDisabled} keepAdding={state === 'edit'} />}>
       <DeckContext />
 
       {state === 'duplicate' ? <DupBanner /> : null}
