@@ -124,12 +124,12 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         abs: [20,336 350x430]
         rel: [20,272 350x430]
       layout: grid cols:2 gap:8
-      spacing: margin:auto/0/-80/0
-      note: GROUPED "game board" — a tight, fixed block (tall ~108px cards = size-xl+space-3, small 8px
-        gaps) pushed to the bottom via margin-top:auto (Flutter: Spacer above / MainAxisAlignment.end).
-        The negative margin-bottom (= -bottom-nav-height) reclaims the body's bottom-nav padding
-        (this screen has NO bottom nav) so the tall cards fit one screen without scrolling; the
-        top stays airy (header + progress). NOT stretched to fill.
+      wrapper: flex:col justify:center flex-grow:1 margin-bottom:-80 (reclaims bottom-nav padding)
+      note: GROUPED "game board" — a tight, fixed block (tall ~108px cards = size-xl+space-3, small
+        8px gaps) VERTICALLY CENTERED in a flex wrapper (justify:center) for a balanced layout —
+        equal breathing above and below (Flutter: Center / MainAxisAlignment.center). The wrapper's
+        negative margin-bottom (= -bottom-nav-height) reclaims the body's bottom-nav padding (this
+        screen has NO bottom nav) so the tall cards fit one screen without scrolling. NOT stretched.
       - node: div
         box:
           abs: [20,116 169x331]
