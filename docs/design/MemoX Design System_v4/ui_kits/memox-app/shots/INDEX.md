@@ -101,13 +101,13 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | submit error | `flashcard-editor--submit-error--light.png` | `flashcard-editor--submit-error--dark.png` |
 | submit success | `flashcard-editor--submit-success--light.png` | `flashcard-editor--submit-success--dark.png` |
 
-## game-picker — Game Picker
+## mode-picker — Mode Picker
 
 | State | Light | Dark |
 | --- | --- | --- |
-| default | `game-picker--default--light.png` | `game-picker--default--dark.png` |
-| scope dropdown | `game-picker--scope-dropdown--light.png` | `game-picker--scope-dropdown--dark.png` |
-| not enough | `game-picker--not-enough--light.png` | `game-picker--not-enough--dark.png` |
+| default | `mode-picker--default--light.png` | `mode-picker--default--dark.png` |
+| scope dropdown | `mode-picker--scope-dropdown--light.png` | `mode-picker--scope-dropdown--dark.png` |
+| not enough | `mode-picker--not-enough--light.png` | `mode-picker--not-enough--dark.png` |
 
 ## match-mode — Match
 

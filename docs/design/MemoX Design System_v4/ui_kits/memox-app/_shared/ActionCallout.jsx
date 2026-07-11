@@ -1,6 +1,6 @@
 /* MemoX shared composite: ActionCallout — a soft-tinted inline banner (icon +
    text) with an optional trailing action. Fills the gap window.Note leaves: Note
-   is icon+text only, but import (dup-warning) and game-picker (not-enough) render
+   is icon+text only, but import (dup-warning) and mode-picker (not-enough) render
    the same tonal row with an optional button. `tone` picks the *-soft / on-*-soft
    pair. (The stacked 2-button flashcard-editor DupBanner and the gap-2 semibold
    account-sync banner are different shapes and stay local.) */

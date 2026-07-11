@@ -17,8 +17,8 @@ drawer:
 | `DeckMoveSheet` (`window.DeckMoveSheet`) | — | deck-settings |
 | `DeckResetConfirmDialog` (`window.DeckResetConfirmDialog`) | — | deck-settings |
 | `DeckDeleteConfirmDialog` (`window.DeckDeleteConfirmDialog`) | — | deck-settings |
-| `ActionCallout` (`window.ActionCallout`) | `ActionCallout.md` | import, game-picker |
-| `SelectSheet` (`window.SelectSheet`) | `SelectSheet.md` | game-picker (ScopeSheet), settings (ValuePickerSheet) |
+| `ActionCallout` (`window.ActionCallout`) | `ActionCallout.md` | import, mode-picker |
+| `SelectSheet` (`window.SelectSheet`) | `SelectSheet.md` | mode-picker (ScopeSheet), settings (ValuePickerSheet) |
 | `ProfileCard` (`window.ProfileCard`) | `ProfileCard.md` | settings, account-sync |
 
 ## Admission rule (strict)

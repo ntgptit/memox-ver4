@@ -25,7 +25,7 @@ export interface SelectSheetProps {
 
 /**
  * Single-select option list inside a bottom `Sheet`. Owns the title + rows +
- * active-check pattern shared by game-picker ScopeSheet, library SortSheet and
+ * active-check pattern shared by mode-picker ScopeSheet, library SortSheet and
  * settings ValuePickerSheet. Wrap it in a `Scrim` at the call site when presenting
  * it as an overlay.
  */

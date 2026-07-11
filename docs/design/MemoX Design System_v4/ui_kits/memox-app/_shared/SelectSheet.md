@@ -2,16 +2,16 @@
 
 A single-select option list inside a bottom `Sheet`: an uppercase title and a
 column of rows, each an icon + label, with a primary-tinted check on the active
-one. Owns the pattern that `game-picker` (ScopeSheet), `library` (SortSheet) and
+one. Owns the pattern that `mode-picker` (ScopeSheet), `library` (SortSheet) and
 `settings` (ValuePickerSheet) previously spelled out row-by-row.
 
 ```jsx
-// game-picker: presented as an overlay → wrap in a Scrim
-<window.Scrim node="game-picker/scope-scrim">
-  <window.SelectSheet title="Card source" node="game-picker/scope-sheet"
+// mode-picker: presented as an overlay → wrap in a Scrim
+<window.Scrim node="mode-picker/scope-scrim">
+  <window.SelectSheet title="Card source" node="mode-picker/scope-sheet"
     options={[
-      { key: 'srs', icon: 'schedule', label: 'By schedule', node: 'game-picker/scope-srs', selected: true },
-      { key: 'all', icon: 'apps', label: 'All cards', node: 'game-picker/scope-all' },
+      { key: 'srs', icon: 'schedule', label: 'By schedule', node: 'mode-picker/scope-srs', selected: true },
+      { key: 'all', icon: 'apps', label: 'All cards', node: 'mode-picker/scope-all' },
     ]} />
 </window.Scrim>
 
@@ -34,7 +34,7 @@ one. Owns the pattern that `game-picker` (ScopeSheet), `library` (SortSheet) and
 - The active-row check is the `MenuItem` `selected` prop (primary-tinted `check`);
   do not re-add trailing check markup at the call site.
 - Wrap in a `Scrim` at the call site only when the sheet is a standalone overlay
-  (game-picker / settings); library renders it inside its own overlay.
+  (mode-picker / settings); library renders it inside its own overlay.
 - Sheets that also carry non-select actions (e.g. library PairPickerSheet's
   "Add language") are **not** SelectSheets — keep those on `MenuItem` directly.
 

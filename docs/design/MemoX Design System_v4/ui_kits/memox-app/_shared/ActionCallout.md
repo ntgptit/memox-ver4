@@ -2,15 +2,15 @@
 
 A soft-tinted inline banner: icon + text on a `*-soft` background, with an
 optional trailing action. Fills the gap `window.Note` leaves (Note is icon+text
-only) for the `import` (dup-warning) and `game-picker` (not-enough) banners.
+only) for the `import` (dup-warning) and `mode-picker` (not-enough) banners.
 
 ```jsx
 <window.ActionCallout node="import/dup-warning" icon="warning"
   text="8 cards already exist — import anyway?" />
 
-<window.ActionCallout node="game-picker/not-enough" icon="info"
+<window.ActionCallout node="mode-picker/not-enough" icon="info"
   text="This deck needs at least 4 words to play."
-  action={<MxButton variant="primary" size="sm" node="game-picker/add-cards">Add words</MxButton>} />
+  action={<MxButton variant="primary" size="sm" node="mode-picker/add-cards">Add words</MxButton>} />
 ```
 
 ## Props

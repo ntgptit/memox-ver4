@@ -62,7 +62,7 @@ const REGISTRY = {
   'deck-settings': { g: 'DeckSettings', states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
   'deck-content-choice': { g: 'DeckContentChoice', states: ['default'] },
   'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
-  'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },
+  'mode-picker': { g: 'ModePicker', states: ['default', 'not-enough'] },
   'match-mode': { g: 'MatchMode', states: ['playing', 'complete'] },
   'guess-mode': { g: 'GuessMode', states: ['waiting', 'long-text', 'complete'] },
   'recall-mode': { g: 'RecallMode', states: ['before-reveal', 'complete'] },
