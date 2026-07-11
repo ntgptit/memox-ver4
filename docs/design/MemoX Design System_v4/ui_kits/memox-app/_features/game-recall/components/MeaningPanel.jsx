@@ -5,7 +5,7 @@ const { MxCard } = NS;
 
 function MeaningPanel({ revealed }) {
   return (
-    <MxCard node="game-recall/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', minHeight: 'var(--memox-size-2xl)', justifyContent: 'center' }}>
+    <MxCard node="game-recall/meaning" style={{ flex: 1, alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', minHeight: 'var(--memox-size-2xl)', justifyContent: 'center' }}>
       {revealed ? (
         <React.Fragment>
           <div style={{ width: 'var(--memox-size-md)', height: 'var(--memox-size-3xs)', background: 'var(--memox-divider)', borderRadius: 'var(--memox-radius-xs)' }} />
