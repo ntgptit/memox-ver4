@@ -127,13 +127,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     - node: card
       id: game-mc/prompt
       box:
-        abs: [20,108 350x180]
-        rel: [20,44 350x180]
-      layout: flex:col gap:12 align:center
+        abs: [20,108 350x144]
+        rel: [20,44 350x144]
+      layout: flex center (term centered)
       flex: shrink:0
       spacing: pad:24
       position: pos:relative
       style: bg:surface r:20 shadow:9/16
+      note: term is centered (sole focus); the two utility icons are pos:absolute in the RIGHT
+        corners — edit top-right, audio (volume_up) bottom-right — inset by space-4. Tidy, no
+        centered icon row.
       - node: div
         text: 학교
         box:
