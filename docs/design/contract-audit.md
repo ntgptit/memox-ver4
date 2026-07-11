@@ -68,10 +68,10 @@ Ký hiệu: ✓ có · ✗ thiếu · ～ có state domain tương đương.
 | deck-detail | Detail | ✓ | ✓ | ✗ | ✗ | ✓ | ✓ | — | nhiều menu/dialog ✓; thiếu min/dense |
 | flashcard-editor | **Form** | — | ✓ | — | — | — | — | validation ✓; **thiếu disabled/submitting/failure/success** | |
 | game-picker | Selection | ✗ | ✓ | — | — | ～not-enough | ✗ | — | thiếu loading scope |
-| game-matching | Focus flow | ✗ | ✓ | — | — | ✗ no-pairs | ✗ save-error | — | flow states đủ |
-| game-mc | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | |
-| game-recall | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | |
-| game-typing | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | **có input → cần Keyboard-open + long-term** |
+| match-mode | Focus flow | ✗ | ✓ | — | — | ✗ no-pairs | ✗ save-error | — | flow states đủ |
+| guess-mode | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | |
+| recall-mode | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | |
+| fill-mode | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | **có input → cần Keyboard-open + long-term** |
 | review | Focus flow | ✗ | ✓ | — | — | ✗ | ✗ | — | thiếu loading/empty/error |
 | player | Focus flow | ✗ | ✓ | — | — | — | ✗ load-fail | — | thiếu loading/error |
 | study-result | Summary | ～finalizing | ✓ | — | ～many-wrong | — | ✓ finalize-error | — | tốt |
@@ -148,7 +148,7 @@ thật** trên 5 màn — **app-bar title bị cắt ellipsis**:
 | **player** | "TOPIK I — Vocabulary" | tới +182px | mọi width + font (nặng nhất) | title bị bóp còn ~17px ở vài state (trail 2 icon chiếm 100px) |
 | **deck-detail** | "Korean Basics" | +80px | w320–390, mọi font | |
 | flashcard-editor | "New card" | +74px | w320/360 + font lớn | |
-| game-mc | "Multiple choice" | +46px | w320/360 + font lớn | |
+| guess-mode | "Guess" | +46px | w320/360 + font lớn | |
 | account-sync | "Account & Sync" | +8px | chỉ w320/fs1.5 | borderline |
 
 Ghi chú: `.appbar__title` ĐÃ có `flex:1;min-width:0;ellipsis` đúng — vấn đề là **trail chiếm

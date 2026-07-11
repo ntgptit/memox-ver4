@@ -109,55 +109,55 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | scope dropdown | `game-picker--scope-dropdown--light.png` | `game-picker--scope-dropdown--dark.png` |
 | not enough | `game-picker--not-enough--light.png` | `game-picker--not-enough--dark.png` |
 
-## game-matching — Matching
+## match-mode — Match
 
 | State | Light | Dark |
 | --- | --- | --- |
-| playing | `game-matching--playing--light.png` | `game-matching--playing--dark.png` |
-| selected | `game-matching--selected--light.png` | `game-matching--selected--dark.png` |
-| correct | `game-matching--correct--light.png` | `game-matching--correct--dark.png` |
-| wrong | `game-matching--wrong--light.png` | `game-matching--wrong--dark.png` |
-| almost | `game-matching--almost--light.png` | `game-matching--almost--dark.png` |
-| complete | `game-matching--complete--light.png` | `game-matching--complete--dark.png` |
+| playing | `match-mode--playing--light.png` | `match-mode--playing--dark.png` |
+| selected | `match-mode--selected--light.png` | `match-mode--selected--dark.png` |
+| correct | `match-mode--correct--light.png` | `match-mode--correct--dark.png` |
+| wrong | `match-mode--wrong--light.png` | `match-mode--wrong--dark.png` |
+| almost | `match-mode--almost--light.png` | `match-mode--almost--dark.png` |
+| complete | `match-mode--complete--light.png` | `match-mode--complete--dark.png` |
 
-## game-mc — Multiple Choice
-
-| State | Light | Dark |
-| --- | --- | --- |
-| waiting | `game-mc--waiting--light.png` | `game-mc--waiting--dark.png` |
-| correct | `game-mc--correct--light.png` | `game-mc--correct--dark.png` |
-| wrong | `game-mc--wrong--light.png` | `game-mc--wrong--dark.png` |
-| complete | `game-mc--complete--light.png` | `game-mc--complete--dark.png` |
-
-## game-recall — Recall
+## guess-mode — Guess
 
 | State | Light | Dark |
 | --- | --- | --- |
-| before reveal | `game-recall--before-reveal--light.png` | `game-recall--before-reveal--dark.png` |
-| revealed | `game-recall--revealed--light.png` | `game-recall--revealed--dark.png` |
-| forgot | `game-recall--forgot--light.png` | `game-recall--forgot--dark.png` |
-| remembered | `game-recall--remembered--light.png` | `game-recall--remembered--dark.png` |
-| complete | `game-recall--complete--light.png` | `game-recall--complete--dark.png` |
+| waiting | `guess-mode--waiting--light.png` | `guess-mode--waiting--dark.png` |
+| correct | `guess-mode--correct--light.png` | `guess-mode--correct--dark.png` |
+| wrong | `guess-mode--wrong--light.png` | `guess-mode--wrong--dark.png` |
+| complete | `guess-mode--complete--light.png` | `guess-mode--complete--dark.png` |
 
-## game-typing — Typing
-
-| State | Light | Dark |
-| --- | --- | --- |
-| waiting | `game-typing--waiting--light.png` | `game-typing--waiting--dark.png` |
-| typing | `game-typing--typing--light.png` | `game-typing--typing--dark.png` |
-| hint | `game-typing--hint--light.png` | `game-typing--hint--dark.png` |
-| correct | `game-typing--correct--light.png` | `game-typing--correct--dark.png` |
-| wrong | `game-typing--wrong--light.png` | `game-typing--wrong--dark.png` |
-| complete | `game-typing--complete--light.png` | `game-typing--complete--dark.png` |
-
-## review — Review
+## recall-mode — Recall
 
 | State | Light | Dark |
 | --- | --- | --- |
-| browsing | `review--browsing--light.png` | `review--browsing--dark.png` |
-| editing | `review--editing--light.png` | `review--editing--dark.png` |
-| audio | `review--audio--light.png` | `review--audio--dark.png` |
-| end | `review--end--light.png` | `review--end--dark.png` |
+| before reveal | `recall-mode--before-reveal--light.png` | `recall-mode--before-reveal--dark.png` |
+| revealed | `recall-mode--revealed--light.png` | `recall-mode--revealed--dark.png` |
+| forgot | `recall-mode--forgot--light.png` | `recall-mode--forgot--dark.png` |
+| remembered | `recall-mode--remembered--light.png` | `recall-mode--remembered--dark.png` |
+| complete | `recall-mode--complete--light.png` | `recall-mode--complete--dark.png` |
+
+## fill-mode — Fill
+
+| State | Light | Dark |
+| --- | --- | --- |
+| waiting | `fill-mode--waiting--light.png` | `fill-mode--waiting--dark.png` |
+| typing | `fill-mode--typing--light.png` | `fill-mode--typing--dark.png` |
+| hint | `fill-mode--hint--light.png` | `fill-mode--hint--dark.png` |
+| correct | `fill-mode--correct--light.png` | `fill-mode--correct--dark.png` |
+| wrong | `fill-mode--wrong--light.png` | `fill-mode--wrong--dark.png` |
+| complete | `fill-mode--complete--light.png` | `fill-mode--complete--dark.png` |
+
+## review-mode — Review
+
+| State | Light | Dark |
+| --- | --- | --- |
+| browsing | `review-mode--browsing--light.png` | `review-mode--browsing--dark.png` |
+| editing | `review-mode--editing--light.png` | `review-mode--editing--dark.png` |
+| audio | `review-mode--audio--light.png` | `review-mode--audio--dark.png` |
+| end | `review-mode--end--light.png` | `review-mode--end--dark.png` |
 
 ## player — Player
 
@@ -231,7 +231,7 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | --- | --- | --- |
 | source | `import--source--light.png` | `import--source--dark.png` |
 | mapping | `import--mapping--light.png` | `import--mapping--dark.png` |
-| preview | `import--preview--light.png` | `import--preview--dark.png` |
+| preview | `import--preview-mode--light.png` | `import--preview-mode--dark.png` |
 | dup warning | `import--dup-warning--light.png` | `import--dup-warning--dark.png` |
 | done | `import--done--light.png` | `import--done--dark.png` |
 
@@ -255,13 +255,13 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 
 | State | Light | Dark |
 | --- | --- | --- |
-| stage1 review | `study-session--stage1-review--light.png` | `study-session--stage1-review--dark.png` |
-| stage2 matching | `study-session--stage2-matching--light.png` | `study-session--stage2-matching--dark.png` |
-| stage3 choice | `study-session--stage3-choice--light.png` | `study-session--stage3-choice--dark.png` |
+| stage1 review | `study-session--stage1-review-mode--light.png` | `study-session--stage1-review-mode--dark.png` |
+| stage2 matching | `study-session--stage2-match--light.png` | `study-session--stage2-match--dark.png` |
+| stage3 choice | `study-session--stage3-guess--light.png` | `study-session--stage3-guess--dark.png` |
 | stage4 recall | `study-session--stage4-recall--light.png` | `study-session--stage4-recall--dark.png` |
-| stage5 typing | `study-session--stage5-typing--light.png` | `study-session--stage5-typing--dark.png` |
+| stage5 typing | `study-session--stage5-fill--light.png` | `study-session--stage5-fill--dark.png` |
 | relearn | `study-session--relearn--light.png` | `study-session--relearn--dark.png` |
-| due review | `study-session--due-review--light.png` | `study-session--due-review--dark.png` |
+| due review | `study-session--due-review-mode--light.png` | `study-session--due-review-mode--dark.png` |
 | exit | `study-session--exit--light.png` | `study-session--exit--dark.png` |
 | resume error | `study-session--resume-error--light.png` | `study-session--resume-error--dark.png` |
 | answer save-error | `study-session--answer-save-error--light.png` | `study-session--answer-save-error--dark.png` |

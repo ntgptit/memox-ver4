@@ -287,7 +287,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - rel: [169,17 39x22]
 - style: font:17/700 color:surface text:center
 + - node: div
-+ text: Stage 2 · Matching
++ text: Stage 2 · Match
 + box:
 + abs: [20,80 350x20]
 + rel: [20,16 350x20]
@@ -456,7 +456,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - rel: [169,17 39x22]
 - style: font:17/700 color:surface text:center
 + - node: div
-+ text: Stage 3 · Multiple choice
++ text: Stage 3 · Guess
 + box:
 + abs: [20,80 350x20]
 + rel: [20,16 350x20]
@@ -779,7 +779,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - rel: [169,17 39x22]
 - style: font:17/700 color:surface text:center
 + - node: div
-+ text: Stage 5 · Typing
++ text: Stage 5 · Fill
 + box:
 + abs: [20,80 350x20]
 + rel: [20,16 350x20]
@@ -964,7 +964,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - rel: [169,17 39x22]
 - style: font:17/700 color:surface text:center
 + - node: div
-+ text: Stage 3 · Multiple choice
++ text: Stage 3 · Guess
 + box:
 + abs: [20,80 350x20]
 + rel: [20,16 350x20]
@@ -1565,7 +1565,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
     spacing: pad:16/20/96/20
     position: layout_hint:scroll
     - node: div
-      text: Stage 5 · Typing
+      text: Stage 5 · Fill
       box:
         abs: [20,80 350x20]
         rel: [20,16 350x20]

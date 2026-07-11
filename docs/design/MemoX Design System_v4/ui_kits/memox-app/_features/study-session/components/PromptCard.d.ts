@@ -7,5 +7,5 @@ export interface PromptCardProps {
   sub?: ReactNode;
 }
 
-/** Study-session prompt card: a centered term with an optional sub-label. Shared by StageChoice / StageRecall / StageTyping. */
+/** Study-session prompt card: a centered term with an optional sub-label. Shared by StageGuess / StageRecall / StageFill. */
 export function PromptCard(props: PromptCardProps): JSX.Element;

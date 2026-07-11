@@ -1,4 +1,4 @@
-/* @ds-bundle: {"format":4,"namespace":"MemoXDesignSystem_2ffa54","components":[{"name":"MxAvatar","sourcePath":"components/core/MxAvatar.jsx"},{"name":"MxBadge","sourcePath":"components/core/MxBadge.jsx"},{"name":"MxButton","sourcePath":"components/core/MxButton.jsx"},{"name":"MxChip","sourcePath":"components/core/MxChip.jsx"},{"name":"MxSegmentedControl","sourcePath":"components/core/MxSegmentedControl.jsx"},{"name":"MxSwitch","sourcePath":"components/core/MxSwitch.jsx"},{"name":"MxTextField","sourcePath":"components/core/MxTextField.jsx"},{"name":"MxBottomNav","sourcePath":"components/navigation/MxBottomNav.jsx"},{"name":"MxFab","sourcePath":"components/navigation/MxFab.jsx"},{"name":"MxIconButton","sourcePath":"components/navigation/MxIconButton.jsx"},{"name":"MxSearchDock","sourcePath":"components/navigation/MxSearchDock.jsx"},{"name":"MxAppBar","sourcePath":"components/surfaces/MxAppBar.jsx"},{"name":"MxCard","sourcePath":"components/surfaces/MxCard.jsx"},{"name":"MxIconTile","sourcePath":"components/surfaces/MxIconTile.jsx"},{"name":"MxScaffold","sourcePath":"components/surfaces/MxScaffold.jsx"},{"name":"MxSectionHeader","sourcePath":"components/surfaces/MxSectionHeader.jsx"},{"name":"SignInCard","sourcePath":"ui_kits/memox-app/_features/account-sync/components/SignInCard.jsx"},{"name":"SyncBlock","sourcePath":"ui_kits/memox-app/_features/account-sync/components/SyncBlock.jsx"},{"name":"ContinueCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/ContinueCard.jsx"},{"name":"GoalCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/GoalCard.jsx"},{"name":"GreetingHeader","sourcePath":"ui_kits/memox-app/_features/dashboard/components/GreetingHeader.jsx"},{"name":"OnboardingHero","sourcePath":"ui_kits/memox-app/_features/dashboard/components/OnboardingHero.jsx"},{"name":"OnboardingStep","sourcePath":"ui_kits/memox-app/_features/dashboard/components/OnboardingStep.jsx"},{"name":"StreakCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/StreakCard.jsx"},{"name":"TodaySummary","sourcePath":"ui_kits/memox-app/_features/dashboard/components/TodaySummary.jsx"},{"name":"DeckHeader","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeckHeader.jsx"},{"name":"DeckMenu","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeckMenu.jsx"},{"name":"DeleteConfirmDialog","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeleteConfirmDialog.jsx"},{"name":"FlashcardRow","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/FlashcardRow.jsx"},{"name":"SubDeckCard","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/SubDeckCard.jsx"},{"name":"DrawerItem","sourcePath":"ui_kits/memox-app/_features/drawer/components/DrawerItem.jsx"},{"name":"DrawerPanel","sourcePath":"ui_kits/memox-app/_features/drawer/components/DrawerPanel.jsx"},{"name":"LangCard","sourcePath":"ui_kits/memox-app/_features/drawer/components/LangCard.jsx"},{"name":"RemoveLanguageDialog","sourcePath":"ui_kits/memox-app/_features/drawer/components/RemoveLanguageDialog.jsx"},{"name":"ExportingCard","sourcePath":"ui_kits/memox-app/_features/export/components/ExportingCard.jsx"},{"name":"FormatList","sourcePath":"ui_kits/memox-app/_features/export/components/FormatList.jsx"},{"name":"DupBanner","sourcePath":"ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.jsx"},{"name":"Field","sourcePath":"ui_kits/memox-app/_features/flashcard-editor/components/Field.jsx"},{"name":"Tile","sourcePath":"ui_kits/memox-app/_features/game-matching/components/Tile.jsx"},{"name":"McPromptCard","sourcePath":"ui_kits/memox-app/_features/game-mc/components/McPromptCard.jsx"},{"name":"GameOption","sourcePath":"ui_kits/memox-app/_features/game-picker/components/GameOption.jsx"},{"name":"ScopeCard","sourcePath":"ui_kits/memox-app/_features/game-picker/components/ScopeCard.jsx"},{"name":"ScopeSheet","sourcePath":"ui_kits/memox-app/_features/game-picker/components/ScopeSheet.jsx"},{"name":"MeaningPanel","sourcePath":"ui_kits/memox-app/_features/game-recall/components/MeaningPanel.jsx"},{"name":"RecallTermCard","sourcePath":"ui_kits/memox-app/_features/game-recall/components/RecallTermCard.jsx"},{"name":"CharCompare","sourcePath":"ui_kits/memox-app/_features/game-typing/components/CharCompare.jsx"},{"name":"InputBox","sourcePath":"ui_kits/memox-app/_features/game-typing/components/InputBox.jsx"},{"name":"SourceCard","sourcePath":"ui_kits/memox-app/_features/import/components/SourceCard.jsx"},{"name":"Table","sourcePath":"ui_kits/memox-app/_features/import/components/Table.jsx"},{"name":"ContextBar","sourcePath":"ui_kits/memox-app/_features/library/components/ContextBar.jsx"},{"name":"LibraryHeader","sourcePath":"ui_kits/memox-app/_features/library/components/LibraryHeader.jsx"},{"name":"OverflowMenuSheet","sourcePath":"ui_kits/memox-app/_features/library/components/OverflowMenuSheet.jsx"},{"name":"PairPickerSheet","sourcePath":"ui_kits/memox-app/_features/library/components/PairPickerSheet.jsx"},{"name":"PlaySheet","sourcePath":"ui_kits/memox-app/_features/library/components/PlaySheet.jsx"},{"name":"SortSheet","sourcePath":"ui_kits/memox-app/_features/library/components/SortSheet.jsx"},{"name":"Dots","sourcePath":"ui_kits/memox-app/_features/player/components/Dots.jsx"},{"name":"PlayerCard","sourcePath":"ui_kits/memox-app/_features/player/components/PlayerCard.jsx"},{"name":"TimeCol","sourcePath":"ui_kits/memox-app/_features/reminder/components/TimeCol.jsx"},{"name":"TimePickerSheet","sourcePath":"ui_kits/memox-app/_features/reminder/components/TimePickerSheet.jsx"},{"name":"MeaningCard","sourcePath":"ui_kits/memox-app/_features/review/components/MeaningCard.jsx"},{"name":"TermCard","sourcePath":"ui_kits/memox-app/_features/review/components/TermCard.jsx"},{"name":"Chips","sourcePath":"ui_kits/memox-app/_features/search/components/Chips.jsx"},{"name":"ResultRow","sourcePath":"ui_kits/memox-app/_features/search/components/ResultRow.jsx"},{"name":"ValuePickerSheet","sourcePath":"ui_kits/memox-app/_features/settings/components/ValuePickerSheet.jsx"},{"name":"Bars","sourcePath":"ui_kits/memox-app/_features/statistics/components/Bars.jsx"},{"name":"Donut","sourcePath":"ui_kits/memox-app/_features/statistics/components/Donut.jsx"},{"name":"Heatmap","sourcePath":"ui_kits/memox-app/_features/statistics/components/Heatmap.jsx"},{"name":"Cta","sourcePath":"ui_kits/memox-app/_features/study-result/components/Cta.jsx"},{"name":"FinalizingView","sourcePath":"ui_kits/memox-app/_features/study-result/components/FinalizingView.jsx"},{"name":"ResultHero","sourcePath":"ui_kits/memox-app/_features/study-result/components/ResultHero.jsx"},{"name":"StreakGoalCard","sourcePath":"ui_kits/memox-app/_features/study-result/components/StreakGoalCard.jsx"},{"name":"AnswerSaveErrorDialog","sourcePath":"ui_kits/memox-app/_features/study-session/components/AnswerSaveErrorDialog.jsx"},{"name":"ExitDialog","sourcePath":"ui_kits/memox-app/_features/study-session/components/ExitDialog.jsx"},{"name":"PromptCard","sourcePath":"ui_kits/memox-app/_features/study-session/components/PromptCard.jsx"},{"name":"ResumeErrorState","sourcePath":"ui_kits/memox-app/_features/study-session/components/ResumeErrorState.jsx"},{"name":"StageChoice","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageChoice.jsx"},{"name":"StageMatching","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageMatching.jsx"},{"name":"StageRecall","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageRecall.jsx"},{"name":"StageReview","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageReview.jsx"},{"name":"StageTyping","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageTyping.jsx"},{"name":"AccentPicker","sourcePath":"ui_kits/memox-app/_features/theme/components/AccentPicker.jsx"},{"name":"PreviewCard","sourcePath":"ui_kits/memox-app/_features/theme/components/PreviewCard.jsx"},{"name":"ActionCallout","sourcePath":"ui_kits/memox-app/_shared/ActionCallout.jsx"},{"name":"ConfirmDialog","sourcePath":"ui_kits/memox-app/_shared/ConfirmDialog.jsx"},{"name":"ProfileCard","sourcePath":"ui_kits/memox-app/_shared/ProfileCard.jsx"},{"name":"SelectSheet","sourcePath":"ui_kits/memox-app/_shared/SelectSheet.jsx"},{"name":"StatusCardRow","sourcePath":"ui_kits/memox-app/_shared/StatusCardRow.jsx"}],"sourceHashes":{"components/core/MxAvatar.jsx":"77f82103b11b","components/core/MxBadge.jsx":"07bf386675b0","components/core/MxButton.jsx":"e7df637928c8","components/core/MxChip.jsx":"94c968ebe110","components/core/MxSegmentedControl.jsx":"a52c23a71f9d","components/core/MxSwitch.jsx":"f8e1f6e6436c","components/core/MxTextField.jsx":"0cb4eb072b05","components/navigation/MxBottomNav.jsx":"45cf8267b4c2","components/navigation/MxFab.jsx":"e9bdd32a0d56","components/navigation/MxIconButton.jsx":"58d882bf8f34","components/navigation/MxSearchDock.jsx":"12744af28c7d","components/surfaces/MxAppBar.jsx":"536c62bb1ad5","components/surfaces/MxCard.jsx":"ffe5618c3613","components/surfaces/MxIconTile.jsx":"4ce6994a06ec","components/surfaces/MxScaffold.jsx":"063b80fb0b23","components/surfaces/MxSectionHeader.jsx":"405ffc6fd4d9","ui_kits/memox-app/_features/account-sync/AccountSync.jsx":"446a5fca0ac4","ui_kits/memox-app/_features/account-sync/components/SignInCard.jsx":"f6c9c7977665","ui_kits/memox-app/_features/account-sync/components/SyncBlock.jsx":"4e9fddbc9c8c","ui_kits/memox-app/_features/dashboard/Dashboard.jsx":"f33a49f6ecf8","ui_kits/memox-app/_features/dashboard/components/ContinueCard.jsx":"2702985dbd26","ui_kits/memox-app/_features/dashboard/components/GoalCard.jsx":"cbac2ad1aa4d","ui_kits/memox-app/_features/dashboard/components/GreetingHeader.jsx":"0e9db9843268","ui_kits/memox-app/_features/dashboard/components/OnboardingHero.jsx":"ee8b30d429d5","ui_kits/memox-app/_features/dashboard/components/OnboardingStep.jsx":"d7a6c80b2533","ui_kits/memox-app/_features/dashboard/components/StreakCard.jsx":"92cd96e7191a","ui_kits/memox-app/_features/dashboard/components/TodaySummary.jsx":"4e967c9cfc16","ui_kits/memox-app/_features/deck-detail/DeckDetail.jsx":"a9bef7a83f6e","ui_kits/memox-app/_features/deck-detail/components/DeckHeader.jsx":"2c2ab4ba7d7b","ui_kits/memox-app/_features/deck-detail/components/DeckMenu.jsx":"dea38904c8b9","ui_kits/memox-app/_features/deck-detail/components/DeleteConfirmDialog.jsx":"24d3e7a25ce9","ui_kits/memox-app/_features/deck-detail/components/FlashcardRow.jsx":"a7cd4a11d535","ui_kits/memox-app/_features/deck-detail/components/SubDeckCard.jsx":"1276046db06f","ui_kits/memox-app/_features/drawer/Drawer.jsx":"86e826b60176","ui_kits/memox-app/_features/drawer/components/DrawerItem.jsx":"1ae95e7a39f7","ui_kits/memox-app/_features/drawer/components/DrawerPanel.jsx":"b8eef93af2a1","ui_kits/memox-app/_features/drawer/components/LangCard.jsx":"9d7e66f33e96","ui_kits/memox-app/_features/drawer/components/RemoveLanguageDialog.jsx":"54c50a03bede","ui_kits/memox-app/_features/export/Export.jsx":"ce2e3b27ef60","ui_kits/memox-app/_features/export/components/ExportingCard.jsx":"64ba0435fd64","ui_kits/memox-app/_features/export/components/FormatList.jsx":"4d2f5ed0d4bb","ui_kits/memox-app/_features/flashcard-editor/FlashcardEditor.jsx":"1548c302be68","ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.jsx":"983be4525c4b","ui_kits/memox-app/_features/flashcard-editor/components/Field.jsx":"e47f364112df","ui_kits/memox-app/_features/game-matching/GameMatching.jsx":"ecd27f1cd1b8","ui_kits/memox-app/_features/game-matching/components/Tile.jsx":"af449ccb3400","ui_kits/memox-app/_features/game-mc/GameMultipleChoice.jsx":"83dcdacf4f93","ui_kits/memox-app/_features/game-mc/components/McPromptCard.jsx":"4e44c7afe1c5","ui_kits/memox-app/_features/game-picker/GamePicker.jsx":"7408d0aaa6a6","ui_kits/memox-app/_features/game-picker/components/GameOption.jsx":"cd5d697da1a2","ui_kits/memox-app/_features/game-picker/components/ScopeCard.jsx":"3b0deccf506f","ui_kits/memox-app/_features/game-picker/components/ScopeSheet.jsx":"f1188792fa1f","ui_kits/memox-app/_features/game-recall/GameRecall.jsx":"885cf407dd5b","ui_kits/memox-app/_features/game-recall/components/MeaningPanel.jsx":"e1b325dadc62","ui_kits/memox-app/_features/game-recall/components/RecallTermCard.jsx":"d493bee04e5b","ui_kits/memox-app/_features/game-typing/GameTyping.jsx":"fb1bdc3e2d49","ui_kits/memox-app/_features/game-typing/components/CharCompare.jsx":"7bccef39535e","ui_kits/memox-app/_features/game-typing/components/InputBox.jsx":"3b14ac64b384","ui_kits/memox-app/_features/import/Import.jsx":"e55b7f3be87f","ui_kits/memox-app/_features/import/components/SourceCard.jsx":"5410712f0b3a","ui_kits/memox-app/_features/import/components/Table.jsx":"998749e9a1ed","ui_kits/memox-app/_features/library/Library.jsx":"17c66cbf4f82","ui_kits/memox-app/_features/library/components/ContextBar.jsx":"7a4f25687130","ui_kits/memox-app/_features/library/components/LibraryHeader.jsx":"6e57c277e77c","ui_kits/memox-app/_features/library/components/OverflowMenuSheet.jsx":"d3f1c943c342","ui_kits/memox-app/_features/library/components/PairPickerSheet.jsx":"0e69b1072576","ui_kits/memox-app/_features/library/components/PlaySheet.jsx":"5bafd462ea86","ui_kits/memox-app/_features/library/components/SortSheet.jsx":"7953b649b857","ui_kits/memox-app/_features/player/Player.jsx":"970220ab3f29","ui_kits/memox-app/_features/player/components/Dots.jsx":"e3840f268fe8","ui_kits/memox-app/_features/player/components/PlayerCard.jsx":"70a735c68736","ui_kits/memox-app/_features/reminder/Reminder.jsx":"0bae6684077b","ui_kits/memox-app/_features/reminder/components/TimeCol.jsx":"4fe8c4a62675","ui_kits/memox-app/_features/reminder/components/TimePickerSheet.jsx":"6bb913f1aa3f","ui_kits/memox-app/_features/review/Review.jsx":"589f13730ab6","ui_kits/memox-app/_features/review/components/MeaningCard.jsx":"7dc7fd926663","ui_kits/memox-app/_features/review/components/TermCard.jsx":"84220af472d8","ui_kits/memox-app/_features/search/Search.jsx":"f1e6040fae8d","ui_kits/memox-app/_features/search/components/Chips.jsx":"3bcfad758d87","ui_kits/memox-app/_features/search/components/ResultRow.jsx":"7d3522bcbcc1","ui_kits/memox-app/_features/settings/Settings.jsx":"6f05294f01d2","ui_kits/memox-app/_features/settings/components/ValuePickerSheet.jsx":"6a2e63966407","ui_kits/memox-app/_features/statistics/Statistics.jsx":"4e20f4b62d3d","ui_kits/memox-app/_features/statistics/components/Bars.jsx":"0aa6dcbb6d81","ui_kits/memox-app/_features/statistics/components/Donut.jsx":"dd789085b906","ui_kits/memox-app/_features/statistics/components/Heatmap.jsx":"f75284d7cfc9","ui_kits/memox-app/_features/study-result/StudyResult.jsx":"4e31e7043b93","ui_kits/memox-app/_features/study-result/components/Cta.jsx":"3ec27723b138","ui_kits/memox-app/_features/study-result/components/FinalizingView.jsx":"0794edda4934","ui_kits/memox-app/_features/study-result/components/ResultHero.jsx":"d2703eedfd6c","ui_kits/memox-app/_features/study-result/components/StreakGoalCard.jsx":"c167771f7dde","ui_kits/memox-app/_features/study-session/StudySession.jsx":"c32577261ad3","ui_kits/memox-app/_features/study-session/components/AnswerSaveErrorDialog.jsx":"2da608fd7998","ui_kits/memox-app/_features/study-session/components/ExitDialog.jsx":"6cf870b13f01","ui_kits/memox-app/_features/study-session/components/PromptCard.jsx":"f4418329f6fa","ui_kits/memox-app/_features/study-session/components/ResumeErrorState.jsx":"ef98118fc960","ui_kits/memox-app/_features/study-session/components/StageChoice.jsx":"8128f7b8fc07","ui_kits/memox-app/_features/study-session/components/StageMatching.jsx":"d87b35e735ac","ui_kits/memox-app/_features/study-session/components/StageRecall.jsx":"85edf33e953b","ui_kits/memox-app/_features/study-session/components/StageReview.jsx":"742148e30b3d","ui_kits/memox-app/_features/study-session/components/StageTyping.jsx":"a1588cfeb6b4","ui_kits/memox-app/_features/theme/Theme.jsx":"7005b0481dea","ui_kits/memox-app/_features/theme/components/AccentPicker.jsx":"72b9a366df62","ui_kits/memox-app/_features/theme/components/PreviewCard.jsx":"454cd843891c","ui_kits/memox-app/_shared/ActionCallout.jsx":"7e7810d7d22d","ui_kits/memox-app/_shared/ConfirmDialog.jsx":"ebdf626deeaf","ui_kits/memox-app/_shared/ProfileCard.jsx":"f8d0dad2e91a","ui_kits/memox-app/_shared/SelectSheet.jsx":"8172d337af1a","ui_kits/memox-app/_shared/StatusCardRow.jsx":"246c5f855a2b","ui_kits/memox-app/kit-helpers.jsx":"cca5f935a80b"},"inlinedExternals":[],"unexposedExports":[]} */
+/* @ds-bundle: {"format":4,"namespace":"MemoXDesignSystem_2ffa54","components":[{"name":"MxAvatar","sourcePath":"components/core/MxAvatar.jsx"},{"name":"MxBadge","sourcePath":"components/core/MxBadge.jsx"},{"name":"MxButton","sourcePath":"components/core/MxButton.jsx"},{"name":"MxChip","sourcePath":"components/core/MxChip.jsx"},{"name":"MxSegmentedControl","sourcePath":"components/core/MxSegmentedControl.jsx"},{"name":"MxSwitch","sourcePath":"components/core/MxSwitch.jsx"},{"name":"MxTextField","sourcePath":"components/core/MxTextField.jsx"},{"name":"MxBottomNav","sourcePath":"components/navigation/MxBottomNav.jsx"},{"name":"MxFab","sourcePath":"components/navigation/MxFab.jsx"},{"name":"MxIconButton","sourcePath":"components/navigation/MxIconButton.jsx"},{"name":"MxSearchDock","sourcePath":"components/navigation/MxSearchDock.jsx"},{"name":"MxAppBar","sourcePath":"components/surfaces/MxAppBar.jsx"},{"name":"MxCard","sourcePath":"components/surfaces/MxCard.jsx"},{"name":"MxIconTile","sourcePath":"components/surfaces/MxIconTile.jsx"},{"name":"MxScaffold","sourcePath":"components/surfaces/MxScaffold.jsx"},{"name":"MxSectionHeader","sourcePath":"components/surfaces/MxSectionHeader.jsx"},{"name":"SignInCard","sourcePath":"ui_kits/memox-app/_features/account-sync/components/SignInCard.jsx"},{"name":"SyncBlock","sourcePath":"ui_kits/memox-app/_features/account-sync/components/SyncBlock.jsx"},{"name":"ContinueCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/ContinueCard.jsx"},{"name":"GoalCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/GoalCard.jsx"},{"name":"GreetingHeader","sourcePath":"ui_kits/memox-app/_features/dashboard/components/GreetingHeader.jsx"},{"name":"OnboardingHero","sourcePath":"ui_kits/memox-app/_features/dashboard/components/OnboardingHero.jsx"},{"name":"OnboardingStep","sourcePath":"ui_kits/memox-app/_features/dashboard/components/OnboardingStep.jsx"},{"name":"StreakCard","sourcePath":"ui_kits/memox-app/_features/dashboard/components/StreakCard.jsx"},{"name":"TodaySummary","sourcePath":"ui_kits/memox-app/_features/dashboard/components/TodaySummary.jsx"},{"name":"DeckHeader","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeckHeader.jsx"},{"name":"DeckMenu","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeckMenu.jsx"},{"name":"DeleteConfirmDialog","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/DeleteConfirmDialog.jsx"},{"name":"FlashcardRow","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/FlashcardRow.jsx"},{"name":"SubDeckCard","sourcePath":"ui_kits/memox-app/_features/deck-detail/components/SubDeckCard.jsx"},{"name":"DrawerItem","sourcePath":"ui_kits/memox-app/_features/drawer/components/DrawerItem.jsx"},{"name":"DrawerPanel","sourcePath":"ui_kits/memox-app/_features/drawer/components/DrawerPanel.jsx"},{"name":"LangCard","sourcePath":"ui_kits/memox-app/_features/drawer/components/LangCard.jsx"},{"name":"RemoveLanguageDialog","sourcePath":"ui_kits/memox-app/_features/drawer/components/RemoveLanguageDialog.jsx"},{"name":"ExportingCard","sourcePath":"ui_kits/memox-app/_features/export/components/ExportingCard.jsx"},{"name":"FormatList","sourcePath":"ui_kits/memox-app/_features/export/components/FormatList.jsx"},{"name":"DupBanner","sourcePath":"ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.jsx"},{"name":"Field","sourcePath":"ui_kits/memox-app/_features/flashcard-editor/components/Field.jsx"},{"name":"Tile","sourcePath":"ui_kits/memox-app/_features/match-mode/components/Tile.jsx"},{"name":"GuessPromptCard","sourcePath":"ui_kits/memox-app/_features/guess-mode/components/GuessPromptCard.jsx"},{"name":"GameOption","sourcePath":"ui_kits/memox-app/_features/game-picker/components/GameOption.jsx"},{"name":"ScopeCard","sourcePath":"ui_kits/memox-app/_features/game-picker/components/ScopeCard.jsx"},{"name":"ScopeSheet","sourcePath":"ui_kits/memox-app/_features/game-picker/components/ScopeSheet.jsx"},{"name":"MeaningPanel","sourcePath":"ui_kits/memox-app/_features/recall-mode/components/MeaningPanel.jsx"},{"name":"RecallTermCard","sourcePath":"ui_kits/memox-app/_features/recall-mode/components/RecallTermCard.jsx"},{"name":"CharCompare","sourcePath":"ui_kits/memox-app/_features/fill-mode/components/CharCompare.jsx"},{"name":"InputBox","sourcePath":"ui_kits/memox-app/_features/fill-mode/components/InputBox.jsx"},{"name":"SourceCard","sourcePath":"ui_kits/memox-app/_features/import/components/SourceCard.jsx"},{"name":"Table","sourcePath":"ui_kits/memox-app/_features/import/components/Table.jsx"},{"name":"ContextBar","sourcePath":"ui_kits/memox-app/_features/library/components/ContextBar.jsx"},{"name":"LibraryHeader","sourcePath":"ui_kits/memox-app/_features/library/components/LibraryHeader.jsx"},{"name":"OverflowMenuSheet","sourcePath":"ui_kits/memox-app/_features/library/components/OverflowMenuSheet.jsx"},{"name":"PairPickerSheet","sourcePath":"ui_kits/memox-app/_features/library/components/PairPickerSheet.jsx"},{"name":"PlaySheet","sourcePath":"ui_kits/memox-app/_features/library/components/PlaySheet.jsx"},{"name":"SortSheet","sourcePath":"ui_kits/memox-app/_features/library/components/SortSheet.jsx"},{"name":"Dots","sourcePath":"ui_kits/memox-app/_features/player/components/Dots.jsx"},{"name":"PlayerCard","sourcePath":"ui_kits/memox-app/_features/player/components/PlayerCard.jsx"},{"name":"TimeCol","sourcePath":"ui_kits/memox-app/_features/reminder/components/TimeCol.jsx"},{"name":"TimePickerSheet","sourcePath":"ui_kits/memox-app/_features/reminder/components/TimePickerSheet.jsx"},{"name":"MeaningCard","sourcePath":"ui_kits/memox-app/_features/review-mode/components/MeaningCard.jsx"},{"name":"TermCard","sourcePath":"ui_kits/memox-app/_features/review-mode/components/TermCard.jsx"},{"name":"Chips","sourcePath":"ui_kits/memox-app/_features/search/components/Chips.jsx"},{"name":"ResultRow","sourcePath":"ui_kits/memox-app/_features/search/components/ResultRow.jsx"},{"name":"ValuePickerSheet","sourcePath":"ui_kits/memox-app/_features/settings/components/ValuePickerSheet.jsx"},{"name":"Bars","sourcePath":"ui_kits/memox-app/_features/statistics/components/Bars.jsx"},{"name":"Donut","sourcePath":"ui_kits/memox-app/_features/statistics/components/Donut.jsx"},{"name":"Heatmap","sourcePath":"ui_kits/memox-app/_features/statistics/components/Heatmap.jsx"},{"name":"Cta","sourcePath":"ui_kits/memox-app/_features/study-result/components/Cta.jsx"},{"name":"FinalizingView","sourcePath":"ui_kits/memox-app/_features/study-result/components/FinalizingView.jsx"},{"name":"ResultHero","sourcePath":"ui_kits/memox-app/_features/study-result/components/ResultHero.jsx"},{"name":"StreakGoalCard","sourcePath":"ui_kits/memox-app/_features/study-result/components/StreakGoalCard.jsx"},{"name":"AnswerSaveErrorDialog","sourcePath":"ui_kits/memox-app/_features/study-session/components/AnswerSaveErrorDialog.jsx"},{"name":"ExitDialog","sourcePath":"ui_kits/memox-app/_features/study-session/components/ExitDialog.jsx"},{"name":"PromptCard","sourcePath":"ui_kits/memox-app/_features/study-session/components/PromptCard.jsx"},{"name":"ResumeErrorState","sourcePath":"ui_kits/memox-app/_features/study-session/components/ResumeErrorState.jsx"},{"name":"StageGuess","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageGuess.jsx"},{"name":"StageMatch","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageMatch.jsx"},{"name":"StageRecall","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageRecall.jsx"},{"name":"StageReview","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageReview.jsx"},{"name":"StageFill","sourcePath":"ui_kits/memox-app/_features/study-session/components/StageFill.jsx"},{"name":"AccentPicker","sourcePath":"ui_kits/memox-app/_features/theme/components/AccentPicker.jsx"},{"name":"PreviewCard","sourcePath":"ui_kits/memox-app/_features/theme/components/PreviewCard.jsx"},{"name":"ActionCallout","sourcePath":"ui_kits/memox-app/_shared/ActionCallout.jsx"},{"name":"ConfirmDialog","sourcePath":"ui_kits/memox-app/_shared/ConfirmDialog.jsx"},{"name":"ProfileCard","sourcePath":"ui_kits/memox-app/_shared/ProfileCard.jsx"},{"name":"SelectSheet","sourcePath":"ui_kits/memox-app/_shared/SelectSheet.jsx"},{"name":"StatusCardRow","sourcePath":"ui_kits/memox-app/_shared/StatusCardRow.jsx"}],"sourceHashes":{"components/core/MxAvatar.jsx":"77f82103b11b","components/core/MxBadge.jsx":"07bf386675b0","components/core/MxButton.jsx":"e7df637928c8","components/core/MxChip.jsx":"94c968ebe110","components/core/MxSegmentedControl.jsx":"a52c23a71f9d","components/core/MxSwitch.jsx":"f8e1f6e6436c","components/core/MxTextField.jsx":"0cb4eb072b05","components/navigation/MxBottomNav.jsx":"45cf8267b4c2","components/navigation/MxFab.jsx":"e9bdd32a0d56","components/navigation/MxIconButton.jsx":"58d882bf8f34","components/navigation/MxSearchDock.jsx":"12744af28c7d","components/surfaces/MxAppBar.jsx":"536c62bb1ad5","components/surfaces/MxCard.jsx":"ffe5618c3613","components/surfaces/MxIconTile.jsx":"4ce6994a06ec","components/surfaces/MxScaffold.jsx":"063b80fb0b23","components/surfaces/MxSectionHeader.jsx":"405ffc6fd4d9","ui_kits/memox-app/_features/account-sync/AccountSync.jsx":"446a5fca0ac4","ui_kits/memox-app/_features/account-sync/components/SignInCard.jsx":"f6c9c7977665","ui_kits/memox-app/_features/account-sync/components/SyncBlock.jsx":"4e9fddbc9c8c","ui_kits/memox-app/_features/dashboard/Dashboard.jsx":"f33a49f6ecf8","ui_kits/memox-app/_features/dashboard/components/ContinueCard.jsx":"2702985dbd26","ui_kits/memox-app/_features/dashboard/components/GoalCard.jsx":"cbac2ad1aa4d","ui_kits/memox-app/_features/dashboard/components/GreetingHeader.jsx":"0e9db9843268","ui_kits/memox-app/_features/dashboard/components/OnboardingHero.jsx":"ee8b30d429d5","ui_kits/memox-app/_features/dashboard/components/OnboardingStep.jsx":"d7a6c80b2533","ui_kits/memox-app/_features/dashboard/components/StreakCard.jsx":"92cd96e7191a","ui_kits/memox-app/_features/dashboard/components/TodaySummary.jsx":"4e967c9cfc16","ui_kits/memox-app/_features/deck-detail/DeckDetail.jsx":"a9bef7a83f6e","ui_kits/memox-app/_features/deck-detail/components/DeckHeader.jsx":"2c2ab4ba7d7b","ui_kits/memox-app/_features/deck-detail/components/DeckMenu.jsx":"dea38904c8b9","ui_kits/memox-app/_features/deck-detail/components/DeleteConfirmDialog.jsx":"24d3e7a25ce9","ui_kits/memox-app/_features/deck-detail/components/FlashcardRow.jsx":"a7cd4a11d535","ui_kits/memox-app/_features/deck-detail/components/SubDeckCard.jsx":"1276046db06f","ui_kits/memox-app/_features/drawer/Drawer.jsx":"86e826b60176","ui_kits/memox-app/_features/drawer/components/DrawerItem.jsx":"1ae95e7a39f7","ui_kits/memox-app/_features/drawer/components/DrawerPanel.jsx":"b8eef93af2a1","ui_kits/memox-app/_features/drawer/components/LangCard.jsx":"9d7e66f33e96","ui_kits/memox-app/_features/drawer/components/RemoveLanguageDialog.jsx":"54c50a03bede","ui_kits/memox-app/_features/export/Export.jsx":"ce2e3b27ef60","ui_kits/memox-app/_features/export/components/ExportingCard.jsx":"64ba0435fd64","ui_kits/memox-app/_features/export/components/FormatList.jsx":"4d2f5ed0d4bb","ui_kits/memox-app/_features/flashcard-editor/FlashcardEditor.jsx":"1548c302be68","ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.jsx":"983be4525c4b","ui_kits/memox-app/_features/flashcard-editor/components/Field.jsx":"e47f364112df","ui_kits/memox-app/_features/match-mode/MatchMode.jsx":"ecd27f1cd1b8","ui_kits/memox-app/_features/match-mode/components/Tile.jsx":"af449ccb3400","ui_kits/memox-app/_features/guess-mode/GuessMode.jsx":"83dcdacf4f93","ui_kits/memox-app/_features/guess-mode/components/GuessPromptCard.jsx":"4e44c7afe1c5","ui_kits/memox-app/_features/game-picker/GamePicker.jsx":"7408d0aaa6a6","ui_kits/memox-app/_features/game-picker/components/GameOption.jsx":"cd5d697da1a2","ui_kits/memox-app/_features/game-picker/components/ScopeCard.jsx":"3b0deccf506f","ui_kits/memox-app/_features/game-picker/components/ScopeSheet.jsx":"f1188792fa1f","ui_kits/memox-app/_features/recall-mode/RecallMode.jsx":"885cf407dd5b","ui_kits/memox-app/_features/recall-mode/components/MeaningPanel.jsx":"e1b325dadc62","ui_kits/memox-app/_features/recall-mode/components/RecallTermCard.jsx":"d493bee04e5b","ui_kits/memox-app/_features/fill-mode/FillMode.jsx":"fb1bdc3e2d49","ui_kits/memox-app/_features/fill-mode/components/CharCompare.jsx":"7bccef39535e","ui_kits/memox-app/_features/fill-mode/components/InputBox.jsx":"3b14ac64b384","ui_kits/memox-app/_features/import/Import.jsx":"e55b7f3be87f","ui_kits/memox-app/_features/import/components/SourceCard.jsx":"5410712f0b3a","ui_kits/memox-app/_features/import/components/Table.jsx":"998749e9a1ed","ui_kits/memox-app/_features/library/Library.jsx":"17c66cbf4f82","ui_kits/memox-app/_features/library/components/ContextBar.jsx":"7a4f25687130","ui_kits/memox-app/_features/library/components/LibraryHeader.jsx":"6e57c277e77c","ui_kits/memox-app/_features/library/components/OverflowMenuSheet.jsx":"d3f1c943c342","ui_kits/memox-app/_features/library/components/PairPickerSheet.jsx":"0e69b1072576","ui_kits/memox-app/_features/library/components/PlaySheet.jsx":"5bafd462ea86","ui_kits/memox-app/_features/library/components/SortSheet.jsx":"7953b649b857","ui_kits/memox-app/_features/player/Player.jsx":"970220ab3f29","ui_kits/memox-app/_features/player/components/Dots.jsx":"e3840f268fe8","ui_kits/memox-app/_features/player/components/PlayerCard.jsx":"70a735c68736","ui_kits/memox-app/_features/reminder/Reminder.jsx":"0bae6684077b","ui_kits/memox-app/_features/reminder/components/TimeCol.jsx":"4fe8c4a62675","ui_kits/memox-app/_features/reminder/components/TimePickerSheet.jsx":"6bb913f1aa3f","ui_kits/memox-app/_features/review-mode/ReviewMode.jsx":"589f13730ab6","ui_kits/memox-app/_features/review-mode/components/MeaningCard.jsx":"7dc7fd926663","ui_kits/memox-app/_features/review-mode/components/TermCard.jsx":"84220af472d8","ui_kits/memox-app/_features/search/Search.jsx":"f1e6040fae8d","ui_kits/memox-app/_features/search/components/Chips.jsx":"3bcfad758d87","ui_kits/memox-app/_features/search/components/ResultRow.jsx":"7d3522bcbcc1","ui_kits/memox-app/_features/settings/Settings.jsx":"6f05294f01d2","ui_kits/memox-app/_features/settings/components/ValuePickerSheet.jsx":"6a2e63966407","ui_kits/memox-app/_features/statistics/Statistics.jsx":"4e20f4b62d3d","ui_kits/memox-app/_features/statistics/components/Bars.jsx":"0aa6dcbb6d81","ui_kits/memox-app/_features/statistics/components/Donut.jsx":"dd789085b906","ui_kits/memox-app/_features/statistics/components/Heatmap.jsx":"f75284d7cfc9","ui_kits/memox-app/_features/study-result/StudyResult.jsx":"4e31e7043b93","ui_kits/memox-app/_features/study-result/components/Cta.jsx":"3ec27723b138","ui_kits/memox-app/_features/study-result/components/FinalizingView.jsx":"0794edda4934","ui_kits/memox-app/_features/study-result/components/ResultHero.jsx":"d2703eedfd6c","ui_kits/memox-app/_features/study-result/components/StreakGoalCard.jsx":"c167771f7dde","ui_kits/memox-app/_features/study-session/StudySession.jsx":"c32577261ad3","ui_kits/memox-app/_features/study-session/components/AnswerSaveErrorDialog.jsx":"2da608fd7998","ui_kits/memox-app/_features/study-session/components/ExitDialog.jsx":"6cf870b13f01","ui_kits/memox-app/_features/study-session/components/PromptCard.jsx":"f4418329f6fa","ui_kits/memox-app/_features/study-session/components/ResumeErrorState.jsx":"ef98118fc960","ui_kits/memox-app/_features/study-session/components/StageGuess.jsx":"8128f7b8fc07","ui_kits/memox-app/_features/study-session/components/StageMatch.jsx":"d87b35e735ac","ui_kits/memox-app/_features/study-session/components/StageRecall.jsx":"85edf33e953b","ui_kits/memox-app/_features/study-session/components/StageReview.jsx":"742148e30b3d","ui_kits/memox-app/_features/study-session/components/StageFill.jsx":"a1588cfeb6b4","ui_kits/memox-app/_features/theme/Theme.jsx":"7005b0481dea","ui_kits/memox-app/_features/theme/components/AccentPicker.jsx":"72b9a366df62","ui_kits/memox-app/_features/theme/components/PreviewCard.jsx":"454cd843891c","ui_kits/memox-app/_shared/ActionCallout.jsx":"7e7810d7d22d","ui_kits/memox-app/_shared/ConfirmDialog.jsx":"ebdf626deeaf","ui_kits/memox-app/_shared/ProfileCard.jsx":"f8d0dad2e91a","ui_kits/memox-app/_shared/SelectSheet.jsx":"8172d337af1a","ui_kits/memox-app/_shared/StatusCardRow.jsx":"246c5f855a2b","ui_kits/memox-app/kit-helpers.jsx":"cca5f935a80b"},"inlinedExternals":[],"unexposedExports":[]} */
 
 (() => {
 
@@ -2810,9 +2810,9 @@ const Field = (window.MemoXFlashcardEditor || {}).Field;
 Object.assign(__ds_scope, { Field });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/flashcard-editor/components/Field.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-matching/GameMatching.jsx
+// ui_kits/memox-app/_features/match-mode/MatchMode.jsx
 try { (() => {
-/* MemoX — Game: Matching. States: playing · selected · correct · wrong · almost · complete
+/* MemoX — Game: Match. States: playing · selected · correct · wrong · almost · complete
    Feature-local component: components/Tile.jsx */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54;
@@ -2824,7 +2824,7 @@ try { (() => {
   } = NS;
   const {
     Tile
-  } = window.MemoXGameMatching;
+  } = window.MemoXMatchMode;
   const LEFT = ['time', 'love', 'friend', 'food', 'school'];
   const RIGHT = ['사랑', '학교', '음식', '시간', '친구'];
   function toneFor(state, side, i) {
@@ -2846,31 +2846,31 @@ try { (() => {
     complete: 20
   };
   const TOTAL = 20;
-  function GameMatching({
+  function MatchMode({
     state = 'playing'
   }) {
     const bar = /*#__PURE__*/React.createElement(MxAppBar, {
-      node: "game-matching/appbar",
-      title: "Matching",
+      node: "match-mode/appbar",
+      title: "Match",
       leading: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "arrow_back",
-        node: "game-matching/back"
+        node: "match-mode/back"
       }),
       trailing: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "more_horiz",
-        node: "game-matching/options"
+        node: "match-mode/options"
       })
     });
     if (state === 'complete') {
       return /*#__PURE__*/React.createElement(MxScaffold, {
-        node: "game-matching/screen",
+        node: "match-mode/screen",
         appBar: bar
       }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
         done: 20,
         total: 20,
-        node: "game-matching/progress"
+        node: "match-mode/progress"
       }), /*#__PURE__*/React.createElement(window.EmptyState, {
-        node: "game-matching/complete",
+        node: "match-mode/complete",
         icon: "celebration",
         tone: "success",
         title: "Round complete!",
@@ -2878,17 +2878,17 @@ try { (() => {
         action: /*#__PURE__*/React.createElement(MxButton, {
           variant: "primary",
           icon: "arrow_forward",
-          node: "game-matching/next"
+          node: "match-mode/next"
         }, "Next round")
       }));
     }
     return /*#__PURE__*/React.createElement(MxScaffold, {
-      node: "game-matching/screen",
+      node: "match-mode/screen",
       appBar: bar
     }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
       done: DONE[state] || 0,
       total: TOTAL,
-      node: "game-matching/progress"
+      node: "match-mode/progress"
     }), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
@@ -2906,7 +2906,7 @@ try { (() => {
       key: i,
       text: t,
       tone: toneFor(state, 'L', i),
-      node: 'game-matching/left-' + i
+      node: 'match-mode/left-' + i
     }))), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
@@ -2917,14 +2917,14 @@ try { (() => {
       key: i,
       text: t,
       tone: toneFor(state, 'R', i),
-      node: 'game-matching/right-' + i
+      node: 'match-mode/right-' + i
     })))));
   }
-  window.GameMatching = GameMatching;
+  window.MatchMode = MatchMode;
 })();
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-matching/GameMatching.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/match-mode/MatchMode.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-matching/components/Tile.jsx
+// ui_kits/memox-app/_features/match-mode/components/Tile.jsx
 try { (() => {
 /* MemoX — Game-matching local: Tile (a match tile; tone tints the skin, matched hides it).
    Owns its TONE → skin map. */
@@ -2982,20 +2982,20 @@ try { (() => {
       }
     }, text);
   }
-  window.MemoXGameMatching = window.MemoXGameMatching || {};
-  window.MemoXGameMatching.Tile = Tile;
+  window.MemoXMatchMode = window.MemoXMatchMode || {};
+  window.MemoXMatchMode.Tile = Tile;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const Tile = (window.MemoXGameMatching || {}).Tile;
+const Tile = (window.MemoXMatchMode || {}).Tile;
 Object.assign(__ds_scope, { Tile });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-matching/components/Tile.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/match-mode/components/Tile.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-mc/GameMultipleChoice.jsx
+// ui_kits/memox-app/_features/guess-mode/GuessMode.jsx
 try { (() => {
-/* MemoX — Game: Multiple choice. States: waiting · correct · wrong · complete
+/* MemoX — Game: Guess. States: waiting · correct · wrong · complete
    Feature-local component: components/PromptCard.jsx */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54;
@@ -3006,8 +3006,8 @@ try { (() => {
     MxButton
   } = NS;
   const {
-    McPromptCard
-  } = window.MemoXGameMC;
+    GuessPromptCard
+  } = window.MemoXGuessMode;
   const CHOICES = ['school', 'hospital', 'park', 'restaurant'];
   const Choice = window.ChoiceOption;
   function toneFor(state, i) {
@@ -3015,31 +3015,31 @@ try { (() => {
     if (state === 'wrong') return i === 0 ? 'correct' : i === 2 ? 'wrong' : undefined;
     return undefined;
   }
-  function GameMultipleChoice({
+  function GuessMode({
     state = 'waiting'
   }) {
     const bar = /*#__PURE__*/React.createElement(MxAppBar, {
-      node: "game-mc/appbar",
-      title: "Multiple choice",
+      node: "guess-mode/appbar",
+      title: "Guess",
       leading: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "arrow_back",
-        node: "game-mc/back"
+        node: "guess-mode/back"
       }),
       trailing: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "more_horiz",
-        node: "game-mc/options"
+        node: "guess-mode/options"
       })
     });
     if (state === 'complete') {
       return /*#__PURE__*/React.createElement(MxScaffold, {
-        node: "game-mc/screen",
+        node: "guess-mode/screen",
         appBar: bar
       }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
         done: 20,
         total: 20,
-        node: "game-mc/progress"
+        node: "guess-mode/progress"
       }), /*#__PURE__*/React.createElement(window.EmptyState, {
-        node: "game-mc/complete",
+        node: "guess-mode/complete",
         icon: "celebration",
         tone: "success",
         title: "Round complete!",
@@ -3047,18 +3047,18 @@ try { (() => {
         action: /*#__PURE__*/React.createElement(MxButton, {
           variant: "primary",
           icon: "arrow_forward",
-          node: "game-mc/next"
+          node: "guess-mode/next"
         }, "Next round")
       }));
     }
     return /*#__PURE__*/React.createElement(MxScaffold, {
-      node: "game-mc/screen",
+      node: "guess-mode/screen",
       appBar: bar
     }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
       done: 8,
       total: 20,
-      node: "game-mc/progress"
-    }), /*#__PURE__*/React.createElement(McPromptCard, null), /*#__PURE__*/React.createElement("div", {
+      node: "guess-mode/progress"
+    }), /*#__PURE__*/React.createElement(GuessPromptCard, null), /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'flex',
         flexDirection: 'column',
@@ -3068,16 +3068,16 @@ try { (() => {
       key: i,
       text: c,
       tone: toneFor(state, i),
-      node: 'game-mc/choice-' + i
+      node: 'guess-mode/choice-' + i
     }))));
   }
-  window.GameMultipleChoice = GameMultipleChoice;
+  window.GuessMode = GuessMode;
 })();
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-mc/GameMultipleChoice.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/guess-mode/GuessMode.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-mc/components/McPromptCard.jsx
+// ui_kits/memox-app/_features/guess-mode/components/GuessPromptCard.jsx
 try { (() => {
-/* MemoX — Game-mc local: McPromptCard (prompt term + audio/edit controls).
+/* MemoX — Game-mc local: GuessPromptCard (prompt term + audio/edit controls).
    NOTE: kept inline (not promoted to a shared card): its MxCard/MxIconButton carry
    literal node ids the static parity generator must see. Hoisting them behind a
    shared component with dynamic node props would drop them from the contract. */
@@ -3087,9 +3087,9 @@ try { (() => {
     MxCard,
     MxIconButton
   } = NS;
-  function McPromptCard() {
+  function GuessPromptCard() {
     return /*#__PURE__*/React.createElement(MxCard, {
-      node: "game-mc/prompt",
+      node: "guess-mode/prompt",
       style: {
         alignItems: 'center',
         textAlign: 'center',
@@ -3109,21 +3109,21 @@ try { (() => {
       }
     }, /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "volume_up",
-      node: "game-mc/audio"
+      node: "guess-mode/audio"
     }), /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "edit",
       size: "sm",
-      node: "game-mc/edit"
+      node: "guess-mode/edit"
     })));
   }
-  window.MemoXGameMC = window.MemoXGameMC || {};
-  window.MemoXGameMC.McPromptCard = McPromptCard;
+  window.MemoXGuessMode = window.MemoXGuessMode || {};
+  window.MemoXGuessMode.GuessPromptCard = GuessPromptCard;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite. */
-const McPromptCard = (window.MemoXGameMC || {}).McPromptCard;
-Object.assign(__ds_scope, { McPromptCard });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-mc/components/McPromptCard.jsx", error: String((e && e.message) || e) }); }
+const GuessPromptCard = (window.MemoXGuessMode || {}).GuessPromptCard;
+Object.assign(__ds_scope, { GuessPromptCard });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/guess-mode/components/GuessPromptCard.jsx", error: String((e && e.message) || e) }); }
 
 // ui_kits/memox-app/_features/game-picker/GamePicker.jsx
 try { (() => {
@@ -3144,12 +3144,12 @@ try { (() => {
   } = window.MemoXGamePicker;
   const GAMES = [{
     icon: 'join_inner',
-    name: 'Matching',
+    name: 'Match',
     desc: 'Match terms to meanings',
     id: 'matching'
   }, {
     icon: 'quiz',
-    name: 'Multiple choice',
+    name: 'Guess',
     desc: 'Pick the right meaning',
     id: 'mc'
   }, {
@@ -3159,7 +3159,7 @@ try { (() => {
     id: 'recall'
   }, {
     icon: 'keyboard',
-    name: 'Typing',
+    name: 'Fill',
     desc: 'Type the term from its meaning',
     id: 'typing'
   }];
@@ -3372,7 +3372,7 @@ const ScopeSheet = (window.MemoXGamePicker || {}).ScopeSheet;
 Object.assign(__ds_scope, { ScopeSheet });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-picker/components/ScopeSheet.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-recall/GameRecall.jsx
+// ui_kits/memox-app/_features/recall-mode/RecallMode.jsx
 try { (() => {
 /* MemoX — Game: Recall. States: before-reveal · revealed · forgot · remembered · complete
    Feature-local components: components/{TermCard,MeaningPanel}.jsx */
@@ -3387,34 +3387,34 @@ try { (() => {
   const {
     RecallTermCard,
     MeaningPanel
-  } = window.MemoXGameRecall;
+  } = window.MemoXRecallMode;
   const Note = window.Note;
-  function GameRecall({
+  function RecallMode({
     state = 'before-reveal'
   }) {
     const revealed = state === 'revealed' || state === 'forgot' || state === 'remembered';
     const bar = /*#__PURE__*/React.createElement(MxAppBar, {
-      node: "game-recall/appbar",
+      node: "recall-mode/appbar",
       title: "Recall",
       leading: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "arrow_back",
-        node: "game-recall/back"
+        node: "recall-mode/back"
       }),
       trailing: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "more_horiz",
-        node: "game-recall/options"
+        node: "recall-mode/options"
       })
     });
     if (state === 'complete') {
       return /*#__PURE__*/React.createElement(MxScaffold, {
-        node: "game-recall/screen",
+        node: "recall-mode/screen",
         appBar: bar
       }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
         done: 20,
         total: 20,
-        node: "game-recall/progress"
+        node: "recall-mode/progress"
       }), /*#__PURE__*/React.createElement(window.EmptyState, {
-        node: "game-recall/complete",
+        node: "recall-mode/complete",
         icon: "celebration",
         tone: "success",
         title: "Round complete!",
@@ -3422,17 +3422,17 @@ try { (() => {
         action: /*#__PURE__*/React.createElement(MxButton, {
           variant: "primary",
           icon: "arrow_forward",
-          node: "game-recall/next"
+          node: "recall-mode/next"
         }, "Next round")
       }));
     }
     return /*#__PURE__*/React.createElement(MxScaffold, {
-      node: "game-recall/screen",
+      node: "recall-mode/screen",
       appBar: bar
     }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
       done: 12,
       total: 20,
-      node: "game-recall/progress"
+      node: "recall-mode/progress"
     }), /*#__PURE__*/React.createElement(RecallTermCard, null), /*#__PURE__*/React.createElement(MeaningPanel, {
       revealed: revealed
     }), state === 'forgot' ? /*#__PURE__*/React.createElement(Note, {
@@ -3448,7 +3448,7 @@ try { (() => {
       icon: "visibility",
       block: true,
       size: "lg",
-      node: "game-recall/reveal"
+      node: "recall-mode/reveal"
     }, "Show") : /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
@@ -3459,18 +3459,18 @@ try { (() => {
       variant: state === 'forgot' ? 'primary' : 'ghost',
       danger: state === 'forgot',
       block: true,
-      node: "game-recall/forgot"
+      node: "recall-mode/forgot"
     }, "Forgot"), /*#__PURE__*/React.createElement(MxButton, {
       variant: "primary",
       block: true,
-      node: "game-recall/remembered"
+      node: "recall-mode/remembered"
     }, "Got it")));
   }
-  window.GameRecall = GameRecall;
+  window.RecallMode = RecallMode;
 })();
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-recall/GameRecall.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/recall-mode/RecallMode.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-recall/components/MeaningPanel.jsx
+// ui_kits/memox-app/_features/recall-mode/components/MeaningPanel.jsx
 try { (() => {
 /* MemoX — Game-recall local: MeaningPanel (hidden prompt → revealed meaning). */
 (function () {
@@ -3482,7 +3482,7 @@ try { (() => {
     revealed
   }) {
     return /*#__PURE__*/React.createElement(MxCard, {
-      node: "game-recall/meaning",
+      node: "recall-mode/meaning",
       style: {
         alignItems: 'center',
         textAlign: 'center',
@@ -3523,18 +3523,18 @@ try { (() => {
       }
     }, "visibility"), " Recall the meaning, then tap \u201CShow\u201D"));
   }
-  window.MemoXGameRecall = window.MemoXGameRecall || {};
-  window.MemoXGameRecall.MeaningPanel = MeaningPanel;
+  window.MemoXRecallMode = window.MemoXRecallMode || {};
+  window.MemoXRecallMode.MeaningPanel = MeaningPanel;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const MeaningPanel = (window.MemoXGameRecall || {}).MeaningPanel;
+const MeaningPanel = (window.MemoXRecallMode || {}).MeaningPanel;
 Object.assign(__ds_scope, { MeaningPanel });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-recall/components/MeaningPanel.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/recall-mode/components/MeaningPanel.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-recall/components/RecallTermCard.jsx
+// ui_kits/memox-app/_features/recall-mode/components/RecallTermCard.jsx
 try { (() => {
 /* MemoX — Game-recall local: RecallTermCard (prompt term + audio/edit controls).
    NOTE: kept inline (not promoted to a shared card): its MxCard/MxIconButton carry
@@ -3548,7 +3548,7 @@ try { (() => {
   } = NS;
   function RecallTermCard() {
     return /*#__PURE__*/React.createElement(MxCard, {
-      node: "game-recall/term",
+      node: "recall-mode/term",
       style: {
         alignItems: 'center',
         textAlign: 'center',
@@ -3568,25 +3568,25 @@ try { (() => {
       }
     }, /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "volume_up",
-      node: "game-recall/audio"
+      node: "recall-mode/audio"
     }), /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "edit",
       size: "sm",
-      node: "game-recall/edit"
+      node: "recall-mode/edit"
     })));
   }
-  window.MemoXGameRecall = window.MemoXGameRecall || {};
-  window.MemoXGameRecall.RecallTermCard = RecallTermCard;
+  window.MemoXRecallMode = window.MemoXRecallMode || {};
+  window.MemoXRecallMode.RecallTermCard = RecallTermCard;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite. */
-const RecallTermCard = (window.MemoXGameRecall || {}).RecallTermCard;
+const RecallTermCard = (window.MemoXRecallMode || {}).RecallTermCard;
 Object.assign(__ds_scope, { RecallTermCard });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-recall/components/RecallTermCard.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/recall-mode/components/RecallTermCard.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-typing/GameTyping.jsx
+// ui_kits/memox-app/_features/fill-mode/FillMode.jsx
 try { (() => {
-/* MemoX — Game: Typing. States: waiting · typing · hint · correct · wrong · complete
+/* MemoX — Game: Fill. States: waiting · typing · hint · correct · wrong · complete
    Feature-local components: components/{CharCompare,InputBox}.jsx */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54;
@@ -3600,7 +3600,7 @@ try { (() => {
   const {
     CharCompare,
     InputBox
-  } = window.MemoXGameTyping;
+  } = window.MemoXFillMode;
   const Note = window.Note;
   const INPUT = {
     waiting: {
@@ -3622,31 +3622,31 @@ try { (() => {
       tone: 'wrong'
     }
   };
-  function GameTyping({
+  function FillMode({
     state = 'waiting'
   }) {
     const bar = /*#__PURE__*/React.createElement(MxAppBar, {
-      node: "game-typing/appbar",
-      title: "Typing",
+      node: "fill-mode/appbar",
+      title: "Fill",
       leading: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "arrow_back",
-        node: "game-typing/back"
+        node: "fill-mode/back"
       }),
       trailing: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "more_horiz",
-        node: "game-typing/options"
+        node: "fill-mode/options"
       })
     });
     if (state === 'complete') {
       return /*#__PURE__*/React.createElement(MxScaffold, {
-        node: "game-typing/screen",
+        node: "fill-mode/screen",
         appBar: bar
       }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
         done: 20,
         total: 20,
-        node: "game-typing/progress"
+        node: "fill-mode/progress"
       }), /*#__PURE__*/React.createElement(window.EmptyState, {
-        node: "game-typing/complete",
+        node: "fill-mode/complete",
         icon: "celebration",
         tone: "success",
         title: "Round complete!",
@@ -3654,7 +3654,7 @@ try { (() => {
         action: /*#__PURE__*/React.createElement(MxButton, {
           variant: "primary",
           icon: "arrow_forward",
-          node: "game-typing/next"
+          node: "fill-mode/next"
         }, "Next round")
       }));
     }
@@ -3665,7 +3665,7 @@ try { (() => {
         variant: "primary",
         icon: "arrow_forward",
         block: true,
-        node: "game-typing/next"
+        node: "fill-mode/next"
       }, "Next");
     } else if (state === 'wrong') {
       controls = /*#__PURE__*/React.createElement("div", {
@@ -3677,11 +3677,11 @@ try { (() => {
       }, /*#__PURE__*/React.createElement(MxButton, {
         variant: "outline",
         block: true,
-        node: "game-typing/accept"
+        node: "fill-mode/accept"
       }, "Correct"), /*#__PURE__*/React.createElement(MxButton, {
         variant: "primary",
         block: true,
-        node: "game-typing/retry"
+        node: "fill-mode/retry"
       }, "Retry"));
     } else {
       controls = /*#__PURE__*/React.createElement("div", {
@@ -3694,23 +3694,23 @@ try { (() => {
         variant: "ghost",
         icon: "lightbulb",
         block: true,
-        node: "game-typing/hint"
+        node: "fill-mode/hint"
       }, "Help"), /*#__PURE__*/React.createElement(MxButton, {
         variant: "primary",
         block: true,
         disabled: state === 'waiting',
-        node: "game-typing/check"
+        node: "fill-mode/check"
       }, "Check"));
     }
     return /*#__PURE__*/React.createElement(MxScaffold, {
-      node: "game-typing/screen",
+      node: "fill-mode/screen",
       appBar: bar
     }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
       done: 16,
       total: 20,
-      node: "game-typing/progress"
+      node: "fill-mode/progress"
     }), /*#__PURE__*/React.createElement(MxCard, {
-      node: "game-typing/meaning",
+      node: "fill-mode/meaning",
       style: {
         alignItems: 'center',
         textAlign: 'center',
@@ -3748,11 +3748,11 @@ try { (() => {
       }
     }, "\uCE5C\uAD6C")) : null, controls);
   }
-  window.GameTyping = GameTyping;
+  window.FillMode = FillMode;
 })();
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-typing/GameTyping.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/fill-mode/FillMode.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-typing/components/CharCompare.jsx
+// ui_kits/memox-app/_features/fill-mode/components/CharCompare.jsx
 try { (() => {
 /* MemoX — Game-typing local: CharCompare (per-character typed-vs-correct diff). */
 (function () {
@@ -3777,18 +3777,18 @@ try { (() => {
       }, typed[i] || '_');
     }));
   }
-  window.MemoXGameTyping = window.MemoXGameTyping || {};
-  window.MemoXGameTyping.CharCompare = CharCompare;
+  window.MemoXFillMode = window.MemoXFillMode || {};
+  window.MemoXFillMode.CharCompare = CharCompare;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const CharCompare = (window.MemoXGameTyping || {}).CharCompare;
+const CharCompare = (window.MemoXFillMode || {}).CharCompare;
 Object.assign(__ds_scope, { CharCompare });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-typing/components/CharCompare.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/fill-mode/components/CharCompare.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/game-typing/components/InputBox.jsx
+// ui_kits/memox-app/_features/fill-mode/components/InputBox.jsx
 try { (() => {
 /* MemoX — Game-typing local: InputBox (answer field; tone tints the border). */
 (function () {
@@ -3799,7 +3799,7 @@ try { (() => {
   }) {
     const border = tone === 'correct' ? 'var(--memox-stroke-emphasis) solid var(--memox-success)' : tone === 'wrong' ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)';
     return /*#__PURE__*/React.createElement("div", {
-      "data-mx-node": "game-typing/input",
+      "data-mx-node": "fill-mode/input",
       style: {
         border,
         borderRadius: 'var(--memox-radius-control)',
@@ -3820,16 +3820,16 @@ try { (() => {
       }
     }, placeholder));
   }
-  window.MemoXGameTyping = window.MemoXGameTyping || {};
-  window.MemoXGameTyping.InputBox = InputBox;
+  window.MemoXFillMode = window.MemoXFillMode || {};
+  window.MemoXFillMode.InputBox = InputBox;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const InputBox = (window.MemoXGameTyping || {}).InputBox;
+const InputBox = (window.MemoXFillMode || {}).InputBox;
 Object.assign(__ds_scope, { InputBox });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/game-typing/components/InputBox.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/fill-mode/components/InputBox.jsx", error: String((e && e.message) || e) }); }
 
 // ui_kits/memox-app/_features/import/Import.jsx
 try { (() => {
@@ -5001,7 +5001,7 @@ const TimePickerSheet = (window.MemoXReminder || {}).TimePickerSheet;
 Object.assign(__ds_scope, { TimePickerSheet });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/reminder/components/TimePickerSheet.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/review/Review.jsx
+// ui_kits/memox-app/_features/review-mode/ReviewMode.jsx
 try { (() => {
 /* MemoX — Review. States: browsing · editing · audio · end
    Feature-local components: components/{MeaningCard,TermCard}.jsx */
@@ -5016,32 +5016,32 @@ try { (() => {
   const {
     MeaningCard,
     TermCard
-  } = window.MemoXReview;
-  function Review({
+  } = window.MemoXReviewMode;
+  function ReviewMode({
     state = 'browsing'
   }) {
     const editing = state === 'editing';
     const bar = /*#__PURE__*/React.createElement(MxAppBar, {
-      node: "review/appbar",
+      node: "review-mode/appbar",
       title: "Review",
       leading: /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "arrow_back",
-        node: "review/back"
+        node: "review-mode/back"
       }),
       trailing: /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "format_size",
-        node: "review/text-size"
+        node: "review-mode/text-size"
       }), /*#__PURE__*/React.createElement(MxIconButton, {
         icon: "more_vert",
-        node: "review/options"
+        node: "review-mode/options"
       }))
     });
     if (state === 'end') {
       return /*#__PURE__*/React.createElement(MxScaffold, {
-        node: "review/screen",
+        node: "review-mode/screen",
         appBar: bar
       }, /*#__PURE__*/React.createElement(window.EmptyState, {
-        node: "review/end",
+        node: "review-mode/end",
         icon: "done_all",
         tone: "success",
         title: "All reviewed",
@@ -5057,22 +5057,22 @@ try { (() => {
           variant: "primary",
           icon: "school",
           block: true,
-          node: "review/study-now"
+          node: "review-mode/study-now"
         }, "Study now"), /*#__PURE__*/React.createElement(MxButton, {
           variant: "ghost",
           icon: "arrow_back",
           block: true,
-          node: "review/back-deck"
+          node: "review-mode/back-deck"
         }, "Back to deck"))
       }));
     }
     return /*#__PURE__*/React.createElement(MxScaffold, {
-      node: "review/screen",
+      node: "review-mode/screen",
       appBar: bar
     }, /*#__PURE__*/React.createElement(window.ProgressHeader, {
       done: 7,
       total: 20,
-      node: "review/progress"
+      node: "review-mode/progress"
     }), /*#__PURE__*/React.createElement(MeaningCard, {
       editing: editing
     }), /*#__PURE__*/React.createElement(TermCard, {
@@ -5087,21 +5087,21 @@ try { (() => {
       }
     }, /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "chevron_left",
-      node: "review/prev"
+      node: "review-mode/prev"
     }), /*#__PURE__*/React.createElement("span", {
       style: {
         fontSize: 'var(--memox-font-size-sm)'
       }
     }, "Swipe to continue"), /*#__PURE__*/React.createElement(MxIconButton, {
       icon: "chevron_right",
-      node: "review/next"
+      node: "review-mode/next"
     })));
   }
-  window.Review = Review;
+  window.ReviewMode = ReviewMode;
 })();
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review/Review.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review-mode/ReviewMode.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/review/components/MeaningCard.jsx
+// ui_kits/memox-app/_features/review-mode/components/MeaningCard.jsx
 try { (() => {
 /* MemoX — Review local: MeaningCard (meaning + inline edit affordance). */
 (function () {
@@ -5115,7 +5115,7 @@ try { (() => {
     editing
   }) {
     return /*#__PURE__*/React.createElement(MxCard, {
-      node: "review/meaning",
+      node: "review-mode/meaning",
       style: {
         gap: 'var(--memox-space-3)'
       }
@@ -5132,7 +5132,7 @@ try { (() => {
     }, "MEANING"), /*#__PURE__*/React.createElement(MxIconButton, {
       icon: editing ? 'close' : 'edit',
       size: "sm",
-      node: "review/edit"
+      node: "review-mode/edit"
     })), editing ? /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement("div", {
       style: {
         border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)',
@@ -5154,11 +5154,11 @@ try { (() => {
     }, /*#__PURE__*/React.createElement(MxButton, {
       variant: "ghost",
       size: "sm",
-      node: "review/edit-cancel"
+      node: "review-mode/edit-cancel"
     }, "Cancel"), /*#__PURE__*/React.createElement(MxButton, {
       variant: "primary",
       size: "sm",
-      node: "review/edit-save"
+      node: "review-mode/edit-save"
     }, "Save"))) : /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 'var(--memox-font-size-2xl)',
@@ -5166,16 +5166,16 @@ try { (() => {
       }
     }, "school"));
   }
-  window.MemoXReview = window.MemoXReview || {};
-  window.MemoXReview.MeaningCard = MeaningCard;
+  window.MemoXReviewMode = window.MemoXReviewMode || {};
+  window.MemoXReviewMode.MeaningCard = MeaningCard;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite. */
-const MeaningCard = (window.MemoXReview || {}).MeaningCard;
+const MeaningCard = (window.MemoXReviewMode || {}).MeaningCard;
 Object.assign(__ds_scope, { MeaningCard });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review/components/MeaningCard.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review-mode/components/MeaningCard.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/review/components/TermCard.jsx
+// ui_kits/memox-app/_features/review-mode/components/TermCard.jsx
 try { (() => {
 /* MemoX — Review local: TermCard (term + audio control; "Playing…" in audio state). */
 (function () {
@@ -5188,7 +5188,7 @@ try { (() => {
     state
   }) {
     return /*#__PURE__*/React.createElement(MxCard, {
-      node: "review/term",
+      node: "review-mode/term",
       style: {
         alignItems: 'center',
         textAlign: 'center',
@@ -5203,7 +5203,7 @@ try { (() => {
       }
     }, "\uD559\uAD50"), /*#__PURE__*/React.createElement(MxIconButton, {
       icon: state === 'audio' ? 'graphic_eq' : 'volume_up',
-      node: "review/audio"
+      node: "review-mode/audio"
     }), state === 'audio' ? /*#__PURE__*/React.createElement("div", {
       style: {
         fontSize: 'var(--memox-font-size-sm)',
@@ -5212,16 +5212,16 @@ try { (() => {
       }
     }, "Playing\u2026") : null);
   }
-  window.MemoXReview = window.MemoXReview || {};
-  window.MemoXReview.TermCard = TermCard;
+  window.MemoXReviewMode = window.MemoXReviewMode || {};
+  window.MemoXReviewMode.TermCard = TermCard;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const TermCard = (window.MemoXReview || {}).TermCard;
+const TermCard = (window.MemoXReviewMode || {}).TermCard;
 Object.assign(__ds_scope, { TermCard });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review/components/TermCard.jsx", error: String((e && e.message) || e) }); }
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/review-mode/components/TermCard.jsx", error: String((e && e.message) || e) }); }
 
 // ui_kits/memox-app/_features/search/Search.jsx
 try { (() => {
@@ -6369,9 +6369,9 @@ Object.assign(__ds_scope, { StreakGoalCard });
 // ui_kits/memox-app/_features/study-session/StudySession.jsx
 try { (() => {
 /* MemoX — Study session (NewLearn 5 stages + DueReview).
-   States: stage1-review · stage2-matching · stage3-choice · stage4-recall · stage5-typing · relearn · due-review · exit · resume-error · answer-save-error
-   Feature-local components: components/{PromptCard,StageReview,StageMatching,StageChoice,
-   StageRecall,StageTyping,ExitDialog,AnswerSaveErrorDialog,ResumeErrorState}.jsx */
+   States: stage1-review · stage2-match · stage3-guess · stage4-recall · stage5-fill · relearn · due-review · exit · resume-error · answer-save-error
+   Feature-local components: components/{PromptCard,StageReview,StageMatch,StageGuess,
+   StageRecall,StageFill,ExitDialog,AnswerSaveErrorDialog,ResumeErrorState}.jsx */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54;
   const {
@@ -6387,13 +6387,13 @@ try { (() => {
       done: 4,
       total: 25
     },
-    'stage2-matching': {
-      label: 'Stage 2 · Matching',
+    'stage2-match': {
+      label: 'Stage 2 · Match',
       done: 8,
       total: 25
     },
-    'stage3-choice': {
-      label: 'Stage 3 · Multiple choice',
+    'stage3-guess': {
+      label: 'Stage 3 · Guess',
       done: 12,
       total: 25
     },
@@ -6402,13 +6402,13 @@ try { (() => {
       done: 16,
       total: 25
     },
-    'stage5-typing': {
-      label: 'Stage 5 · Typing',
+    'stage5-fill': {
+      label: 'Stage 5 · Fill',
       done: 21,
       total: 25
     },
     'relearn': {
-      label: 'Stage 3 · Multiple choice',
+      label: 'Stage 3 · Guess',
       done: 12,
       total: 25
     },
@@ -6423,7 +6423,7 @@ try { (() => {
       total: 25
     },
     'answer-save-error': {
-      label: 'Stage 5 · Typing',
+      label: 'Stage 5 · Fill',
       done: 21,
       total: 25
     }
@@ -6436,12 +6436,12 @@ try { (() => {
   }) {
     const SS = window.MemoXStudySession;
     if (state === 'stage1-review' || state === 'exit') return /*#__PURE__*/React.createElement(SS.StageReview, null);
-    if (state === 'stage2-matching') return /*#__PURE__*/React.createElement(SS.StageMatching, null);
-    if (state === 'stage3-choice' || state === 'relearn') return /*#__PURE__*/React.createElement(SS.StageChoice, {
+    if (state === 'stage2-match') return /*#__PURE__*/React.createElement(SS.StageMatch, null);
+    if (state === 'stage3-guess' || state === 'relearn') return /*#__PURE__*/React.createElement(SS.StageGuess, {
       relearn: state === 'relearn'
     });
     if (state === 'stage4-recall') return /*#__PURE__*/React.createElement(SS.StageRecall, null);
-    if (state === 'stage5-typing' || state === 'answer-save-error') return /*#__PURE__*/React.createElement(SS.StageTyping, null);
+    if (state === 'stage5-fill' || state === 'answer-save-error') return /*#__PURE__*/React.createElement(SS.StageFill, null);
     // due-review
     return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Note, {
       icon: "schedule",
@@ -6614,7 +6614,7 @@ Object.assign(__ds_scope, { ExitDialog });
 // ui_kits/memox-app/_features/study-session/components/PromptCard.jsx
 try { (() => {
 /* MemoX — Study-session local: PromptCard (centered term + optional sub-label).
-   Shared by StageChoice / StageRecall / StageTyping — load before them. */
+   Shared by StageGuess / StageRecall / StageFill — load before them. */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54 || {};
   const {
@@ -6720,15 +6720,15 @@ const ResumeErrorState = (window.MemoXStudySession || {}).ResumeErrorState;
 Object.assign(__ds_scope, { ResumeErrorState });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/ResumeErrorState.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/study-session/components/StageChoice.jsx
+// ui_kits/memox-app/_features/study-session/components/StageGuess.jsx
 try { (() => {
-/* MemoX — Study-session local: StageChoice (stage 3 / relearn — multiple choice).
+/* MemoX — Study-session local: StageGuess (stage 3 / relearn — multiple choice).
    `relearn` adds the not-counted warning note. */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54 || {};
   const Note = window.Note;
   const Opt = window.ChoiceOption;
-  function StageChoice({
+  function StageGuess({
     relearn
   }) {
     const {
@@ -6752,19 +6752,19 @@ try { (() => {
     }))));
   }
   window.MemoXStudySession = window.MemoXStudySession || {};
-  window.MemoXStudySession.StageChoice = StageChoice;
+  window.MemoXStudySession.StageGuess = StageGuess;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const StageChoice = (window.MemoXStudySession || {}).StageChoice;
-Object.assign(__ds_scope, { StageChoice });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageChoice.jsx", error: String((e && e.message) || e) }); }
+const StageGuess = (window.MemoXStudySession || {}).StageGuess;
+Object.assign(__ds_scope, { StageGuess });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageGuess.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/study-session/components/StageMatching.jsx
+// ui_kits/memox-app/_features/study-session/components/StageMatch.jsx
 try { (() => {
-/* MemoX — Study-session local: StageMatching (stage 2 — two columns of tiles).
+/* MemoX — Study-session local: StageMatch (stage 2 — two columns of tiles).
    `Tile` is used only here, so it stays inside this file. It is a plain styled
    div — no Mx* primitive needed, so this file intentionally reads no NS. */
 (function () {
@@ -6783,7 +6783,7 @@ try { (() => {
       }
     }, text);
   }
-  function StageMatching() {
+  function StageMatch() {
     return /*#__PURE__*/React.createElement("div", {
       style: {
         display: 'grid',
@@ -6811,15 +6811,15 @@ try { (() => {
     }))));
   }
   window.MemoXStudySession = window.MemoXStudySession || {};
-  window.MemoXStudySession.StageMatching = StageMatching;
+  window.MemoXStudySession.StageMatch = StageMatch;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const StageMatching = (window.MemoXStudySession || {}).StageMatching;
-Object.assign(__ds_scope, { StageMatching });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageMatching.jsx", error: String((e && e.message) || e) }); }
+const StageMatch = (window.MemoXStudySession || {}).StageMatch;
+Object.assign(__ds_scope, { StageMatch });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageMatch.jsx", error: String((e && e.message) || e) }); }
 
 // ui_kits/memox-app/_features/study-session/components/StageRecall.jsx
 try { (() => {
@@ -6924,15 +6924,15 @@ const StageReview = (window.MemoXStudySession || {}).StageReview;
 Object.assign(__ds_scope, { StageReview });
 })(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageReview.jsx", error: String((e && e.message) || e) }); }
 
-// ui_kits/memox-app/_features/study-session/components/StageTyping.jsx
+// ui_kits/memox-app/_features/study-session/components/StageFill.jsx
 try { (() => {
-/* MemoX — Study-session local: StageTyping (stage 5 / answer-save-error — type answer). */
+/* MemoX — Study-session local: StageFill (stage 5 / answer-save-error — type answer). */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54 || {};
   const {
     MxButton
   } = NS;
-  function StageTyping() {
+  function StageFill() {
     const {
       PromptCard
     } = window.MemoXStudySession || {};
@@ -6967,15 +6967,15 @@ try { (() => {
     }, "Check")));
   }
   window.MemoXStudySession = window.MemoXStudySession || {};
-  window.MemoXStudySession.StageTyping = StageTyping;
+  window.MemoXStudySession.StageFill = StageFill;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-const StageTyping = (window.MemoXStudySession || {}).StageTyping;
-Object.assign(__ds_scope, { StageTyping });
-})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageTyping.jsx", error: String((e && e.message) || e) }); }
+const StageFill = (window.MemoXStudySession || {}).StageFill;
+Object.assign(__ds_scope, { StageFill });
+})(); } catch (e) { __ds_ns.__errors.push({ path: "ui_kits/memox-app/_features/study-session/components/StageFill.jsx", error: String((e && e.message) || e) }); }
 
 // ui_kits/memox-app/_features/theme/Theme.jsx
 try { (() => {
@@ -8235,7 +8235,7 @@ __ds_ns.Field = __ds_scope.Field;
 
 __ds_ns.Tile = __ds_scope.Tile;
 
-__ds_ns.McPromptCard = __ds_scope.McPromptCard;
+__ds_ns.GuessPromptCard = __ds_scope.GuessPromptCard;
 
 __ds_ns.GameOption = __ds_scope.GameOption;
 
@@ -8307,15 +8307,15 @@ __ds_ns.PromptCard = __ds_scope.PromptCard;
 
 __ds_ns.ResumeErrorState = __ds_scope.ResumeErrorState;
 
-__ds_ns.StageChoice = __ds_scope.StageChoice;
+__ds_ns.StageGuess = __ds_scope.StageGuess;
 
-__ds_ns.StageMatching = __ds_scope.StageMatching;
+__ds_ns.StageMatch = __ds_scope.StageMatch;
 
 __ds_ns.StageRecall = __ds_scope.StageRecall;
 
 __ds_ns.StageReview = __ds_scope.StageReview;
 
-__ds_ns.StageTyping = __ds_scope.StageTyping;
+__ds_ns.StageFill = __ds_scope.StageFill;
 
 __ds_ns.AccentPicker = __ds_scope.AccentPicker;
 
