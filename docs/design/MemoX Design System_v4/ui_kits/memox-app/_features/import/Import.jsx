@@ -2,7 +2,7 @@
    Feature-local components: components/{Table,SourceCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxList } = NS;
 const { Table, SourceCard } = window.MemoXImport;
 
 const SOURCES = [
@@ -56,7 +56,7 @@ function Import({ state = 'source' }) {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
         <SectionLabel>CHOOSE SOURCE</SectionLabel>
-        {SOURCES.map((s, i) => <SourceCard key={i} source={s} index={i} />)}
+        <MxList node="import/sources">{SOURCES.map((s, i) => <SourceCard key={i} source={s} index={i} />)}</MxList>
         <div data-mx-node="import/paste" style={{ border: 'var(--memox-stroke-hairline) dashed var(--memox-divider)', borderRadius: 'var(--memox-radius-control)', minHeight: 'var(--memox-size-xl)', padding: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)', fontSize: 'var(--memox-font-size-base)' }}>Paste your data here (one card per line: term[tab]meaning)…</div>
       </MxScaffold>
     );

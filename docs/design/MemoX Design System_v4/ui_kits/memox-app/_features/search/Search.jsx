@@ -2,7 +2,7 @@
    Feature-local components: components/{ResultRow,Chips}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxCard } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxCard, MxList } = NS;
 const { ResultRow, Chips } = window.MemoXSearch;
 
 const RESULTS = [
@@ -40,9 +40,9 @@ function Search({ state = 'empty-recent' }) {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
         <Chips active={0} />
-        {[0, 1, 2].map((i) => (
+        <MxList node="search/loading">{[0, 1, 2].map((i) => (
           <MxCard key={i} padding="sm"><S w="40%" h={16} /><S w="62%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /><S w="50%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></MxCard>
-        ))}
+        ))}</MxList>
       </MxScaffold>
     );
   }
@@ -62,9 +62,9 @@ function Search({ state = 'empty-recent' }) {
   return (
     <MxScaffold node="search/screen" appBar={bar}>
       <Chips active={filtered ? 2 : 0} />
-      {rows.map((r, i) => (
+      <MxList node="search/results">{rows.map((r, i) => (
         <MxCard key={i} padding="sm" interactive node={'search/result-' + i}><ResultRow {...r} /></MxCard>
-      ))}
+      ))}</MxList>
     </MxScaffold>
   );
 }
