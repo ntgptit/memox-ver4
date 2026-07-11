@@ -2,7 +2,7 @@
    Feature-local components: components/{ModeOption,ScopeCard,ScopeSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxButton, MxIconButton } = NS;
+const { MxScaffold, MxAppBar, MxButton, MxIconButton, MxList } = NS;
 const { ModeOption, ScopeCard, ScopeSheet } = window.MemoXModePicker;
 
 const MODES = [
@@ -25,7 +25,7 @@ function ModePicker({ state = 'default' }) {
 
       <ScopeCard />
 
-      {MODES.map((g) => <ModeOption key={g.id} g={g} disabled={notEnough} />)}
+      <MxList node="mode-picker/modes">{MODES.map((g) => <ModeOption key={g.id} g={g} disabled={notEnough} />)}</MxList>
 
       <div style={{ textAlign: 'center', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)', padding: 'var(--memox-space-1) 0' }}>5 words per round · change in Settings</div>
     </MxScaffold>
