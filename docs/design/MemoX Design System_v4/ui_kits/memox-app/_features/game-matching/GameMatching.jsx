@@ -42,16 +42,18 @@ function GameMatching({ state = 'playing' }) {
   return (
     <MxScaffold node="game-matching/screen" appBar={bar}>
       <window.ProgressHeader done={DONE[state] || 0} total={TOTAL} node="game-matching/progress" />
-      {/* A tight, chunky "game board": big size-2xl cards, small fixed 8px gaps, grouped into
-          one dense block. marginTop:auto pushes it into the bottom (thumb zone); the negative
-          marginBottom reclaims the body's bottom-nav padding (this screen has no bottom nav),
-          giving the tall cards the room to fit one screen without scrolling. */}
-      <div style={{ marginTop: 'auto', marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-2)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
-          {LEFT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'L', i)} node={'game-matching/left-' + i} />)}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
-          {RIGHT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'R', i)} node={'game-matching/right-' + i} />)}
+      {/* A tight, chunky "game board" (big cards, small 8px gaps) VERTICALLY CENTERED for a
+          balanced layout — equal breathing above and below, not jammed to one edge. The wrapper
+          fills the remaining body height and reclaims the body's bottom-nav padding (this screen
+          has no bottom nav) so the tall cards fit one screen without scrolling. */}
+      <div style={{ flex: '1 1 0', minHeight: 0, marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-2)' }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+            {LEFT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'L', i)} node={'game-matching/left-' + i} />)}
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+            {RIGHT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'R', i)} node={'game-matching/right-' + i} />)}
+          </div>
         </div>
       </div>
     </MxScaffold>
