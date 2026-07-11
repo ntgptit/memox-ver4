@@ -9,7 +9,7 @@ const { MxCard, MxIconButton } = NS;
 function McPromptCard() {
   return (
     <MxCard node="game-mc/prompt" style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', minHeight: 'calc(var(--memox-size-2xl) + var(--memox-space-6))', padding: 'var(--memox-space-6)' }}>
-      <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
+      <div style={{ fontSize: 'var(--memox-font-size-3xl)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>학교</div>
       {/* Utility controls tucked into the two right corners so the term stays the sole focus */}
       <div style={{ position: 'absolute', top: 'var(--memox-space-4)', right: 'var(--memox-space-4)' }}>
         <MxIconButton icon="edit" size="sm" node="game-mc/edit" ariaLabel="Edit card" />
