@@ -22,7 +22,7 @@
   .mxg-gallery { display: flex; flex-direction: column; gap: 28px; max-width: 880px; margin: 0 auto; }
 
   .mxg-row { background: #ffffff; border-radius: 24px; padding: 22px; box-shadow: 0 10px 30px rgba(40, 55, 95, .08), 0 2px 4px rgba(40, 55, 95, .06); }
-  .mxg-row__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+  .mxg-row__head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 20px; flex-wrap: wrap; }
   .mxg-row__title { font-size: 17px; font-weight: 800; letter-spacing: -.01em; white-space: nowrap; }
   .mxg-row__sub { font-size: 12.5px; color: #8089a3; margin-top: 2px; }
 
@@ -33,14 +33,19 @@
   .mxg-stepper .mxg-label { min-width: 96px; text-align: center; font-size: 13px; font-weight: 700; letter-spacing: .02em; text-transform: capitalize; color: #2a3357; }
 
   .mxg-frames { display: flex; gap: 22px; justify-content: center; flex-wrap: wrap; }
-  .mxg-frame-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+  .mxg-frame-wrap { display: flex; flex-direction: column; align-items: center; gap: 10px; flex: 1 1 390px; max-width: 390px; min-width: 0; }
+  /* The device mock is a fixed 390x780 (the kit's design width). On narrow viewports the
+     scaler shrinks the whole frame to fit its container and reserves the SCALED footprint,
+     so the frame never bulges past the gallery card. Scale is set inline per measured width. */
+  .mxg-frame-scaler { position: relative; max-width: 100%; }
   .mxg-frame {
-    position: relative;
+    position: absolute; top: 0; left: 0;
     width: 390px; height: 780px;
     border-radius: 44px;
     overflow: hidden;
     background: var(--memox-bg);
     box-shadow: 0 0 0 9px #11152b, 0 0 0 11px #2a2f4a, 0 22px 48px rgba(20, 28, 56, .32);
+    transform-origin: top left;
   }
   .mxg-frame[data-theme="dark"] { box-shadow: 0 0 0 9px #05081a, 0 0 0 11px #232a47, 0 22px 48px rgba(0, 0, 0, .5); }
   .mxg-frame > .app { width: 100%; height: 100%; }
@@ -218,15 +223,33 @@ class ErrorBoundary extends React.Component {
   }
 }
 
+const FRAME_W = 390, FRAME_H = 780;
 function Frame({ theme, Comp, state }) {
+  const wrapRef = React.useRef(null);
+  const [scale, setScale] = React.useState(1);
+  React.useEffect(() => {
+    const el = wrapRef.current;
+    if (!el) return;
+    setScale(Math.min(1, el.clientWidth / FRAME_W));
+    // Read the post-layout width from the observer entry (a synchronous clientWidth read
+    // can be stale mid-resize), so the frame rescales correctly on orientation changes.
+    const ro = new ResizeObserver(([entry]) => {
+      const w = entry.contentRect.width;
+      if (w) setScale(Math.min(1, w / FRAME_W));
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
   return (
-    <div className="mxg-frame-wrap">
-      <div className="mxg-frame" data-theme={theme}>
-        <ErrorBoundary>
-          {typeof Comp === 'function'
-            ? <Comp state={state} />
-            : <div style={{ padding: '16px', color: 'var(--memox-text-tertiary)', fontSize: '13px' }}>Screen not loaded — serve over http:// (e.g. <code>node tool/preview/kit-server.mjs</code>), not file://.</div>}
-        </ErrorBoundary>
+    <div className="mxg-frame-wrap" ref={wrapRef}>
+      <div className="mxg-frame-scaler" style={{ width: FRAME_W * scale, height: FRAME_H * scale }}>
+        <div className="mxg-frame" data-theme={theme} style={{ transform: `scale(${scale})` }}>
+          <ErrorBoundary>
+            {typeof Comp === 'function'
+              ? <Comp state={state} />
+              : <div style={{ padding: '16px', color: 'var(--memox-text-tertiary)', fontSize: '13px' }}>Screen not loaded — serve over http:// (e.g. <code>node tool/preview/kit-server.mjs</code>), not file://.</div>}
+          </ErrorBoundary>
+        </div>
       </div>
       <div className="mxg-cap" data-theme={theme}>{theme}</div>
     </div>
