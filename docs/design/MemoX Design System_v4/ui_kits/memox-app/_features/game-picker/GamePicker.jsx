@@ -6,10 +6,10 @@ const { MxScaffold, MxAppBar, MxButton, MxIconButton } = NS;
 const { GameOption, ScopeCard, ScopeSheet } = window.MemoXGamePicker;
 
 const GAMES = [
-  { icon: 'join_inner', name: 'Matching', desc: 'Match terms to meanings', id: 'matching' },
-  { icon: 'quiz', name: 'Multiple choice', desc: 'Pick the right meaning', id: 'mc' },
+  { icon: 'join_inner', name: 'Match', desc: 'Match terms to meanings', id: 'match' },
+  { icon: 'quiz', name: 'Guess', desc: 'Pick the right meaning', id: 'guess' },
   { icon: 'psychology', name: 'Recall', desc: 'Recall, then self-grade', id: 'recall' },
-  { icon: 'keyboard', name: 'Typing', desc: 'Type the term from its meaning', id: 'typing' },
+  { icon: 'keyboard', name: 'Fill', desc: 'Type the term from its meaning', id: 'fill' },
 ];
 
 function GamePicker({ state = 'default' }) {

@@ -116,19 +116,19 @@
 <script type="text/babel-src" src="_features/game-picker/components/ScopeCard.jsx"></script>
 <script type="text/babel-src" src="_features/game-picker/components/ScopeSheet.jsx"></script>
 <script type="text/babel-src" src="_features/game-picker/GamePicker.jsx"></script>
-<script type="text/babel-src" src="_features/game-matching/components/Tile.jsx"></script>
-<script type="text/babel-src" src="_features/game-matching/GameMatching.jsx"></script>
-<script type="text/babel-src" src="_features/game-mc/components/McPromptCard.jsx"></script>
-<script type="text/babel-src" src="_features/game-mc/GameMultipleChoice.jsx"></script>
-<script type="text/babel-src" src="_features/game-recall/components/RecallTermCard.jsx"></script>
-<script type="text/babel-src" src="_features/game-recall/components/MeaningPanel.jsx"></script>
-<script type="text/babel-src" src="_features/game-recall/GameRecall.jsx"></script>
-<script type="text/babel-src" src="_features/game-typing/components/CharCompare.jsx"></script>
-<script type="text/babel-src" src="_features/game-typing/components/InputBox.jsx"></script>
-<script type="text/babel-src" src="_features/game-typing/GameTyping.jsx"></script>
-<script type="text/babel-src" src="_features/review/components/MeaningCard.jsx"></script>
-<script type="text/babel-src" src="_features/review/components/TermCard.jsx"></script>
-<script type="text/babel-src" src="_features/review/Review.jsx"></script>
+<script type="text/babel-src" src="_features/match-mode/components/Tile.jsx"></script>
+<script type="text/babel-src" src="_features/match-mode/MatchMode.jsx"></script>
+<script type="text/babel-src" src="_features/guess-mode/components/GuessPromptCard.jsx"></script>
+<script type="text/babel-src" src="_features/guess-mode/GuessMode.jsx"></script>
+<script type="text/babel-src" src="_features/recall-mode/components/RecallTermCard.jsx"></script>
+<script type="text/babel-src" src="_features/recall-mode/components/MeaningPanel.jsx"></script>
+<script type="text/babel-src" src="_features/recall-mode/RecallMode.jsx"></script>
+<script type="text/babel-src" src="_features/fill-mode/components/CharCompare.jsx"></script>
+<script type="text/babel-src" src="_features/fill-mode/components/InputBox.jsx"></script>
+<script type="text/babel-src" src="_features/fill-mode/FillMode.jsx"></script>
+<script type="text/babel-src" src="_features/review-mode/components/MeaningCard.jsx"></script>
+<script type="text/babel-src" src="_features/review-mode/components/TermCard.jsx"></script>
+<script type="text/babel-src" src="_features/review-mode/ReviewMode.jsx"></script>
 <script type="text/babel-src" src="_features/player/components/Dots.jsx"></script>
 <script type="text/babel-src" src="_features/player/components/PlayerCard.jsx"></script>
 <script type="text/babel-src" src="_features/player/Player.jsx"></script>
@@ -165,10 +165,10 @@
 <script type="text/babel-src" src="_features/drawer/Drawer.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/PromptCard.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/StageReview.jsx"></script>
-<script type="text/babel-src" src="_features/study-session/components/StageMatching.jsx"></script>
-<script type="text/babel-src" src="_features/study-session/components/StageChoice.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageMatch.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageGuess.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/StageRecall.jsx"></script>
-<script type="text/babel-src" src="_features/study-session/components/StageTyping.jsx"></script>
+<script type="text/babel-src" src="_features/study-session/components/StageFill.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/ExitDialog.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/AnswerSaveErrorDialog.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/ResumeErrorState.jsx"></script>
@@ -189,11 +189,11 @@ const SCREENS = [
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'game-picker', title: 'Game Picker', Comp: () => window.GamePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
-  { id: 'game-matching', title: 'Matching', Comp: () => window.GameMatching, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },
-  { id: 'game-mc', title: 'Multiple Choice', Comp: () => window.GameMultipleChoice, states: ['waiting', 'correct', 'wrong', 'long-text', 'complete'] },
-  { id: 'game-recall', title: 'Recall', Comp: () => window.GameRecall, states: ['before-reveal', 'revealed', 'forgot', 'remembered', 'complete'] },
-  { id: 'game-typing', title: 'Typing', Comp: () => window.GameTyping, states: ['waiting', 'typing', 'hint', 'correct', 'wrong', 'complete'] },
-  { id: 'review', title: 'Review', Comp: () => window.Review, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },
+  { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },
+  { id: 'match-mode', title: 'Match', Comp: () => window.MatchMode, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },
+  { id: 'guess-mode', title: 'Guess', Comp: () => window.GuessMode, states: ['waiting', 'correct', 'wrong', 'long-text', 'complete'] },
+  { id: 'recall-mode', title: 'Recall', Comp: () => window.RecallMode, states: ['before-reveal', 'revealed', 'forgot', 'remembered', 'complete'] },
+  { id: 'fill-mode', title: 'Fill', Comp: () => window.FillMode, states: ['waiting', 'typing', 'hint', 'correct', 'wrong', 'complete'] },
   { id: 'player', title: 'Player', Comp: () => window.Player, states: ['playing', 'paused', 'speed', 'error', 'end'] },
   { id: 'study-result', title: 'Study Result', Comp: () => window.StudyResult, states: ['standard', 'goal-met', 'goal-missed', 'many-wrong', 'finalizing', 'retry-finalize', 'finalize-error'] },
   { id: 'search', title: 'Search', Comp: () => window.Search, states: ['empty-recent', 'results', 'filtered', 'no-results', 'loading'] },
@@ -204,7 +204,7 @@ const SCREENS = [
   { id: 'import', title: 'Import', Comp: () => window.Import, states: ['source', 'mapping', 'preview', 'dup-warning', 'importing', 'import-error', 'done'] },
   { id: 'export', title: 'Export', Comp: () => window.Export, states: ['config', 'exporting', 'export-error', 'done'] },
   { id: 'drawer', title: 'Drawer & Languages', Comp: () => window.Drawer, states: ['open', 'add-language', 'remove-language'] },
-  { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-matching', 'stage3-choice', 'stage4-recall', 'stage5-typing', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
+  { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-match', 'stage3-guess', 'stage4-recall', 'stage5-fill', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
   { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
   { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'root-long', 'root-standard', 'nested', 'nested-overflow', 'search', 'selection', 'focused'] },
 ];

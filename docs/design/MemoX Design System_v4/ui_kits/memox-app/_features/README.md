@@ -23,8 +23,8 @@ _features/<screen>/
   - Each component file is an IIFE that exposes itself on a **per-screen namespace**:
     `window.MemoX<PascalScreen> = window.MemoX<PascalScreen> || {}; window.MemoX<PascalScreen>.<Name> = <Name>;`
     where `<PascalScreen>` is the screen id in PascalCase (`dashboard` →
-    `MemoXDashboard`, `study-session` → `MemoXStudySession`, `game-mc` →
-    `MemoXGameMC`). The screen entry destructures what it needs from that namespace
+    `MemoXDashboard`, `study-session` → `MemoXStudySession`, `guess-mode` →
+    `MemoXGuessMode`). The screen entry destructures what it needs from that namespace
     (`const { GoalCard } = window.MemoXDashboard;`).
   - **`index.html` loads them explicitly.** A screen's `components/*.jsx` each get
     their own `<script type="text/babel">` tag, in dependency order, **before** the

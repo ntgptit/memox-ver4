@@ -32,16 +32,16 @@
               "ui_kits/memox-app/_features/export/components/**",
               "ui_kits/memox-app/_features/flashcard-editor/**",
               "ui_kits/memox-app/_features/flashcard-editor/components/**",
-              "ui_kits/memox-app/_features/game-matching/**",
-              "ui_kits/memox-app/_features/game-matching/components/**",
-              "ui_kits/memox-app/_features/game-mc/**",
-              "ui_kits/memox-app/_features/game-mc/components/**",
+              "ui_kits/memox-app/_features/match-mode/**",
+              "ui_kits/memox-app/_features/match-mode/components/**",
+              "ui_kits/memox-app/_features/guess-mode/**",
+              "ui_kits/memox-app/_features/guess-mode/components/**",
               "ui_kits/memox-app/_features/game-picker/**",
               "ui_kits/memox-app/_features/game-picker/components/**",
-              "ui_kits/memox-app/_features/game-recall/**",
-              "ui_kits/memox-app/_features/game-recall/components/**",
-              "ui_kits/memox-app/_features/game-typing/**",
-              "ui_kits/memox-app/_features/game-typing/components/**",
+              "ui_kits/memox-app/_features/recall-mode/**",
+              "ui_kits/memox-app/_features/recall-mode/components/**",
+              "ui_kits/memox-app/_features/fill-mode/**",
+              "ui_kits/memox-app/_features/fill-mode/components/**",
               "ui_kits/memox-app/_features/import/**",
               "ui_kits/memox-app/_features/import/components/**",
               "ui_kits/memox-app/_features/library/**",
@@ -50,8 +50,8 @@
               "ui_kits/memox-app/_features/player/components/**",
               "ui_kits/memox-app/_features/reminder/**",
               "ui_kits/memox-app/_features/reminder/components/**",
-              "ui_kits/memox-app/_features/review/**",
-              "ui_kits/memox-app/_features/review/components/**",
+              "ui_kits/memox-app/_features/review-mode/**",
+              "ui_kits/memox-app/_features/review-mode/components/**",
               "ui_kits/memox-app/_features/search/**",
               "ui_kits/memox-app/_features/search/components/**",
               "ui_kits/memox-app/_features/settings/**",
@@ -358,8 +358,8 @@
         "message": "<SourceCard> doesn't accept that prop. Declared props: source, index."
       },
       {
-        "selector": "JSXOpeningElement[name.name='StageChoice'] > JSXAttribute > JSXIdentifier[name!=/^(?:relearn|key|ref|className|style|children)$/]",
-        "message": "<StageChoice> doesn't accept that prop. Declared props: relearn."
+        "selector": "JSXOpeningElement[name.name='StageGuess'] > JSXAttribute > JSXIdentifier[name!=/^(?:relearn|key|ref|className|style|children)$/]",
+        "message": "<StageGuess> doesn't accept that prop. Declared props: relearn."
       },
       {
         "selector": "JSXOpeningElement[name.name='StatusCardRow'] > JSXAttribute > JSXIdentifier[name!=/^(?:term|meaning|deck|status|hidden|node|onClick|tightTerm|truncateMeaning|key|ref|className|style|children)$/]",
@@ -524,7 +524,7 @@
       "LibraryHeader": {
         "replaces": []
       },
-      "McPromptCard": {
+      "GuessPromptCard": {
         "replaces": []
       },
       "MeaningCard": {
@@ -641,10 +641,10 @@
       "SourceCard": {
         "replaces": []
       },
-      "StageChoice": {
+      "StageGuess": {
         "replaces": []
       },
-      "StageMatching": {
+      "StageMatch": {
         "replaces": []
       },
       "StageRecall": {
@@ -653,7 +653,7 @@
       "StageReview": {
         "replaces": []
       },
-      "StageTyping": {
+      "StageFill": {
         "replaces": []
       },
       "StatusCardRow": {

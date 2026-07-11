@@ -1,21 +1,21 @@
 /* MemoX — Study session (NewLearn 5 stages + DueReview).
-   States: stage1-review · stage2-matching · stage3-choice · stage4-recall · stage5-typing · relearn · due-review · exit · resume-error · answer-save-error
-   Feature-local components: components/{PromptCard,StageReview,StageMatching,StageChoice,
-   StageRecall,StageTyping,ExitDialog,AnswerSaveErrorDialog,ResumeErrorState}.jsx */
+   States: stage1-review · stage2-match · stage3-guess · stage4-recall · stage5-fill · relearn · due-review · exit · resume-error · answer-save-error
+   Feature-local components: components/{PromptCard,StageReview,StageMatch,StageGuess,
+   StageRecall,StageFill,ExitDialog,AnswerSaveErrorDialog,ResumeErrorState}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
 
 const META = {
   'stage1-review': { label: 'Stage 1 · Review', done: 4, total: 25 },
-  'stage2-matching': { label: 'Stage 2 · Matching', done: 8, total: 25 },
-  'stage3-choice': { label: 'Stage 3 · Multiple choice', done: 12, total: 25 },
+  'stage2-match': { label: 'Stage 2 · Match', done: 8, total: 25 },
+  'stage3-guess': { label: 'Stage 3 · Guess', done: 12, total: 25 },
   'stage4-recall': { label: 'Stage 4 · Recall', done: 16, total: 25 },
-  'stage5-typing': { label: 'Stage 5 · Typing', done: 21, total: 25 },
-  'relearn': { label: 'Stage 3 · Multiple choice', done: 12, total: 25 },
+  'stage5-fill': { label: 'Stage 5 · Fill', done: 21, total: 25 },
+  'relearn': { label: 'Stage 3 · Guess', done: 12, total: 25 },
   'due-review': { label: 'Review · due cards', done: 10, total: 20 },
   'exit': { label: 'Stage 1 · Review', done: 4, total: 25 },
-  'answer-save-error': { label: 'Stage 5 · Typing', done: 21, total: 25 },
+  'answer-save-error': { label: 'Stage 5 · Fill', done: 21, total: 25 },
 };
 
 const Note = window.Note;
@@ -24,10 +24,10 @@ const Note = window.Note;
 function Body({ state }) {
   const SS = window.MemoXStudySession;
   if (state === 'stage1-review' || state === 'exit') return <SS.StageReview />;
-  if (state === 'stage2-matching') return <SS.StageMatching />;
-  if (state === 'stage3-choice' || state === 'relearn') return <SS.StageChoice relearn={state === 'relearn'} />;
+  if (state === 'stage2-match') return <SS.StageMatch />;
+  if (state === 'stage3-guess' || state === 'relearn') return <SS.StageGuess relearn={state === 'relearn'} />;
   if (state === 'stage4-recall') return <SS.StageRecall />;
-  if (state === 'stage5-typing' || state === 'answer-save-error') return <SS.StageTyping />;
+  if (state === 'stage5-fill' || state === 'answer-save-error') return <SS.StageFill />;
   // due-review
   return (
     <React.Fragment>

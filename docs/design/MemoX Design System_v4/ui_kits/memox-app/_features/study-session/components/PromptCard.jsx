@@ -1,5 +1,5 @@
 /* MemoX — Study-session local: PromptCard (centered term + optional sub-label).
-   Shared by StageChoice / StageRecall / StageTyping — load before them. */
+   Shared by StageGuess / StageRecall / StageFill — load before them. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54 || {};
 const { MxCard } = NS;

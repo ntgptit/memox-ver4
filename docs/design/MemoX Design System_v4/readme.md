@@ -106,19 +106,19 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **flashcard-list**: AddCardSheet, cardFixtures
 - **library**: FilterRow, LibraryCreateSheet, SubdeckCard, libFixtures
 - **subdeck-list**: CreateSubdeckSheet, subdeckFixtures
-- **game-matching**: Tile
-- **game-mc**: McPromptCard
+- **match-mode**: Tile
+- **guess-mode**: GuessPromptCard
 - **game-picker**: GameOption, ScopeCard, ScopeSheet
-- **game-recall**: MeaningPanel, RecallTermCard
-- **game-typing**: CharCompare, InputBox
+- **recall-mode**: MeaningPanel, RecallTermCard
+- **fill-mode**: CharCompare, InputBox
 - **import**: SourceCard, Table
 - **library**: ContextBar, LibraryHeader, OverflowMenuSheet, PairPickerSheet, PlaySheet, SortSheet
 - **player**: Dots, PlayerCard
 - **reminder**: TimeCol, TimePickerSheet
-- **review**: MeaningCard, TermCard
+- **review-mode**: MeaningCard, TermCard
 - **search**: Chips, ResultRow
 - **settings**: ValuePickerSheet
 - **statistics**: Bars, Donut, Heatmap
 - **study-result**: Cta, FinalizingView, ResultHero, StreakGoalCard
-- **study-session**: AnswerSaveErrorDialog, ExitDialog, PromptCard, ResumeErrorState, StageChoice, StageMatching, StageRecall, StageReview, StageTyping
+- **study-session**: AnswerSaveErrorDialog, ExitDialog, PromptCard, ResumeErrorState, StageGuess, StageMatch, StageRecall, StageReview, StageFill
 - **theme**: AccentPicker, PreviewCard

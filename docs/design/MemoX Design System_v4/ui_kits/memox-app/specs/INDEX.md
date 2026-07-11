@@ -17,11 +17,11 @@
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 9 |
 | game-picker | Game Picker | `game-picker.md` | 3 |
-| game-matching | Matching | `game-matching.md` | 6 |
-| game-mc | Multiple Choice | `game-mc.md` | 5 |
-| game-recall | Recall | `game-recall.md` | 5 |
-| game-typing | Typing | `game-typing.md` | 6 |
-| review | Review | `review.md` | 4 |
+| match-mode | Match | `match-mode.md` | 6 |
+| guess-mode | Guess | `guess-mode.md` | 5 |
+| recall-mode | Recall | `recall-mode.md` | 5 |
+| fill-mode | Fill | `fill-mode.md` | 6 |
+| review-mode | Review | `review-mode.md` | 4 |
 | player | Player | `player.md` | 4 |
 | study-result | Study Result | `study-result.md` | 7 |
 | search | Search | `search.md` | 5 |

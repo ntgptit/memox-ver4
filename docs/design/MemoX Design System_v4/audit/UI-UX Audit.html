@@ -67,8 +67,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 <div class="toc">
   <p><a href="#global">A. Global findings (G1–G8)</a></p>
   <p><a href="#s-dashboard">Dashboard</a> · <a href="#s-library">Library</a> · <a href="#s-deck-detail">Deck Detail</a> · <a href="#s-search">Search</a> · <a href="#s-editor">Card Editor</a></p>
-  <p><a href="#s-study-session">Study Session</a> · <a href="#s-review">Review</a> · <a href="#s-study-result">Study Result</a> · <a href="#s-player">Player</a></p>
-  <p><a href="#s-game-picker">Game Picker</a> · <a href="#s-game-matching">Matching</a> · <a href="#s-game-mc">Multiple Choice</a> · <a href="#s-game-recall">Recall</a> · <a href="#s-game-typing">Typing</a></p>
+  <p><a href="#s-study-session">Study Session</a> · <a href="#s-review-mode">Review</a> · <a href="#s-study-result">Study Result</a> · <a href="#s-player">Player</a></p>
+  <p><a href="#s-game-picker">Game Picker</a> · <a href="#s-match-mode">Match</a> · <a href="#s-guess-mode">Guess</a> · <a href="#s-recall-mode">Recall</a> · <a href="#s-fill-mode">Fill</a></p>
   <p><a href="#s-import">Import</a> · <a href="#s-export">Export</a> · <a href="#s-statistics">Stats</a> · <a href="#s-settings">Settings</a> · <a href="#s-account">Account &amp; Sync</a> · <a href="#s-reminder">Reminders</a> · <a href="#s-theme">Theme</a> · <a href="#s-drawer">Drawer</a></p>
   <p><a href="#checklist">B. Handoff checklist</a></p>
 </div>
@@ -117,7 +117,7 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 <h3><span class="gid">G4</span>Bottom paired-action layouts — 3 competing conventions</h3>
 <ul>
   <li>Study session: full-width primary <strong>Next</strong> ✓ (single action)</li>
-  <li>Due-review &amp; Typing: ghost left + primary right, unequal widths, right-aligned</li>
+  <li>Due-review &amp; Fill: ghost left + primary right, unequal widths, right-aligned</li>
   <li>Recall: <strong>Forgot</strong> (ghost) + <strong>Got it</strong> (outline) — <em>neither</em> is primary although this is the core grading interaction of the whole app</li>
 </ul>
 <p>Fix: define one action-bar convention (e.g. equal-width pair, 48px+, primary on the right; single action = full-width). Recall's grade buttons deserve the strongest visual weight in the flow.</p>
@@ -256,12 +256,12 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/study-session--stage1-review--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/study-session--stage1-review--light.png" alt="stage 1"></a>
+  <a href="../ui_kits/memox-app/shots/study-session--stage1-review-mode--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/study-session--stage1-review-mode--light.png" alt="stage 1"></a>
   <a href="../ui_kits/memox-app/shots/study-session--exit--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/study-session--exit--light.png" alt="exit dialog"></a>
 </div></div>
 </div>
 
-<div class="screen" id="s-review">
+<div class="screen" id="s-review-mode">
 <h3>Review</h3>
 <p class="meta">4 states: browsing · editing · audio · end</p>
 <p class="vnline">Màn hình có progress chuẩn nhất — nên lấy làm mẫu; chỉnh target nút edit/Cancel/Save và dòng "Swipe to continue".</p>
@@ -274,8 +274,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/review--browsing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/review--browsing--light.png" alt="review browsing"></a>
-  <a href="../ui_kits/memox-app/shots/review--editing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/review--editing--light.png" alt="review editing"></a>
+  <a href="../ui_kits/memox-app/shots/review-mode--browsing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/review-mode--browsing--light.png" alt="review browsing"></a>
+  <a href="../ui_kits/memox-app/shots/review-mode--editing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/review-mode--editing--light.png" alt="review editing"></a>
 </div></div>
 </div>
 
@@ -331,8 +331,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </div></div>
 </div>
 
-<div class="screen" id="s-game-matching">
-<h3>Matching</h3>
+<div class="screen" id="s-match-mode">
+<h3>Match</h3>
 <p class="meta">6 states: playing · selected · correct · wrong · almost · complete</p>
 <p class="vnline">Grid ghép cặp gọn; thiếu số đếm tiến độ và một dòng hướng dẫn ngắn.</p>
 <div class="row"><div class="txt">
@@ -344,13 +344,13 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/game-matching--playing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-matching--playing--light.png" alt="matching"></a>
-  <a href="../ui_kits/memox-app/shots/game-matching--complete--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-matching--complete--light.png" alt="matching complete"></a>
+  <a href="../ui_kits/memox-app/shots/match-mode--playing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/match-mode--playing--light.png" alt="matching"></a>
+  <a href="../ui_kits/memox-app/shots/match-mode--complete--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/match-mode--complete--light.png" alt="matching complete"></a>
 </div></div>
 </div>
 
-<div class="screen" id="s-game-mc">
-<h3>Multiple Choice</h3>
+<div class="screen" id="s-guess-mode">
+<h3>Guess</h3>
 <p class="meta">4 states: waiting · correct · wrong · complete</p>
 <p class="vnline">Feedback đúng/sai mẫu mực (màu + icon); chỉ cần nâng nút edit và thêm số đếm.</p>
 <div class="row"><div class="txt">
@@ -360,12 +360,12 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/game-mc--wrong--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-mc--wrong--light.png" alt="mc wrong"></a>
-  <a href="../ui_kits/memox-app/shots/game-mc--correct--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-mc--correct--light.png" alt="mc correct"></a>
+  <a href="../ui_kits/memox-app/shots/guess-mode--wrong--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/guess-mode--wrong--light.png" alt="mc wrong"></a>
+  <a href="../ui_kits/memox-app/shots/guess-mode--correct--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/guess-mode--correct--light.png" alt="mc correct"></a>
 </div></div>
 </div>
 
-<div class="screen" id="s-game-recall">
+<div class="screen" id="s-recall-mode">
 <h3>Recall</h3>
 <p class="meta">5 states: before-reveal · revealed · remembered · forgot · complete</p>
 <p class="vnline">Đây là tương tác chấm điểm cốt lõi nhưng cặp nút Forgot / Got it lại yếu nhất về thị giác — cần nâng cấp thành cặp nút lớn, cân bằng.</p>
@@ -377,13 +377,13 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/game-recall--revealed--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-recall--revealed--light.png" alt="recall revealed"></a>
-  <a href="../ui_kits/memox-app/shots/game-recall--complete--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-recall--complete--light.png" alt="recall complete"></a>
+  <a href="../ui_kits/memox-app/shots/recall-mode--revealed--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/recall-mode--revealed--light.png" alt="recall revealed"></a>
+  <a href="../ui_kits/memox-app/shots/recall-mode--complete--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/recall-mode--complete--light.png" alt="recall complete"></a>
 </div></div>
 </div>
 
-<div class="screen" id="s-game-typing">
-<h3>Typing</h3>
+<div class="screen" id="s-fill-mode">
+<h3>Fill</h3>
 <p class="meta">6 states: waiting · typing · hint · correct · wrong · complete</p>
 <p class="vnline">Flow gõ đáp án ổn, có hint; chuẩn hoá lại hàng nút Help/Check theo convention chung.</p>
 <div class="row"><div class="txt">
@@ -394,8 +394,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/game-typing--typing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-typing--typing--light.png" alt="typing"></a>
-  <a href="../ui_kits/memox-app/shots/game-typing--hint--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-typing--hint--light.png" alt="typing hint"></a>
+  <a href="../ui_kits/memox-app/shots/fill-mode--typing--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/fill-mode--typing--light.png" alt="typing"></a>
+  <a href="../ui_kits/memox-app/shots/fill-mode--hint--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/fill-mode--hint--light.png" alt="typing hint"></a>
 </div></div>
 </div>
 
