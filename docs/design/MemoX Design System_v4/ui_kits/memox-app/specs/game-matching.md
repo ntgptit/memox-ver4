@@ -125,14 +125,15 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         rel: [20,52 350x560]
       layout: grid cols:2 gap:12
       flex: grow:1 basis:0 layout_hint:expanded
-      note: grid FILLS the remaining body height (thumb zone); each column distributes its
-        5 rows with justify:space-between, so row offsets below are evenly spread on any
-        device height (fixed offsets are indicative, not literal).
+      note: grid FILLS the remaining body height (thumb zone); each column is 5 equal rows
+        (1fr) so the TILES STRETCH tall (~1fr of the column) with one uniform 16px gap —
+        chunky hit targets, no sparse gaps. Tile heights below are indicative, not literal
+        (they scale with device height).
       - node: div
         box:
           abs: [20,116 169x331]
           rel: [0,0 169x331]
-        layout: flex:col justify:space-between gap:12
+        layout: grid rows:5(1fr) gap:16
         repeat: x5(unit=1)
         - node: div
           id: game-matching/left-0
@@ -193,7 +194,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         box:
           abs: [201,116 169x331]
           rel: [181,0 169x331]
-        layout: flex:col justify:space-between gap:12
+        layout: grid rows:5(1fr) gap:16
         repeat: x5(unit=1)
         - node: div
           id: game-matching/right-0
