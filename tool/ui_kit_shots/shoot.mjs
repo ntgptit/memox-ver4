@@ -69,7 +69,7 @@ const REGISTRY = {
   'fill-mode': { g: 'FillMode', states: ['waiting', 'typing', 'complete'] },
   'review-mode': { g: 'ReviewMode', states: ['browsing', 'loading', 'error', 'end'] },
   player: { g: 'Player', states: ['playing', 'error', 'end'] },
-  'study-result': { g: 'StudyResult', states: ['standard', 'many-wrong', 'finalize-error'] },
+  'study-result': { g: 'StudyResult', states: ['standard', 'goal-met', 'many-wrong', 'finalize-error'] },
   search: { g: 'Search', states: ['empty-recent', 'results', 'no-results', 'loading'] },
   statistics: { g: 'Statistics', states: ['loaded', 'insufficient', 'loading', 'error'] },
   reminder: { g: 'Reminder', states: ['on', 'off'] },

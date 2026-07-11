@@ -2,7 +2,7 @@
    Feature-local components: components/{ResultHero,StreakGoalCard,Cta,FinalizingView}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxButton, MxIconButton } = NS;
+const { MxScaffold, MxAppBar, MxCard, MxButton, MxLink } = NS;
 const { ResultHero, StreakGoalCard, Cta, FinalizingView } = window.MemoXStudyResult;
 
 const HEAD = {
@@ -15,7 +15,9 @@ const HEAD = {
 function StudyResult({ state = 'standard' }) {
   const h = HEAD[state] || HEAD.standard;
   const met = state === 'goal-met';
-  const bar = <MxAppBar node="study-result/appbar" title="Results" leading={<MxIconButton icon="close" node="study-result/close" />} />;
+  // Terminal summary page: exit only via the explicit bottom actions (no top-bar close).
+  const bar = <MxAppBar node="study-result/appbar" title="Results" />;
+  const showMistakes = state !== 'many-wrong'; // many-wrong already has a dedicated review CTA
 
   if (state === 'finalizing' || state === 'retry-finalize') {
     return <FinalizingView bar={bar} retry={state === 'retry-finalize'} />;
@@ -36,20 +38,28 @@ function StudyResult({ state = 'standard' }) {
 
   return (
     <MxScaffold node="study-result/screen" appBar={bar}>
-      <ResultHero icon={h.icon} tone={h.tone} title={h.title} text={h.text} />
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-4)' }}>
+        <ResultHero icon={h.icon} tone={h.tone} title={h.title} text={h.text} />
 
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        {[['24', 'cards'], ['88%', 'correct'], ['6:30', 'min']].map(([n, l], i) => (
-          <MxCard key={i} variant="muted" padding="sm" node={'study-result/stat-' + i} style={{ alignItems: 'center' }}>
-            <window.Stat n={n} l={l} />
-          </MxCard>
-        ))}
-      </div>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--memox-space-3)' }}>
+          {[['24', 'cards'], ['88%', 'correct'], ['6:30', 'min']].map(([n, l], i) => (
+            <MxCard key={i} variant="muted" padding="sm" node={'study-result/stat-' + i} style={{ alignItems: 'center' }}>
+              <window.Stat n={n} l={l} />
+            </MxCard>
+          ))}
+        </div>
 
-      <StreakGoalCard met={met} />
+        {showMistakes ? (
+          <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'calc(-1 * var(--memox-space-2))' }}>
+            <MxLink icon="replay" trailingIcon={null} size="sm" node="study-result/review-mistakes">Review mistakes</MxLink>
+          </div>
+        ) : null}
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
-        <Cta state={state} />
+        <StreakGoalCard met={met} />
+
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+          <Cta state={state} />
+        </div>
       </div>
     </MxScaffold>
   );
