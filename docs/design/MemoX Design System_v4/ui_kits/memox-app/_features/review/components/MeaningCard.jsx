@@ -5,7 +5,7 @@ const { MxCard, MxIconButton, MxButton } = NS;
 
 function MeaningCard({ editing }) {
   return (
-    <MxCard node="review/meaning" style={{ gap: 'var(--memox-space-3)' }}>
+    <MxCard node="review/meaning" style={{ flex: 1, gap: 'var(--memox-space-3)' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <window.SectionLabel style={{ flex: 1, margin: 0 }}>MEANING</window.SectionLabel>
         <MxIconButton icon={editing ? 'close' : 'edit'} size="sm" node="review/edit" />
