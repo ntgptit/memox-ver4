@@ -125,7 +125,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         rel: [20,272 350x430]
       layout: grid cols:2 gap:12
       spacing: margin:auto/0/0/0
-      note: GROUPED "game board" — a tight, fixed block (tall size-lg cards, fixed 12px gaps)
+      note: GROUPED "game board" — a tight, fixed block (tall 80px cards = size-md+space-6, fixed 12px gaps)
         pushed to the bottom via margin-top:auto (Flutter: Spacer above, or MainAxisAlignment.end),
         so the top ~1/3 stays airy (header + progress) and the bottom ~2/3 is one dense grid
         in the thumb zone. NOT stretched to fill.
