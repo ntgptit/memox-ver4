@@ -1,19 +1,38 @@
 /* MemoX — Card Editor. A focused create/update form for ONE flashcard; single primary
-   action = Save. Shared focused app bar (Close · title · Save). Groups by priority:
-   Card content → Additional translation → Pronunciation → More options.
+   action = Save (a sticky full-width button at the bottom, easy to reach one-handed).
+   Progressive disclosure: the default view shows only Term → Meaning (+ tags); Example,
+   translation and advanced options are one tap away, so a blank card fits one screen with
+   no scroll.
    9 states: create · edit · validation · duplicate · additional-translation ·
    audio-generating · submitting · submit-error · submit-success.
+   Language labels are DECK-DRIVEN (never hard-coded) so every language pair reads correctly.
+   Runtime keyboard/focus intent is annotated on the fields (see Field.jsx) for production.
    (Dirty-cancel uses the shared ConfirmDialog — same reference as Deck Settings.)
    Feature-local components: components/{Field,DupBanner,AudioRow}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxButton, MxIconButton, MxSwitch } = NS;
+const { MxScaffold, MxContextualAppBar, MxButton, MxIconButton, MxChip, MxSwitch } = NS;
 const { Field, DupBanner, AudioRow } = window.MemoXFlashcardEditor;
 
-const DECK = 'Beginner Grammar';
+// Deck defines the language pair; the editor reads term/meaning/alt languages from it.
+// Beginner Grammar = Korean term → English meaning, with an optional Vietnamese translation.
+const DECK = {
+  name: 'Beginner Grammar',
+  term: { label: '한국어', code: 'ko' },
+  meaning: { label: 'English', code: 'en' },
+  alt: { label: 'Tiếng Việt', code: 'vi' },
+};
 
-function SectionLabel({ children }) {
-  return <div style={{ fontSize: 'var(--memox-font-size-xs)', fontWeight: 'var(--memox-font-weight-bold)', letterSpacing: 'var(--memox-letter-spacing-wide)', textTransform: 'uppercase', color: 'var(--memox-text-tertiary)' }}>{children}</div>;
+// Prominent deck-context pill — anchors which deck the card is saved into without
+// outweighing the screen title.
+function DeckContext() {
+  return (
+    <div data-mx-node="flashcard-editor/deck-context" style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-2) var(--memox-space-3)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-surface-sunken)' }}>
+      <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-primary)' }}>folder</span>
+      <span style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)' }}>Deck</span>
+      <span style={{ fontSize: 'var(--memox-font-size-base)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text)' }}>{DECK.name}</span>
+    </div>
+  );
 }
 
 // Recoverable inline banner (submit error / success) — same soft-tone treatment as the
@@ -30,8 +49,24 @@ function Banner({ tone, icon, text, action, node }) {
   );
 }
 
-// Compact settings row (flat sunken surface, switch trailing) — deliberately low visual
-// weight so it never competes with Term/Meaning. No icon tile, no elevation.
+// Compact tag input — chips for filtering / SRS cycles. Low-weight surface, never competes
+// with Term/Meaning.
+function TagsField({ tags, disabled }) {
+  return (
+    <div data-mx-node="flashcard-editor/tags" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', opacity: disabled ? 'var(--memox-opacity-muted)' : 1 }}>
+      <label style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>Tags</label>
+      <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 'var(--memox-space-2)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+        <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-sm)', color: 'var(--memox-text-tertiary)', flexShrink: 0 }}>sell</span>
+        {tags && tags.length
+          ? tags.map((t, i) => <MxChip key={i} label={t} node={'flashcard-editor/tag-' + i} />)
+          : <span style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-tertiary)' }}>Add tags — e.g. #TOPIK_I, #동사</span>}
+      </div>
+    </div>
+  );
+}
+
+// Compact "hide during study" switch (advanced) — tucked inside More options, flat sunken
+// surface, switch trailing. No icon tile, no elevation.
 function VisibilityRow({ disabled }) {
   const [on, setOn] = React.useState(false);
   return (
@@ -41,6 +76,16 @@ function VisibilityRow({ disabled }) {
         <div style={{ marginTop: 'var(--memox-space-1)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>Excluded from study and review sessions.</div>
       </div>
       <MxSwitch checked={on} onChange={setOn} disabled={disabled} node="flashcard-editor/visibility-switch" ariaLabel="Hide during study" />
+    </div>
+  );
+}
+
+// Sticky bottom action bar — the single primary CTA, full-width, always reachable one-handed
+// even with the keyboard open. Width/label stable so it never shifts across submit states.
+function SaveBar({ label, disabled }) {
+  return (
+    <div data-mx-node="flashcard-editor/save-bar" style={{ display: 'flex', padding: 'var(--memox-space-3) var(--memox-space-4) var(--memox-space-4)', borderTop: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' }}>
+      <MxButton variant="primary" block disabled={disabled} node="flashcard-editor/save">{label}</MxButton>
     </div>
   );
 }
@@ -58,54 +103,68 @@ function FlashcardEditor({ state = 'create' }) {
 
   const term = blank ? '' : '안녕하세요';
   const meaning = blank ? '' : 'Hello (formal)';
+  const tags = blank ? [] : ['#TOPIK_I', '#인사'];
+  const [moreOpen, setMoreOpen] = React.useState(state === 'edit');
 
-  // Focused app bar: Close · title · Save. Save width is reserved (>= "Saving…") so the
-  // centered title never shifts across form/submit states.
+  // Focused app bar: Close (X) · title · (no top-right — Save moved to the sticky bottom bar).
   const bar = (
     <MxContextualAppBar variant="focused" node="flashcard-editor/appbar" title={title}
       leading={<MxIconButton icon="close" size="sm" node="flashcard-editor/cancel" ariaLabel="Cancel" disabled={submitting} />}
-      actions={<div style={{ display: 'flex', justifyContent: 'flex-end', minWidth: 'var(--memox-size-lg)' }}>
-        <MxButton variant="primary" size="sm" disabled={saveDisabled} node="flashcard-editor/save">{saveLabel}</MxButton>
-      </div>} />
+      actions={<span aria-hidden="true" />} />
   );
 
   return (
-    <MxScaffold node="flashcard-editor/screen" appBar={bar}>
-      {/* Deck context — light, not a card, never outweighs the title */}
-      <div data-mx-node="flashcard-editor/deck-context" style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>
-        <span style={{ color: 'var(--memox-text-tertiary)' }}>Deck · </span><span style={{ fontWeight: 'var(--memox-font-weight-semibold)' }}>{DECK}</span>
-      </div>
+    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={<SaveBar label={saveLabel} disabled={saveDisabled} />}>
+      <DeckContext />
 
       {state === 'duplicate' ? <DupBanner /> : null}
       {submitError ? <Banner node="flashcard-editor/save-error" tone="error" icon="error_outline" text="Couldn’t save the card. Your changes are still here." action={<MxButton variant="secondary" size="sm" node="flashcard-editor/save-retry">Try again</MxButton>} /> : null}
       {success ? <Banner node="flashcard-editor/save-success" tone="success" icon="check_circle" text="Card saved." /> : null}
 
-      {/* CARD CONTENT — the primary focus (Term + Meaning grouped tightly) */}
+      {/* CARD CONTENT — the primary focus. Term & Meaning share the same base height; Meaning
+          grows as it wraps. Labels are deck-driven; pronunciation is a compact icon in Term. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
-        <Field label="Term (Korean)" required node="flashcard-editor/term"
-          value={term} placeholder="Enter a term" error={invalid ? 'Enter a term.' : null} disabled={disabledForm} />
-        <Field label="Meaning (English)" required multiline node="flashcard-editor/meaning"
-          value={meaning} placeholder="Enter the meaning" error={invalid ? 'Enter a meaning.' : null} disabled={disabledForm} />
+        <Field label={'Term · ' + DECK.term.label} required node="flashcard-editor/term"
+          value={term} placeholder="Enter a term"
+          lang={DECK.term.code} inputMode="text" autoFocus={state === 'create'} enterKeyHint="next"
+          error={invalid ? 'Enter a term.' : null} disabled={disabledForm}
+          trailing={<AudioRow status={state === 'audio-generating' ? 'generating' : 'auto'} />} />
+
+        <Field label={'Meaning · ' + DECK.meaning.label} required multiline node="flashcard-editor/meaning"
+          value={meaning} placeholder="Enter the meaning"
+          lang={DECK.meaning.code} enterKeyHint="next"
+          labelAction={<MxIconButton icon="add" size="sm" node="flashcard-editor/add-translation" ariaLabel={'Add ' + DECK.alt.label + ' translation'} disabled={disabledForm} />}
+          error={invalid ? 'Enter a meaning.' : null} disabled={disabledForm} />
+
+        {/* Additional translation — expands under Meaning; language-scoped, with a Remove action */}
+        {state === 'additional-translation'
+          ? <Field label={'Translation · ' + DECK.alt.label} node="flashcard-editor/translation"
+              value="Xin chào" placeholder="Enter a translation" lang={DECK.alt.code}
+              labelAction={<MxIconButton icon="close" size="sm" node="flashcard-editor/translation-remove" ariaLabel="Remove translation" />} />
+          : null}
       </div>
 
-      {/* ADDITIONAL TRANSLATION — text action by default; expands to a language-scoped field */}
-      {state === 'additional-translation'
-        ? <Field label="Translation (Vietnamese)" node="flashcard-editor/translation"
-            value="Xin chào" placeholder="Enter a translation"
-            trailing={<MxIconButton icon="close" size="sm" node="flashcard-editor/translation-remove" ariaLabel="Remove translation" />} />
-        : <div><MxButton variant="ghost" size="sm" icon="add" disabled={disabledForm} node="flashcard-editor/add-translation">Add translation</MxButton></div>}
+      <TagsField tags={tags} disabled={disabledForm} />
 
-      {/* PRONUNCIATION — dedicated audio row, never a text field */}
+      {/* MORE OPTIONS — collapsed by default so the base form stays Term → Meaning. Holds the
+          optional Example pair and the advanced Hide-during-study switch. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
-        <SectionLabel>Pronunciation</SectionLabel>
-        <AudioRow status={state === 'audio-generating' ? 'generating' : 'auto'} />
-      </div>
-
-      {/* MORE OPTIONS — grammatical gender lives here only for languages that have it;
-          the Korean fixture has none, so it is not shown. */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
-        <SectionLabel>More options</SectionLabel>
-        <VisibilityRow disabled={disabledForm} />
+        <button type="button" onClick={() => setMoreOpen((v) => !v)} data-mx-node="flashcard-editor/more-toggle"
+          style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 'var(--memox-space-1)', padding: 'var(--memox-space-2) 0', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>
+          <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{moreOpen ? 'expand_less' : 'expand_more'}</span>
+          More options
+        </button>
+        {moreOpen ? (
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+            <Field label="Example" multiline node="flashcard-editor/example"
+              value={blank ? '' : '오늘 날씨가 좋네요.'} placeholder="Add an example sentence"
+              lang={DECK.term.code} disabled={disabledForm} />
+            <Field label="Example translation" multiline node="flashcard-editor/example-translation"
+              value={blank ? '' : 'The weather is nice today.'} placeholder="Translate the example"
+              lang={DECK.meaning.code} disabled={disabledForm} />
+            <VisibilityRow disabled={disabledForm} />
+          </div>
+        ) : null}
       </div>
     </MxScaffold>
   );
