@@ -15,7 +15,7 @@ function clickA11y(onClick, label) {
 
 function ProgressBar({ value = 0, tone, height = 8, node }) {
   return (
-    <div data-mx-node={node} style={{ height, borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-surface-sunken)', overflow: 'hidden' }}>
+    <div data-mx-node={node} style={{ height, borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-border)', overflow: 'hidden' }}>
       <div style={{ height: '100%', width: value + '%', borderRadius: 'var(--memox-radius-pill)', background: tone || 'var(--memox-primary)', transition: 'width .3s ease' }} />
     </div>
   );
