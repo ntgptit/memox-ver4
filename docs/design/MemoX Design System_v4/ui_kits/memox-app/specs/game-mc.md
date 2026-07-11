@@ -429,6 +429,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   ...
 ```
 
+## State: long-text (ordered diff vs waiting)
+
+Same layout; the 5 answer options carry long, multi-line meanings — proves the option boxes
+WRAP and GROW. The options grid uses `grid-template-rows: repeat(5, minmax(min-content, 1fr))`,
+so short options fill to `1fr` while long ones expand to their content; nothing clips or
+truncates. At extreme font-scale the option list scrolls (never clips).
+
+```text
+~ [game-mc/choice-0..4] text: long definition phrases (e.g. "a place where students go to
+   study and learn from teachers") — each wraps to 2–3 lines; the row grows to fit.
+```
+
 ## State: complete (ordered diff vs waiting)
 
 ```diff

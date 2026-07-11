@@ -64,7 +64,7 @@ const REGISTRY = {
   'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
   'game-picker': { g: 'GamePicker', states: ['default', 'not-enough'] },
   'game-matching': { g: 'GameMatching', states: ['playing', 'complete'] },
-  'game-mc': { g: 'GameMultipleChoice', states: ['waiting', 'complete'] },
+  'game-mc': { g: 'GameMultipleChoice', states: ['waiting', 'long-text', 'complete'] },
   'game-recall': { g: 'GameRecall', states: ['before-reveal', 'complete'] },
   'game-typing': { g: 'GameTyping', states: ['waiting', 'typing', 'complete'] },
   review: { g: 'Review', states: ['browsing', 'loading', 'error', 'end'] },
