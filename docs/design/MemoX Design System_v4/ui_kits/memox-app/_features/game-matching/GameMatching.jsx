@@ -42,14 +42,14 @@ function GameMatching({ state = 'playing' }) {
   return (
     <MxScaffold node="game-matching/screen" appBar={bar}>
       <window.ProgressHeader done={DONE[state] || 0} total={TOTAL} node="game-matching/progress" />
-      {/* The grid grows to fill the remaining body height (thumb zone) and the two columns
-          distribute their 5 rows with space-between — so the empty bottom space becomes even
-          breathing room between rows instead of dead space, on any device height. */}
+      {/* The grid grows to fill the remaining body height (thumb zone); each column is 5 equal
+          rows (1fr) so the TILES stretch tall to fill the space with one tight, uniform gap —
+          chunky, generous hit targets, no sparse/hollow gaps, on any device height. */}
       <div style={{ flex: '1 1 0', minHeight: 0, display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 'var(--memox-space-3)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>
+        <div style={{ display: 'grid', gridTemplateRows: 'repeat(5, 1fr)', rowGap: 'var(--memox-space-4)' }}>
           {LEFT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'L', i)} node={'game-matching/left-' + i} />)}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>
+        <div style={{ display: 'grid', gridTemplateRows: 'repeat(5, 1fr)', rowGap: 'var(--memox-space-4)' }}>
           {RIGHT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'R', i)} node={'game-matching/right-' + i} />)}
         </div>
       </div>
