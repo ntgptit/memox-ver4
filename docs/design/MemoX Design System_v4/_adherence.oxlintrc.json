@@ -36,8 +36,8 @@
               "ui_kits/memox-app/_features/match-mode/components/**",
               "ui_kits/memox-app/_features/guess-mode/**",
               "ui_kits/memox-app/_features/guess-mode/components/**",
-              "ui_kits/memox-app/_features/game-picker/**",
-              "ui_kits/memox-app/_features/game-picker/components/**",
+              "ui_kits/memox-app/_features/mode-picker/**",
+              "ui_kits/memox-app/_features/mode-picker/components/**",
               "ui_kits/memox-app/_features/recall-mode/**",
               "ui_kits/memox-app/_features/recall-mode/components/**",
               "ui_kits/memox-app/_features/fill-mode/**",
@@ -154,8 +154,8 @@
         "message": "<FlashcardRow> status must be one of 'new' | 'due' | 'mastered'."
       },
       {
-        "selector": "JSXOpeningElement[name.name='GameOption'] > JSXAttribute > JSXIdentifier[name!=/^(?:g|disabled|key|ref|className|style|children)$/]",
-        "message": "<GameOption> doesn't accept that prop. Declared props: g, disabled."
+        "selector": "JSXOpeningElement[name.name='ModeOption'] > JSXAttribute > JSXIdentifier[name!=/^(?:g|disabled|key|ref|className|style|children)$/]",
+        "message": "<ModeOption> doesn't accept that prop. Declared props: g, disabled."
       },
       {
         "selector": "JSXOpeningElement[name.name='GoalCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:pct|met|key|ref|className|style|children)$/]",
@@ -503,7 +503,7 @@
       "FormatList": {
         "replaces": []
       },
-      "GameOption": {
+      "ModeOption": {
         "replaces": []
       },
       "GoalCard": {

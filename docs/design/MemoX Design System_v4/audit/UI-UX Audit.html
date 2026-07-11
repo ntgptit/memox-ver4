@@ -68,7 +68,7 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
   <p><a href="#global">A. Global findings (G1–G8)</a></p>
   <p><a href="#s-dashboard">Dashboard</a> · <a href="#s-library">Library</a> · <a href="#s-deck-detail">Deck Detail</a> · <a href="#s-search">Search</a> · <a href="#s-editor">Card Editor</a></p>
   <p><a href="#s-study-session">Study Session</a> · <a href="#s-review-mode">Review</a> · <a href="#s-study-result">Study Result</a> · <a href="#s-player">Player</a></p>
-  <p><a href="#s-game-picker">Game Picker</a> · <a href="#s-match-mode">Match</a> · <a href="#s-guess-mode">Guess</a> · <a href="#s-recall-mode">Recall</a> · <a href="#s-fill-mode">Fill</a></p>
+  <p><a href="#s-mode-picker">Mode Picker</a> · <a href="#s-match-mode">Match</a> · <a href="#s-guess-mode">Guess</a> · <a href="#s-recall-mode">Recall</a> · <a href="#s-fill-mode">Fill</a></p>
   <p><a href="#s-import">Import</a> · <a href="#s-export">Export</a> · <a href="#s-statistics">Stats</a> · <a href="#s-settings">Settings</a> · <a href="#s-account">Account &amp; Sync</a> · <a href="#s-reminder">Reminders</a> · <a href="#s-theme">Theme</a> · <a href="#s-drawer">Drawer</a></p>
   <p><a href="#checklist">B. Handoff checklist</a></p>
 </div>
@@ -97,7 +97,7 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 <tr><th>Control</th><th>Actual</th><th>Instances</th></tr>
 <tr><td><code>.chip</code> (filters, days, separators, gender)</td><td class="num">34px</td><td>deck-detail, search, reminder, import, export, flashcard-editor</td></tr>
 <tr><td><code>.switch</code></td><td class="num">52×32</td><td>reminder, settings, export, flashcard-editor (M3 spec size — needs 48px hit area)</td></tr>
-<tr><td><code>.btn--sm</code></td><td class="num">38px</td><td><strong>Editor Save</strong>, account Sync now, game-picker Add words, review Cancel, player speed</td></tr>
+<tr><td><code>.btn--sm</code></td><td class="num">38px</td><td><strong>Editor Save</strong>, account Sync now, mode-picker Add words, review Cancel, player speed</td></tr>
 <tr><td><code>.icon-btn--sm</code></td><td class="num">36px</td><td>sort, search-clear, card edit (games/review), recent-fill, import column pickers</td></tr>
 <tr><td><code>.segmented__seg</code></td><td class="num">38px</td><td>statistics, export, theme, player speed</td></tr>
 <tr><td><code>.section-head__action</code> ("See all")</td><td class="num">41×20</td><td>dashboard — add <code>min-height:48px</code>; it's a bare text button</td></tr>
@@ -313,8 +313,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </div></div>
 </div>
 
-<div class="screen" id="s-game-picker">
-<h3>Game Picker</h3>
+<div class="screen" id="s-mode-picker">
+<h3>Mode Picker</h3>
 <p class="meta">3 states: default · not-enough · scope-dropdown</p>
 <p class="vnline">Danh sách game rõ ràng; state "not enough" xử lý tốt, chỉ cần nâng nút Add words và bỏ chevron ở hàng disabled.</p>
 <div class="row"><div class="txt">
@@ -326,8 +326,8 @@ Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM spec
 </ul>
 </div>
 <div class="thumbs">
-  <a href="../ui_kits/memox-app/shots/game-picker--default--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-picker--default--light.png" alt="game picker"></a>
-  <a href="../ui_kits/memox-app/shots/game-picker--not-enough--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/game-picker--not-enough--light.png" alt="not enough"></a>
+  <a href="../ui_kits/memox-app/shots/mode-picker--default--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/mode-picker--default--light.png" alt="game picker"></a>
+  <a href="../ui_kits/memox-app/shots/mode-picker--not-enough--light.png" target="_blank"><img src="../ui_kits/memox-app/shots/mode-picker--not-enough--light.png" alt="not enough"></a>
 </div></div>
 </div>
 

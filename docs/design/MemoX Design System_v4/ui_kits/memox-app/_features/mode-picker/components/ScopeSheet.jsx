@@ -8,18 +8,18 @@ function ScopeSheet() {
     { icon: 'hourglass_empty', label: 'Unlearned only', sel: false, id: 'unlearned' },
   ];
   return (
-    <window.Scrim node="game-picker/scope-scrim">
-      <window.SelectSheet title="Card source" node="game-picker/scope-sheet"
-        options={opts.map((o) => ({ key: o.id, icon: o.icon, label: o.label, node: 'game-picker/scope-' + o.id, selected: o.sel }))} />
+    <window.Scrim node="mode-picker/scope-scrim">
+      <window.SelectSheet title="Card source" node="mode-picker/scope-sheet"
+        options={opts.map((o) => ({ key: o.id, icon: o.icon, label: o.label, node: 'mode-picker/scope-' + o.id, selected: o.sel }))} />
     </window.Scrim>
   );
 }
 
-window.MemoXGamePicker = window.MemoXGamePicker || {};
-window.MemoXGamePicker.ScopeSheet = ScopeSheet;
+window.MemoXModePicker = window.MemoXModePicker || {};
+window.MemoXModePicker.ScopeSheet = ScopeSheet;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-export const ScopeSheet = (window.MemoXGamePicker || {}).ScopeSheet;
+export const ScopeSheet = (window.MemoXModePicker || {}).ScopeSheet;

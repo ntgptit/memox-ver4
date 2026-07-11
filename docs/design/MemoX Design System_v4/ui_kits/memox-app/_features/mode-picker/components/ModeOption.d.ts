@@ -1,7 +1,7 @@
-export interface GameOptionProps {
+export interface ModeOptionProps {
   /**
    * The game descriptor: id + icon (Material Symbols name) + name + description.
-   * Flutter's `GameOption` decomposes this into typed `icon` / `name` /
+   * Flutter's `ModeOption` decomposes this into typed `icon` / `name` /
    * `description` params (recorded as flutter-idiom exceptions).
    */
   g: { id: string; icon: string; name: string; desc: string };
@@ -10,4 +10,4 @@ export interface GameOptionProps {
 }
 
 /** Game-picker choice row: a tinted icon tile, the game name + description, a chevron. */
-export function GameOption(props: GameOptionProps): JSX.Element;
+export function ModeOption(props: ModeOptionProps): JSX.Element;

@@ -112,10 +112,10 @@
 <script type="text/babel-src" src="_features/flashcard-editor/components/DupBanner.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/components/AudioRow.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-editor/FlashcardEditor.jsx"></script>
-<script type="text/babel-src" src="_features/game-picker/components/GameOption.jsx"></script>
-<script type="text/babel-src" src="_features/game-picker/components/ScopeCard.jsx"></script>
-<script type="text/babel-src" src="_features/game-picker/components/ScopeSheet.jsx"></script>
-<script type="text/babel-src" src="_features/game-picker/GamePicker.jsx"></script>
+<script type="text/babel-src" src="_features/mode-picker/components/ModeOption.jsx"></script>
+<script type="text/babel-src" src="_features/mode-picker/components/ScopeCard.jsx"></script>
+<script type="text/babel-src" src="_features/mode-picker/components/ScopeSheet.jsx"></script>
+<script type="text/babel-src" src="_features/mode-picker/ModePicker.jsx"></script>
 <script type="text/babel-src" src="_features/match-mode/components/Tile.jsx"></script>
 <script type="text/babel-src" src="_features/match-mode/MatchMode.jsx"></script>
 <script type="text/babel-src" src="_features/guess-mode/components/GuessPromptCard.jsx"></script>
@@ -188,7 +188,7 @@ const SCREENS = [
   // Deck Content Choice — decide how a new, empty deck is organised (subdecks vs cards).
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
-  { id: 'game-picker', title: 'Game Picker', Comp: () => window.GamePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
+  { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },
   { id: 'match-mode', title: 'Match', Comp: () => window.MatchMode, states: ['playing', 'selected', 'correct', 'wrong', 'almost', 'complete'] },
   { id: 'guess-mode', title: 'Guess', Comp: () => window.GuessMode, states: ['waiting', 'correct', 'wrong', 'long-text', 'complete'] },

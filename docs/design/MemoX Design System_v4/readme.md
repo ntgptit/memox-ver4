@@ -108,7 +108,7 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **subdeck-list**: CreateSubdeckSheet, subdeckFixtures
 - **match-mode**: Tile
 - **guess-mode**: GuessPromptCard
-- **game-picker**: GameOption, ScopeCard, ScopeSheet
+- **mode-picker**: ModeOption, ScopeCard, ScopeSheet
 - **recall-mode**: MeaningPanel, RecallTermCard
 - **fill-mode**: CharCompare, InputBox
 - **import**: SourceCard, Table

@@ -16,7 +16,7 @@
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 9 |
-| game-picker | Game Picker | `game-picker.md` | 3 |
+| mode-picker | Mode Picker | `mode-picker.md` | 3 |
 | match-mode | Match | `match-mode.md` | 6 |
 | guess-mode | Guess | `guess-mode.md` | 5 |
 | recall-mode | Recall | `recall-mode.md` | 5 |

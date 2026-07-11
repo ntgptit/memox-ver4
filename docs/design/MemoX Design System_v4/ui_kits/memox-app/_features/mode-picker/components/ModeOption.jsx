@@ -1,11 +1,11 @@
-/* MemoX — Game-picker local: GameOption (one game choice row). */
+/* MemoX — Game-picker local: ModeOption (one game choice row). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxCard, MxIconTile } = NS;
 
-function GameOption({ g, disabled }) {
+function ModeOption({ g, disabled }) {
   return (
-    <MxCard interactive padding="sm" node={'game-picker/game-' + g.id} style={{ opacity: disabled ? 'var(--memox-opacity-half)' : 1 }}>
+    <MxCard interactive padding="sm" node={'mode-picker/game-' + g.id} style={{ opacity: disabled ? 'var(--memox-opacity-half)' : 1 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <MxIconTile icon={g.icon} tone="accent" />
         <div style={{ flex: 1, minWidth: 0 }}>
@@ -18,9 +18,9 @@ function GameOption({ g, disabled }) {
   );
 }
 
-window.MemoXGamePicker = window.MemoXGamePicker || {};
-window.MemoXGamePicker.GameOption = GameOption;
+window.MemoXModePicker = window.MemoXModePicker || {};
+window.MemoXModePicker.ModeOption = ModeOption;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite. */
-export const GameOption = (window.MemoXGamePicker || {}).GameOption;
+export const ModeOption = (window.MemoXModePicker || {}).ModeOption;
