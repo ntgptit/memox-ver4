@@ -37,14 +37,17 @@ function GameRecall({ state = 'before-reveal' }) {
       {state === 'forgot' ? <Note icon="replay" tone="warning" text="You'll see this word again this round." /> : null}
       {state === 'remembered' ? <Note icon="check_circle" tone="success" text="Nice! Moving to the next card." /> : null}
 
-      {state === 'before-reveal' ? (
-        <MxButton variant="primary" icon="visibility" block size="lg" node="game-recall/reveal">Show</MxButton>
-      ) : (
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-          <MxButton variant={state === 'forgot' ? 'primary' : 'ghost'} danger={state === 'forgot'} block node="game-recall/forgot">Forgot</MxButton>
-          <MxButton variant="primary" block node="game-recall/remembered">Got it</MxButton>
-        </div>
-      )}
+      {/* action anchored at the bottom (thumb zone); reclaim the unused bottom-nav padding */}
+      <div style={{ marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))' }}>
+        {state === 'before-reveal' ? (
+          <MxButton variant="primary" icon="visibility" block size="lg" node="game-recall/reveal">Show</MxButton>
+        ) : (
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
+            <MxButton variant={state === 'forgot' ? 'primary' : 'ghost'} danger={state === 'forgot'} block node="game-recall/forgot">Forgot</MxButton>
+            <MxButton variant="primary" block node="game-recall/remembered">Got it</MxButton>
+          </div>
+        )}
+      </div>
     </MxScaffold>
   );
 }

@@ -58,7 +58,7 @@ function Review({ state = 'browsing' }) {
 
       <TermCard state={state} />
 
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)' }}>
+      <div style={{ marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)' }}>
         <MxIconButton icon="chevron_left" node="review/prev" />
         <span style={{ fontSize: 'var(--memox-font-size-sm)' }}>Swipe to continue</span>
         <MxIconButton icon="chevron_right" node="review/next" />

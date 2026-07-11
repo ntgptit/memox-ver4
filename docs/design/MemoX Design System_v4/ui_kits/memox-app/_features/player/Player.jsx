@@ -47,14 +47,16 @@ function Player({ state = 'playing' }) {
         <MxIconButton icon="skip_next" node="player/next" />
       </div>
 
-      {state === 'speed' ? (
-        <MxSegmentedControl value="1" onChange={() => {}} block node="player/speed-control"
-          segments={[{ value: '0.75', label: '×0.75' }, { value: '1', label: '×1' }, { value: '1.5', label: '×1.5' }]} />
-      ) : (
-        <div style={{ display: 'flex', justifyContent: 'center' }}>
-          <MxButton variant="ghost" size="sm" icon="speed" node="player/speed">×1</MxButton>
-        </div>
-      )}
+      <div style={{ marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))' }}>
+        {state === 'speed' ? (
+          <MxSegmentedControl value="1" onChange={() => {}} block node="player/speed-control"
+            segments={[{ value: '0.75', label: '×0.75' }, { value: '1', label: '×1' }, { value: '1.5', label: '×1.5' }]} />
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <MxButton variant="ghost" size="sm" icon="speed" node="player/speed">×1</MxButton>
+          </div>
+        )}
+      </div>
     </MxScaffold>
   );
 }
