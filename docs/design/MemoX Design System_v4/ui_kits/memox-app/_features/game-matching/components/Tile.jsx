@@ -9,13 +9,13 @@ const TONE = {
 };
 
 function Tile({ text, tone, node }) {
-  if (tone === 'matched') return <div style={{ minHeight: 'calc(var(--memox-size-xl) + var(--memox-space-3))', visibility: 'hidden' }} />;
+  if (tone === 'matched') return <div style={{ minHeight: 'calc(var(--memox-size-xl) + var(--memox-space-4))', visibility: 'hidden' }} />;
   const skin = TONE[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
   // The skin transitions on tone change — this is the correct-match flash the app
   // holds (var(--memox-duration-flash)) before the tile clears to 'matched'.
   const flash = 'var(--memox-duration-flash) var(--memox-ease-standard)';
   return (
-    <div data-mx-node={node} style={{ ...skin, transition: `background ${flash}, border-color ${flash}, color ${flash}`, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-3)', minHeight: 'calc(var(--memox-size-xl) + var(--memox-space-3))', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
+    <div data-mx-node={node} style={{ ...skin, transition: `background ${flash}, border-color ${flash}, color ${flash}`, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4) var(--memox-space-3)', minHeight: 'calc(var(--memox-size-xl) + var(--memox-space-4))', display: 'flex', alignItems: 'center', justifyContent: 'center', textAlign: 'center', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', cursor: 'pointer' }}>{text}</div>
   );
 }
 
