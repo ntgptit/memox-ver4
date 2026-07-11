@@ -1,4 +1,4 @@
-/* MemoX — Game-picker local: ScopeSheet (card-source dropdown bottom sheet). */
+/* MemoX — Mode-picker local: ScopeSheet (card-source dropdown bottom sheet). */
 (function () {
 
 function ScopeSheet() {

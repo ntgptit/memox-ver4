@@ -9,5 +9,5 @@ export interface ModeOptionProps {
   disabled?: boolean;
 }
 
-/** Game-picker choice row: a tinted icon tile, the game name + description, a chevron. */
+/** Mode-picker choice row: a tinted icon tile, the game name + description, a chevron. */
 export function ModeOption(props: ModeOptionProps): JSX.Element;

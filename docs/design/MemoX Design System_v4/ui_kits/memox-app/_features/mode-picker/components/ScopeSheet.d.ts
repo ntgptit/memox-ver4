@@ -1,5 +1,5 @@
 /**
- * Game-picker card-source sheet: By schedule / All cards / Unlearned only, with a
+ * Mode-picker card-source sheet: By schedule / All cards / Unlearned only, with a
  * check on the active source; each item dismisses the sheet before applying.
  *
  * The kit renders this as a **static fixture** — it hardcodes the option list +

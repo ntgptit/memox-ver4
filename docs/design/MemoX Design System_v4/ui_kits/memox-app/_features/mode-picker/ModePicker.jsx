@@ -1,4 +1,4 @@
-/* MemoX — Game picker ("Single mode"). States: default · scope-dropdown · not-enough
+/* MemoX — Mode picker ("Single mode"). States: default · scope-dropdown · not-enough
    Feature-local components: components/{ModeOption,ScopeCard,ScopeSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;

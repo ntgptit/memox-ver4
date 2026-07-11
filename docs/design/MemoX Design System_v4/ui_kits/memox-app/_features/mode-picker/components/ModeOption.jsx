@@ -1,11 +1,11 @@
-/* MemoX — Game-picker local: ModeOption (one game choice row). */
+/* MemoX — Mode-picker local: ModeOption (one study-mode choice row). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxCard, MxIconTile } = NS;
 
 function ModeOption({ g, disabled }) {
   return (
-    <MxCard interactive padding="sm" node={'mode-picker/game-' + g.id} style={{ opacity: disabled ? 'var(--memox-opacity-half)' : 1 }}>
+    <MxCard interactive padding="sm" node={'mode-picker/mode-' + g.id} style={{ opacity: disabled ? 'var(--memox-opacity-half)' : 1 }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)' }}>
         <MxIconTile icon={g.icon} tone="accent" />
         <div style={{ flex: 1, minWidth: 0 }}>

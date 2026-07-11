@@ -3210,7 +3210,7 @@ try { (() => {
 
 // ui_kits/memox-app/_features/mode-picker/components/ModeOption.jsx
 try { (() => {
-/* MemoX — Game-picker local: ModeOption (one game choice row). */
+/* MemoX — Mode-picker local: ModeOption (one study-mode choice row). */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54;
   const {
@@ -3224,7 +3224,7 @@ try { (() => {
     return /*#__PURE__*/React.createElement(MxCard, {
       interactive: true,
       padding: "sm",
-      node: 'mode-picker/game-' + g.id,
+      node: 'mode-picker/mode-' + g.id,
       style: {
         opacity: disabled ? 'var(--memox-opacity-half)' : 1
       }
@@ -3271,7 +3271,7 @@ Object.assign(__ds_scope, { ModeOption });
 
 // ui_kits/memox-app/_features/mode-picker/components/ScopeCard.jsx
 try { (() => {
-/* MemoX — Game-picker local: ScopeCard (card-source selector that opens ScopeSheet). */
+/* MemoX — Mode-picker local: ScopeCard (card-source selector that opens ScopeSheet). */
 (function () {
   const NS = window.MemoXDesignSystem_2ffa54 || {};
   const {
@@ -3328,7 +3328,7 @@ Object.assign(__ds_scope, { ScopeCard });
 
 // ui_kits/memox-app/_features/mode-picker/components/ScopeSheet.jsx
 try { (() => {
-/* MemoX — Game-picker local: ScopeSheet (card-source dropdown bottom sheet). */
+/* MemoX — Mode-picker local: ScopeSheet (card-source dropdown bottom sheet). */
 (function () {
   function ScopeSheet() {
     const opts = [{

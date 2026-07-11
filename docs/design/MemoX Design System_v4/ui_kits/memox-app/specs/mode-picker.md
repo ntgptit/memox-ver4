@@ -146,7 +146,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
             rel: [294,12 24x24]
           style: font:24/400 color:text-tertiary
     - node: card
-      id: mode-picker/game-matching
+      id: mode-picker/mode-match
       item: item[2]
       box:
         abs: [20,180 350x80]
@@ -199,7 +199,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
             rel: [294,12 24x24]
           style: font:24/400 color:text-tertiary
     - node: card
-      id: mode-picker/game-mc
+      id: mode-picker/mode-guess
       item: item[3]
       box:
         abs: [20,280 350x80]
@@ -252,7 +252,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
             rel: [294,12 24x24]
           style: font:24/400 color:text-tertiary
     - node: card
-      id: mode-picker/game-recall
+      id: mode-picker/mode-recall
       item: item[4]
       box:
         abs: [20,380 350x80]
@@ -305,7 +305,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
             rel: [294,12 24x24]
           style: font:24/400 color:text-tertiary
     - node: card
-      id: mode-picker/game-typing
+      id: mode-picker/mode-fill
       item: item[5]
       box:
         abs: [20,480 350x80]
@@ -582,7 +582,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   rel: [294,12 24x24]
   style: font:24/400 color:text-tertiary
 - - node: card
-- id: mode-picker/game-matching
+- id: mode-picker/mode-match
 - item: item[2]
 - box:
 - abs: [20,180 350x80]
@@ -593,7 +593,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 + - node: card
-+ id: mode-picker/game-matching
++ id: mode-picker/mode-match
 + box:
 + abs: [20,263 350x80]
 + rel: [20,199 350x80]
@@ -615,7 +615,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   rel: [294,12 24x24]
   style: font:24/400 color:text-tertiary
 - - node: card
-- id: mode-picker/game-mc
+- id: mode-picker/mode-guess
 - item: item[3]
 - box:
 - abs: [20,280 350x80]
@@ -626,7 +626,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 + - node: card
-+ id: mode-picker/game-mc
++ id: mode-picker/mode-guess
 + box:
 + abs: [20,363 350x80]
 + rel: [20,299 350x80]
@@ -648,7 +648,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   rel: [294,12 24x24]
   style: font:24/400 color:text-tertiary
 - - node: card
-- id: mode-picker/game-recall
+- id: mode-picker/mode-recall
 - item: item[4]
 - box:
 - abs: [20,380 350x80]
@@ -659,7 +659,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 + - node: card
-+ id: mode-picker/game-recall
++ id: mode-picker/mode-recall
 + box:
 + abs: [20,463 350x80]
 + rel: [20,399 350x80]
@@ -681,7 +681,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
   rel: [294,12 24x24]
   style: font:24/400 color:text-tertiary
 - - node: card
-- id: mode-picker/game-typing
+- id: mode-picker/mode-fill
 - item: item[5]
 - box:
 - abs: [20,480 350x80]
@@ -692,7 +692,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
 - position: pos:relative
 - style: bg:surface r:20 shadow:9/16
 + - node: card
-+ id: mode-picker/game-typing
++ id: mode-picker/mode-fill
 + box:
 + abs: [20,563 350x80]
 + rel: [20,499 350x80]
