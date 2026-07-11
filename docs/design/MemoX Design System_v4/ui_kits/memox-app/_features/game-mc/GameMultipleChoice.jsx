@@ -5,7 +5,7 @@ const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
 const { McPromptCard } = window.MemoXGameMC;
 
-const CHOICES = ['school', 'hospital', 'park', 'restaurant'];
+const CHOICES = ['school', 'hospital', 'park', 'restaurant', 'library'];
 
 const Choice = window.ChoiceOption;
 
@@ -37,7 +37,9 @@ function GameMultipleChoice({ state = 'waiting' }) {
     <MxScaffold node="game-mc/screen" appBar={bar}>
       <window.ProgressHeader done={8} total={20} node="game-mc/progress" />
       <McPromptCard />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+      {/* 5 answer options fill the remaining body height as equal rows — taller, chunkier tap
+          targets and no dead space below. reclaim the (unused) bottom-nav padding so they fit. */}
+      <div style={{ flex: '1 1 0', minHeight: 0, marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'grid', gridTemplateRows: 'repeat(5, 1fr)', gap: 'var(--memox-space-3)' }}>
         {CHOICES.map((c, i) => <Choice key={i} text={c} tone={toneFor(state, i)} node={'game-mc/choice-' + i} />)}
       </div>
     </MxScaffold>

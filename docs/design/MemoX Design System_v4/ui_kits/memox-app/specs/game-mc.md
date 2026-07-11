@@ -177,11 +177,15 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
             style: font:20/400 color:text text:center
     - node: div
       box:
-        abs: [20,308 350x262]
-        rel: [20,244 350x262]
-      layout: flex:col gap:12
-      flex: shrink:0
-      repeat: x4(unit=1)
+        abs: [20,308 350x448]
+        rel: [20,244 350x448]
+      layout: grid rows:5(1fr) gap:12
+      flex: grow:1 basis:0 layout_hint:expanded
+      spacing: margin:0/0/-80/0 (reclaims bottom-nav padding)
+      note: FIVE answer options (not 4) that FILL the remaining body height as equal 1fr rows —
+        taller, chunkier tap targets, no dead space below. Options wrap long meanings and the
+        row grows if needed. Reclaims the (unused) bottom-nav padding so all 5 fit one screen.
+      repeat: x5(unit=1)
       - node: div
         id: game-mc/choice-0
         item: item[1]
