@@ -19,7 +19,7 @@ function MeaningCard({ editing }) {
           </div>
         </React.Fragment>
       ) : (
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
+        <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
       )}
     </MxCard>
   );

@@ -33,8 +33,8 @@ function Body({ state }) {
     <React.Fragment>
       <Note icon="schedule" tone="warning" text="Reviewing due cards — results update the Leitner box." />
       <MxCard node="study-session/card" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-size-3xl)', justifyContent: 'center' }}>
-        <div style={{ fontSize: 'var(--memox-font-size-4xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>학교</div>
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
+        <div style={{ fontSize: 'var(--memox-font-size-3xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>학교</div>
+        <div style={{ fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>school</div>
       </MxCard>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
         <MxButton variant="ghost" icon="replay" block node="study-session/due-relearn">Relearn</MxButton>
