@@ -123,17 +123,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       box:
         abs: [20,336 350x430]
         rel: [20,272 350x430]
-      layout: grid cols:2 gap:12
-      spacing: margin:auto/0/0/0
-      note: GROUPED "game board" — a tight, fixed block (tall 96px cards = size-xl, fixed 12px gaps)
-        pushed to the bottom via margin-top:auto (Flutter: Spacer above, or MainAxisAlignment.end),
-        so the top ~1/3 stays airy (header + progress) and the bottom ~2/3 is one dense grid
-        in the thumb zone. NOT stretched to fill.
+      layout: grid cols:2 gap:8
+      spacing: margin:auto/0/-80/0
+      note: GROUPED "game board" — a tight, fixed block (tall 120px cards = size-2xl, small 8px
+        gaps) pushed to the bottom via margin-top:auto (Flutter: Spacer above / MainAxisAlignment.end).
+        The negative margin-bottom (= -bottom-nav-height) reclaims the body's bottom-nav padding
+        (this screen has NO bottom nav) so the tall cards fit one screen without scrolling; the
+        top stays airy (header + progress). NOT stretched to fill.
       - node: div
         box:
           abs: [20,116 169x331]
           rel: [0,0 169x331]
-        layout: flex:col gap:12
+        layout: flex:col gap:8
         repeat: x5(unit=1)
         - node: div
           id: game-matching/left-0
@@ -194,7 +195,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         box:
           abs: [201,116 169x331]
           rel: [181,0 169x331]
-        layout: flex:col gap:12
+        layout: flex:col gap:8
         repeat: x5(unit=1)
         - node: div
           id: game-matching/right-0

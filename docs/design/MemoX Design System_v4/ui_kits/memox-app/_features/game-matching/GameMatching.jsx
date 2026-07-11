@@ -42,15 +42,15 @@ function GameMatching({ state = 'playing' }) {
   return (
     <MxScaffold node="game-matching/screen" appBar={bar}>
       <window.ProgressHeader done={DONE[state] || 0} total={TOTAL} node="game-matching/progress" />
-      {/* A tight, chunky "game board": fixed 12px gaps, tall cards (size-lg), grouped into one
-          dense block. marginTop:auto pushes the block into the bottom ~2/3 (thumb zone) so the
-          top stays airy (header + progress) and the eye scans one solid grid — no pale gap
-          bands cutting across. */}
-      <div style={{ marginTop: 'auto', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-3)' }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+      {/* A tight, chunky "game board": big size-2xl cards, small fixed 8px gaps, grouped into
+          one dense block. marginTop:auto pushes it into the bottom (thumb zone); the negative
+          marginBottom reclaims the body's bottom-nav padding (this screen has no bottom nav),
+          giving the tall cards the room to fit one screen without scrolling. */}
+      <div style={{ marginTop: 'auto', marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--memox-space-2)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
           {LEFT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'L', i)} node={'game-matching/left-' + i} />)}
         </div>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
           {RIGHT.map((t, i) => <Tile key={i} text={t} tone={toneFor(state, 'R', i)} node={'game-matching/right-' + i} />)}
         </div>
       </div>
