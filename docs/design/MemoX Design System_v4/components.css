@@ -438,12 +438,15 @@
 .btn.outline:hover {
   background: var(--memox-state-hover);
 }
-/* ghost (text) */
+/* ghost (low-emphasis) — a hairline border gives it a visible button boundary in BOTH
+   themes and on any surface (transparent fill alone reads as plain text, near-invisible on
+   dark). Lighter border than `outline`, so it stays the lowest-emphasis real button. */
 .btn.ghost {
   background: transparent;
   /* accent (bright) not primary-strong (a dark pressed colour) so ghost labels keep
      contrast on dark surfaces. */
   color: var(--memox-accent);
+  box-shadow: inset 0 0 0 var(--memox-stroke-hairline) var(--memox-border);
 }
 .btn.ghost:hover {
   background: var(--memox-state-hover);
