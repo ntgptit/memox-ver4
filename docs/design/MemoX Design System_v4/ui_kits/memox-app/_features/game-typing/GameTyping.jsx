@@ -59,7 +59,7 @@ function GameTyping({ state = 'waiting' }) {
 
       <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
         <window.SectionLabel style={{ margin: 0 }}>MEANING</window.SectionLabel>
-        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>friend</div>
+        <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>friend</div>
       </MxCard>
 
       <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>Type the term (Korean)</div>
