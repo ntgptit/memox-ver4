@@ -57,7 +57,7 @@ function GameTyping({ state = 'waiting' }) {
     <MxScaffold node="game-typing/screen" appBar={bar}>
       <window.ProgressHeader done={16} total={20} node="game-typing/progress" />
 
-      <MxCard node="game-typing/meaning" style={{ alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
+      <MxCard node="game-typing/meaning" style={{ flex: 1, justifyContent: 'center', alignItems: 'center', textAlign: 'center', gap: 'var(--memox-space-2)', padding: 'var(--memox-space-6)' }}>
         <window.SectionLabel style={{ margin: 0 }}>MEANING</window.SectionLabel>
         <div style={{ fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-bold)' }}>friend</div>
       </MxCard>
@@ -72,7 +72,7 @@ function GameTyping({ state = 'waiting' }) {
         </div>
       ) : null}
 
-      {controls}
+      <div style={{ marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))' }}>{controls}</div>
     </MxScaffold>
   );
 }
