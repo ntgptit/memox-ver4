@@ -210,7 +210,7 @@ function ChoiceOption({ text, tone, node, onClick }) {
     wrong: { border: 'var(--memox-stroke-emphasis) solid var(--memox-error)', background: 'var(--memox-error-soft)', color: 'var(--memox-on-error-soft)' },
   }[tone] || { border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', background: 'var(--memox-surface)' };
   return (
-    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, text)} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-base)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
+    <div data-mx-node={node} onClick={onClick} {...clickA11y(onClick, text)} style={{ ...skin, borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-4)', fontWeight: 'var(--memox-font-weight-medium)', fontSize: 'var(--memox-font-size-base)', lineHeight: 'var(--memox-line-height-normal)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', cursor: 'pointer' }}>
       <span style={{ flex: 1 }}>{text}</span>
       {tone === 'correct' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-success)' }}>check_circle</span> : null}
       {tone === 'wrong' ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-error)' }}>cancel</span> : null}
