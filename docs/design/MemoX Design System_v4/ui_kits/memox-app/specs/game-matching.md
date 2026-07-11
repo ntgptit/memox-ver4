@@ -121,19 +121,19 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface-sunken r:999
     - node: div
       box:
-        abs: [20,116 350x560]
-        rel: [20,52 350x560]
+        abs: [20,336 350x430]
+        rel: [20,272 350x430]
       layout: grid cols:2 gap:12
-      flex: grow:1 basis:0 layout_hint:expanded
-      note: grid FILLS the remaining body height (thumb zone); each column is 5 equal rows
-        (1fr) so the TILES STRETCH tall (~1fr of the column) with one uniform 16px gap —
-        chunky hit targets, no sparse gaps. Tile heights below are indicative, not literal
-        (they scale with device height).
+      spacing: margin:auto/0/0/0
+      note: GROUPED "game board" — a tight, fixed block (tall size-lg cards, fixed 12px gaps)
+        pushed to the bottom via margin-top:auto (Flutter: Spacer above, or MainAxisAlignment.end),
+        so the top ~1/3 stays airy (header + progress) and the bottom ~2/3 is one dense grid
+        in the thumb zone. NOT stretched to fill.
       - node: div
         box:
           abs: [20,116 169x331]
           rel: [0,0 169x331]
-        layout: grid rows:5(1fr) gap:16
+        layout: flex:col gap:12
         repeat: x5(unit=1)
         - node: div
           id: game-matching/left-0
@@ -194,7 +194,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         box:
           abs: [201,116 169x331]
           rel: [181,0 169x331]
-        layout: grid rows:5(1fr) gap:16
+        layout: flex:col gap:12
         repeat: x5(unit=1)
         - node: div
           id: game-matching/right-0
