@@ -121,15 +121,16 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface-sunken r:999
     - node: div
       box:
-        abs: [20,336 350x430]
-        rel: [20,272 350x430]
+        abs: [20,116 350x648]
+        rel: [20,52 350x648]
       layout: grid cols:2 gap:8
-      wrapper: flex:col justify:center flex-grow:1 margin-bottom:-80 (reclaims bottom-nav padding)
+      spacing: margin:0/0/-80/0 (reclaims bottom-nav padding)
       note: GROUPED "game board" — a tight, fixed block (tall 116px cards = size-xl+space-5, small
-        8px gaps) VERTICALLY CENTERED in a flex wrapper (justify:center) for a balanced layout —
-        equal breathing above and below (Flutter: Center / MainAxisAlignment.center). The wrapper's
-        negative margin-bottom (= -bottom-nav-height) reclaims the body's bottom-nav padding (this
-        screen has NO bottom nav) so the tall cards fit one screen without scrolling. NOT stretched.
+        8px gaps). TOP-ALIGNED: the gap from the progress bar is the body's 24px, SAME as the other
+        card games (MC / Recall / Typing), so content lands in the same spot when switching screens
+        (no jump). The negative margin-bottom (= -bottom-nav-height) reclaims the body's bottom-nav
+        padding (this screen has NO bottom nav) so the tall cards fill down to the bottom without
+        scrolling. NOT centered, NOT stretched.
       - node: div
         box:
           abs: [20,116 169x331]
