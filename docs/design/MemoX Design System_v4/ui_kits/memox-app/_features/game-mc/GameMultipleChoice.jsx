@@ -6,6 +6,14 @@ const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
 const { McPromptCard } = window.MemoXGameMC;
 
 const CHOICES = ['school', 'hospital', 'park', 'restaurant', 'library'];
+// long-text fixture — proves the answer options wrap multi-line meanings and the rows grow.
+const LONG_CHOICES = [
+  'a place where students go to study and learn from teachers',
+  'a building where sick or injured people are cared for by doctors',
+  'a public area with grass and trees, used for rest and recreation',
+  'a business that cooks and serves food and drinks to customers',
+  'a place where books are kept for reading, study, or borrowing',
+];
 
 const Choice = window.ChoiceOption;
 
@@ -38,9 +46,11 @@ function GameMultipleChoice({ state = 'waiting' }) {
       <window.ProgressHeader done={8} total={20} node="game-mc/progress" />
       <McPromptCard />
       {/* 5 answer options fill the remaining body height as equal rows — taller, chunkier tap
-          targets and no dead space below. reclaim the (unused) bottom-nav padding so they fit. */}
-      <div style={{ flex: '1 1 0', minHeight: 0, marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'grid', gridTemplateRows: 'repeat(5, 1fr)', gap: 'var(--memox-space-3)' }}>
-        {CHOICES.map((c, i) => <Choice key={i} text={c} tone={toneFor(state, i)} node={'game-mc/choice-' + i} />)}
+          targets and no dead space below. minmax(min-content,1fr): short options fill to 1fr,
+          long (multi-line) meanings GROW instead of clipping. Reclaims the (unused) bottom-nav
+          padding so they fit. */}
+      <div style={{ flex: '1 1 0', minHeight: 0, marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'grid', gridTemplateRows: 'repeat(5, minmax(min-content, 1fr))', gap: 'var(--memox-space-3)' }}>
+        {(state === 'long-text' ? LONG_CHOICES : CHOICES).map((c, i) => <Choice key={i} text={c} tone={toneFor(state, i)} node={'game-mc/choice-' + i} />)}
       </div>
     </MxScaffold>
   );

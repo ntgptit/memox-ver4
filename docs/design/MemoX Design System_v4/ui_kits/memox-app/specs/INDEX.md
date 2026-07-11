@@ -18,7 +18,7 @@
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 9 |
 | game-picker | Game Picker | `game-picker.md` | 3 |
 | game-matching | Matching | `game-matching.md` | 6 |
-| game-mc | Multiple Choice | `game-mc.md` | 4 |
+| game-mc | Multiple Choice | `game-mc.md` | 5 |
 | game-recall | Recall | `game-recall.md` | 5 |
 | game-typing | Typing | `game-typing.md` | 6 |
 | review | Review | `review.md` | 4 |
