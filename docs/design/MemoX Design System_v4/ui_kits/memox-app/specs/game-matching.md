@@ -121,16 +121,18 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
       style: bg:surface-sunken r:999
     - node: div
       box:
-        abs: [20,116 350x331]
-        rel: [20,52 350x331]
+        abs: [20,116 350x560]
+        rel: [20,52 350x560]
       layout: grid cols:2 gap:12
-      flex: shrink:0
-      spacing: margin:8/0/0/0
+      flex: grow:1 basis:0 layout_hint:expanded
+      note: grid FILLS the remaining body height (thumb zone); each column distributes its
+        5 rows with justify:space-between, so row offsets below are evenly spread on any
+        device height (fixed offsets are indicative, not literal).
       - node: div
         box:
           abs: [20,116 169x331]
           rel: [0,0 169x331]
-        layout: flex:col gap:12
+        layout: flex:col justify:space-between gap:12
         repeat: x5(unit=1)
         - node: div
           id: game-matching/left-0
@@ -191,7 +193,7 @@ has no l10n key. Visual reference PNGs: `../shots/` (see `../shots/INDEX.md`).
         box:
           abs: [201,116 169x331]
           rel: [181,0 169x331]
-        layout: flex:col gap:12
+        layout: flex:col justify:space-between gap:12
         repeat: x5(unit=1)
         - node: div
           id: game-matching/right-0
