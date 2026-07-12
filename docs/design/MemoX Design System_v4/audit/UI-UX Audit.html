@@ -50,6 +50,17 @@
 <p class="sub">22 màn hình · 117 states · light + dark · đối chiếu Material 3 + Apple HIG + foundations của chính design system · 06/07/2026.<br>
 Nguồn đo đạc: <code>components.css</code>, <code>tokens/*</code>, DOM specs (<code>ui_kits/memox-app/specs/</code>, bounding box px thật) và ảnh render (<code>shots/</code>). Vì DS được sync từ code, mọi fix cần thực hiện ở repo gốc rồi chạy lại <code>/design-sync</code>.</p>
 
+<div style="border:2px solid #d9822b;border-radius:12px;padding:16px 20px;margin:20px 0;background:#fff7ed;color:#3b2a12">
+  <strong>⚠ Status update (2026-07-13) — historical snapshot.</strong>
+  <p style="margin:8px 0 0">This report is a point-in-time audit of the kit as of <strong>06/07/2026 (22 screens · 117 states)</strong>. The kit has since grown to <strong>26 screens · 168 states</strong>, and render-health closure is now <strong>objective and continuous</strong>, not a one-off report:</p>
+  <ul style="margin:8px 0 0">
+    <li><strong>Single source of truth</strong> — <code>tool/ui_kit_shots/registry.mjs</code>; the gallery, per-screen specs, and shots index are generated from it (no drift).</li>
+    <li><strong>Committed visual baseline</strong> — 336 canonical PNGs (168 states × light/dark) under <code>../ui_kits/memox-app/shots/</code>.</li>
+    <li><strong>One gate</strong> — <code>npm run verify:ui-kit</code> renders the full matrix and fails on any overflow / clip / render-error, and checks drift + missing shots. Wired into CI (<code>.github/workflows/ui-kit.yml</code>).</li>
+  </ul>
+  <p style="margin:8px 0 0"><strong>Closed since this audit</strong> (via the design work + the gate): full-matrix render-health (0 overflow/clip/render-error across 168 states), progress-convention unification (one <code>ProgressHeader</code>), destructive-action colour (remove/delete use <code>danger</code>), and the app-bar consolidation. <strong>Still OPEN — need a focused re-verification pass, NOT closed by this banner:</strong> G1 token contrast (WCAG values), G2 shared touch-target hit-areas (chip/switch/btn--sm/icon-btn--sm/segmented), G7 chart axis labels. Treat the per-item findings below as open until re-measured against current tokens.</p>
+</div>
+
 <!-- ============ TÓM TẮT TIẾNG VIỆT ============ -->
 <div class="vn">
 <h2>Tóm tắt (tiếng Việt)</h2>
