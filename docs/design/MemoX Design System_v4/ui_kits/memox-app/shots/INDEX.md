@@ -243,13 +243,15 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | exporting | `export--exporting--light.png` | `export--exporting--dark.png` |
 | done | `export--done--light.png` | `export--done--dark.png` |
 
-## drawer — Drawer & Languages
+## languages — Language Pairs
 
 | State | Light | Dark |
 | --- | --- | --- |
-| open | `drawer--open--light.png` | `drawer--open--dark.png` |
-| add language | `drawer--add-language--light.png` | `drawer--add-language--dark.png` |
-| remove language | `drawer--remove-language--light.png` | `drawer--remove-language--dark.png` |
+| list | `languages--list--light.png` | `languages--list--dark.png` |
+| one | `languages--one--light.png` | `languages--one--dark.png` |
+| empty | `languages--empty--light.png` | `languages--empty--dark.png` |
+| add | `languages--add--light.png` | `languages--add--dark.png` |
+| remove | `languages--remove--light.png` | `languages--remove--dark.png` |
 
 ## study-session — Study Session (5 stages)
 
@@ -271,7 +273,11 @@ kit JSX source. Files are named `<screen-id>--<state>--<theme>.png`.
 | State | Light | Dark |
 | --- | --- | --- |
 | loaded | `settings--loaded--light.png` | `settings--loaded--dark.png` |
-| group expanded | `settings--group-expanded--light.png` | `settings--group-expanded--dark.png` |
+| study hub | `settings--study-hub--light.png` | `settings--study-hub--dark.png` |
+| study word display | `settings--study-worddisplay--light.png` | `settings--study-worddisplay--dark.png` |
+| study srs | `settings--study-srs--light.png` | `settings--study-srs--dark.png` |
+| study mode | `settings--study-mode--light.png` | `settings--study-mode--dark.png` |
+| study voice | `settings--study-voice--light.png` | `settings--study-voice--dark.png` |
 | value picker | `settings--value-picker--light.png` | `settings--value-picker--dark.png` |
 
 Total: 22 screens · 117 states · 234 PNGs.

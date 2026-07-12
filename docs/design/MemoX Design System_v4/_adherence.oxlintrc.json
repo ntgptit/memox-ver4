@@ -26,8 +26,8 @@
               "ui_kits/memox-app/_features/dashboard/components/**",
               "ui_kits/memox-app/_features/deck-detail/**",
               "ui_kits/memox-app/_features/deck-detail/components/**",
-              "ui_kits/memox-app/_features/drawer/**",
-              "ui_kits/memox-app/_features/drawer/components/**",
+              "ui_kits/memox-app/_features/languages/**",
+              "ui_kits/memox-app/_features/languages/components/**",
               "ui_kits/memox-app/_features/export/**",
               "ui_kits/memox-app/_features/export/components/**",
               "ui_kits/memox-app/_features/flashcard-editor/**",
@@ -132,10 +132,6 @@
       {
         "selector": "JSXOpeningElement[name.name='Donut'] > JSXAttribute > JSXIdentifier[name!=/^(?:pct|key|ref|className|style|children)$/]",
         "message": "<Donut> doesn't accept that prop. Declared props: pct."
-      },
-      {
-        "selector": "JSXOpeningElement[name.name='DrawerItem'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|label|node|key|ref|className|style|children)$/]",
-        "message": "<DrawerItem> doesn't accept that prop. Declared props: icon, label, node."
       },
       {
         "selector": "JSXOpeningElement[name.name='Field'] > JSXAttribute > JSXIdentifier[name!=/^(?:label|value|placeholder|multiline|error|required|node|trailing|key|ref|className|style|children)$/]",
@@ -466,12 +462,6 @@
         "replaces": []
       },
       "Dots": {
-        "replaces": []
-      },
-      "DrawerItem": {
-        "replaces": []
-      },
-      "DrawerPanel": {
         "replaces": []
       },
       "DupBanner": {

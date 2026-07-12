@@ -10,5 +10,5 @@ export interface LangCardProps {
   node?: string;
 }
 
-/** Drawer language row: a learning/native language in add-language. */
+/** Language row: a learning/native language in the add-pair form. */
 export function LangCard(props: LangCardProps): JSX.Element;

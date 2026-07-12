@@ -22,6 +22,6 @@ export interface ConfirmDialogProps {
 /**
  * Centered scrim + dialog confirm overlay (icon, title, text, actions). Carries
  * no copy of its own — every string, node id, and action is passed in by the
- * caller (l10n stays owned there). Used across study-session / deck-settings / drawer.
+ * caller (l10n stays owned there). Used across study-session / deck-settings / languages.
  */
 export function ConfirmDialog(props: ConfirmDialogProps): JSX.Element;

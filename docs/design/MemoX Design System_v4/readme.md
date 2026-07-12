@@ -100,7 +100,7 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **_shared**: ActionCallout, ConfirmDialog, DeckActionsSheet, DeckCard, DeckContentChoice, DeckDeleteConfirmDialog, DeckMoveSheet, DeckPlaySheet, DeckResetConfirmDialog, ProfileCard, SelectSheet, StatusCardRow, StudyPromptCard
 - **account-sync**: SignInCard, SyncBlock
 - **dashboard**: GoalCard, GreetingHeader, OnboardingHero, OnboardingStep, StreakCard, TodaySummary
-- **drawer**: DrawerItem, DrawerPanel, LangCard, RemoveLanguageDialog
+- **languages**: LangCard, RemoveLanguageDialog
 - **export**: ExportingCard, FormatList
 - **flashcard-editor**: AudioRow, DupBanner, Field
 - **flashcard-list**: AddCardSheet, cardFixtures

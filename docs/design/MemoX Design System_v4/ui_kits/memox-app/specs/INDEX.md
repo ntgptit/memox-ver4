@@ -31,8 +31,8 @@
 | theme | Theme | `theme.md` | 3 |
 | import | Import | `import.md` | 5 |
 | export | Export | `export.md` | 3 |
-| drawer | Drawer & Languages | `drawer.md` | 3 |
+| languages | Language Pairs | `languages.md` | 5 |
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
-| settings | Settings | `settings.md` | 3 |
+| settings | Settings | `settings.md` | 7 |
 
-Total: 25 screens · 142 states.
+Total: 25 screens · 148 states.

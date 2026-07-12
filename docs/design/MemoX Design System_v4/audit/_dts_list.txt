@@ -17,10 +17,8 @@ ui_kits/memox-app/_features/deck-detail/components/DeckMenu.d.ts
 ui_kits/memox-app/_features/deck-detail/components/DeleteConfirmDialog.d.ts
 ui_kits/memox-app/_features/deck-detail/components/FlashcardRow.d.ts
 ui_kits/memox-app/_features/deck-detail/components/SubDeckCard.d.ts
-ui_kits/memox-app/_features/drawer/components/DrawerItem.d.ts
-ui_kits/memox-app/_features/drawer/components/DrawerPanel.d.ts
-ui_kits/memox-app/_features/drawer/components/LangCard.d.ts
-ui_kits/memox-app/_features/drawer/components/RemoveLanguageDialog.d.ts
+ui_kits/memox-app/_features/languages/components/LangCard.d.ts
+ui_kits/memox-app/_features/languages/components/RemoveLanguageDialog.d.ts
 ui_kits/memox-app/_features/export/components/ExportingCard.d.ts
 ui_kits/memox-app/_features/export/components/FormatList.d.ts
 ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.d.ts

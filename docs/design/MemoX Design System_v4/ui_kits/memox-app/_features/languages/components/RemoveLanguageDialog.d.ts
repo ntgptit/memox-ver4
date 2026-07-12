@@ -1,5 +1,5 @@
 /**
- * Drawer remove-language-pair confirm overlay — composes the shared ConfirmDialog.
+ * Remove-language-pair confirm overlay — composes the shared ConfirmDialog.
  *
  * The kit renders this as a **static fixture** (hardcoded copy + node ids) and
  * exposes **no props**. In Flutter it is the top-level helper
