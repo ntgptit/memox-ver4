@@ -6,6 +6,9 @@ export interface MxFabProps {
   variant?: 'accent';
   /** Force the round (icon-only) shape. */
   round?: boolean;
+  /** Accessible name — REQUIRED for an icon-only FAB (no visible `label`). */
+  ariaLabel?: string;
+  disabled?: boolean;
   node?: string;
   onClick?: () => void;
 }
