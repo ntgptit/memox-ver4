@@ -20,6 +20,9 @@
 
   /* layout rhythm */
   --memox-gutter: 16px; /* screen edge padding (phone) — contract: screen horizontal padding = 16 */
+  /* Status-bar / notch inset above every app bar. Kit renders a fixed 24; on a real device
+     the env() inset wins when larger. Production RN maps this to the SafeAreaView top inset. */
+  --memox-safe-area-top: max(env(safe-area-inset-top, 0px), 24px);
   --memox-appbar-height: 64px;
   --memox-appbar-lg-height: 112px;
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */

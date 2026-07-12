@@ -29,6 +29,13 @@
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
 }
+/* Status-bar / notch safe area — a flex spacer above every app bar so no screen's
+   chrome hugs the top edge or collides with system indicators. */
+.app::before {
+  content: '';
+  flex: 0 0 var(--memox-safe-area-top);
+  background: var(--memox-bg);
+}
 .app__body {
   flex: 1;
   min-height: 0;
