@@ -10,8 +10,7 @@ A from-scratch visual system for **MemoX** — a local-first flashcard / spaced-
 
 ## Sources (for the reader — access not assumed)
 
-- **Color reference — Tokyo admin dashboard:** <https://github.com/ntgptit/tokyo-react-admin-dashboard>
-  - Used **only** for the color *palette*. The light values come from `tokyo-free-white-…/src/theme/schemes/PureLightTheme.ts` (primary `#5569ff` on `#f2f5f9`); the dark values from `tokyo-free-black-…/src/theme/schemes/NebulaFighterTheme.ts` (primary `#8C7CF0` on `#070C27`). **No** token names, component names/classes, or layout were borrowed from Tokyo — only color.
+- **Canonical palette — deep violet.** The colour palette is MemoX's own **deep violet** (primary `#4b3a8c`, accent `#7355d6`/`#a88fff`), defined once in `tokens/colors.css`. _Historical note:_ an earlier revision sampled the Tokyo admin dashboard (<https://github.com/ntgptit/tokyo-react-admin-dashboard>) for its colours; those values are **legacy** and have been fully migrated to deep violet — do not reintroduce them. No token names, component names/classes, or layout ever came from Tokyo — only the (now-replaced) colour values.
 - **Product context — MemoX repos** (not imported; for deeper exploration): `ntgptit/memox-v4`, `ntgptit/memox-v3`, `ntgptit/memox-design-v2`. Explore these to ground future screens in the real product.
 - **Font:** Plus Jakarta Sans (variable), provided by the user → `fonts/PlusJakartaSans[wght].ttf`.
 
@@ -45,13 +44,13 @@ How MemoX writes copy:
 
 ## VISUAL FOUNDATIONS
 
-- **Color vibe.** Cool, focused, slightly nocturnal. Light theme is an airy blue-grey canvas (`#f2f5f9`) with crisp white cards and an **indigo** primary (`#5569ff`). Dark theme is a deep navy (`#070C27`) with raised navy cards and a softer **violet** primary (`#8C7CF0`) — easier on the eyes for evening study. Cyan (`#33C2FF`) is the secondary accent. Semantics: green success, amber warning, red error.
+- **Color vibe.** Focused, calm, slightly nocturnal. The canonical palette is **deep violet**. Light theme is an off-white violet-tinted canvas (`#f6f5fc`) with crisp white cards and a **deep-violet** primary (`#4b3a8c`); dark theme is a near-black violet canvas (`#141220`) with raised violet-grey cards and the same deep-violet brand — easier on the eyes for evening study. A **bright violet** accent (`#7355d6` light · `#a88fff` dark) carries highlights. Semantics: green success, amber warning, red error. (All values live in `tokens/colors.css` — the single colour source of truth; there is no runtime theme override.)
 - **Type.** Plus Jakarta Sans throughout — a geometric-humanist sans with friendly round counters. Display/number weights are **Extrabold (800)**, titles **Bold (700)**, body **Regular/Semibold (400/600)**. Tight tracking (`-.02em`) on large display; wide tracking (`.04–.08em`) on small caps overlines. Big numerals are the hero element.
 - **Spacing.** 4px base scale (`--memox-space-1…12`), restricted to `{4,8,12,16,24,32,48}`. Screen gutter and card padding are **16px** (`--memox-gutter` / `--memox-space-4`, per the mobile-ui construction contract); 8–12px gaps between list rows, 24/32 between sections.
 - **Corner radii.** Soft and modern: cards `20px`, tiles `16px`, controls/buttons `12–14px`, FAB/extended pills, chips & switches fully rounded. Nothing sharp.
-- **Cards.** The core surface. Light: white, no border, soft **blue-grey** ambient shadow (`0 9px 16px rgba(159,162,191,.18)`). Dark: raised navy with a hairline `#272C48` ring instead of a heavy shadow. Variants: `flat` (hairline), `muted` (sunken), `primary` (solid brand), `primary-soft` (tint).
+- **Cards.** The core surface. Light: white, no border, soft **violet-grey** ambient shadow (`0 9px 16px rgba(120,112,158,.18)`). Dark: raised violet-grey with a hairline ring instead of a heavy shadow. Variants: `flat` (hairline), `muted` (sunken), `primary` (solid brand), `primary-soft` (tint).
 - **Backgrounds.** Flat token fills — **no gradients, no photographic imagery, no patterns or textures.** Depth comes from surface layering (canvas → muted → surface → raised) and shadow, not decoration.
-- **Elevation system.** Light uses soft blue-grey drop shadows (`shadow-sm` / `shadow-card` / `shadow-lg`) and a colored glow under the FAB (`shadow-fab`). Dark trades drop shadows for hairline rings + deep ambient shadow.
+- **Elevation system.** Light uses soft violet-grey drop shadows (`shadow-sm` / `shadow-card` / `shadow-lg`) and a violet glow under the FAB (`shadow-fab`). Dark trades drop shadows for hairline rings + deep ambient shadow.
 - **Borders.** Hairline `--memox-border`; chips/outline buttons use inset box-shadow rings so they don't shift layout. Dividers are low-alpha (`--memox-divider`).
 - **Hover / press / focus.** Hover = subtle state overlay (`--memox-state-hover`) or a one-step-darker primary. Press = scale down (`0.94–0.97`) — a tactile Material-ish squash. Focus = 3px `--memox-focus-ring` halo. Transitions are quick (120–180ms) and eased; **no bounce, no long animations.** The bottom-nav active item slides a tinted pill behind its icon; the switch thumb grows as it travels.
 - **Transparency & blur.** Used sparingly — soft tints (`*-soft` tokens at ~10–18% alpha) for containers and state layers; scrim/overlay for modals. No glassmorphism.
@@ -90,7 +89,7 @@ Namespace for `@dsCard` / kit HTML: `window.MemoXDesignSystem_2ffa54`.
 ## Caveats
 
 - **No brand logo / app icon asset** was provided or available to copy — the wordmark is currently just Extrabold type. **Please share a MemoX logo / app-icon** if one exists.
-- The **Tokyo palette** was used verbatim as token values. If MemoX has its own brand hues, send them and only the token *values* need to change.
+- The canonical palette is **deep violet**, defined in `tokens/colors.css` (the single colour source of truth — there is no runtime override). Colour values are checked by `node tool/ui_kit_shots/contrast.mjs` (wired into `verify:ui-kit`) for WCAG light + dark. If MemoX adopts different brand hues later, only the token *values* need to change.
 - Screens use **realistic placeholder** copy and data, per the initialization brief — no real content, navigation, or validation yet.
 
 ## Kit composites (ui_kits/memox-app)

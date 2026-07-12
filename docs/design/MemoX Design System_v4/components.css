@@ -723,7 +723,9 @@
 }
 .chip--accent {
   background: var(--memox-accent-soft);
-  color: var(--memox-on-accent);
+  /* accent (bright violet) on the SOFT tint — on-accent is white, meant only for a
+     SOLID accent fill, and fails contrast on the pale tint (cf. .icon-tile--accent). */
+  color: var(--memox-accent);
   box-shadow: none;
 }
 .chip--ghost {
@@ -906,7 +908,8 @@
 }
 .avatar--accent {
   background: var(--memox-accent-soft);
-  color: var(--memox-on-accent);
+  /* accent glyph on the SOFT tint (not on-accent, which is white for a solid fill). */
+  color: var(--memox-accent);
 }
 .avatar--ring {
   box-shadow: 0 0 0 var(--memox-stroke-emphasis) var(--memox-surface), 0 0 0 var(--memox-stroke-bold) var(--memox-primary);
