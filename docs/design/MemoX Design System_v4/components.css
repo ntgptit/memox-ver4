@@ -110,7 +110,7 @@
   justify-content: flex-end;
   gap: var(--memox-space-1);
   min-height: var(--memox-appbar-lg-height);
-  padding: var(--memox-space-6) var(--memox-gutter) var(--memox-space-4);
+  padding: var(--memox-space-3) var(--memox-gutter) var(--memox-space-4);
   background: var(--memox-bg);
   color: var(--memox-text);
   flex-shrink: 0;
