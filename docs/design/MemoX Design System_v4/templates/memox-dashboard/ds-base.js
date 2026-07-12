@@ -1,6 +1,11 @@
 // Loads this design system into the template. In a consuming project, point
 // base at the bound DS folder relative to this file (e.g. '_ds/<folder>' at
 // the project root, '../_ds/<folder>' one level down) — one line to edit.
+//
+// This template is a STATIC scaffold built from the frozen Mx* CSS base classes
+// (.app, .cappbar, .card, .btn…) with data-mx-node ids — it needs only the tokens +
+// component stylesheet, not any component JavaScript. (There is no compiled bundle:
+// the design system renders from source; see components/_ds_runtime.js.)
 (() => {
   const base = '../..';
   for (const p of ["styles.css"]) {
@@ -8,8 +13,4 @@
     l.rel = 'stylesheet'; l.href = base + '/' + p;
     document.head.appendChild(l);
   }
-  const s = document.createElement('script');
-  s.src = base + '/_ds_bundle.js';
-  s.onerror = () => console.error('ds-base.js: failed to load ' + s.src + ' — if this is a consuming project, point the base line in ds-base.js at the bound _ds/<folder> tree relative to this page (e.g. _ds/<folder> at the project root, ../_ds/<folder> one level down); in a fresh design system this can just mean the bundle is not compiled yet');
-  document.head.appendChild(s);
 })();

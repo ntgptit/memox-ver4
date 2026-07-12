@@ -21,10 +21,11 @@
   --memox-surface-raised: #ffffff;
   --memox-surface-sunken: #eae8f4;
 
-  /* --- text (violet-ink) --- */
+  /* --- text (violet-ink). tertiary meets normal-text AA (>=4.5:1) so it is safe for the
+         small 11-13px meta/overline labels that use it (contrast.mjs gates it as normal). --- */
   --memox-text: #1b1a26;
   --memox-text-secondary: #67647a;
-  --memox-text-tertiary: #736f86;
+  --memox-text-tertiary: #6f6b81;
 
   /* --- primary (brand · deep violet) --- */
   --memox-primary: #4b3a8c;

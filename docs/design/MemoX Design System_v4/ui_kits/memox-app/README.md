@@ -25,7 +25,7 @@ Every meaningful node carries a stable `data-mx-node="<screen>/<node>"` — e.g.
 
 ## Load order (important)
 
-`_ds_bundle.js` (plain) → `kit-helpers.jsx` → screen modules → gallery. Screens read components from `window.MemoXDesignSystem_2ffa54` and export themselves to `window`.
+Base `Mx*` primitives (`../../components/**/*.jsx`) → `kit-helpers.jsx` → screen modules → gallery — all loaded from **source** as `text/babel-src` and transpiled in-browser (no compiled bundle). The boot loader registers each primitive on `window.MemoXDesignSystem_2ffa54` incrementally as it loads, so screen modules resolve them at load time; screens export themselves to `window`.
 
 ## Note
 
