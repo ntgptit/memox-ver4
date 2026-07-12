@@ -55,7 +55,7 @@ How MemoX writes copy:
 - **Borders.** Hairline `--memox-border`; chips/outline buttons use inset box-shadow rings so they don't shift layout. Dividers are low-alpha (`--memox-divider`).
 - **Hover / press / focus.** Hover = subtle state overlay (`--memox-state-hover`) or a one-step-darker primary. Press = scale down (`0.94–0.97`) — a tactile Material-ish squash. Focus = 3px `--memox-focus-ring` halo. Transitions are quick (120–180ms) and eased; **no bounce, no long animations.** The bottom-nav active item slides a tinted pill behind its icon; the switch thumb grows as it travels.
 - **Transparency & blur.** Used sparingly — soft tints (`*-soft` tokens at ~10–18% alpha) for containers and state layers; scrim/overlay for modals. No glassmorphism.
-- **Layout rules.** Fixed top app bar (compact 64px, or 132px large/hero), fixed bottom nav (72px), FAB parked above the nav at the screen's right gutter; the body scrolls between them.
+- **Layout rules.** Fixed top app bar (one compact 56px `MxContextualAppBar`, `--memox-appbar-height`; the large/hero bar was retired), fixed bottom nav (80px, `--memox-bottom-nav-height`), FAB parked above the nav at the screen's right gutter; the body scrolls between them.
 
 ---
 
@@ -79,7 +79,7 @@ How MemoX writes copy:
   - `navigation/` — **MxBottomNav** (`bottom-nav`), **MxFab** (`fab`), **MxSearchDock** (`search-dock`), **MxIconButton** (`icon-btn`)
   - `core/` — **MxButton** (`btn` + primary/secondary/outline/ghost), **MxLink** (`link` — text/nav link button), **MxTextField** (`field`), **MxChip** (`chip`), **MxBadge** (`badge`), **MxSwitch** (`switch`), **MxSegmentedControl** (`segmented`), **MxAvatar** (`avatar`)
 - **`guidelines/`** — foundation specimen cards (Colors / Type / Spacing) shown on the Design System tab.
-- **`ui_kits/memox-app/`** — the screen gallery (22 screens × states × light/dark).
+- **`ui_kits/memox-app/`** — the screen gallery (26 screens × states × light/dark; the canonical list lives in `tool/ui_kit_shots/registry.mjs`).
 - **`fonts/`** — Plus Jakarta Sans variable TTF.
 - **`SKILL.md`** — Agent-Skill manifest for use in Claude Code.
 
