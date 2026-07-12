@@ -21,6 +21,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { join, extname, normalize, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { SCREENS, sampleOf } from './registry.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const KIT = normalize(join(HERE, '..', '..', 'docs', 'design', 'MemoX Design System_v4'));
@@ -53,42 +54,22 @@ const serve = (root) => createServer(async (req, res) => {
   } catch { res.writeHead(404).end('not found'); }
 });
 
-// screen -> window global + full state list (mirrors index.html SCREENS)
-const REGISTRY = {
-  dashboard: { g: 'Dashboard', states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
-  library: { g: 'Library', states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
-  'subdeck-list': { g: 'SubdeckList', states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'play', 'loading', 'offline', 'error'] },
-  'flashcard-list': { g: 'FlashcardList', states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error'] },
-  'deck-settings': { g: 'DeckSettings', states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
-  'deck-content-choice': { g: 'DeckContentChoice', states: ['default'] },
-  'flashcard-editor': { g: 'FlashcardEditor', states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'submitting', 'submit-error', 'submit-success'] },
-  'mode-picker': { g: 'ModePicker', states: ['default', 'not-enough'] },
-  'match-mode': { g: 'MatchMode', states: ['playing', 'complete'] },
-  'guess-mode': { g: 'GuessMode', states: ['waiting', 'long-text', 'complete'] },
-  'recall-mode': { g: 'RecallMode', states: ['before-reveal', 'complete'] },
-  'fill-mode': { g: 'FillMode', states: ['waiting', 'typing', 'complete'] },
-  'review-mode': { g: 'ReviewMode', states: ['browsing', 'audio', 'loading', 'error', 'end'] },
-  player: { g: 'Player', states: ['playing', 'error', 'end'] },
-  'study-result': { g: 'StudyResult', states: ['standard', 'goal-met', 'many-wrong', 'finalize-error'] },
-  search: { g: 'Search', states: ['empty-recent', 'results', 'no-results', 'loading'] },
-  statistics: { g: 'Statistics', states: ['loaded', 'insufficient', 'loading', 'error'] },
-  reminder: { g: 'Reminder', states: ['on', 'off'] },
-  'account-sync': { g: 'AccountSync', states: ['signed-out', 'signed-in', 'conflict', 'offline'] },
-  theme: { g: 'Theme', states: ['light', 'accent-size'] },
-  import: { g: 'Import', states: ['source', 'mapping', 'importing', 'import-error', 'done'] },
-  export: { g: 'Export', states: ['config', 'exporting', 'export-error', 'done'] },
-  languages: { g: 'Languages', states: ['list', 'one', 'empty', 'add', 'remove'] },
-  'study-session': { g: 'StudySession', states: ['stage1-review', 'resume-error', 'answer-save-error'] },
-  settings: { g: 'Settings', states: ['loaded', 'study-hub', 'study-worddisplay', 'study-srs', 'study-mode', 'study-voice'] },
-  'app-bar': { g: 'AppBar', states: ['root-top', 'root-scrolled', 'root-unread', 'nested', 'nested-overflow', 'search', 'selection', 'modal'] },
-};
+// screen -> window global + state lists, derived from the SINGLE SOURCE OF TRUTH (registry.mjs).
+// No private list here — edit registry.mjs, and the gallery/specs/shots-index stay in lockstep.
+const REGISTRY = Object.fromEntries(
+  SCREENS.map((s) => [s.id, { g: s.group, states: s.states, sample: sampleOf(s) }]),
+);
+
+// Coverage mode: default renders the FULL state matrix (the CI gate). SHOOT_MODE=sample renders
+// the fast local subset (npm run verify:ui-kit local). An explicit `screen:states` arg always wins.
+const MODE = process.env.SHOOT_MODE === 'sample' ? 'sample' : 'states';
 
 function parseArgs() {
   const a = process.argv[2];
-  if (!a) return Object.keys(REGISTRY).map((id) => ({ id, states: REGISTRY[id].states }));
+  if (!a) return Object.keys(REGISTRY).map((id) => ({ id, states: REGISTRY[id][MODE] }));
   const [id, states] = a.split(':');
   if (!REGISTRY[id]) { console.error(`unknown screen "${id}". Known: ${Object.keys(REGISTRY).join(', ')}`); process.exit(2); }
-  return [{ id, states: states ? states.split(',') : REGISTRY[id].states }];
+  return [{ id, states: states ? states.split(',') : REGISTRY[id][MODE] }];
 }
 
 const run = async () => {
