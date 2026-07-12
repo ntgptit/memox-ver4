@@ -57,7 +57,11 @@ function newestSource() {
   return { newest, at };
 }
 
-console.log(`verify:ui-kit — coverage: ${structural ? 'STRUCTURAL only (drift + shots)' : sample ? 'sample (fast/local)' : 'FULL 168-state matrix (CI)'}`);
+const coverage = structural ? 'STRUCTURAL only (drift + shots, no render)'
+  : scope ? `scoped: ${scope} (full responsive grid, this screen only)`
+  : sample ? 'sample (fast local — sampled states, worst-case combo only)'
+  : (process.env.SHOOT_SHARD ? `FULL matrix, shard ${process.env.SHOOT_SHARD}` : 'FULL matrix (168 states × responsive grid)');
+console.log(`verify:ui-kit — coverage: ${coverage}`);
 
 // ── 1. DRIFT ──────────────────────────────────────────────────────────────
 const drift = step('registry ↔ artifacts (drift)', spawnSync(node, [join(HERE, 'gen.mjs'), '--check'], { stdio: 'inherit' }));

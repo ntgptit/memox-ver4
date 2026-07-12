@@ -31,11 +31,17 @@ jobs:
       - run: npm run verify:ui-kit:structural
 
   # Full responsive render matrix (168 states x widths x font-scales x light/dark) with overflow /
-  # clip / render-error detection. Needs Chromium + CJK fonts so Korean/Japanese fixtures lay out
-  # like the committed baseline.
+  # clip / render-error detection. Sharded 4 ways so each runner does ~1/4 of the screens (~6-7 min
+  # instead of ~25). Drift + missing-shot are already covered by the `structural` job, so each shard
+  # runs shoot.mjs directly (it exits non-zero on any unaccepted finding). Needs Chromium + CJK fonts
+  # so Korean/Japanese fixtures lay out like the committed baseline.
   visual:
-    name: visual (full render matrix)
+    name: visual (shard ${{ matrix.shard }}/4)
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -47,4 +53,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
       - name: Install Playwright Chromium
         run: npx playwright install --with-deps chromium
-      - run: npm run verify:ui-kit
+      - name: Render + gate shard
+        run: node tool/ui_kit_shots/shoot.mjs
+        env:
+          SHOOT_SHARD: ${{ matrix.shard }}/4
