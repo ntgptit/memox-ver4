@@ -8,6 +8,10 @@ export function useColorScheme() {
   const [hasHydrated, setHasHydrated] = useState(false);
 
   useEffect(() => {
+    // Intentional: flip to the real (client) color scheme once, right after hydration, so static
+    // web rendering returns a stable 'light' on the server. This is the documented Expo pattern;
+    // the one synchronous setState here does not cascade (empty deps → runs once).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setHasHydrated(true);
   }, []);
 
