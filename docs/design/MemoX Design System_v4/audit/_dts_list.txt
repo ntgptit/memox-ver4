@@ -45,7 +45,6 @@ ui_kits/memox-app/_features/player/components/PlayerCard.d.ts
 ui_kits/memox-app/_features/reminder/components/TimeCol.d.ts
 ui_kits/memox-app/_features/reminder/components/TimePickerSheet.d.ts
 ui_kits/memox-app/_features/review-mode/components/MeaningCard.d.ts
-ui_kits/memox-app/_features/review-mode/components/TermCard.d.ts
 ui_kits/memox-app/_features/search/components/Chips.d.ts
 ui_kits/memox-app/_features/search/components/ResultRow.d.ts
 ui_kits/memox-app/_features/settings/components/ValuePickerSheet.d.ts

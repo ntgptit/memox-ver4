@@ -1,9 +1,9 @@
 /* MemoX — Review. States: browsing · editing · audio · end
-   Feature-local components: components/{MeaningCard,TermCard}.jsx */
+   Feature-local components: components/{MeaningCard}.jsx. Term card is shared StudyPromptCard. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
-const { MeaningCard, TermCard } = window.MemoXReviewMode;
+const { MeaningCard } = window.MemoXReviewMode;
 
 function ReviewMode({ state = 'browsing' }) {
   const editing = state === 'editing';
@@ -56,7 +56,7 @@ function ReviewMode({ state = 'browsing' }) {
 
       <MeaningCard editing={editing} />
 
-      <TermCard state={state} />
+      <window.StudyPromptCard term="학교" nodePrefix="review-mode" fill editable={false} playing={state === 'audio'} />
 
       <div style={{ marginBottom: 'calc(-1 * var(--memox-bottom-nav-height))', display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 'var(--memox-space-4)', color: 'var(--memox-text-tertiary)' }}>
         <MxIconButton icon="chevron_left" node="review-mode/prev" />
