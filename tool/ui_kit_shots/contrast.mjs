@@ -5,19 +5,22 @@
 // any required foreground/background pair misses its threshold, in EITHER light or dark.
 //
 // Thresholds (WCAG 2.x): normal text ≥ 4.5:1 · large/bold text ≥ 3.0:1 · UI/icon ≥ 3.0:1.
-// text-tertiary is a deliberately de-emphasised role (overlines / large meta); the design
-// system routes small body text to text-secondary, so tertiary is held to the large/UI 3.0
-// floor, not 4.5 — raising it to 4.5 would collapse the tertiary↔secondary hierarchy.
-// Disabled foregrounds are reported but NOT gated (WCAG 1.4.3 exempts disabled controls).
+// text-tertiary is gated as NORMAL text (≥ 4.5) on both bg and surface, because components.css
+// uses it for small 11–13px meta/overline labels; its token value is tuned to clear 4.5 while
+// staying below text-secondary so the hierarchy holds. Disabled foregrounds are reported but
+// NOT gated (WCAG 1.4.3 exempts disabled controls). A MISSING or UNPARSEABLE required token is
+// a hard failure (exit 1), never a silent warning.
 //
 // Usage: node tool/ui_kit_shots/contrast.mjs        (gated by verify:ui-kit[:structural])
 
 import { readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { join } from 'node:path';
+import { join, resolve } from 'node:path';
 
 const KIT = fileURLToPath(new URL('../../docs/design/MemoX Design System_v4/', import.meta.url));
-const COLORS = join(KIT, 'tokens/colors.css');
+// MX_CONTRAST_COLORS lets the regression tests point the gate at a fixture stylesheet without
+// touching the real token source; production runs use the canonical colors.css.
+const COLORS = process.env.MX_CONTRAST_COLORS ? resolve(process.env.MX_CONTRAST_COLORS) : join(KIT, 'tokens/colors.css');
 
 // ── parse tokens/colors.css into { light:{tok:val}, dark:{tok:val} } ─────────
 function parseTokens() {
@@ -78,8 +81,8 @@ const PAIRS = [
   { fg: '--memox-text', bg: '--memox-surface', cat: 'normal' },
   { fg: '--memox-text-secondary', bg: '--memox-bg', cat: 'normal' },
   { fg: '--memox-text-secondary', bg: '--memox-surface', cat: 'normal' },
-  { fg: '--memox-text-tertiary', bg: '--memox-bg', cat: 'large' },
-  { fg: '--memox-text-tertiary', bg: '--memox-surface', cat: 'large' },
+  { fg: '--memox-text-tertiary', bg: '--memox-bg', cat: 'normal' },
+  { fg: '--memox-text-tertiary', bg: '--memox-surface', cat: 'normal' },
   // brand
   { fg: '--memox-on-primary', bg: '--memox-primary', cat: 'normal' },
   { fg: '--memox-on-primary-soft', bg: '--memox-primary-soft', over: '--memox-surface', cat: 'normal' },
@@ -121,14 +124,27 @@ let failures = 0;
 for (const theme of ['light', 'dark']) {
   const T = tokens[theme];
   for (const p of PAIRS) {
-    const fgRaw = T[p.fg], bgRaw = T[p.bg];
-    if (fgRaw == null || bgRaw == null) { rows.push({ theme, ...p, missing: true }); continue; }
-    const baseTok = p.over ? T[p.over] : T['--memox-surface'];
-    const base = parseColor(baseTok);
-    const bg = over(parseColor(bgRaw), base);      // flatten alpha container onto base
-    const fg = over(parseColor(fgRaw), bg);         // flatten any fg alpha onto the bg
-    const r = ratio(fg, bg);
     const need = THRESH[p.cat];
+    // Resolve + composite. A missing required token, a missing composite base, or an
+    // unparseable colour is a HARD failure (never a silent warning) — for every pair,
+    // including the reported-only disabled pairs (their token still has to exist).
+    let fg, bg;
+    try {
+      const fgRaw = T[p.fg];
+      if (fgRaw == null) throw new Error(`missing required foreground token ${p.fg}`);
+      const bgRaw = T[p.bg];
+      if (bgRaw == null) throw new Error(`missing required background token ${p.bg}`);
+      const overTok = p.over || '--memox-surface';
+      const baseRaw = T[overTok];
+      if (baseRaw == null) throw new Error(`missing required composite base ${overTok}`);
+      bg = over(parseColor(bgRaw), parseColor(baseRaw)); // flatten alpha container onto base
+      fg = over(parseColor(fgRaw), bg);                  // flatten any fg alpha onto the bg
+    } catch (e) {
+      failures++;
+      rows.push({ theme, fg: p.fg, bg: p.bg, cat: p.cat, need, error: e.message, gated: true });
+      continue;
+    }
+    const r = ratio(fg, bg);
     const pass = r >= need;
     if (!pass && p.cat !== 'info') failures++;
     rows.push({ theme, fg: p.fg, bg: p.bg, cat: p.cat, ratio: r, need, pass, gated: p.cat !== 'info' });
@@ -141,7 +157,7 @@ const fmt = (n) => n.toFixed(2).padStart(5);
 for (const theme of ['light', 'dark']) {
   console.log(`  ${theme.toUpperCase()}`);
   for (const r of rows.filter((x) => x.theme === theme)) {
-    if (r.missing) { console.log(`    ⚠ MISSING TOKEN  ${short(r.fg)} on ${short(r.bg)}`); continue; }
+    if (r.error) { console.log(`    ✗ ${r.error}  [${r.cat} — required]`); continue; }
     const mark = r.cat === 'info' ? '·' : r.pass ? '✓' : '✗';
     const tag = r.cat === 'info' ? '(disabled — not gated)' : `${r.cat} ≥ ${r.need.toFixed(1)}`;
     console.log(`    ${mark} ${fmt(r.ratio)}:1  ${short(r.fg)} on ${short(r.bg)}  [${tag}]`);
@@ -149,13 +165,15 @@ for (const theme of ['light', 'dark']) {
   console.log('');
 }
 
-if (failures) {
-  console.log(`✗ contrast gate FAILED — ${failures} pair(s) below threshold:\n`);
-  for (const r of rows.filter((x) => x.gated && !x.pass)) {
+const failing = rows.filter((x) => x.error || (x.gated && !x.pass));
+if (failing.length) {
+  console.log(`✗ contrast gate FAILED — ${failing.length} pair(s):\n`);
+  for (const r of failing) {
     console.log(`  Theme:             ${r.theme}`);
     console.log(`  Foreground token:  ${r.fg}`);
     console.log(`  Background token:  ${r.bg}`);
-    console.log(`  Actual ratio:      ${r.ratio.toFixed(2)}:1`);
+    if (r.error) console.log(`  Problem:           ${r.error}`);
+    else console.log(`  Actual ratio:      ${r.ratio.toFixed(2)}:1`);
     console.log(`  Required ratio:    ${r.need.toFixed(1)}:1`);
     console.log(`  Usage category:    ${r.cat}\n`);
   }
