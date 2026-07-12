@@ -20,9 +20,10 @@ function Search({ state = 'empty-recent' }) {
   const val = state === 'empty-recent' ? '' : (state === 'no-results' ? 'xyz' : '하');
   // Search-specific top bar: the dock is a shadowed pill, so it can't sit in MxAppBar's
   // `title` slot (that clips overflow + ellipses text). Give it its own un-clipped row with
-  // vertical breathing room so the pill's shadow reads and it doesn't feel crushed.
+  // a generous space-6 top pad (matching the large-header screens) so the bar breathes and
+  // clears the status-bar area — in production wrap the screen so this is max(inset-top, 24px).
   const bar = (
-    <div data-mx-node="search/appbar" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-appbar-height)', padding: 'var(--memox-space-2) var(--memox-gutter)', background: 'var(--memox-bg)', flexShrink: 0 }}>
+    <div data-mx-node="search/appbar" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-6) var(--memox-gutter) var(--memox-space-3)', background: 'var(--memox-bg)', flexShrink: 0 }}>
       <MxIconButton icon="arrow_back" node="search/back" ariaLabel="Back" />
       <div style={{ flex: 1, minWidth: 0 }}>
         <MxSearchDock value={val || undefined} placeholder="Search by word or meaning" node="search/dock"
