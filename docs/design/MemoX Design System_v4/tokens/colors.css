@@ -1,145 +1,151 @@
 /* ============================================================
-   MemoX — Color tokens  (Layer 1)
-   VALUES sampled from the Tokyo palette:
-     light  → PureLightTheme     (primary #5569ff on #f2f5f9)
-     dark   → NebulaFighterTheme  (primary #8C7CF0 on #070C27)
-   Token NAMES are a frozen contract: --memox-<role>. Additive only.
-   Switch theme by setting [data-theme="dark"] on any ancestor.
+   MemoX — Color tokens  (Layer 1)  ·  CANONICAL PALETTE: DEEP VIOLET
+     light  → deep-violet brand (#4b3a8c) on an off-white violet-tinted
+              canvas (#f6f5fc); bright violet (#7355d6) as the accent.
+     dark   → same deep-violet brand on a near-black violet canvas (#141220);
+              bright violet (#a88fff) as the accent.
+   This file is the SINGLE SOURCE OF TRUTH for every colour value; there is
+   no runtime theme override. Token NAMES are a frozen contract: --memox-<role>,
+   additive only. Switch theme by setting [data-theme="dark"] on any ancestor.
+   (Historical note: an earlier revision sampled the Tokyo admin palette; it was
+   migrated to deep violet and is legacy — do not reintroduce Tokyo values.)
    ============================================================ */
 
 :root,
 [data-theme='light'] {
-  /* --- canvas & surfaces · neutrals tinted toward the indigo brand
-         so background + buttons read as one family --- */
-  --memox-bg: #f3f4fb;
+  /* --- canvas & surfaces · violet-tinted neutrals so background + brand
+         read as one family --- */
+  --memox-bg: #f6f5fc;
   --memox-surface: #ffffff;
-  --memox-surface-muted: #ecedf8;
+  --memox-surface-muted: #f1eff9;
   --memox-surface-raised: #ffffff;
-  --memox-surface-sunken: #e3e5f4;
+  --memox-surface-sunken: #eae8f4;
 
-  /* --- text (indigo-navy) --- */
-  --memox-text: #1d2240;
-  --memox-text-secondary: rgba(29, 34, 64, 0.66);
-  --memox-text-tertiary: rgba(29, 34, 64, 0.55);
+  /* --- text (violet-ink) --- */
+  --memox-text: #1b1a26;
+  --memox-text-secondary: #67647a;
+  --memox-text-tertiary: #736f86;
 
-  /* --- primary (brand · refined indigo) --- */
-  --memox-primary: #4f46e5;
-  --memox-primary-strong: #3f37c4;
+  /* --- primary (brand · deep violet) --- */
+  --memox-primary: #4b3a8c;
+  --memox-primary-strong: #3b2d72;
   --memox-on-primary: #ffffff;
-  --memox-primary-soft: #e6e6fb;
-  --memox-on-primary-soft: #382fb4;
+  --memox-primary-soft: #f1eff9;
+  --memox-on-primary-soft: #4b3a8c;
 
-  /* --- accent (cyan) --- */
-  --memox-accent: #1fa9d6;
-  --memox-on-accent: #04303f;
-  --memox-accent-soft: #ddf2fa;
+  /* --- accent (bright violet highlight) --- */
+  --memox-accent: #7355d6;
+  --memox-on-accent: #ffffff;
+  --memox-accent-soft: #efeafb;
 
   /* --- structural --- */
-  --memox-border: #e4e4f2;
-  --memox-border-strong: #cccce8;
-  --memox-divider: rgba(29, 34, 64, 0.08);
+  --memox-border: rgba(28, 24, 45, 0.11);
+  --memox-border-strong: rgba(28, 24, 45, 0.22);
+  --memox-divider: rgba(28, 24, 45, 0.08);
 
   /* --- semantic: success --- */
-  --memox-success: #1a7d31;
+  --memox-success: #0f7d4b;
   --memox-on-success: #ffffff;
-  --memox-success-soft: #e0f4e2;
-  --memox-on-success-soft: #1f7a33;
+  --memox-success-soft: rgba(15, 125, 75, 0.12);
+  --memox-on-success-soft: #0d6e42;
 
   /* --- semantic: warning --- */
-  --memox-warning: #f5920b;
-  --memox-on-warning: #3a2200;
-  --memox-warning-soft: #fdecca;
-  --memox-on-warning-soft: #93570a;
+  --memox-warning: #c77b12;
+  --memox-on-warning: #2a1a00;
+  --memox-warning-soft: rgba(199, 123, 18, 0.12);
+  --memox-on-warning-soft: #9a5f0e;
 
   /* --- semantic: error --- */
-  --memox-error: #d91e44;
+  --memox-error: #d63a40;
   --memox-on-error: #ffffff;
-  --memox-error-soft: #fce0e5;
-  --memox-on-error-soft: #c20f32;
+  --memox-error-soft: rgba(219, 62, 68, 0.1);
+  --memox-on-error-soft: #c1272d;
 
   /* --- semantic: info --- */
-  --memox-info: #1fa9d6;
-  --memox-on-info: #04303f;
-  --memox-info-soft: #ddf2fa;
-  --memox-on-info-soft: #0a6f93;
+  --memox-info: #4b3a8c;
+  --memox-on-info: #ffffff;
+  --memox-info-soft: rgba(75, 58, 140, 0.1);
+  --memox-on-info-soft: #4b3a8c;
 
   /* --- interaction states --- */
-  --memox-state-hover: rgba(29, 34, 64, 0.045);
-  --memox-state-pressed: rgba(29, 34, 64, 0.09);
-  --memox-state-selected: rgba(79, 70, 229, 0.1);
-  --memox-state-disabled: rgba(29, 34, 64, 0.26);
-  --memox-focus-ring: rgba(79, 70, 229, 0.42);
-  --memox-overlay: rgba(18, 20, 45, 0.38);
-  --memox-scrim: rgba(29, 34, 64, 0.04);
+  --memox-state-hover: rgba(28, 24, 45, 0.05);
+  --memox-state-pressed: rgba(28, 24, 45, 0.07);
+  --memox-state-selected: rgba(75, 58, 140, 0.1);
+  --memox-state-disabled: #bebccb;
+  --memox-focus-ring: #4b3a8c;
+  --memox-overlay: rgba(28, 24, 45, 0.42);
+  --memox-scrim: rgba(28, 24, 45, 0.04);
 }
 
 [data-theme='dark'] {
-  /* --- canvas & surfaces · indigo-tinted dark neutrals; elevation by lightness --- */
-  --memox-bg: #0a0c1e;
-  --memox-surface: #181c34;
-  --memox-surface-muted: #14182f;
-  --memox-surface-raised: #242a47;
-  --memox-surface-sunken: #070817;
+  /* --- canvas & surfaces · near-black violet neutrals; elevation by lightness --- */
+  --memox-bg: #141220;
+  --memox-surface: #252338;
+  --memox-surface-muted: #1c1a2b;
+  --memox-surface-raised: #302d46;
+  --memox-surface-sunken: #141220;
 
   /* --- text --- */
-  --memox-text: #ecedf7;
-  --memox-text-secondary: #a7abc6;
-  --memox-text-tertiary: rgba(167, 171, 198, 0.70);
+  --memox-text: #f4f2fb;
+  --memox-text-secondary: #bdb9d2;
+  --memox-text-tertiary: #a5a1bd;
 
-  /* --- primary (brand) · deep indigo surface, white text;
-         'soft' = dark tonal container with light text (standard dark mode) --- */
-  --memox-primary: #4b42b8;
-  --memox-primary-strong: #8b83f4;
+  /* --- primary (brand) · deep-violet surface, white text; 'soft' = dark
+         tonal container with light text (standard dark mode). primary-strong
+         is the on-surface foreground (ghost buttons / links) → kept light. --- */
+  --memox-primary: #4b3a8c;
+  --memox-primary-strong: #b4aadd;
   --memox-on-primary: #ffffff;
-  --memox-primary-soft: #232452;
-  --memox-on-primary-soft: #c7c4f8;
+  --memox-primary-soft: #302d46;
+  --memox-on-primary-soft: #cbc3ee;
 
-  /* --- accent (cyan) --- */
-  --memox-accent: #33c2ff;
-  --memox-on-accent: #04303f;
-  --memox-accent-soft: #123544;
+  /* --- accent (bright violet highlight) --- */
+  --memox-accent: #a88fff;
+  --memox-on-accent: #141220;
+  --memox-accent-soft: rgba(168, 143, 255, 0.16);
 
   /* --- structural --- */
-  --memox-border: #2b3052;
-  --memox-border-strong: #3c4068;
-  --memox-divider: rgba(255, 255, 255, 0.08);
+  --memox-border: rgba(255, 255, 255, 0.13);
+  --memox-border-strong: rgba(255, 255, 255, 0.24);
+  --memox-divider: rgba(255, 255, 255, 0.1);
 
   /* --- semantic: success --- */
-  --memox-success: #57ca22;
+  --memox-success: #4fd08f;
   --memox-on-success: #06320f;
-  --memox-success-soft: #173620;
-  --memox-on-success-soft: #8ee06a;
+  --memox-success-soft: rgba(34, 181, 115, 0.16);
+  --memox-on-success-soft: #4fd08f;
 
   /* --- semantic: warning --- */
-  --memox-warning: #ffa319;
+  --memox-warning: #ffc76f;
   --memox-on-warning: #2a1a00;
-  --memox-warning-soft: #382909;
-  --memox-on-warning-soft: #ffc25c;
+  --memox-warning-soft: rgba(255, 199, 111, 0.2);
+  --memox-on-warning-soft: #ffc76f;
 
   /* --- semantic: error --- */
-  --memox-error: #ff1943;
-  --memox-on-error: #ffffff;
-  --memox-error-soft: #3b1622;
-  --memox-on-error-soft: #ff8a9c;
+  --memox-error: #ff8a8a;
+  --memox-on-error: #3b1622;
+  --memox-error-soft: rgba(240, 85, 90, 0.16);
+  --memox-on-error-soft: #ff8a8a;
 
   /* --- semantic: info --- */
-  --memox-info: #33c2ff;
-  --memox-on-info: #04303f;
-  --memox-info-soft: #123544;
-  --memox-on-info-soft: #82d6fb;
+  --memox-info: #8a79e0;
+  --memox-on-info: #141220;
+  --memox-info-soft: rgba(138, 121, 224, 0.18);
+  --memox-on-info-soft: #b4a7ec;
 
   /* --- interaction states --- */
   --memox-state-hover: rgba(255, 255, 255, 0.06);
-  --memox-state-pressed: rgba(255, 255, 255, 0.11);
-  --memox-state-selected: rgba(125, 116, 240, 0.24);
-  --memox-state-disabled: rgba(236, 237, 247, 0.26);
-  --memox-focus-ring: rgba(125, 116, 240, 0.6);
-  --memox-overlay: rgba(0, 0, 0, 0.55);
+  --memox-state-pressed: rgba(255, 255, 255, 0.1);
+  --memox-state-selected: rgba(138, 121, 224, 0.22);
+  --memox-state-disabled: #5c5975;
+  --memox-focus-ring: #b4aadd;
+  --memox-overlay: rgba(8, 6, 16, 0.7);
   --memox-scrim: rgba(255, 255, 255, 0.04);
 }
 
-/* --- accent palette · the selectable accent colors offered by the Theme
-       picker. Theme-independent (the user picks an absolute hue), additive. --- */
+/* --- accent palette · the selectable accent colours offered by the Theme
+       picker. Theme-independent (the user picks an absolute hue), additive.
+       These are user choices, NOT the brand palette (brand = deep violet above). --- */
 :root {
   --memox-palette-indigo: #5569ff;
   --memox-palette-violet: #7c5cff;

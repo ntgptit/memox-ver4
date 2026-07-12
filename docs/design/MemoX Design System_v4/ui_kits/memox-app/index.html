@@ -6,7 +6,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MemoX — App UI Kit</title>
 <link rel="stylesheet" href="../../styles.css" />
-<link rel="stylesheet" href="../../theme-override.css" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..40,400,0,0" />
 <style>
   html, body { margin: 0; }
@@ -68,9 +67,25 @@
 <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
-<script src="../../_ds_bundle.js"></script>
-<!-- Core primitives authored in runtime style (not yet in the bundle) — extend the NS namespace. -->
+<!-- Base Mx* primitives load from SOURCE (no compiled bundle) — the boot loader below
+     transpiles them in-browser and the NS shim registers each on the frozen namespace,
+     so the canonical gallery renders the current source with zero compiled-artifact drift. -->
+<script type="text/babel-src" src="../../components/core/MxButton.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxTextField.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxChip.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxBadge.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxSwitch.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxSegmentedControl.jsx"></script>
+<script type="text/babel-src" src="../../components/core/MxAvatar.jsx"></script>
 <script type="text/babel-src" src="../../components/core/MxLink.jsx"></script>
+<script type="text/babel-src" src="../../components/navigation/MxBottomNav.jsx"></script>
+<script type="text/babel-src" src="../../components/navigation/MxFab.jsx"></script>
+<script type="text/babel-src" src="../../components/navigation/MxIconButton.jsx"></script>
+<script type="text/babel-src" src="../../components/navigation/MxSearchDock.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxScaffold.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxCard.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxIconTile.jsx"></script>
+<script type="text/babel-src" src="../../components/surfaces/MxSectionHeader.jsx"></script>
 <script type="text/babel-src" src="../../components/surfaces/MxContextualAppBar.jsx"></script>
 <script type="text/babel-src" src="../../components/surfaces/MxList.jsx"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
@@ -298,8 +313,12 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Gallery />);
 (function () {
   function strip(code) {
     return code
-      .replace(/^[ \t]*export[ \t].*$/gm, '')
-      .replace(/^[ \t]*import[ \t].*$/gm, '');
+      // drop ESM imports (React/etc. are provided as globals)
+      .replace(/^[ \t]*import[ \t].*$/gm, '')
+      // strip ONLY the `export` keyword, keeping the declaration — so a top-level
+      // `export function MxButton(){}` stays a function declaration (→ global), while a
+      // trailing `export const X = window.X` degrades to a harmless local const.
+      .replace(/^([ \t]*)export[ \t]+/gm, '$1');
   }
   function run(code, label) {
     var out = Babel.transform(code, { presets: ['react'], filename: label }).code;
@@ -316,10 +335,22 @@ ReactDOM.createRoot(document.getElementById('root')).render(<Gallery />);
       return fetch(src).then(function (r) { return r.text(); })
         .catch(function (e) { console.error('kit fetch failed:', src, e); return ''; });
     }));
+    // NS shim: the ESM base primitives (MxButton…) drop their `export` on strip and become
+    // Mx* globals; register each on the frozen namespace. This MUST run incrementally — after
+    // every file — because screen modules destructure the primitives off NS at load time
+    // (`const { MxScaffold, … } = NS`), so the base primitives (loaded first) have to be on NS
+    // before any later screen module runs. Runtime-authored primitives already self-register.
+    var NS = (window.MemoXDesignSystem_2ffa54 = window.MemoXDesignSystem_2ffa54 || {});
+    function registerMx() {
+      Object.keys(window).forEach(function (k) {
+        if (/^Mx[A-Z]/.test(k) && typeof window[k] === 'function' && !NS[k]) NS[k] = window[k];
+      });
+    }
     for (var i = 0; i < srcs.length; i++) {
       if (!texts[i]) continue;
       try { run(strip(texts[i]), srcs[i]); }
       catch (e) { console.error('kit run failed:', srcs[i], e); }
+      registerMx();
     }
     var g = document.querySelector('script[type="text/babel-gallery"]');
     if (g) run(strip(g.textContent), 'gallery.jsx');

@@ -66,6 +66,12 @@ console.log(`verify:ui-kit — coverage: ${coverage}`);
 // ── 1. DRIFT ──────────────────────────────────────────────────────────────
 const drift = step('registry ↔ artifacts (drift)', spawnSync(node, [join(HERE, 'gen.mjs'), '--check'], { stdio: 'inherit' }));
 
+// ── 1b. CONTRAST (deterministic, always) — WCAG over tokens/colors.css ───────
+const contrast = step('contrast (WCAG light+dark)', spawnSync(node, [join(HERE, 'contrast.mjs')], { stdio: 'inherit' }));
+
+// ── 1c. SOURCE/RUNTIME PARITY (deterministic, always) ────────────────────────
+const parity = step('source ↔ runtime parity', spawnSync(node, [join(ROOT, 'tool/parity/verify-parity.mjs')], { stdio: 'inherit' }));
+
 // ── 2. VISUAL (renders + writes report.json) — skipped in --structural ──────
 let visual = true, fresh = true;
 if (!structural) {
@@ -101,6 +107,6 @@ if (scope) {
 }
 
 // ── verdict ─────────────────────────────────────────────────────────────────
-const pass = drift && visual && fresh && shotsOk;
+const pass = drift && contrast && parity && visual && fresh && shotsOk;
 console.log(`\n${pass ? '✓ verify:ui-kit PASSED' : '✗ verify:ui-kit FAILED'}${sample ? ' (sample coverage — run without --sample for the full CI gate)' : ''}`);
 process.exit(pass ? 0 : 1);

@@ -14,7 +14,7 @@
 // Usage: node tool/parity/build-manifest.mjs
 
 import { readFile, writeFile, readdir } from 'node:fs/promises';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join, relative, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -43,7 +43,31 @@ const components = abs
   .map((sourcePath) => ({ name: basename(sourcePath, '.jsx'), sourcePath }))
   .sort((a, b) => (a.sourcePath < b.sourcePath ? -1 : a.sourcePath > b.sourcePath ? 1 : 0));
 
+// Refresh each token's recorded VALUE from its source CSS (light / :root scope), so the
+// manifest mirror never reports a stale palette (e.g. legacy Tokyo values after a migration).
+// Names/kinds/definedIn are the frozen contract and are left untouched.
+function lightScopeValues(cssPath) {
+  const css = readFileSync(cssPath, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+  const vals = {};
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*)\}/g)) {
+    const sel = m[1];
+    if (/\[data-theme=['"]dark['"]\]/.test(sel)) continue; // light / :root only
+    for (const d of m[2].matchAll(/(--memox-[a-z0-9-]+)\s*:\s*([^;]+);/g)) vals[d[1].trim()] = d[2].trim();
+  }
+  return vals;
+}
+
 const manifest = JSON.parse(await readFile(MANIFEST, 'utf8'));
+if (Array.isArray(manifest.tokens)) {
+  const cache = {};
+  let refreshed = 0;
+  for (const t of manifest.tokens) {
+    if (!t.definedIn) continue;
+    const vals = (cache[t.definedIn] ??= lightScopeValues(join(KIT, t.definedIn)));
+    if (vals[t.name] != null && vals[t.name] !== t.value) { t.value = vals[t.name]; refreshed++; }
+  }
+  if (refreshed) console.log(`manifest tokens: refreshed ${refreshed} value(s) from source CSS`);
+}
 const prev = new Set(manifest.components.map((c) => c.sourcePath));
 const next = new Set(components.map((c) => c.sourcePath));
 const added = components.filter((c) => !prev.has(c.sourcePath)).map((c) => c.name);

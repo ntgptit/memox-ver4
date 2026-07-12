@@ -79,9 +79,9 @@ Notes file: append-only; newest entries at the bottom; timestamp each with `date
 
 ## 4. Fix on the spot (if §3 finds a real defect)
 
-- Fix at the correct layer: token (`tokens/*.css`, `components.css`, `theme-override.css`) →
-  component (`components/<group>/Mx*.jsx`, `_shared/`) → screen (`_features/<unit>/`). Never
-  layer-skip; never introduce raw `#hex` or off-scale spacing.
+- Fix at the correct layer: token (`tokens/*.css`, e.g. `tokens/colors.css` — the single colour
+  source; `components.css`) → component (`components/<group>/Mx*.jsx`, `_shared/`) → screen
+  (`_features/<unit>/`). Never layer-skip; never introduce raw `#hex` or off-scale spacing.
 - Spacing scale `{4,8,12,16,24,32,48}`; screen padding 16; section gap 24/32; item gap 8/12;
   touch targets ≥ 44×44; ≤ 3 nested surfaces; ≤ 5 type roles; one heading + one primary CTA.
 - Reuse shared `Mx*` families; keep token role names and `Mx*` names/classes/`data-mx-node`
