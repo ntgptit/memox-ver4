@@ -2,7 +2,7 @@
    Feature-local components: components/{ResultRow,Chips}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxCard, MxList } = NS;
+const { MxScaffold, MxAppBar, MxIconButton, MxSearchDock, MxCard, MxList, MxLink } = NS;
 const { ResultRow, Chips } = window.MemoXSearch;
 
 const RESULTS = [
@@ -10,7 +10,11 @@ const RESULTS = [
   { term: '좋아하다', meaning: 'to like', deck: 'Common Verbs', status: 'mastered' },
   { term: '하다', meaning: 'to do (auxiliary)', deck: 'TOPIK I — Vocabulary', status: 'new', hidden: true },
 ];
-const RECENT = ['안녕하세요', '학교', '감사합니다'];
+const RECENT = [
+  { term: '안녕하세요', gloss: 'hello' },
+  { term: '학교', gloss: 'school' },
+  { term: '감사합니다', gloss: 'thank you' },
+];
 
 function Search({ state = 'empty-recent' }) {
   const val = state === 'empty-recent' ? '' : (state === 'no-results' ? 'xyz' : '하');
@@ -24,11 +28,17 @@ function Search({ state = 'empty-recent' }) {
   if (state === 'empty-recent') {
     return (
       <MxScaffold node="search/screen" appBar={bar}>
-        <window.SectionLabel>RECENT</window.SectionLabel>
-        <MxCard padding="sm">
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <window.SectionLabel style={{ flex: 1, margin: 0 }}>RECENT</window.SectionLabel>
+          <MxLink size="sm" trailingIcon={null} node="search/recent-clear">Clear all</MxLink>
+        </div>
+        <MxCard padding="sm" style={{ background: 'var(--memox-surface-raised)' }}>
           {RECENT.map((r, i) => (
-            <window.ListRow key={r} icon="history" title={r} last={i === RECENT.length - 1} node={'search/recent-' + i}
-              trailing={<MxIconButton icon="north_west" size="sm" node={'search/recent-fill-' + i} />} />
+            <window.ListRow key={r.term} icon="history" title={r.term} sub={r.gloss} last={i === RECENT.length - 1} node={'search/recent-' + i}
+              trailing={<div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-1)' }}>
+                <MxIconButton icon="north_west" size="sm" node={'search/recent-fill-' + i} ariaLabel="Use in search" />
+                <MxIconButton icon="close" size="sm" node={'search/recent-remove-' + i} ariaLabel="Remove from history" />
+              </div>} />
           ))}
         </MxCard>
       </MxScaffold>
