@@ -17,6 +17,7 @@ import { spawnSync } from 'node:child_process';
 import { statSync, readdirSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
+import { SCREENS } from './registry.mjs';
 
 const HERE = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
@@ -74,7 +75,22 @@ try {
   if (!fresh) console.log(`    stale vs ${at.replace(ROOT, '')} — re-run the gate`);
 } catch { console.log('\n✗ report freshness — out/report.json missing'); }
 
+// ── 4. SHOTS (canonical baseline present: light+dark per registry state) ────
+let shotsOk = true;
+if (scope) {
+  console.log('\n· canonical shots — skipped (scoped run)');
+} else {
+  const SHOTS = join(KIT, 'ui_kits/memox-app/shots');
+  const missing = [];
+  for (const s of SCREENS) for (const st of s.states) for (const th of ['light', 'dark']) {
+    try { statSync(join(SHOTS, `${s.id}--${st}--${th}.png`)); } catch { missing.push(`${s.id}--${st}--${th}`); }
+  }
+  shotsOk = missing.length === 0;
+  console.log(`\n${shotsOk ? '✓' : '✗'} canonical shots (light+dark per state)`);
+  if (!shotsOk) console.log(`    ${missing.length} missing, e.g. ${missing.slice(0, 5).join(', ')} — run: MXH_CANON=1 node tool/ui_kit_shots/shoot.mjs`);
+}
+
 // ── verdict ─────────────────────────────────────────────────────────────────
-const pass = drift && visual && fresh;
+const pass = drift && visual && fresh && shotsOk;
 console.log(`\n${pass ? '✓ verify:ui-kit PASSED' : '✗ verify:ui-kit FAILED'}${sample ? ' (sample coverage — run without --sample for the full CI gate)' : ''}`);
 process.exit(pass ? 0 : 1);
