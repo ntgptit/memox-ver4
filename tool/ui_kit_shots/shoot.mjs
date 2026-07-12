@@ -77,9 +77,9 @@ const REGISTRY = {
   theme: { g: 'Theme', states: ['light', 'accent-size'] },
   import: { g: 'Import', states: ['source', 'mapping', 'importing', 'import-error', 'done'] },
   export: { g: 'Export', states: ['config', 'exporting', 'export-error', 'done'] },
-  drawer: { g: 'Drawer', states: ['open'] },
+  languages: { g: 'Languages', states: ['list', 'one', 'empty', 'add', 'remove'] },
   'study-session': { g: 'StudySession', states: ['stage1-review', 'resume-error', 'answer-save-error'] },
-  settings: { g: 'Settings', states: ['loaded'] },
+  settings: { g: 'Settings', states: ['loaded', 'study-hub', 'study-worddisplay', 'study-srs', 'study-mode', 'study-voice'] },
   'app-bar': { g: 'AppBar', states: ['root-top', 'root-scrolled', 'root-unread', 'nested', 'nested-overflow', 'search', 'selection', 'modal'] },
 };
 

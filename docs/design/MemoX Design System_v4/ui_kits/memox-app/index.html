@@ -157,11 +157,9 @@
 <script type="text/babel-src" src="_features/export/components/ExportingCard.jsx"></script>
 <script type="text/babel-src" src="_features/export/components/FormatList.jsx"></script>
 <script type="text/babel-src" src="_features/export/Export.jsx"></script>
-<script type="text/babel-src" src="_features/drawer/components/DrawerItem.jsx"></script>
-<script type="text/babel-src" src="_features/drawer/components/LangCard.jsx"></script>
-<script type="text/babel-src" src="_features/drawer/components/DrawerPanel.jsx"></script>
-<script type="text/babel-src" src="_features/drawer/components/RemoveLanguageDialog.jsx"></script>
-<script type="text/babel-src" src="_features/drawer/Drawer.jsx"></script>
+<script type="text/babel-src" src="_features/languages/components/LangCard.jsx"></script>
+<script type="text/babel-src" src="_features/languages/components/RemoveLanguageDialog.jsx"></script>
+<script type="text/babel-src" src="_features/languages/Languages.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/PromptCard.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/StageReview.jsx"></script>
 <script type="text/babel-src" src="_features/study-session/components/StageMatch.jsx"></script>
@@ -202,9 +200,9 @@ const SCREENS = [
   { id: 'theme', title: 'Theme', Comp: () => window.Theme, states: ['light', 'dark', 'accent-size'] },
   { id: 'import', title: 'Import', Comp: () => window.Import, states: ['source', 'mapping', 'preview', 'dup-warning', 'importing', 'import-error', 'done'] },
   { id: 'export', title: 'Export', Comp: () => window.Export, states: ['config', 'exporting', 'export-error', 'done'] },
-  { id: 'drawer', title: 'Drawer & Languages', Comp: () => window.Drawer, states: ['open', 'add-language', 'remove-language'] },
+  { id: 'languages', title: 'Language Pairs', Comp: () => window.Languages, states: ['list', 'one', 'empty', 'add', 'remove'] },
   { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-match', 'stage3-guess', 'stage4-recall', 'stage5-fill', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
-  { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
+  { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'study-hub', 'study-worddisplay', 'study-srs', 'study-mode', 'study-voice', 'value-picker'] },
   { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'nested', 'nested-overflow', 'search', 'selection', 'modal'] },
 ];
 

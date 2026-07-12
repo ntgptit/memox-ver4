@@ -9,7 +9,7 @@ drawer:
 | Composite | Spec | Used by |
 | --- | --- | --- |
 | `Breadcrumb` (`window.Breadcrumb`) | `../specs/subdeck-list.md` | subdeck-list, flashcard-list (multi-level deck path) |
-| `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, flashcard-list, deck-settings, drawer |
+| `ConfirmDialog` (`window.ConfirmDialog`) | `ConfirmDialog.md` | study-session, flashcard-list, deck-settings, languages |
 | `StatusCardRow` (`window.StatusCardRow`) | `StatusCardRow.md` | flashcard-list, search |
 | `DeckCard` (`window.DeckCard`) | — | library, dashboard, subdeck-list (via SubdeckCard) |
 | `DeckContentChoice` (`window.DeckContentChoice`) | `../specs/deck-content-choice.md` | deck-content-choice screen |

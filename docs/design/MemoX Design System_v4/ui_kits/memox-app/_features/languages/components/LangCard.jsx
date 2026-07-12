@@ -1,4 +1,4 @@
-/* MemoX — Drawer local: LangCard (a learning/native language row in add-language). */
+/* MemoX — Languages local: LangCard (a learning/native language row in the add-pair form). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54 || {};
 const { MxCard } = NS;
@@ -18,11 +18,11 @@ function LangCard({ icon, name, sub, node }) {
   );
 }
 
-window.MemoXDrawer = window.MemoXDrawer || {};
-window.MemoXDrawer.LangCard = LangCard;
+window.MemoXLanguages = window.MemoXLanguages || {};
+window.MemoXLanguages.LangCard = LangCard;
 })();
 
 /* ESM export so the design-system compiler indexes this kit composite.
    The kit page itself loads this file via <script type="text/babel"> (with an
    `exports` shim in index.html) and reads it from the window registry above. */
-export const LangCard = (window.MemoXDrawer || {}).LangCard;
+export const LangCard = (window.MemoXLanguages || {}).LangCard;

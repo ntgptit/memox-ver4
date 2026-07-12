@@ -4,7 +4,7 @@ A centered confirm overlay: `Scrim` (dimmed backdrop) + `Dialog` (icon, title,
 body, action row). Carries no copy of its own — the caller passes every string,
 node id and action. Lives in `_shared/` because it is used by **6 sites across 3
 screens** (study-session exit + save-error; deck-settings delete / reset /
-deck-delete; drawer remove-language).
+deck-delete; languages remove-pair).
 
 ```jsx
 <window.ConfirmDialog align="center" scrimNode="deck-settings/delete-scrim"

@@ -1,5 +1,5 @@
 /* MemoX shared composite: ConfirmDialog — a centered Scrim + Dialog confirm
-   overlay. Used by 6 sites across study-session / deck-settings / drawer, so it
+   overlay. Used by 6 sites across study-session / deck-settings / languages, so it
    lives in _shared/ (≥2 screens) rather than any one feature. Thin wrapper over
    the window.Scrim + window.Dialog helpers; carries no copy of its own — every
    string + node id + action is passed in by the caller. */
