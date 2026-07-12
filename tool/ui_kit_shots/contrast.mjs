@@ -81,6 +81,8 @@ const PAIRS = [
   { fg: '--memox-text', bg: '--memox-surface', cat: 'normal' },
   { fg: '--memox-text-secondary', bg: '--memox-bg', cat: 'normal' },
   { fg: '--memox-text-secondary', bg: '--memox-surface', cat: 'normal' },
+  // app-bar search placeholder sits on surface-sunken (.cappbar__search) — text-secondary
+  { fg: '--memox-text-secondary', bg: '--memox-surface-sunken', cat: 'normal' },
   { fg: '--memox-text-tertiary', bg: '--memox-bg', cat: 'normal' },
   { fg: '--memox-text-tertiary', bg: '--memox-surface', cat: 'normal' },
   // brand
