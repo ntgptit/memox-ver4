@@ -45,6 +45,7 @@ function Dashboard({ state = 'loaded' }) {
   const bar = (
     <MxContextualAppBar variant="root-contextual" node="dashboard/appbar"
       context="Saturday · 27 Jun" title="Today"
+      actions={<MxIconButton icon="search" size="sm" node="dashboard/search-open" ariaLabel="Search words" />}
       notification={{ dot: true }}
       avatar={<MxAvatar name="Linh Tran" size="sm" />} />
   );

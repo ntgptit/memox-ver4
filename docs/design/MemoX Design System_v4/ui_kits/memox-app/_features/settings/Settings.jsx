@@ -19,7 +19,7 @@ const GROUPS = [
   { icon: 'translate', title: 'Language', sub: '한국어 → English', val: '' },
   { icon: 'format_shapes', title: 'Word display', sub: 'Native meaning · color by gender' },
   { icon: 'schedule', title: 'Spaced repetition', sub: 'Boxes: 8 · Notifications on', val: '' },
-  { icon: 'sports_esports', title: 'Game settings', sub: '5 words/round · shuffle', val: '5' },
+  { icon: 'tune', title: 'Mode settings', sub: '5 words/round · shuffle', val: '5' },
   { icon: 'record_voice_over', title: 'Voice', sub: 'TTS on · STT off' },
   { icon: 'notifications', title: 'Reminders', sub: '13:00 · Mon–Sun' },
   { icon: 'backup', title: 'Backup / Restore', sub: 'Local file · on device' },
@@ -55,7 +55,7 @@ function Settings({ state = 'loaded' }) {
         </MxCard>
         <Label>OTHER</Label>
         <MxCard padding="sm">
-          <window.ListRow icon="sports_esports" title="Game settings" sub="5 words/round · shuffle" node="settings/games" trailing={<Val v="" />} />
+          <window.ListRow icon="tune" title="Mode settings" sub="5 words/round · shuffle" node="settings/modes" trailing={<Val v="" />} />
           <window.ListRow icon="palette" title="Theme" sub="Light · default accent" last node="settings/theme" trailing={<Val v="" />} />
         </MxCard>
       </MxScaffold>
