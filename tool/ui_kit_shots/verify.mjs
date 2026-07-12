@@ -23,6 +23,9 @@ const HERE = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const KIT = join(ROOT, 'docs/design/MemoX Design System_v4');
 const sample = process.argv.includes('--sample') || process.env.SHOOT_MODE === 'sample';
+// --structural: run only the deterministic checks (drift + canonical-shot presence), skip the
+// font/render-sensitive visual pass. This is the fast, reliable blocking gate for CI.
+const structural = process.argv.includes('--structural');
 // optional positional screen id (or `id:states`) — scopes the visual gate to one screen for a
 // fast end-to-end check; drift + freshness still run repo-wide.
 const scope = process.argv.slice(2).find((a) => !a.startsWith('--'));
@@ -54,26 +57,29 @@ function newestSource() {
   return { newest, at };
 }
 
-console.log(`verify:ui-kit — coverage: ${sample ? 'sample (fast/local)' : 'FULL 168-state matrix (CI)'}`);
+console.log(`verify:ui-kit — coverage: ${structural ? 'STRUCTURAL only (drift + shots)' : sample ? 'sample (fast/local)' : 'FULL 168-state matrix (CI)'}`);
 
 // ── 1. DRIFT ──────────────────────────────────────────────────────────────
 const drift = step('registry ↔ artifacts (drift)', spawnSync(node, [join(HERE, 'gen.mjs'), '--check'], { stdio: 'inherit' }));
 
-// ── 2. VISUAL (renders + writes report.json) ────────────────────────────────
-const shootEnv = { ...process.env, ...(sample ? { SHOOT_MODE: 'sample' } : {}) };
-const shootArgs = [join(HERE, 'shoot.mjs'), ...(scope ? [scope] : [])];
-const visual = step(`visual gate (render + overflow/clip)${scope ? ` [scope: ${scope}]` : ''}`, spawnSync(node, shootArgs, { stdio: 'inherit', env: shootEnv }));
+// ── 2. VISUAL (renders + writes report.json) — skipped in --structural ──────
+let visual = true, fresh = true;
+if (!structural) {
+  const shootEnv = { ...process.env, ...(sample ? { SHOOT_MODE: 'sample' } : {}) };
+  const shootArgs = [join(HERE, 'shoot.mjs'), ...(scope ? [scope] : [])];
+  visual = step(`visual gate (render + overflow/clip)${scope ? ` [scope: ${scope}]` : ''}`, spawnSync(node, shootArgs, { stdio: 'inherit', env: shootEnv }));
 
-// ── 3. FRESHNESS (report newer than any source) ─────────────────────────────
-let fresh = false;
-try {
-  const report = join(HERE, 'out/report.json');
-  const rm = statSync(report).mtimeMs;
-  const { newest, at } = newestSource();
-  fresh = rm >= newest;
-  console.log(`\n${fresh ? '✓' : '✗'} report freshness (report ${fresh ? '≥' : '<'} newest source)`);
-  if (!fresh) console.log(`    stale vs ${at.replace(ROOT, '')} — re-run the gate`);
-} catch { console.log('\n✗ report freshness — out/report.json missing'); }
+  // ── 3. FRESHNESS (report newer than any source) ──────────────────────────
+  fresh = false;
+  try {
+    const report = join(HERE, 'out/report.json');
+    const rm = statSync(report).mtimeMs;
+    const { newest, at } = newestSource();
+    fresh = rm >= newest;
+    console.log(`\n${fresh ? '✓' : '✗'} report freshness (report ${fresh ? '≥' : '<'} newest source)`);
+    if (!fresh) console.log(`    stale vs ${at.replace(ROOT, '')} — re-run the gate`);
+  } catch { console.log('\n✗ report freshness — out/report.json missing'); }
+}
 
 // ── 4. SHOTS (canonical baseline present: light+dark per registry state) ────
 let shotsOk = true;

@@ -1,0 +1,50 @@
+name: UI Kit
+
+# The consolidated UI-kit gate (handoff finding #7). Blocks on drift + missing shots always;
+# runs the full render matrix as a second job. Triggered when the kit or its harness changes.
+on:
+  pull_request:
+    paths:
+      - 'docs/design/MemoX Design System_v4/**'
+      - 'tool/ui_kit_shots/**'
+      - 'package.json'
+      - '.github/workflows/ui-kit.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'docs/design/MemoX Design System_v4/**'
+      - 'tool/ui_kit_shots/**'
+
+jobs:
+  # Fast, deterministic, BLOCKING: registry ↔ generated artifacts in sync + every state has its
+  # committed light+dark canonical PNG. No rendering, so it is font/-environment independent.
+  structural:
+    name: structural (drift + shots)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run verify:ui-kit:structural
+
+  # Full responsive render matrix (168 states x widths x font-scales x light/dark) with overflow /
+  # clip / render-error detection. Needs Chromium + CJK fonts so Korean/Japanese fixtures lay out
+  # like the committed baseline.
+  visual:
+    name: visual (full render matrix)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - name: Install CJK fonts
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+      - run: npm run verify:ui-kit
