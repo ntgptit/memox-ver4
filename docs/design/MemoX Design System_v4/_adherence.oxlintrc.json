@@ -382,6 +382,10 @@
         "message": "<SubDeckCard> doesn't accept that prop. Declared props: deck, index."
       },
       {
+        "selector": "JSXOpeningElement[name.name='StudyPromptCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:term|nodePrefix|fill|key|ref|className|style|children)$/]",
+        "message": "<StudyPromptCard> doesn't accept that prop. Declared props: term, nodePrefix, fill."
+      },
+      {
         "selector": "JSXOpeningElement[name.name='SyncBlock'] > JSXAttribute > JSXIdentifier[name!=/^(?:state|key|ref|className|style|children)$/]",
         "message": "<SyncBlock> doesn't accept that prop. Declared props: state."
       },
@@ -524,9 +528,6 @@
       "LibraryHeader": {
         "replaces": []
       },
-      "GuessPromptCard": {
-        "replaces": []
-      },
       "MeaningCard": {
         "replaces": []
       },
@@ -608,9 +609,6 @@
       "PromptCard": {
         "replaces": []
       },
-      "RecallTermCard": {
-        "replaces": []
-      },
       "RemoveLanguageDialog": {
         "replaces": []
       },
@@ -663,6 +661,9 @@
         "replaces": []
       },
       "StreakGoalCard": {
+        "replaces": []
+      },
+      "StudyPromptCard": {
         "replaces": []
       },
       "SubDeckCard": {

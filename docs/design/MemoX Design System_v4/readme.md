@@ -97,7 +97,7 @@ Namespace for `@dsCard` / kit HTML: `window.MemoXDesignSystem_2ffa54`.
 
 Feature-local composites used by the app UI kit's Screen gallery. One directory per screen; every composite is registered on a `window.MemoX*` namespace for the kit page and re-exported as ESM for the compiler.
 
-- **_shared**: ActionCallout, ConfirmDialog, DeckActionsSheet, DeckCard, DeckContentChoice, DeckDeleteConfirmDialog, DeckMoveSheet, DeckResetConfirmDialog, ProfileCard, SelectSheet, StatusCardRow
+- **_shared**: ActionCallout, ConfirmDialog, DeckActionsSheet, DeckCard, DeckContentChoice, DeckDeleteConfirmDialog, DeckMoveSheet, DeckPlaySheet, DeckResetConfirmDialog, ProfileCard, SelectSheet, StatusCardRow, StudyPromptCard
 - **account-sync**: SignInCard, SyncBlock
 - **dashboard**: GoalCard, GreetingHeader, OnboardingHero, OnboardingStep, StreakCard, TodaySummary
 - **drawer**: DrawerItem, DrawerPanel, LangCard, RemoveLanguageDialog
@@ -107,9 +107,8 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **library**: FilterRow, LibraryCreateSheet, SubdeckCard, libFixtures
 - **subdeck-list**: CreateSubdeckSheet, subdeckFixtures
 - **match-mode**: Tile
-- **guess-mode**: GuessPromptCard
 - **mode-picker**: ModeOption, ScopeCard, ScopeSheet
-- **recall-mode**: MeaningPanel, RecallTermCard
+- **recall-mode**: MeaningPanel
 - **fill-mode**: CharCompare, InputBox
 - **import**: SourceCard, Table
 - **library**: ContextBar, LibraryHeader, OverflowMenuSheet, PairPickerSheet, PlaySheet, SortSheet

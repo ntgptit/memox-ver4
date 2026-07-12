@@ -26,12 +26,10 @@ ui_kits/memox-app/_features/export/components/FormatList.d.ts
 ui_kits/memox-app/_features/flashcard-editor/components/DupBanner.d.ts
 ui_kits/memox-app/_features/flashcard-editor/components/Field.d.ts
 ui_kits/memox-app/_features/match-mode/components/Tile.d.ts
-ui_kits/memox-app/_features/guess-mode/components/GuessPromptCard.d.ts
 ui_kits/memox-app/_features/mode-picker/components/ModeOption.d.ts
 ui_kits/memox-app/_features/mode-picker/components/ScopeCard.d.ts
 ui_kits/memox-app/_features/mode-picker/components/ScopeSheet.d.ts
 ui_kits/memox-app/_features/recall-mode/components/MeaningPanel.d.ts
-ui_kits/memox-app/_features/recall-mode/components/RecallTermCard.d.ts
 ui_kits/memox-app/_features/fill-mode/components/CharCompare.d.ts
 ui_kits/memox-app/_features/fill-mode/components/InputBox.d.ts
 ui_kits/memox-app/_features/import/components/SourceCard.d.ts

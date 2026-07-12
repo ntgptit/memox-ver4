@@ -3,7 +3,6 @@
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
-const { GuessPromptCard } = window.MemoXGuessMode;
 
 const CHOICES = ['school', 'hospital', 'park', 'restaurant', 'library'];
 // long-text fixture — proves the answer options wrap multi-line meanings and the rows grow.
@@ -44,7 +43,7 @@ function GuessMode({ state = 'waiting' }) {
   return (
     <MxScaffold node="guess-mode/screen" appBar={bar}>
       <window.ProgressHeader done={8} total={20} node="guess-mode/progress" />
-      <GuessPromptCard />
+      <window.StudyPromptCard term="학교" nodePrefix="guess-mode" />
       {/* 5 answer options fill the remaining body height as equal rows — taller, chunkier tap
           targets and no dead space below. minmax(min-content,1fr): short options fill to 1fr,
           long (multi-line) meanings GROW instead of clipping. Reclaims the (unused) bottom-nav

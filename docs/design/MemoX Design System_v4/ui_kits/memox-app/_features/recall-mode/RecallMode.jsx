@@ -1,9 +1,9 @@
 /* MemoX — Game: Recall. States: before-reveal · revealed · forgot · remembered · complete
-   Feature-local components: components/{TermCard,MeaningPanel}.jsx */
+   Feature-local components: components/{MeaningPanel}.jsx. Prompt card is shared StudyPromptCard. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
-const { RecallTermCard, MeaningPanel } = window.MemoXRecallMode;
+const { MeaningPanel } = window.MemoXRecallMode;
 
 const Note = window.Note;
 
@@ -30,7 +30,7 @@ function RecallMode({ state = 'before-reveal' }) {
     <MxScaffold node="recall-mode/screen" appBar={bar}>
       <window.ProgressHeader done={12} total={20} node="recall-mode/progress" />
 
-      <RecallTermCard />
+      <window.StudyPromptCard term="친구" nodePrefix="recall-mode" fill />
 
       <MeaningPanel revealed={revealed} />
 
