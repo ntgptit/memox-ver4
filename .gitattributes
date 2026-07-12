@@ -1,0 +1,6 @@
+# Generated UI-kit artifacts + their generators are written with LF by tool/ui_kit_shots/gen.mjs.
+# Force LF so the verify:ui-kit drift gate is deterministic across platforms (no CRLF churn).
+# NOTE: gitattributes patterns can't contain spaces, so `**/` globs skip the "MemoX Design System_v4" dir.
+tool/ui_kit_shots/*.mjs text eol=lf
+**/memox-app/specs/*.md text eol=lf
+**/memox-app/shots/INDEX.md text eol=lf
