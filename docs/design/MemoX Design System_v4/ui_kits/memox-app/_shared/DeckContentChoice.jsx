@@ -1,10 +1,10 @@
-/* MemoX — Deck Content Choice. The decision state for a brand-new deck that has neither
-   subdecks nor cards yet. One question, exactly two primary choices, no competing FAB and
-   no search / filter / list. Import is a tertiary action. Choosing a direction routes the
-   reference flow to Subdeck List or Flashcard List. No branch/leaf terminology in copy. */
+/* MemoX — Deck Content Choice. The naming + organise step for a brand-new deck that has
+   neither subdecks nor cards yet: name it inline, then pick exactly one direction. No
+   competing FAB, no search / filter / list; Import is a tertiary action. Choosing a
+   direction routes the reference flow to Subdeck List or Flashcard List. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxCard, MxIconTile, MxIconButton, MxLink } = NS;
+const { MxScaffold, MxContextualAppBar, MxCard, MxIconTile, MxLink, MxTextField } = NS;
 
 function Choice({ icon, title, text, node }) {
   return (
@@ -22,13 +22,16 @@ function Choice({ icon, title, text, node }) {
 }
 
 function DeckContentChoice() {
-  const bar = (
-    <MxContextualAppBar variant="nested" node="deck-content-choice/appbar" title="Korean TOPIK I"
-      actions={<MxIconButton icon="more_vert" size="sm" node="deck-content-choice/more" ariaLabel="Deck settings" />} />
-  );
+  const bar = <MxContextualAppBar variant="nested" node="deck-content-choice/appbar" title="New deck" />;
   return (
     <MxScaffold node="deck-content-choice/screen" appBar={bar}>
-      <h1 data-mx-node="deck-content-choice/heading" style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>How do you want to organise this deck?</h1>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+        <window.SectionLabel>DECK NAME</window.SectionLabel>
+        <div style={{ display: 'flex', alignItems: 'center', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+          <MxTextField placeholder="Name your deck" autoFocus node="deck-content-choice/name" />
+        </div>
+      </div>
+      <h1 data-mx-node="deck-content-choice/heading" style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>How do you want to organise it?</h1>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         <Choice icon="account_tree" title="Organise with subdecks" text="Create nested topics before adding cards." node="deck-content-choice/subdecks" />
         <Choice icon="playing_cards" title="Add cards directly" text="Use this as a final study deck." node="deck-content-choice/cards" />
