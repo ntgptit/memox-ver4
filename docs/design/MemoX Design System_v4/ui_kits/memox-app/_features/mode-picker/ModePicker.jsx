@@ -6,6 +6,7 @@ const { MxScaffold, MxAppBar, MxButton, MxIconButton, MxList } = NS;
 const { ModeOption, ScopeCard, ScopeSheet } = window.MemoXModePicker;
 
 const MODES = [
+  { icon: 'style', name: 'Review', desc: 'Browse and flip cards', id: 'review' },
   { icon: 'join_inner', name: 'Match', desc: 'Match terms to meanings', id: 'match' },
   { icon: 'quiz', name: 'Guess', desc: 'Pick the right meaning', id: 'guess' },
   { icon: 'psychology', name: 'Recall', desc: 'Recall, then self-grade', id: 'recall' },

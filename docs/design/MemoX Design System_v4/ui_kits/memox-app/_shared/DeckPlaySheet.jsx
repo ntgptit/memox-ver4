@@ -1,8 +1,8 @@
 /* Shared: DeckPlaySheet — the "how do you want to study?" chooser, opened from a deck /
    subdeck "Study" (bolt) action on any deck surface (Library, Subdeck List, Flashcard List).
-   Branches the study entry into the full adaptive Study session (review → match → guess →
-   recall → fill) or the à-la-carte Single mode picker. This is the ONLY entry into Mode
-   Picker, so it is shared to keep one chooser contract across every deck surface. */
+   Branches the study entry three ways: the full adaptive Study session (review → match →
+   guess → recall → fill), the à-la-carte Single mode picker, or hands-free Listen (Player).
+   The only entry into Mode Picker and Player, so it is shared to keep one chooser contract. */
 (function () {
 function DeckPlaySheet({ title = 'Korean TOPIK I' }) {
   const { Scrim, Sheet, MenuItem } = window;
@@ -12,6 +12,7 @@ function DeckPlaySheet({ title = 'Korean TOPIK I' }) {
       <Sheet title={'Study ' + title} node="deck-play/sheet">
         <MenuItem icon="bolt" tone="var(--memox-primary)" label="Study session" node="deck-play/session" />
         <MenuItem icon="sports_esports" label="Single mode" trailing={chevron} node="deck-play/single-mode" />
+        <MenuItem icon="headphones" label="Listen" trailing={chevron} node="deck-play/listen" />
       </Sheet>
     </Scrim>
   );
