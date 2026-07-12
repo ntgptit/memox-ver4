@@ -37,8 +37,12 @@ const THEMES = ['light', 'dark'];
 // design width / font-scale 1, written into the kit's shots/ dir with a stable name (no
 // matrix suffix) to refresh the reference PNGs. The gate still runs to catch regressions.
 const CANON = !!process.env.MXH_CANON;
-const SHOT_W = CANON ? [390] : WIDTHS;
-const SHOT_FS = CANON ? [1.0] : FONT_SCALES;
+// Sample mode (SHOOT_MODE=sample) is a FAST local smoke: the sampled states rendered only at the
+// overflow worst case — narrowest width × largest font-scale, both themes = 2 combos/state (not
+// the full 24). Full/CI keeps the whole responsive matrix.
+const SAMPLE = process.env.SHOOT_MODE === 'sample' && !CANON;
+const SHOT_W = CANON ? [390] : SAMPLE ? [320] : WIDTHS;
+const SHOT_FS = CANON ? [1.0] : SAMPLE ? [1.5] : FONT_SCALES;
 const SHOTS_DIR = join(KIT, 'ui_kits', 'memox-app', 'shots');
 
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.jsx': 'text/plain', '.json': 'application/json', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg' };
@@ -107,7 +111,15 @@ const run = async () => {
     } catch {}
   });
 
-  const targets = parseArgs();
+  let targets = parseArgs();
+  // CI sharding: SHOOT_SHARD="N/M" renders only screen index i where i % M === N-1, so the visual
+  // job can fan out across M runners. Applies to the full list (ignored for an explicit screen arg).
+  const shard = process.env.SHOOT_SHARD;
+  if (shard && /^\d+\/\d+$/.test(shard) && !process.argv[2]) {
+    const [n, m] = shard.split('/').map(Number);
+    targets = targets.filter((_, i) => i % m === n - 1);
+    console.log(`shard ${n}/${m}: ${targets.length} screen(s) — ${targets.map((t) => t.id).join(', ')}`);
+  }
   const report = [];
   for (const { id, states } of targets) {
     const g = REGISTRY[id].g;
