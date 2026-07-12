@@ -2,7 +2,7 @@
    Feature-local components: components/{ResultRow,Chips}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxIconButton, MxSearchDock, MxCard, MxList, MxLink } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxList, MxLink } = NS;
 const { ResultRow, Chips } = window.MemoXSearch;
 
 const RESULTS = [
@@ -18,18 +18,10 @@ const RECENT = [
 
 function Search({ state = 'empty-recent' }) {
   const val = state === 'empty-recent' ? '' : (state === 'no-results' ? 'xyz' : '하');
-  // Search-specific top bar: the dock is a shadowed pill, so it can't sit in MxAppBar's
-  // `title` slot (that clips overflow + ellipses text). Give it its own un-clipped row — the
-  // scaffold's safe-area spacer handles the top breathing, so this only needs the pill's
-  // own vertical padding.
   const bar = (
-    <div data-mx-node="search/appbar" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-appbar-height)', padding: 'var(--memox-space-2) var(--memox-gutter)', background: 'var(--memox-bg)', flexShrink: 0 }}>
-      <MxIconButton icon="arrow_back" node="search/back" ariaLabel="Back" />
-      <div style={{ flex: 1, minWidth: 0 }}>
-        <MxSearchDock value={val || undefined} placeholder="Search by word or meaning" node="search/dock"
-          trailing={val ? <MxIconButton icon="close" size="sm" node="search/clear" /> : null} />
-      </div>
-    </div>
+    <MxContextualAppBar variant="search" node="search/appbar"
+      search={{ value: val, placeholder: 'Search by word or meaning' }}
+      actions={val ? <MxIconButton icon="close" size="sm" node="search/clear" ariaLabel="Clear" /> : null} />
   );
 
   if (state === 'empty-recent') {

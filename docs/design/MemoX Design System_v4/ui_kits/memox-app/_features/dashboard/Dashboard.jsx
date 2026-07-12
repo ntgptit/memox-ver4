@@ -43,8 +43,8 @@ function Dashboard({ state = 'loaded' }) {
   // the top and collapses to the "Today" destination title on scroll. The date lives ONLY
   // here — the greeting below drops its eyebrow so nothing is duplicated (contract §6).
   const bar = (
-    <MxContextualAppBar variant="root-contextual" node="dashboard/appbar"
-      context="Saturday · 27 Jun" title="Today"
+    <MxContextualAppBar variant="root" node="dashboard/appbar"
+      title="Today"
       actions={<MxIconButton icon="search" size="sm" node="dashboard/search-open" ariaLabel="Search words" />}
       notification={{ dot: true }}
       avatar={<MxAvatar name="Linh Tran" size="sm" />} />

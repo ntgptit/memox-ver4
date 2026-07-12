@@ -2,7 +2,7 @@
    Feature-local components: components/{ResultHero,StreakGoalCard,Cta,FinalizingView}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxButton, MxLink } = NS;
+const { MxScaffold, MxContextualAppBar, MxCard, MxButton, MxLink } = NS;
 const { ResultHero, StreakGoalCard, Cta, FinalizingView } = window.MemoXStudyResult;
 
 const HEAD = {
@@ -16,7 +16,7 @@ function StudyResult({ state = 'standard' }) {
   const h = HEAD[state] || HEAD.standard;
   const met = state === 'goal-met';
   // Terminal summary page: exit only via the explicit bottom actions (no top-bar close).
-  const bar = <MxAppBar node="study-result/appbar" title="Results" />;
+  const bar = <MxContextualAppBar variant="root" node="study-result/appbar" title="Results" />;
   const showMistakes = state !== 'many-wrong'; // many-wrong already has a dedicated review CTA
 
   if (state === 'finalizing' || state === 'retry-finalize') {

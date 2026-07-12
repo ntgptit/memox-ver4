@@ -2,7 +2,7 @@
    Feature-local components: components/{DrawerItem,LangCard,DrawerPanel,RemoveLanguageDialog}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxButton } = NS;
 const { LangCard, DrawerPanel, RemoveLanguageDialog } = window.MemoXDrawer;
 
 function Drawer({ state = 'open' }) {
@@ -12,7 +12,7 @@ function Drawer({ state = 'open' }) {
 
   if (state === 'add-language') {
     return (
-      <MxScaffold node="drawer/add-screen" appBar={<MxAppBar title="Add language" node="drawer/add-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/add-back" />} />}>
+      <MxScaffold node="drawer/add-screen" appBar={<MxContextualAppBar variant="nested" title="Add language" node="drawer/add-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/add-back" />} />}>
         <window.SectionLabel>LEARNING</window.SectionLabel>
         <LangCard icon="language" name="한국어" sub="Korean" node="drawer/learn-lang" />
         <div style={{ display: 'flex', justifyContent: 'center', color: 'var(--memox-text-tertiary)' }}><span className="material-symbols-rounded">arrow_downward</span></div>
@@ -26,7 +26,7 @@ function Drawer({ state = 'open' }) {
   // remove-language
   return (
     <React.Fragment>
-      <MxScaffold node="drawer/remove-screen" appBar={<MxAppBar title="Remove language" node="drawer/remove-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/remove-back" />} />}>
+      <MxScaffold node="drawer/remove-screen" appBar={<MxContextualAppBar variant="nested" title="Remove language" node="drawer/remove-appbar" leading={<MxIconButton icon="arrow_back" node="drawer/remove-back" />} />}>
         <MxCard padding="sm">
           <window.ListRow icon="translate" title="한국어 → English" sub="1240 cards" node="drawer/pair-0"
             trailing={<MxIconButton icon="delete" node="drawer/pair-0-del" />} />

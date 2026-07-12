@@ -23,7 +23,7 @@
   /* Status-bar / notch inset above every app bar. Kit renders a fixed 24; on a real device
      the env() inset wins when larger. Production RN maps this to the SafeAreaView top inset. */
   --memox-safe-area-top: max(env(safe-area-inset-top, 0px), 24px);
-  --memox-appbar-height: 64px;
+  --memox-appbar-height: 56px; /* single compact app-bar height (minimal M3) */
   --memox-appbar-lg-height: 76px; /* large-header floor; the global safe-area now owns the top inset (was 112, which double-padded) */
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */
   --memox-fab-size: 56px; /* M3 standard FAB */

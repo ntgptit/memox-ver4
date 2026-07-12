@@ -4,7 +4,7 @@
    StageRecall,StageFill,ExitDialog,AnswerSaveErrorDialog,ResumeErrorState}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxButton } = NS;
 
 const META = {
   'stage1-review': { label: 'Stage 1 · Review', done: 4, total: 25 },
@@ -50,10 +50,10 @@ function StudySession({ state = 'stage1-review' }) {
 
   const m = META[state] || META['stage1-review'];
   const bar = (
-    <MxAppBar node="study-session/appbar"
+    <MxContextualAppBar variant="nested" node="study-session/appbar"
       leading={<MxIconButton icon="close" node="study-session/close" />}
       title={<window.ProgressHeader done={m.done} total={m.total} node="study-session/progress" />}
-      trailing={<MxIconButton icon="more_horiz" node="study-session/options" />} />
+      actions={<MxIconButton icon="more_vert" node="study-session/options" />} />
   );
 
   const scaffold = (

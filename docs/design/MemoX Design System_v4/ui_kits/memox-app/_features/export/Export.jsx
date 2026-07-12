@@ -2,7 +2,7 @@
    Feature-local components: components/{ExportingCard,FormatList}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxSegmentedControl, MxSwitch } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxButton, MxChip, MxSegmentedControl, MxSwitch } = NS;
 const { ExportingCard, FormatList } = window.MemoXExport;
 
 const SEPS = ['Tab', 'Comma', 'Semicolon'];
@@ -11,7 +11,7 @@ const SectionLabel = window.SectionLabel;
 
 function Export({ state = 'config' }) {
   const [incl, setIncl] = React.useState(true);
-  const bar = <MxAppBar title="Export cards" node="export/appbar" leading={<MxIconButton icon="arrow_back" node="export/back" />} />;
+  const bar = <MxContextualAppBar variant="nested" title="Export cards" node="export/appbar" leading={<MxIconButton icon="arrow_back" node="export/back" />} />;
 
   if (state === 'exporting') {
     return (

@@ -2,14 +2,14 @@
    Feature-local components: components/{TimeCol,TimePickerSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxSwitch, MxChip } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxSwitch, MxChip } = NS;
 const { TimePickerSheet } = window.MemoXReminder;
 
 const WEEKDAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 function Reminder({ state = 'on' }) {
   const on = state !== 'off';
-  const bar = <MxAppBar title="Reminders" node="reminder/appbar" leading={<MxIconButton icon="arrow_back" node="reminder/back" />} />;
+  const bar = <MxContextualAppBar variant="nested" title="Reminders" node="reminder/appbar" leading={<MxIconButton icon="arrow_back" node="reminder/back" />} />;
 
   const base = (
     <MxScaffold node="reminder/screen" appBar={bar}>

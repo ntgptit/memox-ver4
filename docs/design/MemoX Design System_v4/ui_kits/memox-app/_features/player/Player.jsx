@@ -2,15 +2,15 @@
    Feature-local components: components/{Dots,PlayerCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxFab, MxButton, MxSegmentedControl } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxFab, MxButton, MxSegmentedControl } = NS;
 const { Dots, PlayerCard } = window.MemoXPlayer;
 
 function Player({ state = 'playing' }) {
   const playing = state !== 'paused';
   const bar = (
-    <MxAppBar node="player/appbar" title="TOPIK I — Vocabulary"
+    <MxContextualAppBar variant="nested" node="player/appbar" title="TOPIK I — Vocabulary"
       leading={<MxIconButton icon="arrow_back" node="player/back" />}
-      trailing={<MxIconButton icon="more_vert" node="player/options" />} />
+      actions={<MxIconButton icon="more_vert" node="player/options" />} />
   );
 
   if (state === 'error') {

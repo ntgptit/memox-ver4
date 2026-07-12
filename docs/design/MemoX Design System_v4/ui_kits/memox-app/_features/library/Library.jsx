@@ -28,8 +28,8 @@ function Library({ state = 'loaded' }) {
   const nav = <MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />;
   const fab = <MxFab icon="add" node="library/create" ariaLabel="Create" />;
   const rootBar = (
-    <MxContextualAppBar variant="root-contextual" node="library/appbar"
-      context="12 decks · 48 due" title="Library"
+    <MxContextualAppBar variant="root" node="library/appbar"
+      title="Library"
       actions={<MxIconButton icon="search" size="sm" node="library/search-open" ariaLabel="Search" />}
       avatar={AV} />
   );

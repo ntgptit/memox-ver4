@@ -2,7 +2,7 @@
    Feature-local component: components/PromptCard.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxButton } = NS;
 
 const CHOICES = ['school', 'hospital', 'park', 'restaurant', 'library'];
 // long-text fixture — proves the answer options wrap multi-line meanings and the rows grow.
@@ -24,9 +24,9 @@ function toneFor(state, i) {
 
 function GuessMode({ state = 'waiting' }) {
   const bar = (
-    <MxAppBar node="guess-mode/appbar" title="Guess"
+    <MxContextualAppBar variant="nested" node="guess-mode/appbar" title="Guess"
       leading={<MxIconButton icon="arrow_back" node="guess-mode/back" />}
-      trailing={<MxIconButton icon="more_horiz" node="guess-mode/options" />} />
+      actions={<MxIconButton icon="more_vert" node="guess-mode/options" />} />
   );
 
   if (state === 'complete') {

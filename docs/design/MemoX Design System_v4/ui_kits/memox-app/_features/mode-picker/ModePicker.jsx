@@ -2,7 +2,7 @@
    Feature-local components: components/{ModeOption,ScopeCard,ScopeSheet}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxButton, MxIconButton, MxList } = NS;
+const { MxScaffold, MxContextualAppBar, MxButton, MxIconButton, MxList } = NS;
 const { ModeOption, ScopeCard, ScopeSheet } = window.MemoXModePicker;
 
 const MODES = [
@@ -15,7 +15,7 @@ const MODES = [
 
 function ModePicker({ state = 'default' }) {
   const notEnough = state === 'not-enough';
-  const bar = <MxAppBar title="Single mode" node="mode-picker/appbar" leading={<MxIconButton icon="arrow_back" node="mode-picker/back" />} />;
+  const bar = <MxContextualAppBar variant="nested" title="Single mode" node="mode-picker/appbar" leading={<MxIconButton icon="arrow_back" node="mode-picker/back" />} />;
 
   const base = (
     <MxScaffold node="mode-picker/screen" appBar={bar}>

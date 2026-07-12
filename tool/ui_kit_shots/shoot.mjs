@@ -80,7 +80,7 @@ const REGISTRY = {
   drawer: { g: 'Drawer', states: ['open'] },
   'study-session': { g: 'StudySession', states: ['stage1-review', 'resume-error', 'answer-save-error'] },
   settings: { g: 'Settings', states: ['loaded'] },
-  'app-bar': { g: 'AppBar', states: ['root-top', 'root-scrolled', 'root-unread', 'root-long', 'root-standard', 'nested', 'nested-overflow', 'search', 'selection', 'focused'] },
+  'app-bar': { g: 'AppBar', states: ['root-top', 'root-scrolled', 'root-unread', 'nested', 'nested-overflow', 'search', 'selection', 'modal'] },
 };
 
 function parseArgs() {
