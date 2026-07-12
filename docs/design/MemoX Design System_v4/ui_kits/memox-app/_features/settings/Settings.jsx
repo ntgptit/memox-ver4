@@ -3,7 +3,7 @@
    Shared: window.ProfileCard (_shared/ProfileCard.jsx). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSwitch } = NS;
+const { MxScaffold, MxContextualAppBar, MxBottomNav, MxCard, MxSwitch } = NS;
 const { ValuePickerSheet } = window.MemoXSettings;
 const Profile = () => <window.ProfileCard node="settings/profile" />;
 
@@ -39,7 +39,7 @@ const Label = window.SectionLabel;
 
 function Settings({ state = 'loaded' }) {
   const [notif, setNotif] = React.useState(true);
-  const bar = <MxAppBar large title="Settings" node="settings/appbar" />;
+  const bar = <MxContextualAppBar variant="root" title="Settings" node="settings/appbar" />;
   const nav = <MxBottomNav items={NAV} value="me" node="shell/bottom-nav" />;
 
   if (state === 'group-expanded') {

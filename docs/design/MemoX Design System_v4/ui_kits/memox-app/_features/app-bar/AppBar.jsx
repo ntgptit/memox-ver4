@@ -1,8 +1,7 @@
-/* MemoX — Contextual App Bar reference. Demonstrates the shared MxContextualAppBar in
-   real screen compositions across every variant + state. Not an app destination — a
-   component gallery screen proving the shared bar works in context.
-   States: root-top · root-scrolled · root-unread · root-long · root-large · root-standard
-   · nested · nested-overflow · search · selection · focused */
+/* MemoX — App Bar reference. Demonstrates the one MxContextualAppBar across every variant
+   in real screen compositions. Not an app destination — a component gallery screen.
+   States: root-top · root-scrolled · root-unread · nested · nested-overflow · search
+   · selection · modal */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxContextualAppBar, MxBottomNav, MxIconButton, MxAvatar, MxCard } = NS;
@@ -27,32 +26,23 @@ function Body({ heading, sub }) {
 
 const AV = <MxAvatar name="Linh Tran" size="sm" />;
 const nav = <MxBottomNav items={NAV} value="home" node="shell/bottom-nav" />;
+const search = <MxIconButton icon="search" size="sm" node="app-bar/search-open" ariaLabel="Search" />;
 
 function AppBar({ state = 'root-top' }) {
-  // Root contextual — at top vs scrolled (the two required visual states).
-  if (state === 'root-top' || state === 'root-scrolled' || state === 'root-unread' || state === 'root-long' || state === 'root-large') {
+  // root — the tab-destination bar; elevate-on-scroll shown via top vs scrolled.
+  if (state === 'root-top' || state === 'root-scrolled' || state === 'root-unread') {
     const collapsed = state === 'root-scrolled';
-    const ctx = state === 'root-long' ? 'Wednesday · 30 September · week 39' : 'Saturday · 27 Jun';
     const bar = (
-      <MxContextualAppBar variant="root-contextual" collapsed={collapsed} node="app-bar/root"
-        context={ctx} title="Today"
+      <MxContextualAppBar variant="root" collapsed={collapsed} node="app-bar/root" title="Today"
+        actions={search}
         notification={state === 'root-unread' ? { count: 3 } : { dot: true }}
         avatar={AV} />
     );
     return (
       <MxScaffold node="app-bar/screen" appBar={bar} bottomNav={nav}>
-        <Body heading={collapsed ? null : 'Good evening, Linh'} sub={collapsed ? null : 'Continue studying'} />
+        <Body heading="Good evening, Linh" sub="Continue studying" />
       </MxScaffold>
     );
-  }
-
-  if (state === 'root-standard') {
-    const bar = (
-      <MxContextualAppBar variant="root-standard" node="app-bar/std" title="Library"
-        actions={<MxIconButton icon="search" size="sm" node="app-bar/search-open" ariaLabel="Search" />}
-        avatar={AV} />
-    );
-    return <MxScaffold node="app-bar/screen" appBar={bar} bottomNav={nav}><Body sub="Your decks and subdecks" /></MxScaffold>;
   }
 
   if (state === 'nested' || state === 'nested-overflow') {
@@ -88,12 +78,12 @@ function AppBar({ state = 'root-top' }) {
     return <MxScaffold node="app-bar/screen" appBar={bar}><Body sub="3 of 12 cards selected" /></MxScaffold>;
   }
 
-  // focused
+  // modal — full-screen form bar: close + centered title + a primary action.
   const bar = (
-    <MxContextualAppBar variant="focused" node="app-bar/focused" title="Card 7 of 20"
-      leading={<MxIconButton icon="close" size="sm" node="app-bar/f-close" ariaLabel="Exit session" />} />
+    <MxContextualAppBar variant="modal" node="app-bar/modal" title="New card"
+      actions={<span style={{ color: 'var(--memox-primary)', fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-base)' }}>Save</span>} />
   );
-  return <MxScaffold node="app-bar/screen" appBar={bar}><Body sub="Study session in progress" /></MxScaffold>;
+  return <MxScaffold node="app-bar/screen" appBar={bar}><Body sub="Card editor form" /></MxScaffold>;
 }
 
 window.AppBar = AppBar;

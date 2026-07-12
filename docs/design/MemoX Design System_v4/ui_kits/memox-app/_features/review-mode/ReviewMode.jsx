@@ -2,15 +2,15 @@
    Feature-local components: components/{MeaningCard}.jsx. Term card is shared StudyPromptCard. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxButton } = NS;
 const { MeaningCard } = window.MemoXReviewMode;
 
 function ReviewMode({ state = 'browsing' }) {
   const editing = state === 'editing';
   const bar = (
-    <MxAppBar node="review-mode/appbar" title="Review"
+    <MxContextualAppBar variant="nested" node="review-mode/appbar" title="Review"
       leading={<MxIconButton icon="arrow_back" node="review-mode/back" />}
-      trailing={<React.Fragment>
+      actions={<React.Fragment>
         <MxIconButton icon="format_size" node="review-mode/text-size" />
         <MxIconButton icon="more_vert" node="review-mode/options" />
       </React.Fragment>} />

@@ -205,7 +205,7 @@ const SCREENS = [
   { id: 'drawer', title: 'Drawer & Languages', Comp: () => window.Drawer, states: ['open', 'add-language', 'remove-language'] },
   { id: 'study-session', title: 'Study Session (5 stages)', Comp: () => window.StudySession, states: ['stage1-review', 'stage2-match', 'stage3-guess', 'stage4-recall', 'stage5-fill', 'relearn', 'due-review', 'exit', 'resume-error', 'answer-save-error'] },
   { id: 'settings', title: 'Settings', Comp: () => window.Settings, states: ['loaded', 'group-expanded', 'value-picker'] },
-  { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'root-long', 'root-standard', 'nested', 'nested-overflow', 'search', 'selection', 'focused'] },
+  { id: 'app-bar', title: 'App Bar (shared)', Comp: () => window.AppBar, states: ['root-top', 'root-scrolled', 'root-unread', 'nested', 'nested-overflow', 'search', 'selection', 'modal'] },
 ];
 
 // A single screen failing (compile error, runtime throw, or not loaded — e.g.

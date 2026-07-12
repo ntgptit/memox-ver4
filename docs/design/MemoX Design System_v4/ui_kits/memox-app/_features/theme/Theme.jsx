@@ -2,7 +2,7 @@
    Feature-local components: components/{PreviewCard,AccentPicker}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxSegmentedControl, MxSectionHeader } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxSegmentedControl, MxSectionHeader } = NS;
 const { PreviewCard, AccentPicker } = window.MemoXTheme;
 
 // Presentational palette samples for the accent picker.
@@ -15,7 +15,7 @@ function Theme({ state = 'light' }) {
   const accentColor = SWATCHES[accent];
   const termSize = size === 'lg' ? 'var(--memox-font-size-3xl)' : size === 'sm' ? 'var(--memox-font-size-xl)' : 'var(--memox-font-size-2xl)';
 
-  const bar = <MxAppBar title="Theme" node="theme/appbar" leading={<MxIconButton icon="arrow_back" node="theme/back" />} />;
+  const bar = <MxContextualAppBar variant="nested" title="Theme" node="theme/appbar" leading={<MxIconButton icon="arrow_back" node="theme/back" />} />;
 
   return (
     <MxScaffold node="theme/screen" appBar={bar}>

@@ -2,7 +2,7 @@
    Feature-local components: components/{MeaningPanel}.jsx. Prompt card is shared StudyPromptCard. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxButton } = NS;
 const { MeaningPanel } = window.MemoXRecallMode;
 
 const Note = window.Note;
@@ -10,9 +10,9 @@ const Note = window.Note;
 function RecallMode({ state = 'before-reveal' }) {
   const revealed = state === 'revealed' || state === 'forgot' || state === 'remembered';
   const bar = (
-    <MxAppBar node="recall-mode/appbar" title="Recall"
+    <MxContextualAppBar variant="nested" node="recall-mode/appbar" title="Recall"
       leading={<MxIconButton icon="arrow_back" node="recall-mode/back" />}
-      trailing={<MxIconButton icon="more_horiz" node="recall-mode/options" />} />
+      actions={<MxIconButton icon="more_vert" node="recall-mode/options" />} />
   );
 
   if (state === 'complete') {

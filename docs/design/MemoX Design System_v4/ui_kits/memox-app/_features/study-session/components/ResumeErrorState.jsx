@@ -2,11 +2,11 @@
    Owns its own app bar since this state has no progress bar. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54 || {};
-const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxButton } = NS;
 
 function ResumeErrorState() {
   const errBar = (
-    <MxAppBar node="study-session/appbar"
+    <MxContextualAppBar variant="nested" node="study-session/appbar"
       leading={<MxIconButton icon="close" node="study-session/close" />}
       title={<span style={{ fontSize: 'var(--memox-font-size-base)', fontWeight: 'var(--memox-font-weight-bold)' }}>Resume session</span>} />
   );

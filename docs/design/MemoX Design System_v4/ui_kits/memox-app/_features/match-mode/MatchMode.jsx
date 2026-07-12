@@ -2,7 +2,7 @@
    Feature-local component: components/Tile.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxButton } = NS;
 const { Tile } = window.MemoXMatchMode;
 
 const LEFT = ['time', 'love', 'friend', 'food', 'school'];
@@ -23,9 +23,9 @@ const DONE = { playing: 0, selected: 0, correct: 4, wrong: 0, almost: 12, comple
 
 function MatchMode({ state = 'playing' }) {
   const bar = (
-    <MxAppBar node="match-mode/appbar" title="Match"
+    <MxContextualAppBar variant="nested" node="match-mode/appbar" title="Match"
       leading={<MxIconButton icon="arrow_back" node="match-mode/back" />}
-      trailing={<MxIconButton icon="more_horiz" node="match-mode/options" />} />
+      actions={<MxIconButton icon="more_vert" node="match-mode/options" />} />
   );
 
   if (state === 'complete') {

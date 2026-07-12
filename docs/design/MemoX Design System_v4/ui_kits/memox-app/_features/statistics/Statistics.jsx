@@ -2,7 +2,7 @@
    Feature-local components: components/{Bars,Heatmap,Donut}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxBottomNav, MxCard, MxSectionHeader, MxSegmentedControl, MxButton } = NS;
 const { Bars, Heatmap, Donut } = window.MemoXStatistics;
 
 const NAV = [
@@ -14,7 +14,7 @@ const NAV = [
 ];
 
 function Statistics({ state = 'loaded' }) {
-  const bar = <MxAppBar large title="Stats" node="statistics/appbar" />;
+  const bar = <MxContextualAppBar variant="root" title="Stats" node="statistics/appbar" />;
   const nav = <MxBottomNav items={NAV} value="stats" node="shell/bottom-nav" />;
   const scope = (
     <MxSegmentedControl value={state === 'scope-switch' ? 'all' : 'pair'} onChange={() => {}} block node="statistics/scope"

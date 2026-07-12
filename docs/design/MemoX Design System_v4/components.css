@@ -142,7 +142,7 @@
   display: flex;
   align-items: center;
   gap: var(--memox-space-3);
-  min-height: var(--memox-appbar-height); /* 64 (56-64 spec) */
+  min-height: var(--memox-appbar-height); /* 56 — single compact height */
   padding: 0 var(--memox-gutter);          /* same horizontal grid as content */
   color: var(--memox-text);
   flex-shrink: 0;
@@ -186,9 +186,9 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-/* Focused form bar: the title is a fixed page label centered between the leading
+/* Modal form bar: the title is a fixed page label centered between the leading
    (close) and trailing (Save) actions, so it never shifts across form/submit states. */
-.cappbar--focused .cappbar__title { text-align: center; }
+.cappbar--modal .cappbar__title { text-align: center; }
 .cappbar__title,
 .cappbar__context {
   animation: cappbar-label-in var(--memox-duration-base) var(--memox-ease-standard);

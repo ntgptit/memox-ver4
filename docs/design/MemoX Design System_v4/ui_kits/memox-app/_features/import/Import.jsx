@@ -2,7 +2,7 @@
    Feature-local components: components/{Table,SourceCard}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxIconButton, MxCard, MxButton, MxChip, MxList } = NS;
+const { MxScaffold, MxContextualAppBar, MxIconButton, MxCard, MxButton, MxChip, MxList } = NS;
 const { Table, SourceCard } = window.MemoXImport;
 
 const SOURCES = [
@@ -16,7 +16,7 @@ const ROWS = [['Term', 'Meaning'], ['안녕하세요', 'Hello'], ['감사합니�
 const SectionLabel = window.SectionLabel;
 
 function Import({ state = 'source' }) {
-  const bar = <MxAppBar title="Import cards" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;
+  const bar = <MxContextualAppBar variant="nested" title="Import cards" node="import/appbar" leading={<MxIconButton icon="arrow_back" node="import/back" />} />;
 
   if (state === 'importing') {
     return (

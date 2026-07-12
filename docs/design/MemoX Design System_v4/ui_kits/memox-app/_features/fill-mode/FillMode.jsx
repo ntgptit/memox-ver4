@@ -2,7 +2,7 @@
    Feature-local components: components/{CharCompare,InputBox}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxAppBar, MxCard, MxIconButton, MxButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxButton } = NS;
 const { CharCompare, InputBox } = window.MemoXFillMode;
 
 const Note = window.Note;
@@ -17,9 +17,9 @@ const INPUT = {
 
 function FillMode({ state = 'waiting' }) {
   const bar = (
-    <MxAppBar node="fill-mode/appbar" title="Fill"
+    <MxContextualAppBar variant="nested" node="fill-mode/appbar" title="Fill"
       leading={<MxIconButton icon="arrow_back" node="fill-mode/back" />}
-      trailing={<MxIconButton icon="more_horiz" node="fill-mode/options" />} />
+      actions={<MxIconButton icon="more_vert" node="fill-mode/options" />} />
   );
 
   if (state === 'complete') {

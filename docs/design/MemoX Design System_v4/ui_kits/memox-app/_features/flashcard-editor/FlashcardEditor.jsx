@@ -125,7 +125,7 @@ function FlashcardEditor({ state = 'create' }) {
 
   // Focused app bar: Close (X) · title · (no top-right — Save moved to the sticky bottom bar).
   const bar = (
-    <MxContextualAppBar variant="focused" node="flashcard-editor/appbar" title={title}
+    <MxContextualAppBar variant="modal" node="flashcard-editor/appbar" title={title}
       leading={<MxIconButton icon="close" size="sm" node="flashcard-editor/cancel" ariaLabel="Cancel" disabled={submitting} />}
       actions={<span aria-hidden="true" />} />
   );

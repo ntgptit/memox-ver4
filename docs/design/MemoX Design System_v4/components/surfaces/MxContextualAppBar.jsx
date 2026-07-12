@@ -1,12 +1,19 @@
-/* MxContextualAppBar — the shared, context-aware top app bar. Base class: cappbar
-   One component for every screen chrome; content is passed by semantic slot, never
-   screen-specific markup. Variants: root-contextual · root-standard · nested · search ·
-   selection · focused. Root-contextual has two visual states — "at top" (context label,
-   transparent, no divider) and "scrolled" (destination title, surface + divider); it
-   collapses automatically on scroll, or via the explicit `collapsed` prop (gallery states).
+/* MxContextualAppBar — the ONE app bar for every screen. Base class: cappbar.
+   Minimal Material-3: a single 56px bar, start-aligned title, flat, transparent at the top
+   and gaining a surface + hairline divider once the body scrolls (elevate-on-scroll). Content
+   is passed by semantic slot, never screen-specific markup.
 
-   Runtime-authored (IIFE + global React) so the kit gallery loads it via babel-src without
-   a bundle rebuild; ESM-exported for the design-system compiler. */
+   Variants:
+     root      — tab destinations: title + trailing actions (search / notification / avatar).
+     nested    — pushed detail screens: back + title + optional actions.
+     search    — back + a filled search field.
+     selection — close + "N selected" + selection actions (stays elevated).
+     modal     — full-screen form: close + centered title + a primary action (stays elevated).
+   root / nested / search elevate on scroll; selection / modal always show the surface.
+   Pin the state with the `collapsed` prop (gallery states).
+
+   Runtime-authored (IIFE + global React) so the kit gallery loads it via babel-src without a
+   bundle rebuild; ESM-exported for the design-system compiler. */
 (function () {
   const NS = (window.MemoXDesignSystem_2ffa54 = window.MemoXDesignSystem_2ffa54 || {});
   const { MxIconButton } = NS;
@@ -29,32 +36,31 @@
 
   function MxContextualAppBar(props) {
     const {
-      variant = 'root-standard', collapsed: collapsedProp, context, title, count,
+      variant = 'root', collapsed: collapsedProp, title, count,
       search, leading, actions, notification, avatar, node, className = '',
     } = props;
 
-    // Root-contextual collapses on scroll unless the state is pinned by `collapsed`.
+    // root / nested / search blend at the top and gain a surface + divider on scroll.
+    const elevates = variant === 'root' || variant === 'nested' || variant === 'search';
     const [auto, setAuto] = R.useState(false);
     const ref = R.useRef(null);
     R.useEffect(() => {
-      if (collapsedProp !== undefined || variant !== 'root-contextual' || !ref.current) return;
+      if (collapsedProp !== undefined || !elevates || !ref.current) return;
       const app = ref.current.closest('.app');
       const body = app && app.querySelector('.app__body');
       if (!body) return;
-      const onScroll = () => setAuto(body.scrollTop > 24);
+      const onScroll = () => setAuto(body.scrollTop > 8);
       onScroll();
       body.addEventListener('scroll', onScroll, { passive: true });
       return () => body.removeEventListener('scroll', onScroll);
-    }, [collapsedProp, variant]);
-    const collapsed = collapsedProp !== undefined ? collapsedProp : auto;
-
-    const scrolled = collapsed || variant === 'root-standard' || variant === 'nested' || variant === 'selection' || variant === 'focused';
+    }, [collapsedProp, elevates]);
+    const scrolled = collapsedProp !== undefined ? collapsedProp : (elevates ? auto : true);
     const cls = ['cappbar', 'cappbar--' + variant, scrolled ? 'cappbar--scrolled' : 'cappbar--top', className].filter(Boolean).join(' ');
 
-    // Leading slot: explicit, else a sensible default per variant.
+    // Leading slot: explicit override, else a sensible default per variant.
     const lead = leading !== undefined ? leading
-      : variant === 'nested' || variant === 'search' || variant === 'focused' ? <MxIconButton icon="arrow_back" size="sm" node="shell/back" ariaLabel="Back" />
-      : variant === 'selection' ? <MxIconButton icon="close" size="sm" node="shell/close" ariaLabel="Cancel selection" />
+      : variant === 'nested' || variant === 'search' ? <MxIconButton icon="arrow_back" size="sm" node="shell/back" ariaLabel="Back" />
+      : variant === 'modal' || variant === 'selection' ? <MxIconButton icon="close" size="sm" node="shell/close" ariaLabel="Close" />
       : null;
 
     // Center content by variant.
@@ -68,15 +74,11 @@
       );
     } else if (variant === 'selection') {
       main = <div className="cappbar__title" role="status">{count} selected</div>;
-    } else if (variant === 'root-contextual') {
-      main = collapsed
-        ? <div className="cappbar__title">{title}</div>
-        : <div className="cappbar__context">{context}</div>;
     } else {
       main = <div className="cappbar__title">{title}</div>;
     }
 
-    // Right actions cluster (generic actions, then notification, then avatar).
+    // Right cluster: generic actions, then notification, then avatar.
     const right = (
       <div className="cappbar__actions">
         {actions}
