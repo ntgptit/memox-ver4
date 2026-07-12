@@ -114,7 +114,7 @@ Feature-local composites used by the app UI kit's Screen gallery. One directory 
 - **library**: ContextBar, LibraryHeader, OverflowMenuSheet, PairPickerSheet, PlaySheet, SortSheet
 - **player**: Dots, PlayerCard
 - **reminder**: TimeCol, TimePickerSheet
-- **review-mode**: MeaningCard, TermCard
+- **review-mode**: MeaningCard
 - **search**: Chips, ResultRow
 - **settings**: ValuePickerSheet
 - **statistics**: Bars, Donut, Heatmap

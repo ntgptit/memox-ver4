@@ -382,8 +382,8 @@
         "message": "<SubDeckCard> doesn't accept that prop. Declared props: deck, index."
       },
       {
-        "selector": "JSXOpeningElement[name.name='StudyPromptCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:term|nodePrefix|fill|key|ref|className|style|children)$/]",
-        "message": "<StudyPromptCard> doesn't accept that prop. Declared props: term, nodePrefix, fill."
+        "selector": "JSXOpeningElement[name.name='StudyPromptCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:term|nodePrefix|fill|editable|playing|key|ref|className|style|children)$/]",
+        "message": "<StudyPromptCard> doesn't accept that prop. Declared props: term, nodePrefix, fill, editable, playing."
       },
       {
         "selector": "JSXOpeningElement[name.name='SyncBlock'] > JSXAttribute > JSXIdentifier[name!=/^(?:state|key|ref|className|style|children)$/]",
@@ -396,14 +396,6 @@
       {
         "selector": "JSXOpeningElement[name.name='Table'] > JSXAttribute > JSXIdentifier[name!=/^(?:rows|key|ref|className|style|children)$/]",
         "message": "<Table> doesn't accept that prop. Declared props: rows."
-      },
-      {
-        "selector": "JSXOpeningElement[name.name='TermCard'] > JSXAttribute > JSXIdentifier[name!=/^(?:state|key|ref|className|style|children)$/]",
-        "message": "<TermCard> doesn't accept that prop. Declared props: state."
-      },
-      {
-        "selector": "JSXOpeningElement[name.name='TermCard'] > JSXAttribute[name.name='state'] > Literal[value!=/^(?:idle|audio)$/]",
-        "message": "<TermCard> state must be one of 'idle' | 'audio'."
       },
       {
         "selector": "JSXOpeningElement[name.name='Tile'] > JSXAttribute > JSXIdentifier[name!=/^(?:text|tone|node|key|ref|className|style|children)$/]",
@@ -673,9 +665,6 @@
         "replaces": []
       },
       "Table": {
-        "replaces": []
-      },
-      "TermCard": {
         "replaces": []
       },
       "Tile": {

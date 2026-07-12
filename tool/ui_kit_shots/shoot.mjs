@@ -67,7 +67,7 @@ const REGISTRY = {
   'guess-mode': { g: 'GuessMode', states: ['waiting', 'long-text', 'complete'] },
   'recall-mode': { g: 'RecallMode', states: ['before-reveal', 'complete'] },
   'fill-mode': { g: 'FillMode', states: ['waiting', 'typing', 'complete'] },
-  'review-mode': { g: 'ReviewMode', states: ['browsing', 'loading', 'error', 'end'] },
+  'review-mode': { g: 'ReviewMode', states: ['browsing', 'audio', 'loading', 'error', 'end'] },
   player: { g: 'Player', states: ['playing', 'error', 'end'] },
   'study-result': { g: 'StudyResult', states: ['standard', 'goal-met', 'many-wrong', 'finalize-error'] },
   search: { g: 'Search', states: ['empty-recent', 'results', 'no-results', 'loading'] },
