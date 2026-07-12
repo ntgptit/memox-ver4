@@ -1,4 +1,4 @@
-<!-- @dsCard group="Components" viewport="700x340" name="Navigation" subtitle="AppBar · BottomNav · Fab · SearchDock · IconButton" -->
+<!-- @dsCard group="Components" viewport="700x300" name="Navigation" subtitle="BottomNav · Fab · SearchDock · IconButton" -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,17 +19,11 @@
 <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 <script src="../../_ds_bundle.js"></script>
 <script type="text/babel">
-const { MxAppBar, MxBottomNav, MxFab, MxSearchDock, MxIconButton } = window.MemoXDesignSystem_2ffa54;
+const { MxBottomNav, MxFab, MxSearchDock, MxIconButton } = window.MemoXDesignSystem_2ffa54;
 function Demo() {
   const [tab, setTab] = React.useState('library');
   return (
     <div className="grid">
-      <div style={{ background:'var(--memox-surface)', borderRadius:'var(--memox-radius-lg)', boxShadow:'var(--memox-shadow-card)', overflow:'hidden' }}>
-        <MxAppBar
-          leading={<MxIconButton icon="arrow_back" />}
-          title="Japanese N5"
-          trailing={<React.Fragment><MxIconButton icon="search" /><MxIconButton icon="more_vert" /></React.Fragment>} />
-      </div>
       <MxSearchDock placeholder="Search decks & cards" trailing={<MxIconButton icon="tune" size="sm" />} />
       <div style={{ display:'flex', gap:'12px', alignItems:'center' }}>
         <MxFab icon="add" label="New deck" />

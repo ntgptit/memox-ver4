@@ -75,7 +75,7 @@ How MemoX writes copy:
 - **`tokens/`** — `colors.css` (light+dark roles), `typography.css` (+ `@font-face`), `spacing.css`, `radius.css`, `elevation.css`.
 - **`components.css`** — Layer-2 styling for every `Mx*` base class.
 - **`components/`**
-  - `surfaces/` — **MxScaffold** (`app`), **MxContextualAppBar** (`cappbar` — shared context-aware top bar: root-contextual/root-standard/nested/search/selection/focused), **MxAppBar** (`appbar`/`appbar-lg` — legacy simple bar), **MxCard** (`card`), **MxSectionHeader** (`section-head`), **MxIconTile** (`icon-tile`)
+  - `surfaces/` — **MxScaffold** (`app`), **MxContextualAppBar** (`cappbar` — the one app bar; variants root/nested/search/selection/modal, minimal-M3, elevate-on-scroll), **MxCard** (`card`), **MxSectionHeader** (`section-head`), **MxIconTile** (`icon-tile`)
   - `navigation/` — **MxBottomNav** (`bottom-nav`), **MxFab** (`fab`), **MxSearchDock** (`search-dock`), **MxIconButton** (`icon-btn`)
   - `core/` — **MxButton** (`btn` + primary/secondary/outline/ghost), **MxLink** (`link` — text/nav link button), **MxTextField** (`field`), **MxChip** (`chip`), **MxBadge** (`badge`), **MxSwitch** (`switch`), **MxSegmentedControl** (`segmented`), **MxAvatar** (`avatar`)
 - **`guidelines/`** — foundation specimen cards (Colors / Type / Spacing) shown on the Design System tab.

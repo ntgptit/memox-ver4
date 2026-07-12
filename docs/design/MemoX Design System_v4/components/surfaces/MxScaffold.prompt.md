@@ -3,7 +3,7 @@ MxScaffold — the root phone shell every screen mounts into; slots an app bar, 
 ```jsx
 <MxScaffold
   node="dashboard/screen"
-  appBar={<MxAppBar large title="Today" />}
+  appBar={<MxContextualAppBar variant="root" title="Today" />}
   bottomNav={<MxBottomNav items={tabs} value="home" onChange={setTab} />}
   fab={<MxFab icon="add" label="New deck" />}
 >

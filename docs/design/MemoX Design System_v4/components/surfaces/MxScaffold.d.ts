@@ -5,7 +5,7 @@ import type { ReactNode, CSSProperties } from 'react';
  * @startingPoint section="Shell" subtitle="App scaffold with app bar, body, nav & FAB" viewport="390x844"
  */
 export interface MxScaffoldProps {
-  /** Top app bar element (usually <MxAppBar/>). */
+  /** Top app bar element (usually <MxContextualAppBar/>). */
   appBar?: ReactNode;
   /** Bottom navigation element (usually <MxBottomNav/>). */
   bottomNav?: ReactNode;

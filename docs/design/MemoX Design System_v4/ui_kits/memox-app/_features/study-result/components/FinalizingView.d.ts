@@ -10,7 +10,7 @@ export interface FinalizingViewProps {
 /**
  * Study-result "saving your results…" view shown while the session commits to
  * SRS. The kit passes a pre-rendered `bar` node; the Flutter `FinalizingView`
- * builds its own `MxAppBar` and takes an `onClose` callback for the close action
+ * builds its own `MxContextualAppBar` and takes an `onClose` callback for the close action
  * — recorded as exceptions.
  */
 export function FinalizingView(props: FinalizingViewProps): JSX.Element;

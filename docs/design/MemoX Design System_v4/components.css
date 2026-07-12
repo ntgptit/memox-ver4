@@ -75,64 +75,6 @@
 }
 
 /* ============================================================
-   MxAppBar  ·  .appbar  /  .appbar-lg
-   ============================================================ */
-.appbar {
-  display: flex;
-  align-items: center;
-  gap: var(--memox-space-3);
-  height: var(--memox-appbar-height);
-  padding: 0 var(--memox-gutter);
-  background: var(--memox-bg);
-  color: var(--memox-text);
-  flex-shrink: 0;
-}
-.appbar__lead,
-.appbar__trail {
-  display: flex;
-  align-items: center;
-  gap: var(--memox-space-1);
-}
-.appbar__title {
-  flex: 1;
-  min-width: 0;
-  font-size: var(--memox-font-size-lg);
-  font-weight: var(--memox-font-weight-bold);
-  letter-spacing: var(--memox-letter-spacing-tight);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-/* large / hero variant — Material-3 large top app bar */
-.appbar-lg {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: var(--memox-space-1);
-  min-height: var(--memox-appbar-lg-height);
-  padding: var(--memox-space-3) var(--memox-gutter) var(--memox-space-4);
-  background: var(--memox-bg);
-  color: var(--memox-text);
-  flex-shrink: 0;
-}
-.appbar-lg__row {
-  display: flex;
-  align-items: center;
-  gap: var(--memox-space-3);
-}
-.appbar-lg__eyebrow {
-  font-size: var(--memox-font-size-sm);
-  font-weight: var(--memox-font-weight-semibold);
-  color: var(--memox-text-secondary);
-}
-.appbar-lg__title {
-  font-size: var(--memox-font-size-2xl);
-  font-weight: var(--memox-font-weight-extrabold);
-  letter-spacing: var(--memox-letter-spacing-tight);
-  line-height: var(--memox-line-height-tight);
-}
-
-/* ============================================================
    MxContextualAppBar  ·  .cappbar   (shared context-aware top bar)
    ============================================================ */
 .cappbar {

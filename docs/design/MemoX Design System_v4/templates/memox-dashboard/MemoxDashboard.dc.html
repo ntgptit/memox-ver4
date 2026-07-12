@@ -19,17 +19,23 @@
 
 <div class="app" data-mx-node="dashboard/screen" style="height:100vh">
 
-  <header class="appbar-lg" data-mx-node="dashboard/appbar">
-    <div class="appbar-lg__row">
-      <div style="flex:1"></div>
-      <button class="icon-btn" data-mx-node="dashboard/notifications"><span class="material-symbols-rounded">notifications</span></button>
+  <header class="cappbar cappbar--root cappbar--top" data-mx-node="dashboard/appbar">
+    <div class="cappbar__main"><div class="cappbar__title">Today</div></div>
+    <div class="cappbar__actions">
+      <span class="cappbar__notif" data-mx-node="shell/notifications">
+        <button class="icon-btn" aria-label="Notifications"><span class="material-symbols-rounded">notifications</span></button>
+        <span class="cappbar__badge cappbar__badge--dot" aria-hidden="true"></span>
+      </span>
       <span class="avatar avatar--sm">LT</span>
     </div>
-    <div class="appbar-lg__eyebrow">Tuesday · 27 June</div>
-    <div class="appbar-lg__title">Good evening, Linh</div>
   </header>
 
   <div class="app__body">
+
+    <div data-mx-node="dashboard/greeting">
+      <div style="font-size:var(--memox-font-size-2xl);font-weight:800;letter-spacing:-.01em">Good evening, Linh</div>
+      <div style="font-size:var(--memox-font-size-base);color:var(--memox-text-secondary)">Tuesday · 27 June</div>
+    </div>
 
     <div class="card card--primary" data-mx-node="dashboard/due-summary">
       <div style="display:flex;justify-content:space-between;align-items:flex-start">
