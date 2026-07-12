@@ -186,10 +186,6 @@
         "message": "<MeaningPanel> doesn't accept that prop. Declared props: revealed."
       },
       {
-        "selector": "JSXOpeningElement[name.name='MxAppBar'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|eyebrow|large|leading|trailing|node|className|key|ref|className|style|children)$/]",
-        "message": "<MxAppBar> doesn't accept that prop. Declared props: title, eyebrow, large, leading, trailing, node, className."
-      },
-      {
         "selector": "JSXOpeningElement[name.name='MxAvatar'] > JSXAttribute > JSXIdentifier[name!=/^(?:name|src|size|variant|ring|node|key|ref|className|style|children)$/]",
         "message": "<MxAvatar> doesn't accept that prop. Declared props: name, src, size, variant, ring, node."
       },
@@ -526,9 +522,6 @@
       "MeaningPanel": {
         "replaces": []
       },
-      "MxAppBar": {
-        "replaces": []
-      },
       "MxAvatar": {
         "replaces": []
       },
@@ -687,7 +680,6 @@
       "--memox-accent",
       "--memox-accent-soft",
       "--memox-appbar-height",
-      "--memox-appbar-lg-height",
       "--memox-bg",
       "--memox-border",
       "--memox-border-strong",
@@ -946,7 +938,6 @@
       "--memox-space-12": "spacing",
       "--memox-gutter": "spacing",
       "--memox-appbar-height": "spacing",
-      "--memox-appbar-lg-height": "spacing",
       "--memox-bottom-nav-height": "spacing",
       "--memox-fab-size": "spacing",
       "--memox-touch-min": "spacing",
