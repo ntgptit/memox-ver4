@@ -35,6 +35,9 @@ const baseCss = readFileSync(join(KIT, 'tokens/colors.css'), 'utf8');
 ok('contrast: canonical colors.css passes', contrastExit(baseCss) === 0);
 ok('contrast: sub-4.5 text-tertiary (light) fails',
   contrastExit(baseCss.replace('--memox-text-tertiary: #6f6b81;', '--memox-text-tertiary: #9793a8;')) === 1);
+ok('contrast: sub-4.5 search placeholder (text-secondary on surface-sunken, light) fails',
+  // darken light surface-sunken so text-secondary on it drops to ~4.08:1 (< 4.5); only this pair uses it
+  contrastExit(baseCss.replace('--memox-surface-sunken: #eae8f4;', '--memox-surface-sunken: #dcd8e8;')) === 1);
 ok('contrast: missing required token fails',
   contrastExit(baseCss.replace(/--memox-on-error:\s*#[0-9a-f]+;/i, '')) === 1);
 ok('contrast: invalid required colour fails',

@@ -199,7 +199,9 @@
   color: var(--memox-text);
 }
 .cappbar__search-input::placeholder {
-  color: var(--memox-text-tertiary);
+  /* text-secondary (not tertiary): the search field sits on surface-sunken, where tertiary
+     is only 4.24:1 — below AA. text-secondary clears 4.5:1 on that container. */
+  color: var(--memox-text-secondary);
 }
 @media (prefers-reduced-motion: reduce) {
   .cappbar { transition: none; }
