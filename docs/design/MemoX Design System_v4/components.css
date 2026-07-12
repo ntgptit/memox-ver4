@@ -937,6 +937,39 @@
   resize: none;
   line-height: var(--memox-line-height-normal);
 }
+.field--error {
+  color: var(--memox-error);
+  caret-color: var(--memox-error);
+}
+.field--disabled {
+  color: var(--memox-text-tertiary);
+  cursor: not-allowed;
+}
+/* Labelled field group — wraps .field with a label, helper and error message. */
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-2);
+}
+.field-group--disabled {
+  opacity: var(--memox-opacity-disabled, 0.5);
+}
+.field-group__label {
+  font-size: var(--memox-font-size-sm);
+  font-weight: var(--memox-font-weight-semibold);
+  color: var(--memox-text-secondary);
+}
+.field-group__req {
+  color: var(--memox-error);
+}
+.field-group__helper {
+  font-size: var(--memox-font-size-sm);
+  color: var(--memox-text-tertiary);
+}
+.field-group__error {
+  font-size: var(--memox-font-size-sm);
+  color: var(--memox-error);
+}
 
 /* ============================================================
    M3-1 hit areas (audit G2) — interactive controls whose VISUAL is smaller

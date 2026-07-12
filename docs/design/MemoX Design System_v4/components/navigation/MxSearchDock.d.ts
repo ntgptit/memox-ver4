@@ -10,6 +10,8 @@ export interface MxSearchDockProps {
   flat?: boolean;
   /** Trailing slot (filter button, etc.). */
   trailing?: ReactNode;
+  /** Accessible name for the input (defaults to `placeholder`). */
+  ariaLabel?: string;
   node?: string;
 }
 

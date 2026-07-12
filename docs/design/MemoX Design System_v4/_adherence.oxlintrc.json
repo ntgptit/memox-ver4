@@ -242,7 +242,7 @@
         "message": "<MxChip> variant must be one of 'accent' | 'ghost'."
       },
       {
-        "selector": "JSXOpeningElement[name.name='MxFab'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|label|variant|round|node|onClick|key|ref|className|style|children)$/]",
+        "selector": "JSXOpeningElement[name.name='MxFab'] > JSXAttribute > JSXIdentifier[name!=/^(?:icon|label|variant|round|ariaLabel|disabled|node|onClick|key|ref|className|style|children)$/]",
         "message": "<MxFab> doesn't accept that prop. Declared props: icon, label, variant, round, node, onClick."
       },
       {
@@ -278,11 +278,11 @@
         "message": "<MxScaffold> doesn't accept that prop. Declared props: appBar, bottomNav, fab, children, flush, node, className, style."
       },
       {
-        "selector": "JSXOpeningElement[name.name='MxSearchDock'] > JSXAttribute > JSXIdentifier[name!=/^(?:placeholder|value|onChange|focused|flat|trailing|node|key|ref|className|style|children)$/]",
+        "selector": "JSXOpeningElement[name.name='MxSearchDock'] > JSXAttribute > JSXIdentifier[name!=/^(?:placeholder|value|onChange|focused|flat|trailing|ariaLabel|node|key|ref|className|style|children)$/]",
         "message": "<MxSearchDock> doesn't accept that prop. Declared props: placeholder, value, onChange, focused, flat, trailing, node."
       },
       {
-        "selector": "JSXOpeningElement[name.name='MxSectionHeader'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|caption|action|onAction|node|key|ref|className|style|children)$/]",
+        "selector": "JSXOpeningElement[name.name='MxSectionHeader'] > JSXAttribute > JSXIdentifier[name!=/^(?:title|caption|action|onAction|actionLabel|node|key|ref|className|style|children)$/]",
         "message": "<MxSectionHeader> doesn't accept that prop. Declared props: title, caption, action, onAction, node."
       },
       {
@@ -294,7 +294,7 @@
         "message": "<MxSwitch> doesn't accept that prop. Declared props: checked, disabled, onChange, node, ariaLabel."
       },
       {
-        "selector": "JSXOpeningElement[name.name='MxTextField'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|placeholder|multiline|rows|align|autoFocus|node|className|onChange|key|ref|className|style|children)$/]",
+        "selector": "JSXOpeningElement[name.name='MxTextField'] > JSXAttribute > JSXIdentifier[name!=/^(?:value|defaultValue|placeholder|label|helper|error|multiline|rows|align|autoFocus|type|inputMode|disabled|required|id|name|ariaLabel|node|className|onChange|key|ref|style|children)$/]",
         "message": "<MxTextField> doesn't accept that prop. Declared props: value, placeholder, multiline, rows, align, autoFocus, node, className, onChange."
       },
       {

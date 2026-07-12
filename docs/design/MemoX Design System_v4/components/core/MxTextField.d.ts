@@ -6,7 +6,14 @@
  */
 export interface MxTextFieldProps {
   value?: string;
+  defaultValue?: string;
   placeholder?: string;
+  /** Visible label — renders a `<label>` wired to the input via `htmlFor`/`id`. */
+  label?: string;
+  /** Helper text under the field (hidden when `error` is set). */
+  helper?: string;
+  /** Error message — sets the error state, `aria-invalid`, and `role="alert"`. */
+  error?: string;
   /** Renders a multi-line textarea instead of a single-line input. */
   multiline?: boolean;
   /** Minimum visible rows when `multiline`. */
@@ -14,6 +21,16 @@ export interface MxTextFieldProps {
   /** Horizontal alignment of the text and placeholder. */
   align?: 'start' | 'center';
   autoFocus?: boolean;
+  /** Input type (single-line only): text, email, password, number, tel, url… */
+  type?: string;
+  /** Virtual-keyboard hint: numeric, decimal, email, tel, search, url. */
+  inputMode?: string;
+  disabled?: boolean;
+  required?: boolean;
+  id?: string;
+  name?: string;
+  /** Accessible name when there is no visible `label` (falls back to `placeholder`). */
+  ariaLabel?: string;
   node?: string;
   className?: string;
   onChange?: (event: unknown) => void;
