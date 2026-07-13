@@ -42,10 +42,9 @@ export function Scrim({ align = 'end', onDismiss, node, children }: ScrimProps) 
             flex: 1,
             justifyContent: align === 'center' ? 'center' : 'flex-end',
             alignItems: align === 'center' ? 'center' : 'stretch',
-            // The kit's centered dialogs render ~11px from the frame edge (its overlay
-            // escapes the .app border-box reset, so the 320 max-width is content-box);
-            // space-3 is the closest token to that effective margin.
-            padding: align === 'center' ? t.space[3] : 0,
+            // No frame padding for centered dialogs: the Dialog carries its own exact
+            // kit width (its overlay escapes the .app border-box reset, so the kit box
+            // is 320 content + 48 padding = 368, i.e. ~11px off the 390 frame).
           }}
           pointerEvents="box-none"
         >
