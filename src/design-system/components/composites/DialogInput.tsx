@@ -31,7 +31,9 @@ export function DialogInput({ label, placeholder, value, onChangeText, error, no
       )}
       <View
         style={{
-          minHeight: t.layout.touchMin,
+          // Kit DialogInput renders content-box (its overlay escapes the .app
+          // border-box reset): min-height 48 + 12px vertical padding = a 72px box.
+          minHeight: t.layout.touchMin + t.space[3] * 2,
           paddingHorizontal: t.space[4],
           paddingVertical: t.space[3],
           borderRadius: t.radius.control,
