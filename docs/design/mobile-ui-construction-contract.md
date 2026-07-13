@@ -57,6 +57,12 @@ Mỗi section phải có lý do tồn tại. Không thêm card, divider, icon ho
 - Không đặt card trong card nếu không có semantic grouping riêng.
 - Touch target tối thiểu 44×44.
 - Không hard-code màu, radius, typography hoặc spacing ngoài design system.
+  - **Machine-enforced (WBS 0.12):** `eslint.config.js` fails the build on a raw
+    `#hex` / `rgb()` / `hsl()` colour literal, or a direct import of the raw token
+    layer (`@/design-system/tokens`), anywhere in `src/features/**` or `src/app/**`
+    (tests exempt). Colours must come from `useTheme()` (`t.color.*`). The off-scale
+    **spacing** restriction above (`{4,8,12,16,24,32,48}`) is enforced by review — a
+    numeric literal is ambiguous to lint — so keep spacing on `t.space[...]` steps.
 - Một màn hình chỉ có một heading cấp cao nhất.
 - Một màn hình tối đa năm typography roles.
 - Một màn hình tối đa một primary CTA.
