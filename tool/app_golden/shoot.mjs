@@ -38,7 +38,15 @@ const THRESHOLD = 0.1; // per-pixel colour tolerance
 const MAX_DIFF_RATIO = 0.01; // ≤1% of pixels may differ
 
 // Canonical states. <screen>--<state>--<theme>. Feature slices append their own.
-const TARGETS = [{ name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' }];
+// The languages route (WBS 3.3) renders a deterministic, DB-free fixture preview when
+// given a `state` (and optional `theme`) query param — see src/app/settings/languages.tsx.
+const TARGETS = [
+  { name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' },
+  { name: 'languages--list--light', path: '/settings/languages?state=list', waitFor: 'text=Korean → English' },
+  { name: 'languages--empty--light', path: '/settings/languages?state=empty', waitFor: 'text=No language pairs yet' },
+  { name: 'languages--add--light', path: '/settings/languages?state=add', waitFor: 'text=Language to learn' },
+  { name: 'languages--list--dark', path: '/settings/languages?state=list&theme=dark', waitFor: 'text=Korean → English' },
+];
 
 const MIME = {
   '.html': 'text/html',
