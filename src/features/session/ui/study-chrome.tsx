@@ -11,22 +11,24 @@ import { MxCard, MxButton, Icon, useTheme, type Theme } from '@/design-system';
 export function ProgressHeader({ done, total, node }: { done: number; total: number; node: string }) {
   const t = useTheme();
   const pct = total > 0 ? Math.min(1, done / total) : 0;
+  // Kit ProgressHeader (kit-helpers.jsx): ONE row — an 8px bar (flex:1) beside a bold
+  // `done/total` count. No "Progress" label, no second line; bar fill is on a `border`
+  // track. One presentation for every study/review/game flow.
   return (
     <View
       testID={node}
       accessibilityRole="progressbar"
       accessibilityValue={{ min: 0, max: total, now: done }}
-      style={{ gap: t.space[2] }}
+      style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[3] }}
     >
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Text style={[t.font.text({ size: 'sm', weight: 'semibold' }), { color: t.color.textSecondary }]}>Progress</Text>
-        <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textTertiary }]}>
-          {done} / {total}
-        </Text>
+      <View
+        style={{ flex: 1, height: t.space[2], borderRadius: t.radius.pill, backgroundColor: t.color.border, overflow: 'hidden' }}
+      >
+        <View style={{ width: `${pct * 100}%`, height: '100%', borderRadius: t.radius.pill, backgroundColor: t.color.primary }} />
       </View>
-      <View style={{ height: t.space[2], borderRadius: t.radius.full, backgroundColor: t.color.surfaceMuted, overflow: 'hidden' }}>
-        <View style={{ width: `${pct * 100}%`, height: '100%', backgroundColor: t.color.primary }} />
-      </View>
+      <Text style={[t.font.text({ size: 'sm', weight: 'bold' }), { color: t.color.textSecondary }]}>
+        {done}/{total}
+      </Text>
     </View>
   );
 }

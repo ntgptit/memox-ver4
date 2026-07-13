@@ -54,7 +54,7 @@ describe('MatchModeScreen — states', () => {
   it('almost: three pairs are matched', () => {
     renderScreen(<MatchModeScreen {...props('almost')} />);
     // done reflects three matched pairs
-    expect(screen.getByText('3 / 5')).toBeTruthy();
+    expect(screen.getByText('3/5')).toBeTruthy();
   });
 
   it('complete: round-complete', () => {
