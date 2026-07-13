@@ -46,6 +46,22 @@ const TARGETS = [
   { name: 'languages--empty--light', path: '/settings/languages?state=empty', waitFor: 'text=No language pairs yet' },
   { name: 'languages--add--light', path: '/settings/languages?state=add', waitFor: 'text=Language to learn' },
   { name: 'languages--list--dark', path: '/settings/languages?state=list&theme=dark', waitFor: 'text=Korean → English' },
+  // deck-content-choice (WBS 3.6) — DB-free fixture preview via ?state=/?theme=.
+  {
+    name: 'deck-content-choice--default--light',
+    path: '/deck/preview/content?state=default',
+    waitFor: 'text=How do you want to organise it?',
+  },
+  {
+    name: 'deck-content-choice--named--light',
+    path: '/deck/preview/content?state=named',
+    waitFor: 'text=How do you want to organise it?',
+  },
+  {
+    name: 'deck-content-choice--default--dark',
+    path: '/deck/preview/content?state=default&theme=dark',
+    waitFor: 'text=How do you want to organise it?',
+  },
 ];
 
 const MIME = {
