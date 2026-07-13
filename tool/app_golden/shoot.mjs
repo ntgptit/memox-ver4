@@ -96,6 +96,12 @@ const TARGETS = [
   { name: 'search--filtered--light', path: '/search?state=filtered', waitFor: 'text=to study' },
   { name: 'search--no-results--light', path: '/search?state=no-results', waitFor: 'text=No matches' },
   { name: 'search--results--dark', path: '/search?state=results&theme=dark', waitFor: 'text=to study' },
+  // recall-mode (WBS 7.1) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'recall-mode--before-reveal--light', path: '/session/recall?state=before-reveal', waitFor: 'text=친구' },
+  { name: 'recall-mode--revealed--light', path: '/session/recall?state=revealed', waitFor: 'text=friend' },
+  { name: 'recall-mode--remembered--light', path: '/session/recall?state=remembered', waitFor: 'text=Moving to the next card.' },
+  { name: 'recall-mode--complete--light', path: '/session/recall?state=complete', waitFor: 'text=Round complete!' },
+  { name: 'recall-mode--revealed--dark', path: '/session/recall?state=revealed&theme=dark', waitFor: 'text=friend' },
 ];
 
 const MIME = {
