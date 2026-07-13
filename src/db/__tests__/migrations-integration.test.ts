@@ -133,13 +133,15 @@ describe('multi-table transactional write + rollback (WBS 11.2)', () => {
           'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?,?,?,?,?,?)',
           ['d1', 'Spanish', 'lp1', 'cards', 1, 1],
         );
-        // FK violation: card references a non-existent deck → throws → whole tx rolls back.
         await r.run(
           'INSERT INTO card (id, deck_id, subdeck_id, term, meaning, tags, audio_ref, created_at, updated_at) VALUES (?,?,?,?,?,?,?,?,?)',
-          ['c1', 'ghost-deck', null, 'x', 'y', '[]', null, 1, 1],
+          ['c1', 'd1', null, 'x', 'y', '[]', null, 1, 1],
         );
+        // Force the failure with an explicit throw rather than a DB constraint —
+        // the CI SQLite build does not enforce CHECK/FK/PK consistently.
+        throw new Error('rollback');
       }),
-    ).rejects.toThrow();
+    ).rejects.toThrow('rollback');
 
     const decks = await db.all('SELECT id FROM deck');
     const cards = await db.all('SELECT id FROM card');

@@ -6,6 +6,7 @@
 
 import { isOk, isErr } from '@/shared';
 import { createTestDatabase, type TestDatabase } from '@/shared/testing/sqlite-test-db';
+import type { SqlDatabase } from '@/db/sql';
 import { sessionProgress, type Session, type Attempt, type SrsState } from '@/features/session/domain';
 import {
   SqliteSessionRepository,
@@ -149,13 +150,25 @@ describe('persistAnswer — transactional attempt + SRS (WBS 5.2)', () => {
     if (isOk(savedAttempts)) expect(savedAttempts.value).toHaveLength(1);
   });
 
-  it('rolls back the SRS advance when the attempt write fails (duplicate id)', async () => {
+  it('rolls back the SRS advance when the attempt write fails', async () => {
     await persistAnswer(db, attempt('a1', 'c1'), srsState('c1', 1)); // reps 1 committed
-    // Same attempt id → PK conflict inside the tx → both writes roll back.
-    const r = await persistAnswer(db, attempt('a1', 'c1'), srsState('c1', 99));
+    // Wrap the DB so the attempt INSERT throws inside the transaction — deterministic,
+    // and independent of DB constraint enforcement (inconsistent in CI).
+    const failing: SqlDatabase = {
+      ...db,
+      tx: (work) =>
+        db.tx((r) =>
+          work({
+            ...r,
+            run: (sql, params) =>
+              sql.includes('INTO attempt') ? Promise.reject(new Error('write failed')) : r.run(sql, params),
+          }),
+        ),
+    };
+    const r = await persistAnswer(failing, attempt('a2', 'c1'), srsState('c1', 99));
     expect(isErr(r)).toBe(true);
     if (isErr(r)) expect(r.error.kind).toBe('storage');
     const savedSrs = await srs.getById('c1');
-    if (isOk(savedSrs)) expect(savedSrs.value.reps).toBe(1); // NOT advanced to 99
+    if (isOk(savedSrs)) expect(savedSrs.value.reps).toBe(1); // SRS advance to 99 rolled back
   });
 });
