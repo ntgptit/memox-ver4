@@ -27,6 +27,9 @@ class FakeCardRepo implements CardRepository {
   async listByDeck(deckId: string) {
     return ok([...this.cards.values()].filter((c) => c.deckId === deckId));
   }
+  async countByDeck(deckId: string) {
+    return ok([...this.cards.values()].filter((c) => c.deckId === deckId).length);
+  }
   async save(c: Card) {
     this.cards.set(c.id, c);
     return ok(c);
