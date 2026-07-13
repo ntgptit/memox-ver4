@@ -18,13 +18,16 @@
 import { useFonts } from 'expo-font';
 
 import { fontFamily } from '../tokens';
+import { ICON_FONT_FAMILY } from '../icons';
 
 /**
- * The font map registered with expo-font. Keyed by the frozen family name so
- * `fontFamily.sans` in the theme matches the loaded font exactly.
+ * The font map registered with expo-font. Keyed by the frozen family names so
+ * `fontFamily.sans` (theme text) and `ICON_FONT_FAMILY` (icon adapter, WBS 1.4)
+ * match the loaded fonts exactly.
  */
 export const memoxFontMap = {
   [fontFamily.sans]: require('../../../assets/fonts/PlusJakartaSans.ttf'),
+  [ICON_FONT_FAMILY]: require('../../../assets/fonts/MaterialSymbolsRounded.ttf'),
 } as const;
 
 /**
