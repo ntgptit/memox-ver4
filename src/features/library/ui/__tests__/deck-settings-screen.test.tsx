@@ -102,13 +102,15 @@ describe('DeckSettingsScreen — interactions', () => {
     await waitFor(() => expect(screen.getByText('Give the deck a name.')).toBeTruthy());
   });
 
-  it('move: picking another pair calls onMove; the current pair does not', async () => {
+  it('move: pick a destination then apply (kit: select + Move button); current is inert', async () => {
     const onMove = jest.fn(async () => ok(undefined));
     renderScreen(<DeckSettingsScreen {...props({ initialOverlay: 'move', onMove })} />);
     fireEvent.press(screen.getByTestId('deck-settings/move-lp-ko-en')); // current → ignored
+    fireEvent.press(screen.getByTestId('deck-settings/move-apply')); // nothing selected yet
     expect(onMove).not.toHaveBeenCalled();
+    fireEvent.press(screen.getByTestId('deck-settings/move-lp-ja-en'));
     await act(async () => {
-      fireEvent.press(screen.getByTestId('deck-settings/move-lp-ja-en'));
+      fireEvent.press(screen.getByTestId('deck-settings/move-apply'));
     });
     expect(onMove).toHaveBeenCalledWith('lp-ja-en');
   });

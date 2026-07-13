@@ -167,52 +167,67 @@ function MoveSheet({
   onMove: DeckSettingsScreenProps['onMove'];
   onClose: () => void;
 }) {
+  // Kit DeckMoveSheet: pick a destination row (radio), then confirm with the
+  // primary block "Move" button (`deck-settings/move-apply`) — not move-on-tap.
+  const [selected, setSelected] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
-  const pick = async (id: string) => {
-    if (busy || id === currentPairId) return;
+  const apply = async () => {
+    if (busy || !selected) return;
     setBusy(true);
-    const result = await onMove(id);
+    const result = await onMove(selected);
     setBusy(false);
     if (!isErr(result)) onClose();
   };
   return (
     <Scrim node="deck-settings/move-scrim" onDismiss={onClose} align="end">
       <Sheet title="Move to" node="deck-settings/move-sheet">
-        {pairs.map((p) => {
+        {pairs.map((p, i) => {
           const current = p.id === currentPairId;
-          // Radio semantics (immediate move) with the kit's row anatomy: icon tile,
-          // title, and a radio/Current trailing.
+          const picked = p.id === selected;
+          const last = i === pairs.length - 1;
           return (
             <Pressable
               key={p.id}
               testID={`deck-settings/move-${p.id}`}
               accessibilityRole="radio"
-              accessibilityState={{ checked: current, disabled: current }}
-              accessibilityLabel={p.label}
-              onPress={() => pick(p.id)}
+              accessibilityState={{ checked: current || picked, disabled: current }}
+              accessibilityLabel={current ? `${p.label} (current)` : p.label}
+              onPress={() => {
+                if (!current) setSelected(p.id);
+              }}
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
                 gap: t.space[4],
-                minHeight: t.layout.touchMin,
-                paddingVertical: t.space[3],
-                paddingHorizontal: t.space[2],
-                borderRadius: t.radius.control,
-                opacity: current ? t.opacity.half : 1,
+                paddingBottom: last ? 0 : t.space[4],
+                marginBottom: last ? 0 : t.space[4],
+                borderBottomWidth: last ? 0 : t.stroke.hairline,
+                borderBottomColor: t.color.divider,
+                opacity: current ? t.opacity.muted : 1,
               }}
             >
               <MxIconTile icon="translate" />
-              <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text, flex: 1 }]}>
+              <Text
+                numberOfLines={1}
+                style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text, flex: 1 }]}
+              >
                 {p.label}
               </Text>
-              {current ? (
-                <Text style={[t.font.text({ size: 'xs', weight: 'bold' }), { color: t.color.textTertiary }]}>Current</Text>
-              ) : (
-                <Icon name="radio_button_unchecked" size={t.iconSize.md} color={t.color.textTertiary} />
+              {!current && (
+                <Icon
+                  name={picked ? 'radio_button_checked' : 'radio_button_unchecked'}
+                  size={t.iconSize.md}
+                  color={picked ? t.color.primary : t.color.textTertiary}
+                />
               )}
             </Pressable>
           );
         })}
+        <View style={{ marginTop: t.space[2] }}>
+          <MxButton variant="primary" block disabled={busy || !selected} onPress={apply} node="deck-settings/move-apply">
+            {busy ? 'Moving…' : 'Move'}
+          </MxButton>
+        </View>
       </Sheet>
     </Scrim>
   );

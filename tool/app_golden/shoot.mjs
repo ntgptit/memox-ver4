@@ -42,10 +42,10 @@ const MAX_DIFF_RATIO = 0.01; // ≤1% of pixels may differ
 // given a `state` (and optional `theme`) query param — see src/app/settings/languages.tsx.
 const TARGETS = [
   { name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' },
-  { name: 'languages--list--light', path: '/settings/languages?state=list', waitFor: 'text=Korean → English' },
+  { name: 'languages--list--light', path: '/settings/languages?state=list', waitFor: 'text=한국어 → English' },
   { name: 'languages--empty--light', path: '/settings/languages?state=empty', waitFor: 'text=No language pairs yet' },
-  { name: 'languages--add--light', path: '/settings/languages?state=add', waitFor: 'text=Language to learn' },
-  { name: 'languages--list--dark', path: '/settings/languages?state=list&theme=dark', waitFor: 'text=Korean → English' },
+  { name: 'languages--add--light', path: '/settings/languages?state=add', waitFor: 'text=Meaning language' },
+  { name: 'languages--list--dark', path: '/settings/languages?state=list&theme=dark', waitFor: 'text=한국어 → English' },
   // deck-content-choice (WBS 3.6) — DB-free fixture preview via ?state=/?theme=.
   {
     name: 'deck-content-choice--default--light',
@@ -104,8 +104,8 @@ const TARGETS = [
   { name: 'recall-mode--revealed--dark', path: '/session/recall?state=revealed&theme=dark', waitFor: 'text=friend' },
   // guess-mode (WBS 6.3) — DB-free fixture preview via ?state=/?theme=.
   { name: 'guess-mode--waiting--light', path: '/session/guess?state=waiting', waitFor: 'text=학교' },
-  { name: 'guess-mode--correct--light', path: '/session/guess?state=correct', waitFor: 'text=Continue' },
-  { name: 'guess-mode--wrong--light', path: '/session/guess?state=wrong', waitFor: 'text=Continue' },
+  { name: 'guess-mode--correct--light', path: '/session/guess?state=correct', waitFor: 'text=school' },
+  { name: 'guess-mode--wrong--light', path: '/session/guess?state=wrong', waitFor: 'text=school' },
   { name: 'guess-mode--long-text--light', path: '/session/guess?state=long-text', waitFor: 'text=students go to study' },
   { name: 'guess-mode--waiting--dark', path: '/session/guess?state=waiting&theme=dark', waitFor: 'text=학교' },
   // fill-mode (WBS 7.2) — DB-free fixture preview via ?state=/?theme=.
@@ -118,7 +118,7 @@ const TARGETS = [
   { name: 'match-mode--playing--light', path: '/session/match?state=playing', waitFor: 'text=friend' },
   { name: 'match-mode--selected--light', path: '/session/match?state=selected', waitFor: 'text=love' },
   { name: 'match-mode--correct--light', path: '/session/match?state=correct', waitFor: 'text=love' },
-  { name: 'match-mode--almost--light', path: '/session/match?state=almost', waitFor: 'text=3 / 5' },
+  { name: 'match-mode--almost--light', path: '/session/match?state=almost', waitFor: 'text=3/5' },
   { name: 'match-mode--playing--dark', path: '/session/match?state=playing&theme=dark', waitFor: 'text=friend' },
 ];
 

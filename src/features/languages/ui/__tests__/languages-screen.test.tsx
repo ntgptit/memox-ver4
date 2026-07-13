@@ -84,38 +84,43 @@ describe('LanguagesScreen — add form lifecycle', () => {
   it('opens the add sub-view from the list CTA', () => {
     renderScreen(<LanguagesScreen {...props()} />);
     fireEvent.press(screen.getByTestId('languages/add'));
-    expect(screen.getByLabelText('Language to learn')).toBeTruthy();
-    expect(screen.getByLabelText('Meaning language')).toBeTruthy();
+    expect(screen.getByTestId('languages/learn-lang')).toBeTruthy();
+    expect(screen.getByTestId('languages/native-lang')).toBeTruthy();
   });
 
-  it('success: submits the typed pair then returns to the list', async () => {
+  it('success: submits the picked pair then returns to the list', async () => {
     const onAdd = jest.fn(async () => ok(undefined));
     renderScreen(<LanguagesScreen {...props({ data: LANGUAGES_FIXTURES.empty, onAdd })} />);
     fireEvent.press(screen.getByTestId('languages/empty-add'));
-    fireEvent.changeText(screen.getByTestId('languages/learn-field'), 'Korean');
-    fireEvent.changeText(screen.getByTestId('languages/native-field'), 'English');
+    // defaults: 한국어 (learning) → English (native), per the kit fixture
     fireEvent.press(screen.getByTestId('languages/add-confirm'));
-    expect(onAdd).toHaveBeenCalledWith({ learning: 'Korean', native: 'English' });
+    expect(onAdd).toHaveBeenCalledWith({ learning: '한국어', native: 'English' });
     await waitFor(() => expect(screen.getByText('No language pairs yet')).toBeTruthy());
   });
 
-  it('validation: a field error is shown inline and stays on the form', async () => {
+  it('picker: changing the learning language updates the submitted pair', async () => {
+    const onAdd = jest.fn(async () => ok(undefined));
+    renderScreen(<LanguagesScreen {...props({ data: LANGUAGES_FIXTURES.empty, onAdd })} />);
+    fireEvent.press(screen.getByTestId('languages/empty-add'));
+    fireEvent.press(screen.getByTestId('languages/learn-lang'));
+    fireEvent.press(screen.getByTestId('languages/pick-japanese'));
+    fireEvent.press(screen.getByTestId('languages/add-confirm'));
+    expect(onAdd).toHaveBeenCalledWith({ learning: '日本語', native: 'English' });
+  });
+
+  it('validation: the error is shown in the banner and stays on the form', async () => {
     const onAdd = async () => err(validationError([{ field: 'native', message: 'The two languages must be different.' }]));
     renderScreen(<LanguagesScreen {...props({ onAdd })} />);
     fireEvent.press(screen.getByTestId('languages/add'));
-    fireEvent.changeText(screen.getByTestId('languages/learn-field'), 'Korean');
-    fireEvent.changeText(screen.getByTestId('languages/native-field'), 'Korean');
     fireEvent.press(screen.getByTestId('languages/add-confirm'));
     await waitFor(() => expect(screen.getByText('The two languages must be different.')).toBeTruthy());
-    expect(screen.getByLabelText('Meaning language')).toBeTruthy();
+    expect(screen.getByTestId('languages/native-lang')).toBeTruthy();
   });
 
   it('failure: a non-validation error surfaces as an alert banner', async () => {
     const onAdd = async () => err(storageError('Could not save your changes.'));
     renderScreen(<LanguagesScreen {...props({ onAdd })} />);
     fireEvent.press(screen.getByTestId('languages/add'));
-    fireEvent.changeText(screen.getByTestId('languages/learn-field'), 'Korean');
-    fireEvent.changeText(screen.getByTestId('languages/native-field'), 'English');
     fireEvent.press(screen.getByTestId('languages/add-confirm'));
     await waitFor(() => expect(screen.getByTestId('languages/add-error')).toBeTruthy());
   });
@@ -125,7 +130,7 @@ describe('LanguagesScreen — remove confirmation', () => {
   it('opens the confirm dialog from a row delete', () => {
     renderScreen(<LanguagesScreen {...props()} />);
     fireEvent.press(screen.getByTestId('languages/pair-lp-ko-en-del'));
-    expect(screen.getByText('Remove language pair?')).toBeTruthy();
+    expect(screen.getByText('Remove 한국어 → English?')).toBeTruthy();
   });
 
   it('confirm: calls onRemove with the pair id and closes', async () => {
@@ -136,7 +141,7 @@ describe('LanguagesScreen — remove confirmation', () => {
       fireEvent.press(screen.getByTestId('languages/remove-confirm'));
     });
     expect(onRemove).toHaveBeenCalledWith('lp-ko-en');
-    await waitFor(() => expect(screen.queryByText('Remove language pair?')).toBeNull());
+    await waitFor(() => expect(screen.queryByText('Remove 한국어 → English?')).toBeNull());
   });
 
   it('cancel: dismisses without removing', () => {
@@ -145,7 +150,7 @@ describe('LanguagesScreen — remove confirmation', () => {
     fireEvent.press(screen.getByTestId('languages/pair-lp-ja-en-del'));
     fireEvent.press(screen.getByTestId('languages/remove-cancel'));
     expect(onRemove).not.toHaveBeenCalled();
-    expect(screen.queryByText('Remove language pair?')).toBeNull();
+    expect(screen.queryByText('Remove 日本語 → English?')).toBeNull();
   });
 
   it('failure: a remove error stays open and shows the message', async () => {
@@ -154,6 +159,6 @@ describe('LanguagesScreen — remove confirmation', () => {
     fireEvent.press(screen.getByTestId('languages/pair-lp-ko-en-del'));
     fireEvent.press(screen.getByTestId('languages/remove-confirm'));
     await waitFor(() => expect(screen.getByTestId('languages/remove-error')).toBeTruthy());
-    expect(screen.getByText('Remove language pair?')).toBeTruthy();
+    expect(screen.getByText('Remove 한국어 → English?')).toBeTruthy();
   });
 });

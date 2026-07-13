@@ -53,14 +53,14 @@ describe('LanguagesScreen a11y — roles & labels', () => {
   it('the remove dialog announces a header and the scrim is dismissible', () => {
     renderScreen(<LanguagesScreen {...base} />);
     fireEvent.press(screen.getByTestId('languages/pair-lp-ko-en-del'));
-    expect(screen.getByRole('header', { name: 'Remove language pair?' })).toBeTruthy();
+    expect(screen.getByRole('header', { name: 'Remove 한국어 → English?' })).toBeTruthy();
     expect(screen.getByLabelText('Dismiss')).toBeTruthy();
   });
 
-  it('the add fields are labelled', () => {
+  it('the add picker cards are labelled', () => {
     renderScreen(<LanguagesScreen {...base} initialMode="add" />);
-    expect(screen.getByLabelText('Language to learn')).toBeTruthy();
-    expect(screen.getByLabelText('Meaning language')).toBeTruthy();
+    expect(screen.getByLabelText('Korean. Change')).toBeTruthy();
+    expect(screen.getByLabelText('Meaning language. Change')).toBeTruthy();
   });
 });
 

@@ -9,16 +9,20 @@
  */
 
 import { useState } from 'react';
-import { ActivityIndicator, Pressable, Text, View } from 'react-native';
+import { ActivityIndicator, Text, View } from 'react-native';
 
 import {
   AppScreen,
   MxCard,
   MxButton,
-  MxTextField,
   Icon,
   ListRow,
   EmptyState,
+  SectionLabel,
+  Scrim,
+  Sheet,
+  MenuItem,
+  Dialog,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -194,9 +198,53 @@ function PairList({
 
 // --- add sub-view --------------------------------------------------------------
 
-function fieldError(error: AppError | null, field: string): string | undefined {
-  if (!error || error.kind !== 'validation') return undefined;
-  return error.issues.find((i) => i.field === field)?.message;
+/** Preset pickable languages (native script + English name), per the kit's picker UX. */
+const LANGUAGE_CHOICES = [
+  { native: '한국어', english: 'Korean' },
+  { native: '日本語', english: 'Japanese' },
+  { native: '中文', english: 'Chinese' },
+  { native: 'Tiếng Việt', english: 'Vietnamese' },
+  { native: 'Español', english: 'Spanish' },
+  { native: 'Français', english: 'French' },
+  { native: 'English', english: 'English' },
+] as const;
+
+type LanguageChoice = (typeof LANGUAGE_CHOICES)[number];
+
+/**
+ * Kit `_features/languages/components/LangCard.jsx`: an interactive card row —
+ * icon · bold name over its English sub · expand_more chevron — used for the
+ * LEARNING and NATIVE pickers in the add form.
+ */
+function LangCard({
+  theme: t,
+  icon,
+  name,
+  sub,
+  node,
+  onPress,
+}: {
+  theme: Theme;
+  icon: string;
+  name: string;
+  sub: string;
+  node: string;
+  onPress: () => void;
+}) {
+  return (
+    <MxCard node={node} padding="sm" interactive onPress={onPress} accessibilityLabel={`${sub}. Change`}>
+      <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[4] }}>
+        <Icon name={icon} size={t.iconSize.lg} color={t.color.textSecondary} />
+        <View style={{ flex: 1, minWidth: 0 }}>
+          <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text }]}>{name}</Text>
+          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary, marginTop: t.space[1] }]}>
+            {sub}
+          </Text>
+        </View>
+        <Icon name="expand_more" size={t.iconSize.md} color={t.color.textTertiary} />
+      </View>
+    </MxCard>
+  );
 }
 
 function AddPairView({
@@ -210,8 +258,12 @@ function AddPairView({
   onDone: () => void;
   leading: React.ReactNode;
 }) {
-  const [learning, setLearning] = useState('');
-  const [native, setNative] = useState('');
+  // Kit add form: two preset picker cards (LEARNING / NATIVE), not free text.
+  const [learning, setLearning] = useState<LanguageChoice>(LANGUAGE_CHOICES[0]);
+  const [native, setNative] = useState<LanguageChoice>(
+    LANGUAGE_CHOICES.find((l) => l.english === 'English') ?? LANGUAGE_CHOICES[0],
+  );
+  const [picker, setPicker] = useState<'learning' | 'native' | null>(null);
   const [error, setError] = useState<AppError | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
@@ -219,7 +271,7 @@ function AddPairView({
     if (submitting) return;
     setSubmitting(true);
     setError(null);
-    const result = await onAdd({ learning, native });
+    const result = await onAdd({ learning: learning.native, native: native.native });
     if (isErr(result)) {
       setSubmitting(false);
       setError(result.error);
@@ -229,58 +281,78 @@ function AddPairView({
     onDone();
   };
 
-  const bannerMessage = error && error.kind !== 'validation' ? error.message : null;
+  // No per-field inputs any more (kit picker form) — surface validation issues in the banner.
+  const bannerMessage = !error
+    ? null
+    : error.kind === 'validation' && error.issues.length > 0
+      ? error.issues.map((i) => i.message).join(' ')
+      : error.message;
 
   return (
     <AppScreen node="languages/add-screen" variant="nested" title="Add language pair" leading={leading}>
-      <View style={{ gap: t.space[4] }}>
-        {bannerMessage && (
-          <View
-            testID="languages/add-error"
-            accessibilityRole="alert"
-            style={{
-              backgroundColor: t.color.errorSoft,
-              borderRadius: t.radius.md,
-              padding: t.space[3],
-            }}
-          >
-            <Text style={[t.font.text({ size: 'sm' }), { color: t.color.onErrorSoft }]}>{bannerMessage}</Text>
-          </View>
-        )}
-
-        <MxTextField
-          node="languages/learn-field"
-          label="Language to learn"
-          placeholder="e.g. Korean"
-          value={learning}
-          onChangeText={setLearning}
-          error={fieldError(error, 'learning')}
-        />
-
-        <View style={{ alignItems: 'center' }}>
-          <Icon name="arrow_downward" size="md" color={t.color.textTertiary} />
-        </View>
-
-        <MxTextField
-          node="languages/native-field"
-          label="Meaning language"
-          placeholder="e.g. English"
-          value={native}
-          onChangeText={setNative}
-          error={fieldError(error, 'native')}
-        />
-
-        <MxButton
-          variant="primary"
-          icon="add"
-          block
-          disabled={submitting}
-          onPress={submit}
-          node="languages/add-confirm"
+      {bannerMessage && (
+        <View
+          testID="languages/add-error"
+          accessibilityRole="alert"
+          style={{
+            backgroundColor: t.color.errorSoft,
+            borderRadius: t.radius.control,
+            padding: t.space[3],
+          }}
         >
-          {submitting ? 'Adding…' : 'Add language pair'}
-        </MxButton>
+          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.onErrorSoft }]}>{bannerMessage}</Text>
+        </View>
+      )}
+
+      <SectionLabel uppercase>Learning</SectionLabel>
+      <LangCard
+        theme={t}
+        icon="language"
+        name={learning.native}
+        sub={learning.english}
+        node="languages/learn-lang"
+        onPress={() => setPicker('learning')}
+      />
+
+      <View style={{ alignItems: 'center' }}>
+        <Icon name="arrow_downward" size="md" color={t.color.textTertiary} />
       </View>
+
+      <SectionLabel uppercase style={{ marginTop: 0 }}>
+        Native
+      </SectionLabel>
+      <LangCard
+        theme={t}
+        icon="translate"
+        name={native.native}
+        sub="Meaning language"
+        node="languages/native-lang"
+        onPress={() => setPicker('native')}
+      />
+
+      <MxButton variant="primary" icon="add" block disabled={submitting} onPress={submit} node="languages/add-confirm">
+        {submitting ? 'Adding…' : 'Add language pair'}
+      </MxButton>
+
+      {picker && (
+        <Scrim node="languages/pick-scrim" align="end" onDismiss={() => setPicker(null)}>
+          <Sheet title={picker === 'learning' ? 'Learning language' : 'Meaning language'} node="languages/pick-sheet">
+            {LANGUAGE_CHOICES.map((l) => (
+              <MenuItem
+                key={l.english}
+                icon={picker === 'learning' ? 'language' : 'translate'}
+                label={`${l.native} · ${l.english}`}
+                selected={(picker === 'learning' ? learning : native).english === l.english}
+                onPress={() => {
+                  (picker === 'learning' ? setLearning : setNative)(l);
+                  setPicker(null);
+                }}
+                node={`languages/pick-${l.english.toLowerCase()}`}
+              />
+            ))}
+          </Sheet>
+        </Scrim>
+      )}
     </AppScreen>
   );
 }
@@ -317,52 +389,43 @@ function RemoveDialog({
     onDone();
   };
 
+  // Kit RemoveLanguageDialog: shared ConfirmDialog — centered Scrim + Dialog with the
+  // error icon tile and full-width split Cancel / Remove actions.
   return (
-    <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-      <Pressable
-        testID="languages/remove-scrim"
-        accessibilityRole="button"
-        accessibilityLabel="Dismiss"
-        onPress={onCancel}
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: t.color.scrim }}
-      />
-      <View
-        style={{ flex: 1, alignItems: 'center', justifyContent: 'center', padding: t.space[4] }}
-        pointerEvents="box-none"
+    <Scrim node="languages/remove-scrim" align="center" onDismiss={onCancel}>
+      <Dialog
+        node="languages/remove-dialog"
+        icon="delete"
+        tone="error"
+        title={`Remove ${pairTitle(pair)}?`}
+        text="All decks and cards for this pair will be deleted. This can’t be undone."
+        actions={[
+          <MxButton key="cancel" variant="ghost" block onPress={onCancel} node="languages/remove-cancel">
+            Cancel
+          </MxButton>,
+          <MxButton
+            key="ok"
+            variant="primary"
+            danger
+            block
+            disabled={busy}
+            onPress={confirm}
+            node="languages/remove-confirm"
+          >
+            {busy ? 'Removing…' : 'Remove'}
+          </MxButton>,
+        ]}
       >
-        <View onStartShouldSetResponder={() => true} accessibilityViewIsModal style={{ width: '100%' }}>
-          <MxCard node="languages/remove-dialog" variant="elevated">
-            <View style={{ gap: t.space[3] }}>
-              <Text
-                accessibilityRole="header"
-                style={[t.font.text({ size: 'lg', weight: 'bold' }), { color: t.color.text }]}
-              >
-                Remove language pair?
-              </Text>
-              <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>
-                {pairTitle(pair)} and its cards will be removed. This can’t be undone.
-              </Text>
-              {failed && (
-                <Text
-                  testID="languages/remove-error"
-                  accessibilityRole="alert"
-                  style={[t.font.text({ size: 'sm' }), { color: t.color.error }]}
-                >
-                  {failed}
-                </Text>
-              )}
-              <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: t.space[2] }}>
-                <MxButton variant="ghost" onPress={onCancel} node="languages/remove-cancel">
-                  Cancel
-                </MxButton>
-                <MxButton variant="primary" danger disabled={busy} onPress={confirm} node="languages/remove-confirm">
-                  {busy ? 'Removing…' : 'Remove'}
-                </MxButton>
-              </View>
-            </View>
-          </MxCard>
-        </View>
-      </View>
-    </View>
+        {failed ? (
+          <Text
+            testID="languages/remove-error"
+            accessibilityRole="alert"
+            style={[t.font.text({ size: 'sm' }), { color: t.color.error, textAlign: 'center' }]}
+          >
+            {failed}
+          </Text>
+        ) : null}
+      </Dialog>
+    </Scrim>
   );
 }
