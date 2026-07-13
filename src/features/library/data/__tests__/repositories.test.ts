@@ -108,26 +108,32 @@ describe('transactional multi-write rollback (WBS 3.2)', () => {
     await langs.save(lp);
   });
 
-  it('rolls back all writes in a transaction when one step throws', async () => {
+  it('rolls back every table write when the transaction fails part-way', async () => {
+    // Force the failure with an explicit throw AFTER two multi-table writes, rather
+    // than relying on a DB constraint to raise it — constraint enforcement (CHECK,
+    // and even PK in some cases) is not consistent across the CI SQLite build.
     await expect(
       db.tx(async (r) => {
         await r.run(
           'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
           ['d1', 'Spanish', 'lp1', 'subdecks', 1, 1],
         );
-        // Second write reuses the PRIMARY KEY 'd1' → constraint violation throws →
-        // whole tx rolls back. (PK is enforced by every SQLite build; a CHECK
-        // constraint is not, so it can't be relied on across environments.)
-        await r.run(
-          'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
-          ['d1', 'Dup', 'lp1', 'cards', 1, 1],
-        );
+        await r.run('INSERT INTO subdeck (id, deck_id, parent_id, title, position) VALUES (?, ?, ?, ?, ?)', [
+          's1',
+          'd1',
+          null,
+          'Verbs',
+          0,
+        ]);
+        throw new Error('rollback');
       }),
-    ).rejects.toThrow();
+    ).rejects.toThrow('rollback');
 
-    // Neither deck should exist — the first insert rolled back too.
-    const all = await decks.list();
-    if (isOk(all)) expect(all.value).toHaveLength(0);
+    // Both writes rolled back — the DB is untouched.
+    const decksAfter = await decks.list();
+    const subsAfter = await subdecks.listByDeck('d1');
+    if (isOk(decksAfter)) expect(decksAfter.value).toHaveLength(0);
+    if (isOk(subsAfter)) expect(subsAfter.value).toHaveLength(0);
   });
 
   it('commits all writes when the transaction succeeds', async () => {
