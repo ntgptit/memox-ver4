@@ -13,3 +13,4 @@ export { Scrim, type ScrimProps } from './Scrim';
 export { Sheet, type SheetProps } from './Sheet';
 export { MenuItem, type MenuItemProps } from './MenuItem';
 export { Dialog, type DialogProps } from './Dialog';
+export { DialogInput, type DialogInputProps } from './DialogInput';

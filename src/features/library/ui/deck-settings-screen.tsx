@@ -15,12 +15,12 @@ import {
   MxButton,
   MxIconButton,
   MxIconTile,
-  MxTextField,
   Icon,
   Scrim,
   Sheet,
   MenuItem,
   Dialog,
+  DialogInput,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -73,6 +73,7 @@ export function DeckSettingsScreen(props: DeckSettingsScreenProps) {
 
       {overlay === 'actions' && (
         <ActionsSheet
+          deckTitle={deckTitle}
           onDismiss={() => setOverlay(null)}
           onRename={() => setOverlay('rename')}
           onMove={() => setOverlay('move')}
@@ -125,6 +126,7 @@ export function DeckSettingsScreen(props: DeckSettingsScreenProps) {
 // --- overlay chrome (composed from the shared Scrim/Sheet/MenuItem/Dialog) ------
 
 function ActionsSheet({
+  deckTitle,
   onDismiss,
   onRename,
   onMove,
@@ -132,6 +134,7 @@ function ActionsSheet({
   onDelete,
   onExport,
 }: {
+  deckTitle: string;
   onDismiss: () => void;
   onRename: () => void;
   onMove: () => void;
@@ -139,9 +142,10 @@ function ActionsSheet({
   onDelete: () => void;
   onExport?: () => void;
 }) {
+  // Kit DeckActionsSheet titles the sheet with the DECK NAME, not a generic label.
   return (
     <Scrim node="deck-settings/actions-scrim" onDismiss={onDismiss} align="end">
-      <Sheet title="Deck actions" node="deck-settings/actions-sheet">
+      <Sheet title={deckTitle} node="deck-settings/actions-sheet">
         <MenuItem icon="edit" label="Rename deck" onPress={onRename} node="deck-settings/action-rename" />
         <MenuItem icon="drive_file_move" label="Move deck" onPress={onMove} node="deck-settings/action-move" />
         {onExport && (
@@ -277,15 +281,13 @@ function RenameDialog({
           </MxButton>,
         ]}
       >
-        <View style={{ alignSelf: 'stretch' }}>
-          <MxTextField
-            node="deck-settings/rename-input"
-            label="Deck name"
-            value={name}
-            onChangeText={setName}
-            error={fieldError}
-          />
-        </View>
+        <DialogInput
+          node="deck-settings/rename-input"
+          label="Deck name"
+          value={name}
+          onChangeText={setName}
+          error={fieldError}
+        />
       </Dialog>
     </Scrim>
   );

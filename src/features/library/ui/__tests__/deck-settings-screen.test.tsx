@@ -70,7 +70,7 @@ describe('DeckSettingsScreen — overlay states', () => {
 
   it('dark: the action sheet renders under the dark scheme', () => {
     renderScreen(<DeckSettingsScreen {...props({ initialOverlay: 'actions' })} />, 'dark');
-    expect(screen.getByText('Deck actions')).toBeTruthy();
+    expect(screen.getByTestId('deck-settings/actions-sheet')).toBeTruthy();
   });
 });
 
