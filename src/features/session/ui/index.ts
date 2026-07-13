@@ -22,3 +22,10 @@ export { RecallModeScreen, type RecallModeScreenProps, type RecallPhase } from '
 export { RecallModeContainer } from './recall-mode-container';
 export { useRecallMode, type RecallModeDeps, type RecallModeController } from './use-recall-mode';
 export { RECALL_FIXTURES, type RecallFixtureKey, type RecallFixture } from './recall-mode-fixtures';
+
+export { GuessModeScreen, type GuessModeScreenProps, type GuessPhase } from './guess-mode-screen';
+export { GuessModeContainer } from './guess-mode-container';
+export { useGuessMode, type GuessModeDeps, type GuessModeController } from './use-guess-mode';
+export { buildOptions, type GuessOptions } from './guess-options';
+export { GUESS_FIXTURES, type GuessFixtureKey, type GuessFixture } from './guess-mode-fixtures';
+export { ProgressHeader, StudyPromptCard, FeedbackNote, RoundComplete } from './study-chrome';
