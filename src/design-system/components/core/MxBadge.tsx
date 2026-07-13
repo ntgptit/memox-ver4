@@ -45,7 +45,7 @@ export function MxBadge({ children, tone = 'primary', soft = false, dot = false,
       <View
         testID={node}
         accessibilityElementsHidden
-        style={{ width: t.space[2], height: t.space[2], borderRadius: t.radius.pill, backgroundColor: bg }}
+        style={{ width: t.comp.badgeDot, height: t.comp.badgeDot, borderRadius: t.radius.pill, backgroundColor: bg }}
       />
     );
   }
@@ -54,11 +54,11 @@ export function MxBadge({ children, tone = 'primary', soft = false, dot = false,
     <View
       testID={node}
       style={{
-        minWidth: t.space[5],
-        height: t.space[5],
+        minWidth: t.comp.badgeMinWidth,
+        height: t.comp.badgeHeight,
         alignItems: 'center',
         justifyContent: 'center',
-        paddingHorizontal: t.space[2],
+        paddingHorizontal: t.comp.badgePadX,
         borderRadius: t.radius.pill,
         backgroundColor: bg,
       }}

@@ -20,10 +20,14 @@ export interface MxChipProps {
 }
 
 function chipColors(t: Theme, variant: MxChipVariant, selected: boolean): { bg: string; fg: string; border: string } {
+  // Kit: `.chip--accent` is a SOFT accent tint with the bright accent glyph (on-accent
+  // is meant only for a solid fill), and `.chip--selected` is the primary-soft tint —
+  // selection is a tint, never a solid brand fill (components.css .chip--selected).
+  if (variant === 'accent') {
+    return { bg: t.color.accentSoft, fg: t.color.accent, border: 'transparent' };
+  }
   if (selected) {
-    return variant === 'accent'
-      ? { bg: t.color.accent, fg: t.color.onAccent, border: 'transparent' }
-      : { bg: t.color.primary, fg: t.color.onPrimary, border: 'transparent' };
+    return { bg: t.color.primarySoft, fg: t.color.onPrimarySoft, border: 'transparent' };
   }
   return { bg: t.color.surface, fg: t.color.textSecondary, border: t.color.border };
 }
@@ -39,12 +43,13 @@ export function MxChip({ label, icon, selected = false, variant = 'ghost', onPre
       accessibilityRole="button"
       accessibilityState={{ selected }}
       accessibilityLabel={label}
+      hitSlop={(t.layout.touchMin - t.comp.chipHeight) / 2}
       style={({ pressed }) => [
         {
           flexDirection: 'row',
           alignItems: 'center',
           gap: t.space[2],
-          height: t.size.sm - t.space[2], // ~32
+          height: t.comp.chipHeight,
           paddingHorizontal: t.space[4],
           borderRadius: t.radius.chip,
           backgroundColor: bg,

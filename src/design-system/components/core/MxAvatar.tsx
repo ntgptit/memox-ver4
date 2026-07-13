@@ -32,7 +32,7 @@ function initials(name: string): string {
 
 export function MxAvatar({ name, src, size = 'md', variant = 'primary', ring = false, node }: MxAvatarProps) {
   const t = useTheme();
-  const box = size === 'lg' ? t.size.md : size === 'sm' ? t.size.xs * 2 : t.size.sm; // 56 / 32 / 40
+  const box = size === 'lg' ? t.comp.avatarLg : size === 'sm' ? t.comp.avatarSm : t.comp.avatarMd; // 64 / 32 / 44
   const bg = variant === 'accent' ? t.color.accentSoft : t.color.primarySoft;
   const fg = variant === 'accent' ? t.color.accent : t.color.onPrimarySoft;
 

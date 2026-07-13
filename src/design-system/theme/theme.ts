@@ -34,6 +34,7 @@ import {
   iconSize,
   stroke,
   opacity,
+  comp,
 } from '../tokens';
 import type {
   ColorScheme,
@@ -83,6 +84,8 @@ export interface Theme {
   iconSize: typeof iconSize;
   stroke: typeof stroke;
   opacity: typeof opacity;
+  /** Fixed control geometry (`--memox-comp-*`, tokens/component.css). */
+  comp: typeof comp;
   paletteAccents: typeof paletteAccents;
 }
 
@@ -150,6 +153,7 @@ export function resolveTheme(scheme: ColorScheme, opts: ThemeOptions = {}): Them
     iconSize,
     stroke,
     opacity,
+    comp,
     paletteAccents,
   };
 }

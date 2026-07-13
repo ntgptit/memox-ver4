@@ -45,8 +45,8 @@ export function MxIconButton({
 }: MxIconButtonProps) {
   const t = useTheme();
   const { bg, fg, shadow } = variantColors(t, variant);
-  const box = size === 'sm' ? 36 : t.layout.touchMin; // touchMin = 48
-  const hit = size === 'sm' ? (t.layout.touchMin - 36) / 2 : 0; // pad sm up to a 48px target
+  const box = size === 'sm' ? t.comp.iconBtnSm : t.layout.touchMin; // touchMin = 48
+  const hit = size === 'sm' ? (t.layout.touchMin - t.comp.iconBtnSm) / 2 : 0; // pad sm up to a 48px target
   const glyph = size === 'sm' ? t.iconSize.sm : t.iconSize.md;
 
   return (

@@ -38,7 +38,7 @@ export function MxSearchDock({
       flexDirection: 'row',
       alignItems: 'center',
       gap: t.space[3],
-      height: t.layout.touchMin,
+      height: t.comp.searchDockHeight,
       paddingHorizontal: t.space[4],
       backgroundColor: t.color.surface,
       borderRadius: t.radius.pill,

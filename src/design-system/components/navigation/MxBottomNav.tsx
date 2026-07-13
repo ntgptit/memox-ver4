@@ -34,7 +34,8 @@ export function MxBottomNav({ items, value, onChange, node }: MxBottomNavProps) 
           alignItems: 'stretch',
           justifyContent: 'space-around',
           height: t.layout.bottomNavHeight,
-          paddingVertical: t.space[2],
+          paddingTop: t.space[2],
+          paddingBottom: t.space[2] + t.comp.navSafePad,
           paddingHorizontal: t.space[2],
           backgroundColor: t.color.surface,
         },
@@ -51,19 +52,22 @@ export function MxBottomNav({ items, value, onChange, node }: MxBottomNavProps) 
             accessibilityRole="tab"
             accessibilityState={{ selected: active }}
             accessibilityLabel={item.label}
-            style={{ flex: 1, minWidth: 0, alignItems: 'center', justifyContent: 'center', gap: t.space[1] }}
+            style={{ flex: 1, minWidth: 0, alignItems: 'center', justifyContent: 'center', gap: t.comp.navItemGap }}
           >
             <View
               style={{
-                paddingHorizontal: t.space[4],
-                paddingVertical: t.space[1],
+                width: '100%',
+                maxWidth: t.comp.navPillWidth,
+                height: t.comp.navPillHeight,
+                alignItems: 'center',
+                justifyContent: 'center',
                 borderRadius: t.radius.pill,
                 backgroundColor: active ? t.color.primarySoft : 'transparent',
               }}
             >
               <Icon
                 name={item.icon}
-                size={t.iconSize.md}
+                size={t.iconSize.lg}
                 color={active ? t.color.onPrimarySoft : t.color.textSecondary}
               />
             </View>
