@@ -1,0 +1,19 @@
+/**
+ * Ports the flashcards domain depends on (WBS 4.1). Implemented by the data layer
+ * (WBS 4.2) over `expo-sqlite`; the domain knows only these interfaces.
+ */
+
+import type { Repository, Observable, Result } from '@/shared';
+import type { Card } from './card';
+import type { CardTranslation } from './card-translation';
+
+/** Persistence + reactivity for cards, with the deck-scoped read duplicate-detection needs. */
+export interface CardRepository extends Repository<Card>, Observable {
+  /** All cards of a deck, for duplicate detection + list screens. */
+  listByDeck(deckId: string): Promise<Result<Card[]>>;
+}
+
+/** Persistence for a card's additional translations. */
+export interface CardTranslationRepository extends Repository<CardTranslation>, Observable {
+  listByCard(cardId: string): Promise<Result<CardTranslation[]>>;
+}
