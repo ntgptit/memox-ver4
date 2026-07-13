@@ -29,3 +29,8 @@ export { useGuessMode, type GuessModeDeps, type GuessModeController } from './us
 export { buildOptions, type GuessOptions } from './guess-options';
 export { GUESS_FIXTURES, type GuessFixtureKey, type GuessFixture } from './guess-mode-fixtures';
 export { ProgressHeader, StudyPromptCard, FeedbackNote, RoundComplete } from './study-chrome';
+
+export { FillModeScreen, type FillModeScreenProps, type FillPhase } from './fill-mode-screen';
+export { FillModeContainer } from './fill-mode-container';
+export { useFillMode, type FillModeDeps, type FillModeController } from './use-fill-mode';
+export { FILL_FIXTURES, type FillFixtureKey, type FillFixture } from './fill-mode-fixtures';
