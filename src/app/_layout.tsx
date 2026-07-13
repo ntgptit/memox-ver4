@@ -2,7 +2,8 @@ import { Stack } from 'expo-router';
 import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 
-import { ThemeProvider, useMemoxFonts } from '@/design-system';
+import { useMemoxFonts } from '@/design-system';
+import { PersistedThemeProvider } from '@/features/settings/ui';
 
 // Hold the splash screen until the fonts (WBS 1.3) have loaded, so no text ever
 // flashes in a system fallback. Registered at module scope per the Expo docs.
@@ -29,7 +30,7 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider>
+    <PersistedThemeProvider>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="deck/[deckId]" options={{ headerShown: false }} />
@@ -40,6 +41,6 @@ export default function RootLayout() {
         <Stack.Screen name="search" options={{ presentation: 'modal', title: 'Search' }} />
         <Stack.Screen name="player" options={{ presentation: 'modal', title: 'Player' }} />
       </Stack>
-    </ThemeProvider>
+    </PersistedThemeProvider>
   );
 }

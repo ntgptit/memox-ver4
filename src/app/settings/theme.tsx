@@ -1,5 +1,8 @@
-import { RoutePlaceholder } from '@/design-system/dev/route-placeholder';
+import { useRouter } from 'expo-router';
 
-export default function ThemeScreen() {
-  return <RoutePlaceholder title="Theme" wbs="2.3" />;
+import { ThemeScreen } from '@/features/settings/ui';
+
+export default function ThemeRoute() {
+  const router = useRouter();
+  return <ThemeScreen onBack={() => router.back()} />;
 }

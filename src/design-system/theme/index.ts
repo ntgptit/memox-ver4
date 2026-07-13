@@ -3,6 +3,6 @@
  */
 
 export { resolveTheme, themes } from './theme';
-export type { Theme, ThemeFont, TextStyleSpec } from './theme';
-export { ThemeProvider, useTheme, useThemeMode } from './theme-context';
-export type { ThemeMode, ThemeProviderProps } from './theme-context';
+export type { Theme, ThemeFont, TextStyleSpec, AccentChoice, ThemeOptions } from './theme';
+export { ThemeProvider, useTheme, useThemeSettings } from './theme-context';
+export type { ThemeMode, ThemeSettings, ThemeProviderProps } from './theme-context';
