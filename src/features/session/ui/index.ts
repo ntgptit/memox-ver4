@@ -34,3 +34,15 @@ export { FillModeScreen, type FillModeScreenProps, type FillPhase } from './fill
 export { FillModeContainer } from './fill-mode-container';
 export { useFillMode, type FillModeDeps, type FillModeController } from './use-fill-mode';
 export { FILL_FIXTURES, type FillFixtureKey, type FillFixture } from './fill-mode-fixtures';
+
+export {
+  MatchModeScreen,
+  type MatchModeScreenProps,
+  type MatchPhase,
+  type MatchTileView,
+  type TileTone,
+} from './match-mode-screen';
+export { MatchModeContainer } from './match-mode-container';
+export { useMatchMode, type MatchModeDeps, type MatchModeController } from './use-match-mode';
+export { buildBoard, BOARD_SIZE, type MatchBoard, type MatchTile } from './match-board';
+export { MATCH_FIXTURES, type MatchFixtureKey, type MatchFixture } from './match-mode-fixtures';
