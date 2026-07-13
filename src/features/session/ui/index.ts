@@ -17,3 +17,8 @@ export {
   type ScopeChoice,
 } from './mode-picker-model';
 export { MODE_PICKER_FIXTURES, type ModePickerFixtureKey, type ModePickerFixture } from './mode-picker-fixtures';
+
+export { RecallModeScreen, type RecallModeScreenProps, type RecallPhase } from './recall-mode-screen';
+export { RecallModeContainer } from './recall-mode-container';
+export { useRecallMode, type RecallModeDeps, type RecallModeController } from './use-recall-mode';
+export { RECALL_FIXTURES, type RecallFixtureKey, type RecallFixture } from './recall-mode-fixtures';
