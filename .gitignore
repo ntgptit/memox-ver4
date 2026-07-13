@@ -53,3 +53,9 @@ tool/ui_kit_shots/out/
 
 # stray preview screenshots at repo root
 /*.png
+
+# WBS 11.4 app golden harness — the exported web build + fresh captures + diffs are
+# transient; the committed reference is tool/app_golden/baseline/*.png only.
+/web-build-golden/
+/tool/app_golden/out/
+/tool/app_golden/diff/
