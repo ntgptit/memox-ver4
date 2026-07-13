@@ -36,11 +36,13 @@ export function MenuItem({ icon, label, tone, danger = false, selected = false, 
       accessibilityLabel={label}
       accessibilityState={{ selected }}
       onPress={onPress}
+      // Kit MenuItem has no min-height — the row is its 12px padding around the
+      // icon/label (~46px); the ≥48 target is met via hitSlop, like the kit's ::after.
+      hitSlop={t.space[1]}
       style={{
         flexDirection: 'row',
         alignItems: 'center',
         gap: t.space[4],
-        minHeight: t.layout.touchMin,
         paddingVertical: t.space[3],
         paddingHorizontal: t.space[2],
         borderRadius: t.radius.control,

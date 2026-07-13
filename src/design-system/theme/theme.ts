@@ -112,7 +112,9 @@ function makeFont(textScale: number): ThemeFont {
         fontFamily: fontFamily[family ?? 'sans'],
         fontSize: px,
         fontWeight: fontWeight[weight ?? 'regular'],
-        lineHeight: Math.round(px * lineHeightRatio[lineHeight ?? 'normal']),
+        // Exact ratio, not rounded — the kit's CSS line-height is fractional (15×1.5 =
+        // 22.5) and rounding shifted every wrapped line by ~0.5px against the kit.
+        lineHeight: px * lineHeightRatio[lineHeight ?? 'normal'],
         letterSpacing: px * letterSpacingEm[letterSpacing ?? 'normal'],
       };
     },
