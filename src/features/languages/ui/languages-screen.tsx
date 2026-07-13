@@ -82,7 +82,7 @@ export function LanguagesScreen({
   return (
     <AppScreen node="languages/screen" variant="nested" title="Language pairs" leading={back}>
       {data.status === 'loading' && <LoadingState theme={t} />}
-      {data.status === 'error' && <ErrorState theme={t} message={data.message} onRetry={onRetry} />}
+      {data.status === 'error' && <ErrorState message={data.message} onRetry={onRetry} />}
       {data.status === 'ready' && data.pairs.length === 0 && (
         <EmptyState
           node="languages/empty"

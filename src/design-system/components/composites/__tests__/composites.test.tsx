@@ -6,7 +6,17 @@
 import { fireEvent, render } from '@testing-library/react-native';
 import type { ReactElement } from 'react';
 
-import { ThemeProvider, ListRow, EmptyState, SectionLabel, MxButton } from '@/design-system';
+import {
+  ThemeProvider,
+  ListRow,
+  EmptyState,
+  SectionLabel,
+  MxButton,
+  Scrim,
+  Sheet,
+  MenuItem,
+  Dialog,
+} from '@/design-system';
 
 function renderThemed(ui: ReactElement) {
   return render(<ThemeProvider>{ui}</ThemeProvider>);
@@ -67,5 +77,53 @@ describe('shared composites (kit-helpers ports)', () => {
     );
     expect(getByTestId('t/label')).toBeTruthy();
     expect(getByText('Learning')).toBeTruthy();
+  });
+
+  it('Scrim backdrop dismisses; Sheet + MenuItem render inside it', () => {
+    const onDismiss = jest.fn();
+    const onPick = jest.fn();
+    const { getByTestId, getByText } = renderThemed(
+      <Scrim node="t/scrim" align="end" onDismiss={onDismiss}>
+        <Sheet title="Deck actions" node="t/sheet">
+          <MenuItem icon="edit" label="Rename deck" onPress={onPick} node="t/menu-rename" />
+        </Sheet>
+      </Scrim>,
+    );
+    expect(getByText('Deck actions')).toBeTruthy();
+    fireEvent.press(getByTestId('t/menu-rename'));
+    expect(onPick).toHaveBeenCalledTimes(1);
+    fireEvent.press(getByTestId('t/scrim-backdrop'));
+    expect(onDismiss).toHaveBeenCalledTimes(1);
+  });
+
+  it('Dialog renders icon/title/text, a custom body, and split actions', () => {
+    const onConfirm = jest.fn();
+    const { getByTestId, getByText } = renderThemed(
+      <Scrim node="t/dscrim" align="center" onDismiss={() => {}}>
+        <Dialog
+          node="t/dialog"
+          icon="delete"
+          tone="error"
+          title="Delete this deck?"
+          text="This can’t be undone."
+          actions={[
+            <MxButton key="cancel" variant="ghost" block node="t/dialog-cancel">
+              Cancel
+            </MxButton>,
+            <MxButton key="ok" variant="primary" danger block onPress={onConfirm} node="t/dialog-ok">
+              Delete
+            </MxButton>,
+          ]}
+        >
+          <SectionLabel node="t/dialog-body">Body</SectionLabel>
+        </Dialog>
+      </Scrim>,
+    );
+    expect(getByTestId('t/dialog')).toBeTruthy();
+    expect(getByText('Delete this deck?')).toBeTruthy();
+    expect(getByText('This can’t be undone.')).toBeTruthy();
+    expect(getByTestId('t/dialog-body')).toBeTruthy();
+    fireEvent.press(getByTestId('t/dialog-ok'));
+    expect(onConfirm).toHaveBeenCalledTimes(1);
   });
 });

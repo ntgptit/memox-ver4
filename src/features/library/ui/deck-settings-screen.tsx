@@ -8,15 +8,19 @@
  */
 
 import { useState } from 'react';
-import { Modal, Pressable, Text, View } from 'react-native';
+import { Pressable, Text, View } from 'react-native';
 
 import {
   AppScreen,
-  MxCard,
   MxButton,
   MxIconButton,
+  MxIconTile,
   MxTextField,
   Icon,
+  Scrim,
+  Sheet,
+  MenuItem,
+  Dialog,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -69,7 +73,6 @@ export function DeckSettingsScreen(props: DeckSettingsScreenProps) {
 
       {overlay === 'actions' && (
         <ActionsSheet
-          theme={t}
           onDismiss={() => setOverlay(null)}
           onRename={() => setOverlay('rename')}
           onMove={() => setOverlay('move')}
@@ -79,7 +82,7 @@ export function DeckSettingsScreen(props: DeckSettingsScreenProps) {
         />
       )}
       {overlay === 'rename' && (
-        <RenameDialog theme={t} initial={deckTitle} onRename={props.onRename} onClose={() => setOverlay(null)} />
+        <RenameDialog initial={deckTitle} onRename={props.onRename} onClose={() => setOverlay(null)} />
       )}
       {overlay === 'move' && (
         <MoveSheet
@@ -119,102 +122,9 @@ export function DeckSettingsScreen(props: DeckSettingsScreenProps) {
   );
 }
 
-// --- overlay chrome ------------------------------------------------------------
-
-function Scrim({
-  theme: t,
-  node,
-  onDismiss,
-  align,
-  children,
-}: {
-  theme: Theme;
-  node: string;
-  onDismiss: () => void;
-  align: 'center' | 'end';
-  children: React.ReactNode;
-}) {
-  // Render in a Modal so the overlay covers the whole screen (portaled above the app
-  // shell), independent of how tall the backdrop content is.
-  return (
-    <Modal transparent visible animationType="none" onRequestClose={onDismiss}>
-      <View style={{ flex: 1 }}>
-        <Pressable
-          testID={`${node}-scrim`}
-          accessibilityRole="button"
-          accessibilityLabel="Dismiss"
-          onPress={onDismiss}
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: t.color.scrim }}
-        />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: align === 'end' ? 'flex-end' : 'center',
-            alignItems: 'center',
-            padding: align === 'center' ? t.space[4] : 0,
-          }}
-          pointerEvents="box-none"
-        >
-          <View onStartShouldSetResponder={() => true} accessibilityViewIsModal style={{ width: '100%' }}>
-            {children}
-          </View>
-        </View>
-      </View>
-    </Modal>
-  );
-}
-
-function sheetStyle(t: Theme) {
-  return {
-    backgroundColor: t.color.surfaceRaised,
-    borderTopLeftRadius: t.radius.lg,
-    borderTopRightRadius: t.radius.lg,
-    paddingTop: t.space[4],
-    paddingBottom: t.space[6],
-    paddingHorizontal: t.space[4],
-    gap: t.space[1],
-  } as const;
-}
-
-function MenuRow({
-  theme: t,
-  icon,
-  label,
-  danger,
-  onPress,
-  node,
-}: {
-  theme: Theme;
-  icon: string;
-  label: string;
-  danger?: boolean;
-  onPress: () => void;
-  node: string;
-}) {
-  const color = danger ? t.color.error : t.color.text;
-  return (
-    <Pressable
-      testID={node}
-      accessibilityRole="button"
-      accessibilityLabel={label}
-      onPress={onPress}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: t.space[3],
-        minHeight: t.layout.touchMin,
-        paddingHorizontal: t.space[2],
-        borderRadius: t.radius.md,
-      }}
-    >
-      <Icon name={icon} size="sm" color={color} />
-      <Text style={[t.font.text({ size: 'base' }), { color, flex: 1 }]}>{label}</Text>
-    </Pressable>
-  );
-}
+// --- overlay chrome (composed from the shared Scrim/Sheet/MenuItem/Dialog) ------
 
 function ActionsSheet({
-  theme: t,
   onDismiss,
   onRename,
   onMove,
@@ -222,7 +132,6 @@ function ActionsSheet({
   onDelete,
   onExport,
 }: {
-  theme: Theme;
   onDismiss: () => void;
   onRename: () => void;
   onMove: () => void;
@@ -231,19 +140,16 @@ function ActionsSheet({
   onExport?: () => void;
 }) {
   return (
-    <Scrim theme={t} node="deck-settings/actions" onDismiss={onDismiss} align="end">
-      <View style={sheetStyle(t)}>
-        <Text accessibilityRole="header" style={[t.font.text({ size: 'md', weight: 'bold' }), { color: t.color.text }]}>
-          Deck actions
-        </Text>
-        <MenuRow theme={t} icon="edit" label="Rename deck" onPress={onRename} node="deck-settings/action-rename" />
-        <MenuRow theme={t} icon="drive_file_move" label="Move deck" onPress={onMove} node="deck-settings/action-move" />
+    <Scrim node="deck-settings/actions-scrim" onDismiss={onDismiss} align="end">
+      <Sheet title="Deck actions" node="deck-settings/actions-sheet">
+        <MenuItem icon="edit" label="Rename deck" onPress={onRename} node="deck-settings/action-rename" />
+        <MenuItem icon="drive_file_move" label="Move deck" onPress={onMove} node="deck-settings/action-move" />
         {onExport && (
-          <MenuRow theme={t} icon="ios_share" label="Export deck" onPress={onExport} node="deck-settings/action-export" />
+          <MenuItem icon="ios_share" label="Export deck" onPress={onExport} node="deck-settings/action-export" />
         )}
-        <MenuRow theme={t} icon="restart_alt" label="Reset progress" onPress={onReset} node="deck-settings/action-reset" />
-        <MenuRow theme={t} icon="delete" label="Delete deck" danger onPress={onDelete} node="deck-settings/action-delete" />
-      </View>
+        <MenuItem icon="restart_alt" label="Reset progress" onPress={onReset} node="deck-settings/action-reset" />
+        <MenuItem icon="delete" label="Delete deck" danger onPress={onDelete} node="deck-settings/action-delete" />
+      </Sheet>
     </Scrim>
   );
 }
@@ -270,13 +176,12 @@ function MoveSheet({
     if (!isErr(result)) onClose();
   };
   return (
-    <Scrim theme={t} node="deck-settings/move" onDismiss={onClose} align="end">
-      <View style={sheetStyle(t)}>
-        <Text accessibilityRole="header" style={[t.font.text({ size: 'md', weight: 'bold' }), { color: t.color.text }]}>
-          Move to
-        </Text>
+    <Scrim node="deck-settings/move-scrim" onDismiss={onClose} align="end">
+      <Sheet title="Move to" node="deck-settings/move-sheet">
         {pairs.map((p) => {
           const current = p.id === currentPairId;
+          // Radio semantics (immediate move) with the kit's row anatomy: icon tile,
+          // title, and a radio/Current trailing.
           return (
             <Pressable
               key={p.id}
@@ -288,35 +193,36 @@ function MoveSheet({
               style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                gap: t.space[3],
+                gap: t.space[4],
                 minHeight: t.layout.touchMin,
+                paddingVertical: t.space[3],
                 paddingHorizontal: t.space[2],
-                borderRadius: t.radius.md,
+                borderRadius: t.radius.control,
                 opacity: current ? t.opacity.half : 1,
               }}
             >
-              <Icon name="translate" size="sm" color={t.color.textSecondary} />
-              <Text style={[t.font.text({ size: 'base' }), { color: t.color.text, flex: 1 }]}>{p.label}</Text>
+              <MxIconTile icon="translate" />
+              <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text, flex: 1 }]}>
+                {p.label}
+              </Text>
               {current ? (
-                <Text style={[t.font.text({ size: 'xs' }), { color: t.color.textTertiary }]}>Current</Text>
+                <Text style={[t.font.text({ size: 'xs', weight: 'bold' }), { color: t.color.textTertiary }]}>Current</Text>
               ) : (
-                <Icon name="chevron_right" size="sm" color={t.color.textTertiary} />
+                <Icon name="radio_button_unchecked" size={t.iconSize.md} color={t.color.textTertiary} />
               )}
             </Pressable>
           );
         })}
-      </View>
+      </Sheet>
     </Scrim>
   );
 }
 
 function RenameDialog({
-  theme: t,
   initial,
   onRename,
   onClose,
 }: {
-  theme: Theme;
   initial: string;
   onRename: DeckSettingsScreenProps['onRename'];
   onClose: () => void;
@@ -341,12 +247,22 @@ function RenameDialog({
   };
 
   return (
-    <Scrim theme={t} node="deck-settings/rename" onDismiss={onClose} align="center">
-      <MxCard node="deck-settings/rename-dialog" variant="elevated">
-        <View style={{ gap: t.space[3] }}>
-          <Text accessibilityRole="header" style={[t.font.text({ size: 'lg', weight: 'bold' }), { color: t.color.text }]}>
-            Rename deck
-          </Text>
+    <Scrim node="deck-settings/rename-scrim" onDismiss={onClose} align="center">
+      <Dialog
+        node="deck-settings/rename-dialog"
+        icon="edit"
+        title="Rename deck"
+        actionsLayout="end"
+        actions={[
+          <MxButton key="cancel" variant="ghost" onPress={onClose} node="deck-settings/rename-cancel">
+            Cancel
+          </MxButton>,
+          <MxButton key="ok" variant="primary" disabled={busy} onPress={save} node="deck-settings/rename-ok">
+            {busy ? 'Saving…' : 'Save'}
+          </MxButton>,
+        ]}
+      >
+        <View style={{ alignSelf: 'stretch' }}>
           <MxTextField
             node="deck-settings/rename-input"
             label="Deck name"
@@ -354,16 +270,8 @@ function RenameDialog({
             onChangeText={setName}
             error={fieldError}
           />
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: t.space[2] }}>
-            <MxButton variant="ghost" onPress={onClose} node="deck-settings/rename-cancel">
-              Cancel
-            </MxButton>
-            <MxButton variant="primary" disabled={busy} onPress={save} node="deck-settings/rename-ok">
-              {busy ? 'Saving…' : 'Save'}
-            </MxButton>
-          </View>
         </View>
-      </MxCard>
+      </Dialog>
     </Scrim>
   );
 }
@@ -407,43 +315,49 @@ function ConfirmDialog({
   };
 
   return (
-    <Scrim theme={t} node={node} onDismiss={onClose} align="center">
-      <MxCard node={node} variant="elevated">
-        <View style={{ gap: t.space[3], alignItems: 'flex-start' }}>
-          <Icon name={icon} color={t.color.error} />
-          <Text accessibilityRole="header" style={[t.font.text({ size: 'lg', weight: 'bold' }), { color: t.color.text }]}>
-            {title}
-          </Text>
-          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>{text}</Text>
-          {failed && (
-            <View
-              testID={`${node}-error`}
-              accessibilityRole="alert"
-              style={{
-                flexDirection: 'row',
-                alignItems: 'center',
-                gap: t.space[2],
-                alignSelf: 'stretch',
-                borderWidth: t.stroke.hairline,
-                borderColor: t.color.error,
-                borderRadius: t.radius.md,
-                padding: t.space[2],
-              }}
-            >
-              <Icon name="error" size="sm" color={t.color.error} />
-              <Text style={[t.font.text({ size: 'sm' }), { color: t.color.text, flex: 1 }]}>{failed}</Text>
-            </View>
-          )}
-          <View style={{ flexDirection: 'row', justifyContent: 'flex-end', gap: t.space[2], alignSelf: 'stretch' }}>
-            <MxButton variant="ghost" onPress={onClose} node={`${node}-cancel`}>
-              Cancel
-            </MxButton>
-            <MxButton variant="primary" danger disabled={busy} onPress={confirm} node={`${node}-ok`}>
-              {busy ? `${confirmLabel}…` : confirmLabel}
-            </MxButton>
+    <Scrim node={`${node}-scrim`} onDismiss={onClose} align="center">
+      <Dialog
+        node={node}
+        icon={icon}
+        tone="error"
+        title={title}
+        text={text}
+        actions={[
+          <MxButton key="cancel" variant="ghost" block onPress={onClose} node={`${node}-cancel`}>
+            Cancel
+          </MxButton>,
+          <MxButton
+            key="ok"
+            variant="primary"
+            danger
+            block
+            disabled={busy}
+            onPress={confirm}
+            node={`${node}-ok`}
+          >
+            {busy ? `${confirmLabel}…` : confirmLabel}
+          </MxButton>,
+        ]}
+      >
+        {failed ? (
+          <View
+            testID={`${node}-error`}
+            accessibilityRole="alert"
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              gap: t.space[2],
+              alignSelf: 'stretch',
+              backgroundColor: t.color.errorSoft,
+              borderRadius: t.radius.md,
+              padding: t.space[3],
+            }}
+          >
+            <Icon name="error" size="sm" color={t.color.onErrorSoft} />
+            <Text style={[t.font.text({ size: 'sm' }), { color: t.color.onErrorSoft, flex: 1 }]}>{failed}</Text>
           </View>
-        </View>
-      </MxCard>
+        ) : null}
+      </Dialog>
     </Scrim>
   );
 }

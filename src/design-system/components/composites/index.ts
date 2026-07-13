@@ -9,3 +9,7 @@
 export { ListRow, type ListRowProps } from './ListRow';
 export { EmptyState, type EmptyStateProps } from './EmptyState';
 export { SectionLabel, type SectionLabelProps } from './SectionLabel';
+export { Scrim, type ScrimProps } from './Scrim';
+export { Sheet, type SheetProps } from './Sheet';
+export { MenuItem, type MenuItemProps } from './MenuItem';
+export { Dialog, type DialogProps } from './Dialog';

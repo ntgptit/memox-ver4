@@ -18,6 +18,8 @@ import {
   MxButton,
   MxList,
   Icon,
+  Scrim,
+  Sheet,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -185,67 +187,41 @@ function ScopeSheet({
   onSelect: (scope: StudyScope) => void;
   onDismiss: () => void;
 }) {
+  // Shared Scrim + Sheet chrome (backdrop, grabber, uppercase section label); the rows
+  // stay bespoke for their radio semantics but follow the kit's plain-row + check anatomy
+  // (no tinted selection pill — selection is the trailing check).
   return (
-    <View style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0 }}>
-      <Pressable
-        testID="mode-picker/scope-scrim"
-        accessibilityRole="button"
-        accessibilityLabel="Dismiss"
-        onPress={onDismiss}
-        style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: t.color.scrim }}
-      />
-      <View style={{ flex: 1, justifyContent: 'flex-end' }} pointerEvents="box-none">
-        <View
-          onStartShouldSetResponder={() => true}
-          accessibilityViewIsModal
-          style={{
-            backgroundColor: t.color.surfaceRaised,
-            borderTopLeftRadius: t.radius.lg,
-            borderTopRightRadius: t.radius.lg,
-            paddingTop: t.space[4],
-            paddingBottom: t.space[6],
-            paddingHorizontal: t.space[4],
-            gap: t.space[2],
-          }}
-        >
-          <Text accessibilityRole="header" style={[t.font.text({ size: 'md', weight: 'bold' }), { color: t.color.text }]}>
-            Card source
-          </Text>
-          {SCOPE_CHOICES.map((s) => {
-            const selected = s.id === scope;
-            return (
-              <Pressable
-                key={s.id}
-                testID={`mode-picker/scope-${s.id}`}
-                accessibilityRole="radio"
-                accessibilityState={{ checked: selected, selected }}
-                accessibilityLabel={s.label}
-                onPress={() => onSelect(s.id)}
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  gap: t.space[3],
-                  minHeight: t.layout.touchMin,
-                  paddingHorizontal: t.space[2],
-                  borderRadius: t.radius.md,
-                  backgroundColor: selected ? t.color.primarySoft : 'transparent',
-                }}
-              >
-                <Icon name={s.icon} size="sm" color={selected ? t.color.onPrimarySoft : t.color.textSecondary} />
-                <Text
-                  style={[
-                    t.font.text({ size: 'base', weight: selected ? 'semibold' : 'regular' }),
-                    { color: selected ? t.color.onPrimarySoft : t.color.text, flex: 1 },
-                  ]}
-                >
-                  {s.label}
-                </Text>
-                {selected && <Icon name="check_circle" size="sm" color={t.color.onPrimarySoft} />}
-              </Pressable>
-            );
-          })}
-        </View>
-      </View>
-    </View>
+    <Scrim node="mode-picker/scope-scrim" align="end" onDismiss={onDismiss}>
+      <Sheet title="Card source" node="mode-picker/scope-sheet">
+        {SCOPE_CHOICES.map((s) => {
+          const selected = s.id === scope;
+          return (
+            <Pressable
+              key={s.id}
+              testID={`mode-picker/scope-${s.id}`}
+              accessibilityRole="radio"
+              accessibilityState={{ checked: selected, selected }}
+              accessibilityLabel={s.label}
+              onPress={() => onSelect(s.id)}
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                gap: t.space[4],
+                minHeight: t.layout.touchMin,
+                paddingVertical: t.space[3],
+                paddingHorizontal: t.space[2],
+                borderRadius: t.radius.control,
+              }}
+            >
+              <Icon name={s.icon} size={t.iconSize.md} color={t.color.textSecondary} />
+              <Text style={[t.font.text({ size: 'base', weight: 'semibold' }), { color: t.color.text, flex: 1 }]}>
+                {s.label}
+              </Text>
+              {selected && <Icon name="check" size={t.iconSize.md} color={t.color.primary} />}
+            </Pressable>
+          );
+        })}
+      </Sheet>
+    </Scrim>
   );
 }

@@ -76,13 +76,19 @@ export function RecallModeScreen(props: RecallModeScreenProps) {
 
       <View style={{ gap: t.space[3] }}>
         {phase === 'before-reveal' ? (
-          <MxButton variant="primary" icon="visibility" block onPress={props.onReveal} node="recall-mode/reveal">
+          <MxButton variant="primary" icon="visibility" block size="lg" onPress={props.onReveal} node="recall-mode/reveal">
             Show
           </MxButton>
         ) : (
           <View style={{ flexDirection: 'row', gap: t.space[3] }}>
             <View style={{ flex: 1 }}>
-              <MxButton variant="outline" danger block onPress={props.onForgot} node="recall-mode/forgot">
+              <MxButton
+                variant={phase === 'forgot' ? 'primary' : 'ghost'}
+                danger={phase === 'forgot'}
+                block
+                onPress={props.onForgot}
+                node="recall-mode/forgot"
+              >
                 Forgot
               </MxButton>
             </View>
