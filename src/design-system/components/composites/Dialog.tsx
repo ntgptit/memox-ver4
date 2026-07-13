@@ -38,7 +38,9 @@ export function Dialog({ icon, tone, title, text, children, actions, actionsLayo
       style={[
         {
           width: '100%',
-          maxWidth: t.size['5xl'],
+          // Kit Dialog: `max-width: var(--memox-size-5xl)` under CONTENT-box sizing, so
+          // the visual box is 320 + 2×24 padding = 368. RN is border-box; widen to match.
+          maxWidth: t.size['5xl'] + t.space[6] * 2,
           backgroundColor: t.color.surface,
           borderRadius: t.radius.xl,
           padding: t.space[6],

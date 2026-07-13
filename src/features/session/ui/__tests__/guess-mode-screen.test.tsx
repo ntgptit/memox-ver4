@@ -35,16 +35,16 @@ describe('GuessModeScreen — states', () => {
     expect(screen.queryByTestId('guess-mode/continue')).toBeNull();
   });
 
-  it('correct: the correct option is marked and continue shows', () => {
+  it('correct: the correct option is marked; no separate continue button (kit: tap to continue)', () => {
     renderScreen(<GuessModeScreen {...props('correct')} />);
-    expect(screen.getByLabelText('school (correct)')).toBeTruthy();
-    expect(screen.getByTestId('guess-mode/continue')).toBeTruthy();
+    expect(screen.getByLabelText('school (correct). Tap to continue')).toBeTruthy();
+    expect(screen.queryByTestId('guess-mode/continue')).toBeNull();
   });
 
   it('wrong: correct + the wrong pick are both marked', () => {
     renderScreen(<GuessModeScreen {...props('wrong')} />);
-    expect(screen.getByLabelText('school (correct)')).toBeTruthy();
-    expect(screen.getByLabelText('park (your answer, wrong)')).toBeTruthy();
+    expect(screen.getByLabelText('school (correct). Tap to continue')).toBeTruthy();
+    expect(screen.getByLabelText('park (your answer, wrong). Tap to continue')).toBeTruthy();
   });
 
   it('long-text: long options render (no clip)', () => {
@@ -72,24 +72,19 @@ describe('GuessModeScreen — interactions', () => {
     expect(onPick).toHaveBeenCalledWith(2);
   });
 
-  it('options are not tappable after feedback', () => {
+  it('after feedback a tap continues instead of re-picking', () => {
     const onPick = jest.fn();
-    renderScreen(<GuessModeScreen {...props('correct', { onPick })} />);
+    const onContinue = jest.fn();
+    renderScreen(<GuessModeScreen {...props('correct', { onPick, onContinue })} />);
     fireEvent.press(screen.getByTestId('guess-mode/choice-1'));
     expect(onPick).not.toHaveBeenCalled();
-  });
-
-  it('continue advances', () => {
-    const onContinue = jest.fn();
-    renderScreen(<GuessModeScreen {...props('wrong', { onContinue })} />);
-    fireEvent.press(screen.getByTestId('guess-mode/continue'));
     expect(onContinue).toHaveBeenCalledTimes(1);
   });
 
   it('complete → next fires onDone', () => {
     const onDone = jest.fn();
     renderScreen(<GuessModeScreen {...props('complete', { onDone })} />);
-    fireEvent.press(screen.getByTestId('guess-mode/complete-next'));
+    fireEvent.press(screen.getByTestId('guess-mode/next'));
     expect(onDone).toHaveBeenCalledTimes(1);
   });
 });

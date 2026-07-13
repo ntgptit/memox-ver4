@@ -41,7 +41,13 @@ export function MatchModeScreen(props: MatchModeScreenProps) {
     return (
       <AppScreen node="match-mode/screen" variant="nested" title="Match" leading={back}>
         <ProgressHeader done={props.total} total={props.total} node="match-mode/progress" />
-        <RoundComplete node="match-mode/complete" title="Round complete!" text="You matched every pair." onNext={props.onNext} />
+        <RoundComplete
+          node="match-mode/complete"
+          ctaNode="match-mode/next"
+          title="Round complete!"
+          text="You matched every pair."
+          onNext={props.onNext}
+        />
       </AppScreen>
     );
   }

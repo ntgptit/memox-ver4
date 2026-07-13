@@ -37,7 +37,7 @@ describe('RecallModeScreen — states', () => {
   it('before-reveal: term shown, meaning hidden, Show CTA', () => {
     renderScreen(<RecallModeScreen {...props('before-reveal')} />);
     expect(screen.getByText('친구')).toBeTruthy();
-    expect(screen.getByText('Tap “Show” to reveal')).toBeTruthy();
+    expect(screen.getByText('Recall the meaning, then tap “Show”')).toBeTruthy();
     expect(screen.getByTestId('recall-mode/reveal')).toBeTruthy();
   });
 

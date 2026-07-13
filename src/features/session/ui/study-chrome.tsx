@@ -1,12 +1,14 @@
 /**
- * Shared study-mode chrome (WBS 6.x/7.x). The pieces every study-mode screen composes:
- * a progress header, the prompt card, an inline feedback note, and the round-complete
- * panel. Kept here so recall/guess/fill never drift.
+ * Shared study-mode chrome (WBS 6.x/7.x). The pieces every study-mode screen composes,
+ * each a 1:1 port of its kit counterpart (kit-helpers.jsx + _shared/StudyPromptCard.jsx):
+ * ProgressHeader, StudyPromptCard, FeedbackNote (kit `Note`), RoundComplete (kit
+ * `EmptyState` complete panel), and ChoiceOption. Kept here so recall/guess/fill/match
+ * never drift.
  */
 
-import { Text, View } from 'react-native';
+import { Pressable, Text, View, type StyleProp, type ViewStyle } from 'react-native';
 
-import { MxCard, MxButton, Icon, useTheme, type Theme } from '@/design-system';
+import { MxCard, MxButton, MxIconButton, EmptyState, Icon, useTheme, type Theme } from '@/design-system';
 
 export function ProgressHeader({ done, total, node }: { done: number; total: number; node: string }) {
   const t = useTheme();
@@ -33,33 +35,95 @@ export function ProgressHeader({ done, total, node }: { done: number; total: num
   );
 }
 
-export function StudyPromptCard({ term, eyebrow, node }: { term: string; eyebrow?: string; node: string }) {
+/**
+ * Kit `_shared/StudyPromptCard.jsx`: the study term centred in a card, edit tucked
+ * top-right and audio bottom-right so the term stays the sole focus. `fill` stretches
+ * the card (Recall); compact is `size-2xl + space-6` = 144 min-height (Guess).
+ * Node ids follow the kit: `<prefix>/prompt` · `<prefix>/edit` · `<prefix>/audio`.
+ */
+export function StudyPromptCard({
+  term,
+  nodePrefix,
+  fill = false,
+  editable = true,
+  playing = false,
+  onEdit,
+  onAudio,
+}: {
+  term: string;
+  nodePrefix: string;
+  fill?: boolean;
+  editable?: boolean;
+  playing?: boolean;
+  onEdit?: () => void;
+  onAudio?: () => void;
+}) {
   const t = useTheme();
   return (
-    <MxCard node={node} variant="elevated">
-      <View style={{ alignItems: 'center', paddingVertical: t.space[6], gap: t.space[2] }}>
-        {eyebrow && (
-          <Text style={[t.font.text({ size: 'xs', weight: 'semibold' }), { color: t.color.textTertiary }]}>{eyebrow}</Text>
+    <MxCard
+      node={`${nodePrefix}/prompt`}
+      style={[
+        { alignItems: 'center', justifyContent: 'center' },
+        fill ? { flex: 1 } : { minHeight: t.size['2xl'] + t.space[6] },
+      ]}
+    >
+      <Text
+        style={[
+          t.font.text({ size: '3xl', weight: 'bold', letterSpacing: 'tight' }),
+          { color: t.color.text, textAlign: 'center' },
+        ]}
+      >
+        {term}
+      </Text>
+      {editable && (
+        <View style={{ position: 'absolute', top: t.space[4], right: t.space[4] }}>
+          <MxIconButton icon="edit" size="sm" accessibilityLabel="Edit card" onPress={onEdit} node={`${nodePrefix}/edit`} />
+        </View>
+      )}
+      <View
+        style={{
+          position: 'absolute',
+          bottom: t.space[4],
+          right: t.space[4],
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: t.space[2],
+        }}
+      >
+        {playing && (
+          <Text style={[t.font.text({ size: 'sm', weight: 'semibold' }), { color: t.color.primary }]}>Playing…</Text>
         )}
-        <Text style={[t.font.text({ size: '3xl', weight: 'bold' }), { color: t.color.text, textAlign: 'center' }]}>{term}</Text>
+        <MxIconButton
+          icon={playing ? 'graphic_eq' : 'volume_up'}
+          accessibilityLabel="Play pronunciation"
+          onPress={onAudio}
+          node={`${nodePrefix}/audio`}
+        />
       </View>
     </MxCard>
   );
 }
 
+/** Kit `Note` (kit-helpers.jsx): icon + text on a soft tonal fill — no border. */
 export function FeedbackNote({
   tone,
   icon,
   text,
   node,
 }: {
-  tone: 'warning' | 'success' | 'error';
+  tone: 'accent' | 'warning' | 'success' | 'error';
   icon: string;
   text: string;
   node: string;
 }) {
   const t = useTheme();
-  const color = tone === 'success' ? t.color.success : tone === 'error' ? t.color.error : t.color.warning;
+  const map = {
+    accent: { bg: t.color.primarySoft, fg: t.color.onPrimarySoft },
+    success: { bg: t.color.successSoft, fg: t.color.onSuccessSoft },
+    warning: { bg: t.color.warningSoft, fg: t.color.onWarningSoft },
+    error: { bg: t.color.errorSoft, fg: t.color.onErrorSoft },
+  } as const;
+  const { bg, fg } = map[tone];
   return (
     <View
       testID={node}
@@ -67,45 +131,113 @@ export function FeedbackNote({
       style={{
         flexDirection: 'row',
         alignItems: 'center',
-        gap: t.space[3],
-        borderRadius: t.radius.md,
-        borderWidth: t.stroke.hairline,
-        borderColor: color,
-        backgroundColor: t.color.surface,
-        padding: t.space[3],
+        gap: t.space[2],
+        backgroundColor: bg,
+        borderRadius: t.radius.control,
+        paddingVertical: t.space[3],
+        paddingHorizontal: t.space[4],
       }}
     >
-      <Icon name={icon} size="sm" color={color} />
-      <Text style={[t.font.text({ size: 'sm' }), { color: t.color.text, flex: 1 }]}>{text}</Text>
+      <Icon name={icon} size="sm" color={fg} />
+      <Text style={[t.font.text({ size: 'sm', weight: 'semibold' }), { color: fg, flex: 1 }]}>{text}</Text>
     </View>
   );
 }
 
+/**
+ * Round-complete panel — the kit renders this as an `EmptyState` (celebration tile,
+ * success tone) with a primary "Next round" CTA whose node is `<mode>/next`.
+ */
 export function RoundComplete({
   title,
   text,
-  buttonLabel = 'Done',
+  buttonLabel = 'Next round',
   onNext,
   node,
+  ctaNode,
 }: {
   title: string;
   text: string;
   buttonLabel?: string;
   onNext?: () => void;
   node: string;
+  /** CTA node id; defaults to `<node>-next` for compatibility. */
+  ctaNode?: string;
 }) {
-  const t = useTheme();
   return (
-    <MxCard node={node} variant="flat">
-      <View style={{ alignItems: 'center', gap: t.space[3], paddingVertical: t.space[5] }}>
-        <Icon name="celebration" size="xl" color={t.color.success} />
-        <Text style={[t.font.text({ size: 'lg', weight: 'bold' }), { color: t.color.text, textAlign: 'center' }]}>{title}</Text>
-        <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary, textAlign: 'center' }]}>{text}</Text>
-        <MxButton variant="primary" icon="arrow_forward" onPress={onNext} node={`${node}-next`}>
+    <EmptyState
+      node={node}
+      icon="celebration"
+      tone="success"
+      title={title}
+      text={text}
+      action={
+        <MxButton variant="primary" icon="arrow_forward" onPress={onNext} node={ctaNode ?? `${node}-next`}>
           {buttonLabel}
         </MxButton>
-      </View>
-    </MxCard>
+      }
+    />
+  );
+}
+
+export type ChoiceTone = 'neutral' | 'correct' | 'wrong';
+
+/**
+ * Kit `ChoiceOption` (kit-helpers.jsx): a selectable answer box — idle surface with a
+ * hairline divider ring, or a correct/wrong soft-tinted feedback skin with a trailing
+ * check_circle / cancel glyph.
+ */
+export function ChoiceOption({
+  text,
+  tone = 'neutral',
+  onPress,
+  node,
+  accessibilityLabel,
+  accessibilityState,
+  style,
+}: {
+  text: string;
+  tone?: ChoiceTone;
+  onPress?: () => void;
+  node?: string;
+  accessibilityLabel?: string;
+  accessibilityState?: { disabled?: boolean; selected?: boolean };
+  style?: StyleProp<ViewStyle>;
+}) {
+  const t = useTheme();
+  const skin =
+    tone === 'correct'
+      ? { borderColor: t.color.success, borderWidth: t.stroke.emphasis, backgroundColor: t.color.successSoft, fg: t.color.onSuccessSoft }
+      : tone === 'wrong'
+        ? { borderColor: t.color.error, borderWidth: t.stroke.emphasis, backgroundColor: t.color.errorSoft, fg: t.color.onErrorSoft }
+        : { borderColor: t.color.divider, borderWidth: t.stroke.hairline, backgroundColor: t.color.surface, fg: t.color.text };
+  return (
+    <Pressable
+      testID={node}
+      accessibilityRole="button"
+      accessibilityLabel={accessibilityLabel ?? text}
+      accessibilityState={accessibilityState}
+      onPress={onPress}
+      style={[
+        {
+          flexDirection: 'row',
+          alignItems: 'center',
+          gap: t.space[3],
+          padding: t.space[4],
+          borderRadius: t.radius.control,
+          borderColor: skin.borderColor,
+          borderWidth: skin.borderWidth,
+          backgroundColor: skin.backgroundColor,
+        },
+        style,
+      ]}
+    >
+      <Text style={[t.font.text({ size: 'base', weight: 'medium', lineHeight: 'normal' }), { color: skin.fg, flex: 1 }]}>
+        {text}
+      </Text>
+      {tone === 'correct' && <Icon name="check_circle" size={t.iconSize.md} color={t.color.success} />}
+      {tone === 'wrong' && <Icon name="cancel" size={t.iconSize.md} color={t.color.error} />}
+    </Pressable>
   );
 }
 

@@ -73,7 +73,7 @@ export function MxCard({
     );
   }
   return (
-    <View testID={node} style={composed}>
+    <View testID={node} accessibilityLabel={accessibilityLabel} style={composed}>
       {children}
     </View>
   );
