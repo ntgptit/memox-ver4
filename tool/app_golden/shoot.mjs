@@ -90,6 +90,12 @@ const TARGETS = [
     path: '/deck/preview/settings?state=action-sheet&theme=dark',
     waitFor: 'text=Deck actions',
   },
+  // search (WBS 4.6) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'search--empty-recent--light', path: '/search?state=empty-recent', waitFor: 'text=RECENT' },
+  { name: 'search--results--light', path: '/search?state=results', waitFor: 'text=to study' },
+  { name: 'search--filtered--light', path: '/search?state=filtered', waitFor: 'text=to study' },
+  { name: 'search--no-results--light', path: '/search?state=no-results', waitFor: 'text=No matches' },
+  { name: 'search--results--dark', path: '/search?state=results&theme=dark', waitFor: 'text=to study' },
 ];
 
 const MIME = {
