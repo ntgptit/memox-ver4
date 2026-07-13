@@ -27,6 +27,8 @@ export interface AppScreenProps {
   variant?: MxAppBarVariant;
   leading?: ReactNode;
   actions?: ReactNode;
+  /** Custom app-bar main content (e.g. a search dock for the `search` variant). */
+  main?: ReactNode;
   fab?: ReactNode;
   children?: ReactNode;
   node?: string;
@@ -41,6 +43,7 @@ export function AppScreen({
   variant = 'root',
   leading,
   actions,
+  main,
   fab,
   children,
   node,
@@ -60,6 +63,7 @@ export function AppScreen({
         variant={variant}
         title={title}
         context={context}
+        main={main}
         leading={leading}
         actions={actions}
         scrolled={scrolled}
@@ -67,6 +71,7 @@ export function AppScreen({
       />
       <View style={{ flex: 1, minHeight: 0 }}>
         <ScrollView
+          testID={node ? `${node}/scroll` : undefined}
           onScroll={onScroll}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
