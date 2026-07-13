@@ -114,6 +114,12 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // match-mode (WBS 6.2) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'match-mode--playing--light', path: '/session/match?state=playing', waitFor: 'text=friend' },
+  { name: 'match-mode--selected--light', path: '/session/match?state=selected', waitFor: 'text=love' },
+  { name: 'match-mode--correct--light', path: '/session/match?state=correct', waitFor: 'text=love' },
+  { name: 'match-mode--almost--light', path: '/session/match?state=almost', waitFor: 'text=3 / 5' },
+  { name: 'match-mode--playing--dark', path: '/session/match?state=playing&theme=dark', waitFor: 'text=friend' },
 ];
 
 const MIME = {
