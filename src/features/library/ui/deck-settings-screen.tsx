@@ -272,6 +272,15 @@ function RenameDialog({
         icon="edit"
         title="Rename deck"
         actionsLayout="end"
+        body={
+          <DialogInput
+            node="deck-settings/rename-input"
+            label="Deck name"
+            value={name}
+            onChangeText={setName}
+            error={fieldError}
+          />
+        }
         actions={[
           <MxButton key="cancel" variant="ghost" onPress={onClose} node="deck-settings/rename-cancel">
             Cancel
@@ -280,15 +289,7 @@ function RenameDialog({
             {busy ? 'Saving…' : 'Save'}
           </MxButton>,
         ]}
-      >
-        <DialogInput
-          node="deck-settings/rename-input"
-          label="Deck name"
-          value={name}
-          onChangeText={setName}
-          error={fieldError}
-        />
-      </Dialog>
+      />
     </Scrim>
   );
 }

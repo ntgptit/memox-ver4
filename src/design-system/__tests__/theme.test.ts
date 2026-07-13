@@ -32,7 +32,7 @@ describe('resolveTheme (WBS 1.1/1.2)', () => {
     // base = 15px; normal line-height ratio 1.5 → round(22.5) = 23; weight '600'
     expect(style.fontSize).toBe(15);
     expect(style.fontWeight).toBe('600');
-    expect(style.lineHeight).toBe(23);
+    expect(style.lineHeight).toBe(22.5); // exact kit ratio (15 × 1.5), not rounded
     expect(style.fontFamily).toBe('Plus Jakarta Sans');
   });
 

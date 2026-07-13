@@ -20,7 +20,12 @@ export interface DialogProps {
   tone?: MxIconTileTone;
   title: string;
   text?: string;
-  /** Custom body between the copy and the actions (input, error note, …). */
+  /**
+   * Custom content in the kit's `text` slot — INSIDE the title group (8px under the
+   * title), e.g. the rename DialogInput.
+   */
+  body?: ReactNode;
+  /** Custom body between the copy and the actions (error note, …). */
   children?: ReactNode;
   actions?: ReactNode;
   actionsLayout?: 'split' | 'end';
@@ -29,7 +34,7 @@ export interface DialogProps {
 
 type IconLike = string;
 
-export function Dialog({ icon, tone, title, text, children, actions, actionsLayout = 'split', node }: DialogProps) {
+export function Dialog({ icon, tone, title, text, body, children, actions, actionsLayout = 'split', node }: DialogProps) {
   const t = useTheme();
 
   return (
@@ -71,6 +76,7 @@ export function Dialog({ icon, tone, title, text, children, actions, actionsLayo
             {text}
           </Text>
         )}
+        {body}
       </View>
       {children}
       {actions !== undefined && (
