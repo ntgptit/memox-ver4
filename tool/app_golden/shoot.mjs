@@ -108,6 +108,12 @@ const TARGETS = [
   { name: 'guess-mode--wrong--light', path: '/session/guess?state=wrong', waitFor: 'text=Continue' },
   { name: 'guess-mode--long-text--light', path: '/session/guess?state=long-text', waitFor: 'text=students go to study' },
   { name: 'guess-mode--waiting--dark', path: '/session/guess?state=waiting&theme=dark', waitFor: 'text=학교' },
+  // fill-mode (WBS 7.2) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'fill-mode--waiting--light', path: '/session/fill?state=waiting', waitFor: 'text=friend' },
+  { name: 'fill-mode--hint--light', path: '/session/fill?state=hint', waitFor: 'text=starts with' },
+  { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
+  { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
+  { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
 ];
 
 const MIME = {
