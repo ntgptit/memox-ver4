@@ -225,31 +225,31 @@ Each feature slice still **owns** its own interaction tests, state-matrix tests,
 
 | Screen | Registry states | WBS IDs | Missing states | Blocked reason |
 |---|---:|---|---|---|
-| dashboard | 8 | 5.1, 5.2, 5.3 | 0 | DEP-DB via 0.4/5.2 |
-| library | 12 | 3.1, 3.2, 3.4 | 0 | DEP-DB via 0.4 |
-| subdeck-list | 13 | 3.1, 3.2, 3.5 | 0 | DEP-DB via 0.4 |
-| flashcard-list | 15 | 4.1, 4.2, 4.3 | 0 | DEP-DB via 0.4 |
-| deck-settings | 5 | 3.1, 3.2, 4.5 | 0 | DEP-DB via 0.4 |
-| deck-content-choice | 1 | 3.1, 3.2, 3.6 | 0 | DEP-DB via 0.4 |
-| flashcard-editor | 9 | 4.1, 4.2, 4.4 | 0 | DEP-DB via 0.4; audio needs DEP-TTS |
-| mode-picker | 3 | 5.1, 5.2, 5.4 | 0 | DEP-DB via 0.4 |
-| review-mode | 6 | 5.1, 5.2, 6.1 | 0 | DEP-DB via 0.4; audio needs DEP-TTS |
-| match-mode | 6 | 5.1, 5.2, 6.2 | 0 | DEP-DB via 0.4 |
-| guess-mode | 5 | 5.1, 5.2, 6.3 | 0 | DEP-DB via 0.4 |
-| recall-mode | 5 | 5.1, 5.2, 7.1 | 0 | DEP-DB via 0.4 |
-| fill-mode | 6 | 5.1, 5.2, 7.2 | 0 | DEP-DB via 0.4 |
-| player | 5 | 5.1, 5.2, 7.3 | 0 | DEP-DB via 0.4; audio needs DEP-TTS |
-| study-result | 7 | 5.1, 5.2, 7.4 | 0 | DEP-DB via 0.4 |
-| search | 5 | 4.2, 4.6 | 0 | DEP-DB via 0.4 |
-| statistics | 5 | 5.2, 8.1 | 0 | DEP-DB via 5.2; after finalization (7.4) |
-| reminder | 3 | 8.2 | 0 | DEP-NOTIFICATIONS + DEP-DB |
-| account-sync | 5 | 10.2, 10.3 | 0 | DEP-AUTH + DEP-CLOUD; after learning flow (7.4) |
+| dashboard | 8 | 5.1, 5.2, 5.3 | 0 | DEP-DB via 0.4/5.2; Quality readiness gate: 2.6 |
+| library | 12 | 3.1, 3.2, 3.4 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| subdeck-list | 13 | 3.1, 3.2, 3.5 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| flashcard-list | 15 | 4.1, 4.2, 4.3 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| deck-settings | 5 | 3.1, 3.2, 4.5 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| deck-content-choice | 1 | 3.1, 3.2, 3.6 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| flashcard-editor | 9 | 4.1, 4.2, 4.4 | 0 | DEP-DB via 0.4; audio needs DEP-TTS; Quality readiness gate: 2.6 |
+| mode-picker | 3 | 5.1, 5.2, 5.4 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| review-mode | 6 | 5.1, 5.2, 6.1 | 0 | DEP-DB via 0.4; audio needs DEP-TTS; Quality readiness gate: 2.6 |
+| match-mode | 6 | 5.1, 5.2, 6.2 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| guess-mode | 5 | 5.1, 5.2, 6.3 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| recall-mode | 5 | 5.1, 5.2, 7.1 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| fill-mode | 6 | 5.1, 5.2, 7.2 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| player | 5 | 5.1, 5.2, 7.3 | 0 | DEP-DB via 0.4; audio needs DEP-TTS; Quality readiness gate: 2.6 |
+| study-result | 7 | 5.1, 5.2, 7.4 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| search | 5 | 4.2, 4.6 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| statistics | 5 | 5.2, 8.1 | 0 | DEP-DB via 5.2; after finalization (7.4); Quality readiness gate: 2.6 |
+| reminder | 3 | 8.2 | 0 | DEP-NOTIFICATIONS + DEP-DB; Quality readiness gate: 2.6 |
+| account-sync | 5 | 10.2, 10.3 | 0 | DEP-AUTH + DEP-CLOUD; after learning flow (7.4); Quality readiness gate: 2.6 |
 | theme | 3 | 1.2, 2.3 | 0 | DEP-DB via 0.4 |
-| import | 7 | 4.1, 4.2, 9.1 | 0 | DEP-FILE-PICKER + DEP-DB |
-| export | 4 | 4.2, 9.2 | 0 | DEP-FILE-SHARING + DEP-DB |
-| languages | 5 | 3.1, 3.2, 3.3 | 0 | DEP-DB via 0.4 |
-| study-session | 10 | 5.1, 5.2, 5.5 | 0 | DEP-DB via 0.4 |
-| settings | 7 | 2.3, 5.2, 10.1 | 0 | DEP-DB via 0.4; voice needs DEP-TTS |
+| import | 7 | 4.1, 4.2, 9.1 | 0 | DEP-FILE-PICKER + DEP-DB; Quality readiness gate: 2.6 |
+| export | 4 | 4.2, 9.2 | 0 | DEP-FILE-SHARING + DEP-DB; Quality readiness gate: 2.6 |
+| languages | 5 | 3.1, 3.2, 3.3 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| study-session | 10 | 5.1, 5.2, 5.5 | 0 | DEP-DB via 0.4; Quality readiness gate: 2.6 |
+| settings | 7 | 2.3, 5.2, 10.1 | 0 | DEP-DB via 0.4; voice needs DEP-TTS; Quality readiness gate: 2.6 |
 | app-bar | 8 | 1.5, 1.6, 1.7, 2.1, 2.2 | 0 | Shared shell (not a feature screen) |
 
 ```
@@ -353,7 +353,8 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Commit | Date | WBS IDs | Summary |
 |---|---|---|---|
-| TBD — replace with actual squash-merge hash in the next WBS update. | 2026-07-13 | 1.4, 1.5, 1.8, 2.3, 2.4, 2.6, 8.2, 11.2, 3.3–10.3 | Enforce quality-harness ordering: move 1.4/1.5 automated tests into 1.8 (implementation contracts only); add 2.6 feature quality-harness readiness gate (deps 11.1/11.3/11.4); gate all production screen slices (3.3–10.3) on 2.6 without a cycle; add 0.13 + shared quality harnesses + 2.6 to the Critical Path and MVP A; correct MVP A gates (DEP-DB, DEP-TEST, DEP-ICON-FONT, DEP-GOLDEN, DEP-TTS); fix stale 0.8/0.4 evidence (1.8/2.4/11.2 → 0.13; 2.3/8.2 persistence → 0.5); recount (67 rows: 11 Specified / 56 Blocked) |
+| TBD — replace with actual squash-merge hash in the next WBS update. | 2026-07-13 | UI Kit Coverage (sections 3–10 screens) | Surface the 2.6 quality-readiness gate in the UI Kit Coverage table: add "Quality readiness gate: 2.6" to the Blocked reason of every production screen (24 rows), keeping theme and app-bar (bootstrap shell) unchanged. Docs-only, coverage table only — no dependency-graph or status-count change |
+| 2d00d10 | 2026-07-13 | 1.4, 1.5, 1.8, 2.3, 2.4, 2.6, 8.2, 11.2, 3.3–10.3 | Enforce quality-harness ordering: move 1.4/1.5 automated tests into 1.8 (implementation contracts only); add 2.6 feature quality-harness readiness gate (deps 11.1/11.3/11.4); gate all production screen slices (3.3–10.3) on 2.6 without a cycle; add 0.13 + shared quality harnesses + 2.6 to the Critical Path and MVP A; correct MVP A gates (DEP-DB, DEP-TEST, DEP-ICON-FONT, DEP-GOLDEN, DEP-TTS); fix stale 0.8/0.4 evidence (1.8/2.4/11.2 → 0.13; 2.3/8.2 persistence → 0.5); recount (67 rows: 11 Specified / 56 Blocked) |
 | a4155ee | 2026-07-13 | 0.6, 0.7, 0.8, 0.13, 1.5, 1.6, 1.7, 2.1, 2.2, 2.3, 3.1, 3.2, 4.1, 4.2, 5.1, 5.2, 8.2, 11.1, 11.3, 11.4, 11.6 | Fix test and quality prerequisites: split the test-framework decision (0.8) from the harness setup (0.13, new); add the test-harness prerequisite to test-owning domain/persistence rows (0.6, 3.1, 3.2, 4.1, 4.2, 5.1, 5.2 → Blocked); gate icon-based primitives 1.5/1.6/1.7 on 1.4 (Blocked, cascading 0.7/2.1/2.2); convert 11.1/11.3/11.4 into harness/contract rows + add Vertical Slice Quality Ownership; expand 11.6 content-flow prerequisites; gate theme/reminder persistence on 0.5; recalculate work-package and status counts (66 rows: 11 Specified / 55 Blocked) |
 | 093ea6e | 2026-07-13 | 0.4, 1.4, 10.2, 10.3, 11.6 | Fix remaining dependency gates: remove the DEP-DB self-cycle from the 0.4 decision gate; add DEP-ICON-FONT and set 1.4 Blocked; gate 10.2 and 10.3 behind MVP B (5.5 + 7.4); add DEP-FILE-PICKER/DEP-FILE-SHARING to 10.3; gate 11.6 smoke on import/export (9.1, 9.2); recalculate status counts (21 Specified / 44 Blocked) |
 | e4ca0e3 | 2026-07-13 | 1.4, 1.5, 7.4, 8.1 | Fix WBS review findings: add MxList (18 primitives), correct 7.4↔8.1 dependency direction, reorder Next 10 (0.3 before 0.7), set 2.5 Blocked, normalize dependency ids to WBS/DEP-*, fix icon parity strategy |
