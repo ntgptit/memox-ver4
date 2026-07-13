@@ -85,7 +85,12 @@ export function AppScreen({
               flexGrow: 1, // lets a flex:1 child (EmptyState, tall study cards) fill the body like the kit
               paddingHorizontal: t.layout.gutter,
               paddingTop: t.space[4],
-              paddingBottom: fab ? t.space[4] + t.layout.fabSize + t.space[6] : t.space[6],
+              // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
+              // (+ the FAB clearance when present); screens that need the space back
+              // reclaim it with a negative margin, exactly like the kit.
+              paddingBottom: fab
+                ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
+                : t.layout.bottomNavHeight + t.space[6],
               gap: t.space[6],
             },
             contentStyle,

@@ -55,7 +55,8 @@ export function MatchModeScreen(props: MatchModeScreenProps) {
   return (
     <AppScreen node="match-mode/screen" variant="nested" title="Match" leading={back}>
       <ProgressHeader done={props.done} total={props.total} node="match-mode/progress" />
-      <View style={{ flexDirection: 'row', gap: t.space[2] }}>
+      {/* Kit: the board reclaims the body's reserved bottom-nav padding. */}
+      <View style={{ flexDirection: 'row', gap: t.space[2], marginBottom: -t.layout.bottomNavHeight }}>
         <View style={{ flex: 1, gap: t.space[2] }}>
           {props.left.map((tile, i) => (
             <Tile key={tile.key} theme={t} tile={tile} node={`match-mode/left-${i}`} onPress={() => props.onTap('L', tile.cardId)} />

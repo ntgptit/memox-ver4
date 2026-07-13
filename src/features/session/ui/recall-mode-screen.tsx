@@ -69,30 +69,33 @@ export function RecallModeScreen(props: RecallModeScreenProps) {
         <FeedbackNote node="recall-mode/note-success" tone="success" icon="check_circle" text="Nice! Moving to the next card." />
       )}
 
-      {phase === 'before-reveal' ? (
-        <MxButton variant="primary" icon="visibility" block size="lg" onPress={props.onReveal} node="recall-mode/reveal">
-          Show
-        </MxButton>
-      ) : (
-        <View style={{ flexDirection: 'row', gap: t.space[3] }}>
-          <View style={{ flex: 1 }}>
-            <MxButton
-              variant={phase === 'forgot' ? 'primary' : 'ghost'}
-              danger={phase === 'forgot'}
-              block
-              onPress={props.onForgot}
-              node="recall-mode/forgot"
-            >
-              Forgot
-            </MxButton>
+      {/* Kit: the action row reclaims the body's reserved bottom-nav padding. */}
+      <View style={{ marginBottom: -t.layout.bottomNavHeight }}>
+        {phase === 'before-reveal' ? (
+          <MxButton variant="primary" icon="visibility" block size="lg" onPress={props.onReveal} node="recall-mode/reveal">
+            Show
+          </MxButton>
+        ) : (
+          <View style={{ flexDirection: 'row', gap: t.space[3] }}>
+            <View style={{ flex: 1 }}>
+              <MxButton
+                variant={phase === 'forgot' ? 'primary' : 'ghost'}
+                danger={phase === 'forgot'}
+                block
+                onPress={props.onForgot}
+                node="recall-mode/forgot"
+              >
+                Forgot
+              </MxButton>
+            </View>
+            <View style={{ flex: 1 }}>
+              <MxButton variant="primary" block onPress={props.onRemembered} node="recall-mode/remembered">
+                Got it
+              </MxButton>
+            </View>
           </View>
-          <View style={{ flex: 1 }}>
-            <MxButton variant="primary" block onPress={props.onRemembered} node="recall-mode/remembered">
-              Got it
-            </MxButton>
-          </View>
-        </View>
-      )}
+        )}
+      </View>
     </AppScreen>
   );
 }

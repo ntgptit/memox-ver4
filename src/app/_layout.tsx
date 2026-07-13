@@ -36,10 +36,13 @@ export default function RootLayout() {
         <Stack.Screen name="deck/[deckId]" options={{ headerShown: false }} />
         <Stack.Screen name="session" options={{ headerShown: false }} />
         <Stack.Screen name="settings" options={{ headerShown: false }} />
-        <Stack.Screen name="card/new" options={{ presentation: 'modal', title: 'New card' }} />
-        <Stack.Screen name="card/[cardId]" options={{ presentation: 'modal', title: 'Edit card' }} />
-        <Stack.Screen name="search" options={{ presentation: 'modal', title: 'Search' }} />
-        <Stack.Screen name="player" options={{ presentation: 'modal', title: 'Player' }} />
+        {/* Modal routes own their MxContextualAppBar — the router header would stack a
+            second (theme-blind) bar on top (the search--dark golden showed it as a white
+            band over the dark canvas). */}
+        <Stack.Screen name="card/new" options={{ presentation: 'modal', title: 'New card', headerShown: false }} />
+        <Stack.Screen name="card/[cardId]" options={{ presentation: 'modal', title: 'Edit card', headerShown: false }} />
+        <Stack.Screen name="search" options={{ presentation: 'modal', title: 'Search', headerShown: false }} />
+        <Stack.Screen name="player" options={{ presentation: 'modal', title: 'Player', headerShown: false }} />
       </Stack>
     </PersistedThemeProvider>
   );

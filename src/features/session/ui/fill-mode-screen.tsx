@@ -89,7 +89,10 @@ export function FillModeScreen(props: FillModeScreenProps) {
           </Text>
         )}
 
-        <Controls theme={t} canCheck={canCheck} {...props} />
+        {/* Kit: the controls reclaim the body's reserved bottom-nav padding. */}
+        <View style={{ marginBottom: -t.layout.bottomNavHeight }}>
+          <Controls theme={t} canCheck={canCheck} {...props} />
+        </View>
       </KeyboardAvoidingView>
     </AppScreen>
   );

@@ -65,9 +65,10 @@ export function GuessModeScreen(props: GuessModeScreenProps) {
       <StudyPromptCard term={props.term} nodePrefix="guess-mode" />
 
       {/* Kit: the five options fill the remaining body height as equal rows — short
-          options grow to share the space, long meanings keep their content height. After
-          the reveal there is no Continue button; tapping any option advances. */}
-      <View style={{ flex: 1, gap: t.space[3] }}>
+          options grow to share the space, long meanings keep their content height — and
+          the grid reclaims the body's reserved bottom-nav padding. After the reveal
+          there is no Continue button; tapping any option advances. */}
+      <View style={{ flex: 1, gap: t.space[3], marginBottom: -t.layout.bottomNavHeight }}>
         {props.options.map((text, i) => {
           const tone = toneFor(phase, i, props.correctIndex, props.pickedIndex);
           const stateLabel = tone === 'correct' ? ' (correct)' : tone === 'wrong' ? ' (your answer, wrong)' : '';
