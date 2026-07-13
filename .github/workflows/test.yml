@@ -1,0 +1,36 @@
+name: Test
+
+# Production test harness (WBS 0.13). Runs the jest suite (unit + RN component + repository
+# contract) on changes to app source, the test config, or dependencies. Kept separate from the
+# UI-kit gate, which is scoped to the design kit. Path-filtered per repo convention.
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'jest.config.js'
+      - 'jest.setup.js'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/test.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'src/**'
+      - 'jest.config.js'
+      - 'jest.setup.js'
+      - 'package.json'
+      - 'tsconfig.json'
+      - '.github/workflows/test.yml'
+
+jobs:
+  jest:
+    name: jest (unit + component + repository)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test -- --ci
