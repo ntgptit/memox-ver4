@@ -17,6 +17,8 @@ import {
   MxButton,
   MxTextField,
   Icon,
+  ListRow,
+  EmptyState,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -82,7 +84,17 @@ export function LanguagesScreen({
       {data.status === 'loading' && <LoadingState theme={t} />}
       {data.status === 'error' && <ErrorState theme={t} message={data.message} onRetry={onRetry} />}
       {data.status === 'ready' && data.pairs.length === 0 && (
-        <EmptyState theme={t} onAdd={() => setMode('add')} />
+        <EmptyState
+          node="languages/empty"
+          icon="translate"
+          title="No language pairs yet"
+          text="Add a learning language and the language you want its meanings in."
+          action={
+            <MxButton variant="primary" icon="add" onPress={() => setMode('add')} node="languages/empty-add">
+              Add language pair
+            </MxButton>
+          }
+        />
       )}
       {data.status === 'ready' && data.pairs.length > 0 && (
         <PairList theme={t} pairs={data.pairs} onAdd={() => setMode('add')} onRemove={setPendingRemove} />
@@ -118,45 +130,22 @@ function LoadingState({ theme: t }: { theme: Theme }) {
   );
 }
 
-function ErrorState({ theme: t, message, onRetry }: { theme: Theme; message: string; onRetry?: () => void }) {
+function ErrorState({ message, onRetry }: { message: string; onRetry?: () => void }) {
   return (
-    <MxCard node="languages/error" variant="flat">
-      <View style={{ alignItems: 'center', gap: t.space[3], paddingVertical: t.space[4] }}>
-        <Icon name="cloud_off" size="xl" color={t.color.textTertiary} />
-        <Text style={[t.font.text({ size: 'md', weight: 'bold' }), { color: t.color.text, textAlign: 'center' }]}>
-          Couldn’t load
-        </Text>
-        <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary, textAlign: 'center' }]}>
-          {message}
-        </Text>
-        {onRetry && (
+    <EmptyState
+      node="languages/error"
+      icon="cloud_off"
+      tone="error"
+      title="Couldn’t load"
+      text={message}
+      action={
+        onRetry && (
           <MxButton variant="secondary" icon="refresh" onPress={onRetry} node="languages/retry">
             Try again
           </MxButton>
-        )}
-      </View>
-    </MxCard>
-  );
-}
-
-function EmptyState({ theme: t, onAdd }: { theme: Theme; onAdd: () => void }) {
-  return (
-    <MxCard node="languages/empty" variant="flat">
-      <View style={{ alignItems: 'center', gap: t.space[3], paddingVertical: t.space[6] }}>
-        <Icon name="translate" size="xl" color={t.color.textTertiary} />
-        <Text style={[t.font.text({ size: 'md', weight: 'bold' }), { color: t.color.text, textAlign: 'center' }]}>
-          No language pairs yet
-        </Text>
-        <Text
-          style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary, textAlign: 'center' }]}
-        >
-          Add a learning language and the language you want its meanings in.
-        </Text>
-        <MxButton variant="primary" icon="add" onPress={onAdd} node="languages/empty-add">
-          Add language pair
-        </MxButton>
-      </View>
-    </MxCard>
+        )
+      }
+    />
   );
 }
 
@@ -177,66 +166,28 @@ function PairList({
     <View style={{ gap: t.space[4] }}>
       <MxCard node="languages/list" padding="sm">
         {pairs.map((p, i) => (
-          <PairRow key={p.id} theme={t} pair={p} last={i === pairs.length - 1} onRemove={() => onRemove(p)} />
+          <ListRow
+            key={p.id}
+            node={`languages/pair-${p.id}`}
+            icon="translate"
+            title={pairTitle(p)}
+            sub={pairSubtitle(p)}
+            last={i === pairs.length - 1}
+            trailing={
+              <MxIconButton
+                icon="delete"
+                variant="ghost"
+                accessibilityLabel={`Remove ${pairTitle(p)}`}
+                onPress={() => onRemove(p)}
+                node={`languages/pair-${p.id}-del`}
+              />
+            }
+          />
         ))}
       </MxCard>
       <MxButton variant="secondary" icon="add" block onPress={onAdd} node="languages/add">
         Add language pair
       </MxButton>
-    </View>
-  );
-}
-
-function PairRow({
-  theme: t,
-  pair,
-  last,
-  onRemove,
-}: {
-  theme: Theme;
-  pair: LanguagePairView;
-  last: boolean;
-  onRemove: () => void;
-}) {
-  return (
-    <View
-      testID={`languages/pair-${pair.id}`}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: t.space[3],
-        paddingVertical: t.space[3],
-        borderBottomWidth: last ? 0 : t.stroke.hairline,
-        borderBottomColor: t.color.divider,
-      }}
-    >
-      <View
-        style={{
-          width: t.space[7],
-          height: t.space[7],
-          borderRadius: t.radius.md,
-          backgroundColor: t.color.primarySoft,
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <Icon name="translate" size="sm" color={t.color.onPrimarySoft} />
-      </View>
-      <View style={{ flex: 1 }}>
-        <Text numberOfLines={1} style={[t.font.text({ size: 'md', weight: 'medium' }), { color: t.color.text }]}>
-          {pairTitle(pair)}
-        </Text>
-        <Text numberOfLines={1} style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>
-          {pairSubtitle(pair)}
-        </Text>
-      </View>
-      <MxIconButton
-        icon="delete"
-        variant="ghost"
-        accessibilityLabel={`Remove ${pairTitle(pair)}`}
-        onPress={onRemove}
-        node={`languages/pair-${pair.id}-del`}
-      />
     </View>
   );
 }

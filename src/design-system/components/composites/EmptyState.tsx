@@ -1,0 +1,63 @@
+/**
+ * EmptyState — shared composite, ported from the kit's `kit-helpers.jsx`
+ * `EmptyState` (`window.EmptyState`): a centered lg icon tile, extrabold title,
+ * secondary body copy capped at a readable measure, and an optional action.
+ */
+
+import { Text, View } from 'react-native';
+import type { ReactNode } from 'react';
+
+import { useTheme } from '../../theme';
+import type { IconName } from '../../icons';
+import { MxIconTile, type MxIconTileTone } from '../surfaces/MxIconTile';
+
+export interface EmptyStateProps {
+  icon: IconName | string;
+  tone?: MxIconTileTone;
+  title: string;
+  text?: string;
+  action?: ReactNode;
+  node?: string;
+}
+
+export function EmptyState({ icon, tone, title, text, action, node }: EmptyStateProps) {
+  const t = useTheme();
+
+  return (
+    <View
+      testID={node}
+      style={{
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: t.space[4],
+        paddingVertical: t.space[7],
+        paddingHorizontal: t.space[4],
+      }}
+    >
+      <MxIconTile icon={icon} tone={tone} size="lg" />
+      <View style={{ gap: t.space[2], maxWidth: t.size['3xl'], alignItems: 'center' }}>
+        <Text
+          accessibilityRole="header"
+          style={[
+            t.font.text({ size: 'lg', weight: 'extrabold', letterSpacing: 'tight' }),
+            { color: t.color.text, textAlign: 'center' },
+          ]}
+        >
+          {title}
+        </Text>
+        {text !== undefined && (
+          <Text
+            style={[
+              t.font.text({ size: 'base', lineHeight: 'normal' }),
+              { color: t.color.textSecondary, textAlign: 'center' },
+            ]}
+          >
+            {text}
+          </Text>
+        )}
+      </View>
+      {action}
+    </View>
+  );
+}
