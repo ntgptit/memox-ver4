@@ -6,7 +6,7 @@
  */
 
 import { isErr, type UseCase, type IdGenerator, type Clock } from '@/shared';
-import { makeDeck, renameDeck, type Deck, type DeckOrganisation } from './deck';
+import { makeDeck, renameDeck, reorganiseDeck, type Deck, type DeckOrganisation } from './deck';
 import { makeSubdeck, moveSubdeck as moveSubdeckEntity, type Subdeck } from './subdeck';
 import type { DeckRepository, SubdeckRepository } from './ports';
 
@@ -62,6 +62,34 @@ export function deleteDeck(deps: Pick<LibraryDeps, 'decks'>): UseCase<string, vo
   return {
     execute(deckId) {
       return deps.decks.remove(deckId);
+    },
+  };
+}
+
+export interface SetDeckContentInput {
+  deckId: string;
+  title: string;
+  organisation: DeckOrganisation;
+}
+
+/**
+ * Name + organise a new deck in one step (deck-content-choice, WBS 3.6): rename the
+ * deck (validates the title) and set its organisation, then persist. A blank title
+ * short-circuits with a validation error before any write.
+ */
+export function setDeckContentUseCase(deps: Pick<LibraryDeps, 'decks' | 'clock'>): UseCase<SetDeckContentInput, Deck> {
+  return {
+    async execute(input) {
+      const found = await deps.decks.getById(input.deckId);
+      if (isErr(found)) {
+        return found;
+      }
+      const now = deps.clock();
+      const renamed = renameDeck(found.value, input.title, now);
+      if (isErr(renamed)) {
+        return renamed;
+      }
+      return deps.decks.save(reorganiseDeck(renamed.value, input.organisation, now));
     },
   };
 }

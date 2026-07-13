@@ -68,3 +68,12 @@ export function renameDeck(deck: Deck, rawTitle: string, updatedAt: number): Res
   }
   return ok({ ...deck, title: title.value, updatedAt });
 }
+
+/**
+ * Set how a deck organises its content (deck-content-choice, WBS 3.6), bumping
+ * `updatedAt`. `organisation` is a typed union so no validation is needed; returns a
+ * new Deck (immutable).
+ */
+export function reorganiseDeck(deck: Deck, organisation: DeckOrganisation, updatedAt: number): Deck {
+  return { ...deck, organisation, updatedAt };
+}
