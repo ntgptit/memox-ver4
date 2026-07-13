@@ -8,8 +8,10 @@
  */
 
 import type { Migration } from './types';
+import { content001 } from './001-content';
 
-export const migrations: readonly Migration[] = [];
+export const migrations: readonly Migration[] = [content001];
 
 export * from './types';
 export * from './runner';
+export { content001 } from './001-content';
