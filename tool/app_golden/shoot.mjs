@@ -102,6 +102,12 @@ const TARGETS = [
   { name: 'recall-mode--remembered--light', path: '/session/recall?state=remembered', waitFor: 'text=Moving to the next card.' },
   { name: 'recall-mode--complete--light', path: '/session/recall?state=complete', waitFor: 'text=Round complete!' },
   { name: 'recall-mode--revealed--dark', path: '/session/recall?state=revealed&theme=dark', waitFor: 'text=friend' },
+  // guess-mode (WBS 6.3) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'guess-mode--waiting--light', path: '/session/guess?state=waiting', waitFor: 'text=학교' },
+  { name: 'guess-mode--correct--light', path: '/session/guess?state=correct', waitFor: 'text=Continue' },
+  { name: 'guess-mode--wrong--light', path: '/session/guess?state=wrong', waitFor: 'text=Continue' },
+  { name: 'guess-mode--long-text--light', path: '/session/guess?state=long-text', waitFor: 'text=students go to study' },
+  { name: 'guess-mode--waiting--dark', path: '/session/guess?state=waiting&theme=dark', waitFor: 'text=학교' },
 ];
 
 const MIME = {
