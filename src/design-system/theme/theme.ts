@@ -45,6 +45,7 @@ import type {
   FontWeightName,
   LineHeightName,
   LetterSpacingName,
+  PaletteAccent,
 } from '../tokens';
 
 /** Spec for {@link Theme.font.text} — a size is required, the rest default. */
@@ -85,7 +86,17 @@ export interface Theme {
   paletteAccents: typeof paletteAccents;
 }
 
-function makeFont(): ThemeFont {
+/** A user accent choice: the deep-violet `brand` default, or a palette accent. */
+export type AccentChoice = 'brand' | PaletteAccent;
+
+/** User theme overrides (WBS 2.3): accent colour + a type scale multiplier. */
+export interface ThemeOptions {
+  accent?: AccentChoice;
+  /** Multiplier applied to every composed font size (e.g. 0.9 / 1 / 1.15). */
+  textScale?: number;
+}
+
+function makeFont(textScale: number): ThemeFont {
   return {
     family: fontFamily,
     size: fontSize,
@@ -93,7 +104,7 @@ function makeFont(): ThemeFont {
     lineHeightRatio,
     letterSpacingEm,
     text: ({ size: s, weight, lineHeight, letterSpacing, family }: TextStyleSpec): TextStyle => {
-      const px = fontSize[s];
+      const px = Math.round(fontSize[s] * textScale);
       return {
         fontFamily: fontFamily[family ?? 'sans'],
         fontSize: px,
@@ -105,15 +116,32 @@ function makeFont(): ThemeFont {
   };
 }
 
-/** Build the active {@link Theme} for a colour scheme. Pure; memoize per scheme. */
-export function resolveTheme(scheme: ColorScheme): Theme {
+function hexToRgba(hex: string, alpha: number): string {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+}
+
+/**
+ * Build the active {@link Theme} for a colour scheme, applying the user's accent and
+ * text-scale overrides (WBS 2.3). Pure; memoize per (scheme, accent, textScale).
+ */
+export function resolveTheme(scheme: ColorScheme, opts: ThemeOptions = {}): Theme {
+  const { accent = 'brand', textScale = 1 } = opts;
+  let color = colorTokens[scheme];
+  if (accent !== 'brand') {
+    const hex = paletteAccents[accent];
+    color = { ...color, accent: hex, accentSoft: hexToRgba(hex, 0.16) };
+  }
   return {
     scheme,
-    color: colorTokens[scheme],
+    color,
     space,
     layout,
     radius,
-    font: makeFont(),
+    font: makeFont(textScale),
     elevation: elevationTokens[scheme],
     focusRingWidth,
     duration,

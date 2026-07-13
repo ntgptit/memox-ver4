@@ -11,11 +11,13 @@ import type { Migration } from './types';
 import { content001 } from './001-content';
 import { flashcards002 } from './002-flashcards';
 import { sessions003 } from './003-sessions';
+import { settings004 } from './004-settings';
 
-export const migrations: readonly Migration[] = [content001, flashcards002, sessions003];
+export const migrations: readonly Migration[] = [content001, flashcards002, sessions003, settings004];
 
 export * from './types';
 export * from './runner';
 export { content001 } from './001-content';
 export { flashcards002 } from './002-flashcards';
 export { sessions003 } from './003-sessions';
+export { settings004 } from './004-settings';
