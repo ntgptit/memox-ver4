@@ -41,8 +41,8 @@ describe('LanguagesScreen a11y — roles & labels', () => {
 
   it('each row delete control names the pair it removes', () => {
     renderScreen(<LanguagesScreen {...base} />);
-    expect(screen.getByLabelText('Remove Korean → English')).toBeTruthy();
-    expect(screen.getByLabelText('Remove Japanese → English')).toBeTruthy();
+    expect(screen.getByLabelText('Remove 한국어 → English')).toBeTruthy();
+    expect(screen.getByLabelText('Remove 日本語 → English')).toBeTruthy();
   });
 
   it('the loading state exposes a progressbar', () => {

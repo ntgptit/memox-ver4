@@ -55,14 +55,14 @@ describe('LanguagesScreen — data states (contract §6)', () => {
 
   it('one: renders a single pair', () => {
     renderScreen(<LanguagesScreen {...props({ data: LANGUAGES_FIXTURES.one })} />);
-    expect(screen.getByText('Korean → English')).toBeTruthy();
-    expect(screen.queryByText('Japanese → English')).toBeNull();
+    expect(screen.getByText('한국어 → English')).toBeTruthy();
+    expect(screen.queryByText('日本語 → English')).toBeNull();
   });
 
   it('list: renders every pair with its deck-count subtitle', () => {
     renderScreen(<LanguagesScreen {...props({ data: LANGUAGES_FIXTURES.list })} />);
-    expect(screen.getByText('Korean → English')).toBeTruthy();
-    expect(screen.getByText('Japanese → English')).toBeTruthy();
+    expect(screen.getByText('한국어 → English')).toBeTruthy();
+    expect(screen.getByText('日本語 → English')).toBeTruthy();
     expect(screen.getByText('12 decks')).toBeTruthy();
     expect(screen.getByText('4 decks')).toBeTruthy();
   });
@@ -76,7 +76,7 @@ describe('LanguagesScreen — data states (contract §6)', () => {
 
   it('dark: list renders under the dark scheme', () => {
     renderScreen(<LanguagesScreen {...props({ data: LANGUAGES_FIXTURES.list })} />, 'dark');
-    expect(screen.getByText('Korean → English')).toBeTruthy();
+    expect(screen.getByText('한국어 → English')).toBeTruthy();
   });
 });
 

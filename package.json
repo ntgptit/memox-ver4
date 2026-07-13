@@ -53,6 +53,7 @@
     "lint": "expo lint",
     "gen:ui-kit": "node tool/ui_kit_shots/gen.mjs",
     "gen:parity": "node tool/parity/build-manifest.mjs",
+    "parity:app": "node tool/parity/verify-app-parity.mjs",
     "verify:ui-kit": "node tool/ui_kit_shots/verify.mjs",
     "verify:ui-kit:local": "node tool/ui_kit_shots/verify.mjs --sample",
     "verify:ui-kit:structural": "node tool/ui_kit_shots/verify.mjs --structural",

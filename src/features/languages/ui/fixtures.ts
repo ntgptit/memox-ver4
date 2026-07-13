@@ -35,9 +35,15 @@ export function pairSubtitle(p: LanguagePairView): string {
   return `${p.deckCount} ${p.deckCount === 1 ? 'deck' : 'decks'}`;
 }
 
+/**
+ * Canonical pairs mirror the kit fixture (`_features/languages/Languages.jsx`:
+ * 한국어 → English, 日本語 → English) so the app goldens stay comparable with the
+ * kit reference shots. The kit subtitles count CARDS (`1240 cards`); this slice's
+ * domain counts decks — a recorded divergence the kit↔app parity report surfaces.
+ */
 const PAIRS: readonly LanguagePairView[] = [
-  { id: 'lp-ko-en', learning: 'Korean', native: 'English', deckCount: 12 },
-  { id: 'lp-ja-en', learning: 'Japanese', native: 'English', deckCount: 4 },
+  { id: 'lp-ko-en', learning: '한국어', native: 'English', deckCount: 12 },
+  { id: 'lp-ja-en', learning: '日本語', native: 'English', deckCount: 4 },
 ];
 
 /** Fixtures keyed by canonical state name (contract §6 + the loading/error edges). */
