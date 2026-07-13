@@ -75,6 +75,21 @@ const TARGETS = [
     waitFor: 'text=This deck needs at least 4 words to play.',
   },
   { name: 'mode-picker--default--dark', path: '/session/mode-picker?state=default&theme=dark', waitFor: 'text=Card source' },
+  // deck-settings (WBS 4.5) — DB-free overlay preview via ?state=/?theme=.
+  { name: 'deck-settings--action-sheet--light', path: '/deck/preview/settings?state=action-sheet', waitFor: 'text=Deck actions' },
+  { name: 'deck-settings--rename--light', path: '/deck/preview/settings?state=rename', waitFor: 'text=Rename deck' },
+  { name: 'deck-settings--move--light', path: '/deck/preview/settings?state=move', waitFor: 'text=Move to' },
+  { name: 'deck-settings--reset-confirm--light', path: '/deck/preview/settings?state=reset-confirm', waitFor: 'text=Reset progress?' },
+  {
+    name: 'deck-settings--delete-confirm--light',
+    path: '/deck/preview/settings?state=delete-confirm',
+    waitFor: 'text=Delete this deck?',
+  },
+  {
+    name: 'deck-settings--action-sheet--dark',
+    path: '/deck/preview/settings?state=action-sheet&theme=dark',
+    waitFor: 'text=Deck actions',
+  },
 ];
 
 const MIME = {
