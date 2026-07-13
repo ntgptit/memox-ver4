@@ -115,10 +115,12 @@ describe('transactional multi-write rollback (WBS 3.2)', () => {
           'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
           ['d1', 'Spanish', 'lp1', 'subdecks', 1, 1],
         );
-        // Second write violates the CHECK constraint → throws → whole tx rolls back.
+        // Second write reuses the PRIMARY KEY 'd1' → constraint violation throws →
+        // whole tx rolls back. (PK is enforced by every SQLite build; a CHECK
+        // constraint is not, so it can't be relied on across environments.)
         await r.run(
           'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)',
-          ['d2', 'Bad', 'lp1', 'not-a-valid-org', 1, 1],
+          ['d1', 'Dup', 'lp1', 'cards', 1, 1],
         );
       }),
     ).rejects.toThrow();

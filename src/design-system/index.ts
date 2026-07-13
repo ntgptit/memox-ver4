@@ -15,6 +15,7 @@
 export * from './theme';
 export * from './fonts';
 export * from './icons';
+export * from './components';
 
 // Tokens are re-exported for the theme/component layers and design tooling. Screens
 // must not import raw tokens directly — that boundary is enforced by WBS 0.12's guard.
