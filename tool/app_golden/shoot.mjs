@@ -62,6 +62,19 @@ const TARGETS = [
     path: '/deck/preview/content?state=default&theme=dark',
     waitFor: 'text=How do you want to organise it?',
   },
+  // mode-picker (WBS 5.4) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'mode-picker--default--light', path: '/session/mode-picker?state=default', waitFor: 'text=Card source' },
+  {
+    name: 'mode-picker--scope-dropdown--light',
+    path: '/session/mode-picker?state=scopeDropdown',
+    waitFor: 'text=Unlearned only',
+  },
+  {
+    name: 'mode-picker--not-enough--light',
+    path: '/session/mode-picker?state=notEnough',
+    waitFor: 'text=This deck needs at least 4 words to play.',
+  },
+  { name: 'mode-picker--default--dark', path: '/session/mode-picker?state=default&theme=dark', waitFor: 'text=Card source' },
 ];
 
 const MIME = {
