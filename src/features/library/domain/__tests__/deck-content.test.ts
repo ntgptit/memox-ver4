@@ -4,7 +4,15 @@
  * missing deck surfaces not-found.
  */
 
-import { reorganiseDeck, setDeckContentUseCase, makeDeck, type Deck, type DeckRepository } from '@/features/library/domain';
+import {
+  reorganiseDeck,
+  setDeckContentUseCase,
+  moveDeck,
+  moveDeckUseCase,
+  makeDeck,
+  type Deck,
+  type DeckRepository,
+} from '@/features/library/domain';
 import { ok, err, notFoundError, isErr, isOk, type Result, type AppError } from '@/shared';
 import { fixedClock } from '@/shared/testing/fixtures';
 
@@ -80,6 +88,36 @@ describe('setDeckContentUseCase', () => {
       title: 'X',
       organisation: 'cards',
     });
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error.kind).toBe('not-found');
+  });
+});
+
+describe('moveDeck', () => {
+  it('sets languagePairId and bumps updatedAt', () => {
+    const r = moveDeck(seedDeck(), 'lp2', 700);
+    expect(isOk(r)).toBe(true);
+    if (isOk(r)) expect(r.value).toMatchObject({ languagePairId: 'lp2', updatedAt: 700 });
+  });
+
+  it('rejects a blank target pair', () => {
+    const r = moveDeck(seedDeck(), '   ', 700);
+    expect(isErr(r)).toBe(true);
+    if (isErr(r)) expect(r.error.kind).toBe('validation');
+  });
+});
+
+describe('moveDeckUseCase', () => {
+  it('moves an existing deck to a new pair', async () => {
+    const repo = new FakeDeckRepo([seedDeck()]);
+    const r = await moveDeckUseCase({ decks: repo, clock: fixedClock(800) }).execute({ deckId: 'd1', languagePairId: 'lp2' });
+    expect(isOk(r)).toBe(true);
+    expect(repo.saved[0]).toMatchObject({ id: 'd1', languagePairId: 'lp2', updatedAt: 800 });
+  });
+
+  it('surfaces not-found for a missing deck', async () => {
+    const repo = new FakeDeckRepo([]);
+    const r = await moveDeckUseCase({ decks: repo, clock: fixedClock() }).execute({ deckId: 'ghost', languagePairId: 'lp2' });
     expect(isErr(r)).toBe(true);
     if (isErr(r)) expect(r.error.kind).toBe('not-found');
   });

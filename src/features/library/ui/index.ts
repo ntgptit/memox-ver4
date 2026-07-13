@@ -10,3 +10,18 @@ export {
   DECK_CONTENT_CHOICE_FIXTURES,
   type DeckContentChoiceFixtureKey,
 } from './deck-content-choice-fixtures';
+
+export {
+  DeckSettingsScreen,
+  type DeckSettingsScreenProps,
+  type DeckSettingsOverlay,
+  type LanguagePairOption,
+} from './deck-settings-screen';
+export { DeckSettingsContainer } from './deck-settings-container';
+export { useDeckSettings, type DeckSettingsDeps, type DeckSettingsController } from './use-deck-settings';
+export {
+  DECK_SETTINGS_FIXTURE,
+  DECK_SETTINGS_PAIRS,
+  DECK_SETTINGS_OVERLAYS,
+  type DeckSettingsFixtureKey,
+} from './deck-settings-fixtures';

@@ -6,7 +6,7 @@
  */
 
 import { isErr, type UseCase, type IdGenerator, type Clock } from '@/shared';
-import { makeDeck, renameDeck, reorganiseDeck, type Deck, type DeckOrganisation } from './deck';
+import { makeDeck, renameDeck, reorganiseDeck, moveDeck, type Deck, type DeckOrganisation } from './deck';
 import { makeSubdeck, moveSubdeck as moveSubdeckEntity, type Subdeck } from './subdeck';
 import type { DeckRepository, SubdeckRepository } from './ports';
 
@@ -62,6 +62,25 @@ export function deleteDeck(deps: Pick<LibraryDeps, 'decks'>): UseCase<string, vo
   return {
     execute(deckId) {
       return deps.decks.remove(deckId);
+    },
+  };
+}
+
+export interface MoveDeckInput {
+  deckId: string;
+  languagePairId: string;
+}
+
+/** Move a deck to another language pair (deck-settings, WBS 4.5). */
+export function moveDeckUseCase(deps: Pick<LibraryDeps, 'decks' | 'clock'>): UseCase<MoveDeckInput, Deck> {
+  return {
+    async execute(input) {
+      const found = await deps.decks.getById(input.deckId);
+      if (isErr(found)) {
+        return found;
+      }
+      const moved = moveDeck(found.value, input.languagePairId, deps.clock());
+      return moved.ok ? deps.decks.save(moved.value) : moved;
     },
   };
 }

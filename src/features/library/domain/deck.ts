@@ -77,3 +77,14 @@ export function renameDeck(deck: Deck, rawTitle: string, updatedAt: number): Res
 export function reorganiseDeck(deck: Deck, organisation: DeckOrganisation, updatedAt: number): Deck {
   return { ...deck, organisation, updatedAt };
 }
+
+/**
+ * Move a deck to another language pair (deck-settings, WBS 4.5), bumping `updatedAt`.
+ * `languagePairId` must be non-empty; returns a new Deck (immutable).
+ */
+export function moveDeck(deck: Deck, languagePairId: string, updatedAt: number): Result<Deck> {
+  if (languagePairId.trim().length === 0) {
+    return err(validationError([{ field: 'languagePairId', message: 'Pick a language pair.' }]));
+  }
+  return ok({ ...deck, languagePairId, updatedAt });
+}

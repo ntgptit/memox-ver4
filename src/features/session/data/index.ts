@@ -14,6 +14,7 @@ import {
 export * from './repositories';
 export * from './mappers';
 export * from './record-answer';
+export * from './reset-deck-progress';
 
 /** Construct the session repositories over the shared production DB. */
 export async function createSessionRepositories() {
