@@ -11,6 +11,8 @@ import type { CardTranslation } from './card-translation';
 export interface CardRepository extends Repository<Card>, Observable {
   /** All cards of a deck, for duplicate detection + list screens. */
   listByDeck(deckId: string): Promise<Result<Card[]>>;
+  /** The deck's maintained card count (for library/deck headers). */
+  countByDeck(deckId: string): Promise<Result<number>>;
 }
 
 /** Persistence for a card's additional translations. */
