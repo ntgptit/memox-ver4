@@ -6,3 +6,4 @@
 export * from './surfaces';
 export * from './navigation';
 export * from './core';
+export { AppScreen, type AppScreenProps } from './AppScreen';
