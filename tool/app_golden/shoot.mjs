@@ -178,6 +178,27 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // study-result (WBS 7.4) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'study-result--standard--light', path: '/session/result?state=standard', waitFor: 'text=Session complete' },
+  { name: 'study-result--goal-met--light', path: '/session/result?state=goal-met', waitFor: 'text=Daily goal reached!' },
+  { name: 'study-result--goal-missed--light', path: '/session/result?state=goal-missed', waitFor: 'text=Almost there!' },
+  { name: 'study-result--many-wrong--light', path: '/session/result?state=many-wrong', waitFor: 'text=A few shaky words' },
+  { name: 'study-result--finalizing--light', path: '/session/result?state=finalizing', waitFor: 'text=Saving your results' },
+  {
+    name: 'study-result--retry-finalize--light',
+    path: '/session/result?state=retry-finalize',
+    waitFor: 'text=Retrying…',
+  },
+  {
+    name: 'study-result--finalize-error--light',
+    path: '/session/result?state=finalize-error',
+    waitFor: 'text=Couldn\'t save your results',
+  },
+  {
+    name: 'study-result--standard--dark',
+    path: '/session/result?state=standard&theme=dark',
+    waitFor: 'text=Session complete',
+  },
   // match-mode (WBS 6.2) — DB-free fixture preview via ?state=/?theme=.
   { name: 'match-mode--playing--light', path: '/session/match?state=playing', waitFor: 'text=friend' },
   { name: 'match-mode--selected--light', path: '/session/match?state=selected', waitFor: 'text=love' },

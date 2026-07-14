@@ -46,3 +46,30 @@ export { MatchModeContainer } from './match-mode-container';
 export { useMatchMode, type MatchModeDeps, type MatchModeController } from './use-match-mode';
 export { buildBoard, BOARD_SIZE, type MatchBoard, type MatchTile } from './match-board';
 export { MATCH_FIXTURES, type MatchFixtureKey, type MatchFixture } from './match-mode-fixtures';
+
+export { StudyResultScreen, type StudyResultScreenProps } from './study-result-screen';
+export { StudyResultContainer, type StudyResultContainerProps } from './study-result-container';
+export {
+  useStudyResult,
+  deriveSummary,
+  deriveKind,
+  deriveStreak,
+  formatDuration,
+  dayKey,
+  RESULT_GOAL_MINUTES,
+  MANY_WRONG_THRESHOLD,
+  ALMOST_THERE_MINUTES,
+  type StudyResultDeps,
+  type StudyResultController,
+} from './use-study-result';
+export {
+  STUDY_RESULT_FIXTURES,
+  STUDY_RESULT_SUMMARY,
+  type StudyResultData,
+  type StudyResultSummary,
+  type StudyResultKind,
+  type StudyResultFixture,
+  type StudyResultFixtureKey,
+  type StudyResultUiState,
+} from './study-result-fixtures';
+export { ResultHero, StreakGoalCard, FinalizingBody, Cta } from './study-result-components';

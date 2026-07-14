@@ -16,11 +16,13 @@ export interface EmptyStateProps {
   tone?: MxIconTileTone;
   title: string;
   text?: string;
+  /** Widen the copy column (+20) to match kit shots that wrap wider than 220. */
+  wide?: boolean;
   action?: ReactNode;
   node?: string;
 }
 
-export function EmptyState({ icon, tone, title, text, action, node }: EmptyStateProps) {
+export function EmptyState({ icon, tone, title, text, wide = false, action, node }: EmptyStateProps) {
   const t = useTheme();
 
   return (
@@ -36,7 +38,13 @@ export function EmptyState({ icon, tone, title, text, action, node }: EmptyState
       }}
     >
       <MxIconTile icon={icon} tone={tone} size="lg" />
-      <View style={{ gap: t.space[2], maxWidth: t.size['3xl'], alignItems: 'center' }}>
+      {/* Kit declares max-width 220. Some kit SHOTS wrap their body copy slightly
+          wider than the app's font metrics allow at 220 — `wide` (+20) makes those
+          screens break lines where their frozen references do (rendered contract
+          over declared CSS); everything else keeps the kit's 220. */}
+      <View
+        style={{ gap: t.space[2], maxWidth: wide ? t.size['3xl'] + t.space[5] : t.size['3xl'], alignItems: 'center' }}
+      >
         <Text
           accessibilityRole="header"
           style={[

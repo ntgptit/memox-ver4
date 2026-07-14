@@ -21,3 +21,4 @@ export { Skeleton, type SkeletonProps } from './Skeleton';
 export { StatusCardRow, type StatusCardRowProps, type CardStatus as StatusCardStatus } from './StatusCardRow';
 export { ProgressBar, type ProgressBarProps } from './ProgressBar';
 export { Note, type NoteProps, type NoteTone } from './Note';
+export { Stat, type StatProps } from './Stat';
