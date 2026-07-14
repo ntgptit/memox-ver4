@@ -128,7 +128,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 | 5.2 | Session + progress persistence | Sessions/attempts/SRS tables + repository; durable mid-session state for resume | study-session, dashboard, statistics | 0.4, 0.5, 5.1, 0.13, DEP-TEST | Implemented | P0 | No (schema) | Kill/restart mid-session resumes losslessly; attempts persist per stage; SRS updates transactional (rollback test) | `src/db/migrations/003-sessions.ts` (srs_state/session/attempt); `src/features/session/data/*` (repos, mappers, transactional persistAnswer) — real-SQLite tested (resume + rollback) | Opus | TBD |
 | 5.3 | Dashboard slice | `dashboard` screen: due summary, streak/goal, continue-CTA, onboarding/empty/loading | dashboard (8 states) | 5.1, 5.2, 1.5, 1.6, 1.7, 2.6 | Implemented | P0 | No | All 8 states incl. caught-up/streak-reset/goal-met/empty/loading; numbers from DB; FAB clearance; visual parity | `src/features/dashboard/ui/{dashboard-screen,dashboard-container,use-dashboard,dashboard-fixtures,dashboard-components}.tsx/ts` + tests (streak/goal/mastery derived from decks+SRS+sessions); shared `ProgressBar`/`Note` composites, `DeckCard.progress`, kit `contrast` button + root-bar bell/avatar; route `src/app/(tabs)/index.tsx`; goldens `dashboard--*.png` — all 8 states + dark < 3% vs kit (parity gate) | Opus + Design | 1b28f85 |
 | 5.4 | Mode-picker slice | `mode-picker`: choose mode + scope, not-enough-words guard, scope dropdown | mode-picker (default, scope-dropdown, not-enough) | 5.1, 5.2, 1.5, 1.7, 2.6 | Implemented | P1 | No | All 3 states; not-enough explains threshold + offers fix; scope selection feeds session start | `src/features/session/ui/*` (ModePickerScreen + scope bottom-sheet + `use-mode-picker` controller + container + model/fixtures), route `src/app/session/mode-picker.tsx` (routes to `/session/<mode>?deckId=&scope=`); tests `.../ui/__tests__/{mode-picker-screen,mode-picker-a11y,use-mode-picker}` (25); golden `mode-picker--{default,scope-dropdown,not-enough}--light` + `--default--dark` | Opus | TBD |
-| 5.5 | Study-session shell slice | `study-session` orchestrator: 5-stage flow shell, progress header, exit/resume-error/answer-save-error, due-review/relearn | study-session (10 states) | 5.1, 5.2, 6.1, 6.2, 6.3, 7.1, 7.2, 2.6 | Blocked | P0 | No | All 10 states; exit=danger; resume-error + answer-save-error recover; progress bar + n/N; stages mount from 6.1/6.2/6.3/7.1/7.2 | `.../specs/study-session.md`, `.../shots/study-session--*.png` | Opus + Design | TBD |
+| 5.5 | Study-session shell slice | `study-session` orchestrator: 5-stage flow shell, progress header, exit/resume-error/answer-save-error, due-review/relearn | study-session (10 states) | 5.1, 5.2, 6.1, 6.2, 6.3, 7.1, 7.2, 2.6 | Implemented | P0 | No | All 10 states; exit=danger; resume-error + answer-save-error recover; progress bar + n/N; stages mount from 6.1/6.2/6.3/7.1/7.2 | `src/features/session/ui/{study-session-screen,study-session-container,use-study-session,study-session-fixtures,study-session-components}.tsx/ts` + tests (full 5-stage orchestration: start/RESUME a `full` session with position rebuilt from attempts — broken resume → resume-error; per-answer `recordAnswer` with the answer-save-error retry dialog on failure; wrong guesses re-queue as not-counted relearn passes; due-review mode over `srs.dueCards`; finalize at the last stage; session-wide n/N = distinct (stage,card) over cards×5); route `src/app/session/play.tsx`; goldens `study-session--*.png` — all 10 states + dark < 3% vs kit (parity gate) | Opus + Design | TBD |
 
 ---
 
@@ -422,10 +422,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 53 |
+| Implemented | 54 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 13 |
+| Blocked | 12 |
 | Future | 0 |
 | Deprecated | 0 |
 

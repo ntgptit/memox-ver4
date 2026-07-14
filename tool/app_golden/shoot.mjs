@@ -178,6 +178,30 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // study-session (WBS 5.5) — DB-free fixture preview via /session/play?state=/?theme=.
+  { name: 'study-session--stage1-review--light', path: '/session/play?state=stage1-review', waitFor: 'text=Stage 1 · Review' },
+  { name: 'study-session--stage2-match--light', path: '/session/play?state=stage2-match', waitFor: 'text=Stage 2 · Match' },
+  { name: 'study-session--stage3-guess--light', path: '/session/play?state=stage3-guess', waitFor: 'text=Stage 3 · Guess' },
+  { name: 'study-session--stage4-recall--light', path: '/session/play?state=stage4-recall', waitFor: 'text=Stage 4 · Recall' },
+  { name: 'study-session--stage5-fill--light', path: '/session/play?state=stage5-fill', waitFor: 'text=Stage 5 · Fill' },
+  { name: 'study-session--relearn--light', path: '/session/play?state=relearn', waitFor: 'text=not counted toward progress' },
+  { name: 'study-session--due-review--light', path: '/session/play?state=due-review', waitFor: 'text=Leitner box' },
+  { name: 'study-session--exit--light', path: '/session/play?state=exit', waitFor: 'text=Leave the session?' },
+  {
+    name: 'study-session--resume-error--light',
+    path: '/session/play?state=resume-error',
+    waitFor: 'text=Couldn\'t resume your session',
+  },
+  {
+    name: 'study-session--answer-save-error--light',
+    path: '/session/play?state=answer-save-error',
+    waitFor: 'text=Couldn\'t save your answer',
+  },
+  {
+    name: 'study-session--stage1-review--dark',
+    path: '/session/play?state=stage1-review&theme=dark',
+    waitFor: 'text=Stage 1 · Review',
+  },
   // review-mode (WBS 6.1) — DB-free fixture preview via ?state=/?theme=.
   { name: 'review-mode--browsing--light', path: '/session/review?state=browsing', waitFor: 'text=학교' },
   { name: 'review-mode--editing--light', path: '/session/review?state=editing', waitFor: 'text=학교' },

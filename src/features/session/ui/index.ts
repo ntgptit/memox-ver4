@@ -84,3 +84,35 @@ export {
   type ReviewModeFixtureKey,
   type ReviewModeUiState,
 } from './review-mode-fixtures';
+
+export { StudySessionScreen, type StudySessionScreenProps } from './study-session-screen';
+export { StudySessionContainer } from './study-session-container';
+export {
+  useStudySession,
+  normalizeAnswer,
+  buildShellOptions,
+  type StudySessionDeps,
+  type StudySessionController,
+  type StudySessionMode,
+} from './use-study-session';
+export {
+  STUDY_SESSION_META,
+  STAGE_CONTENT,
+  RECALL_TERM,
+  STUDY_SESSION_STATES,
+  type StudySessionUiState,
+  type StudySessionFixtureKey,
+  type StageMeta,
+  type StageContent,
+} from './study-session-fixtures';
+export {
+  PromptCard,
+  StageReview,
+  StageMatch,
+  StageGuess,
+  StageRecall,
+  StageFill,
+  ExitDialog,
+  AnswerSaveErrorDialog,
+  ResumeErrorState,
+} from './study-session-components';
