@@ -136,7 +136,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 
 | ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 6.1 | Review-mode slice | `review-mode` (stage 1): browse round, inline edit, audio, end; persists attempts | review-mode (browsing, editing, audio, loading, error, end) | 5.1, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Blocked | P0 | No | All 6 states; edit persists; audio gated on DEP-TTS; loading/error/end; progress header; visual parity | `.../specs/review-mode.md`, `.../shots/review-mode--*.png` | Opus + Design | TBD |
+| 6.1 | Review-mode slice | `review-mode` (stage 1): browse round, inline edit, audio, end; persists attempts | review-mode (browsing, editing, audio, loading, error, end) | 5.1, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Implemented | P0 | No | All 6 states; edit persists; audio gated on DEP-TTS; loading/error/end; progress header; visual parity | `src/features/session/ui/{review-mode-screen,review-mode-container,use-review-mode,review-mode-fixtures}.tsx/ts` + tests (browse round starts a `review` session; ONE attempt per card via `recordAnswer` grade `good` on pass, never re-recorded on prev; inline meaning edit persists via `editCardUseCase`; pronunciation via `expo-speech`; finalize at round end); shared `ProgressHeader`/`StudyPromptCard` reused; route `src/app/session/review.tsx`; goldens `review-mode--*.png` — all 6 states + dark < 3% vs kit (parity gate) | Opus + Design | TBD |
 | 6.2 | Match-mode slice | `match-mode` (stage 2): term↔meaning grid, selected/correct/wrong/almost/complete | match-mode (playing, selected, correct, wrong, almost, complete) | 5.1, 5.2, 1.5, 1.7, 2.6 | Implemented | P0 | No | All 6 states; wrong pairs use color+non-color cue; count label; attempts persisted; visual parity | `src/features/session/ui/*` (MatchModeScreen — two-column tile board; correct pair locks green ✓, wrong flashes red ✕ (colour **and** icon), matched tiles dim + announce disabled — + `use-match-mode` session-play controller + pure `match-board` builder + container + fixtures), route `src/app/session/match.tsx`; controller reuses 7.1 session-play (start→correct pair persists via `recordAnswer` `good`→finalize when the board is fully matched); tests `.../ui/__tests__/{match-board,match-mode-screen,match-mode-a11y,use-match-mode}` (28); golden `match-mode--{playing,selected,correct,almost}--light` + `playing--dark` | Opus + Design | TBD |
 | 6.3 | Guess-mode slice | `guess-mode` (stage 3): pick meaning, correct/wrong/long-text/complete | guess-mode (waiting, correct, wrong, long-text, complete) | 5.1, 5.2, 1.5, 1.7, 2.6 | Implemented | P0 | No | All 5 states; feedback = color+icon; long-text no clip; attempts persisted; visual parity | `src/features/session/ui/*` (GuessModeScreen — prompt + 5 options, feedback marks correct ✓ green + wrong ✕ red (colour **and** icon), long text wraps — + `use-guess-mode` session-play controller + pure `guess-options` builder + container + fixtures + shared `study-chrome`), route `src/app/session/guess.tsx`; controller reuses 7.1 session-play (start→pick persists via `recordAnswer` correct→`good`/wrong→`again`→continue→finalize); tests `.../ui/__tests__/{guess-options,guess-mode-screen,guess-mode-a11y,use-guess-mode}` (29) + shared `src/shared/testing/session-fakes.ts`; golden `guess-mode--{waiting,correct,wrong,long-text}--light` + `waiting--dark` | Opus + Design | TBD |
 
@@ -421,10 +421,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 52 |
+| Implemented | 53 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 14 |
+| Blocked | 13 |
 | Future | 0 |
 | Deprecated | 0 |
 

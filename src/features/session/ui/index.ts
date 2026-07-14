@@ -73,3 +73,14 @@ export {
   type StudyResultUiState,
 } from './study-result-fixtures';
 export { ResultHero, StreakGoalCard, FinalizingBody, Cta } from './study-result-components';
+
+export { ReviewModeScreen, type ReviewModeScreenProps } from './review-mode-screen';
+export { ReviewModeContainer } from './review-mode-container';
+export { useReviewMode, type ReviewModeDeps, type ReviewModeController } from './use-review-mode';
+export {
+  REVIEW_MODE_FIXTURES,
+  type ReviewModeData,
+  type ReviewModeFixture,
+  type ReviewModeFixtureKey,
+  type ReviewModeUiState,
+} from './review-mode-fixtures';

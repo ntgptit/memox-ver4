@@ -178,6 +178,14 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // review-mode (WBS 6.1) — DB-free fixture preview via ?state=/?theme=.
+  { name: 'review-mode--browsing--light', path: '/session/review?state=browsing', waitFor: 'text=학교' },
+  { name: 'review-mode--editing--light', path: '/session/review?state=editing', waitFor: 'text=학교' },
+  { name: 'review-mode--audio--light', path: '/session/review?state=audio', waitFor: 'text=Playing…' },
+  { name: 'review-mode--loading--light', path: '/session/review?state=loading', waitFor: 'text=Review' },
+  { name: 'review-mode--error--light', path: '/session/review?state=error', waitFor: 'text=Couldn\'t load review' },
+  { name: 'review-mode--end--light', path: '/session/review?state=end', waitFor: 'text=All reviewed' },
+  { name: 'review-mode--browsing--dark', path: '/session/review?state=browsing&theme=dark', waitFor: 'text=학교' },
   // flashcard-editor (WBS 4.4) — DB-free fixture preview via /card/new?state=/?theme=.
   { name: 'flashcard-editor--create--light', path: '/card/new?state=create', waitFor: 'text=New card' },
   { name: 'flashcard-editor--edit--light', path: '/card/new?state=edit', waitFor: 'text=Edit card' },
