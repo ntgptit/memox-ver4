@@ -33,8 +33,19 @@ export function Scrim({ align = 'end', onDismiss, node, children }: ScrimProps) 
           testID={node ? `${node}-backdrop` : undefined}
           accessibilityRole="button"
           accessibilityLabel="Dismiss"
+          // The modal auto-focuses this full-frame button; without this the browser
+          // paints its default focus ring around the whole viewport (a 1px frame edge).
+          focusable={false}
           onPress={onDismiss}
-          style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: t.color.overlay }}
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: t.color.overlay,
+            outlineWidth: 0,
+          }}
         />
         <View
           testID={node}

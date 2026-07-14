@@ -57,6 +57,32 @@ const TARGETS = [
   { name: 'subdeck-list--offline--light', path: '/deck/preview?state=offline', waitFor: 'text=Offline · showing saved subdecks' },
   { name: 'subdeck-list--error--light', path: '/deck/preview?state=error', waitFor: 'text=Couldn\'t load subdecks' },
 
+  // Flashcard list (WBS 4.3) — fixture preview via /deck/preview/cards?state=… (src/app/deck/[deckId]/cards.tsx).
+  { name: 'flashcard-list--loaded--light', path: '/deck/preview/cards?state=loaded', waitFor: 'text=안녕하세요' },
+  { name: 'flashcard-list--dense--light', path: '/deck/preview/cards?state=dense', waitFor: 'text=안녕하세요' },
+  { name: 'flashcard-list--minimum-data--light', path: '/deck/preview/cards?state=minimum-data', waitFor: 'text=감사합니다' },
+  { name: 'flashcard-list--long-text--light', path: '/deck/preview/cards?state=long-text', waitFor: 'text=전화번호부에' },
+  { name: 'flashcard-list--empty--light', path: '/deck/preview/cards?state=empty', waitFor: 'text=No cards yet' },
+  { name: 'flashcard-list--search--light', path: '/deck/preview/cards?state=search', waitFor: 'text=공부하다' },
+  { name: 'flashcard-list--no-results--light', path: '/deck/preview/cards?state=no-results', waitFor: 'text=No cards found' },
+  { name: 'flashcard-list--filter-applied--light', path: '/deck/preview/cards?state=filter-applied', waitFor: 'text=2 due cards' },
+  { name: 'flashcard-list--selection--light', path: '/deck/preview/cards?state=selection', waitFor: 'text=2 selected' },
+  { name: 'flashcard-list--add-sheet--light', path: '/deck/preview/cards?state=add-sheet', waitFor: 'text=Import cards' },
+  { name: 'flashcard-list--card-actions--light', path: '/deck/preview/cards?state=card-actions', waitFor: 'text=Hide card' },
+  {
+    name: 'flashcard-list--delete-confirm--light',
+    path: '/deck/preview/cards?state=delete-confirm',
+    waitFor: 'text=Delete this card?',
+  },
+  { name: 'flashcard-list--loading--light', path: '/deck/preview/cards?state=loading' },
+  {
+    name: 'flashcard-list--offline--light',
+    path: '/deck/preview/cards?state=offline',
+    waitFor: 'text=Offline · showing saved cards',
+  },
+  { name: 'flashcard-list--error--light', path: '/deck/preview/cards?state=error', waitFor: 'text=Couldn\'t load cards' },
+  { name: 'flashcard-list--loaded--dark', path: '/deck/preview/cards?state=loaded&theme=dark', waitFor: 'text=안녕하세요' },
+
   // Library (WBS 3.4) — fixture preview via /library?state=… (src/app/(tabs)/library.tsx).
   { name: 'library--loaded--light', path: '/library?state=loaded', waitFor: 'text=Korean TOPIK I' },
   { name: 'library--dense--light', path: '/library?state=dense', waitFor: 'text=Advanced Idiomatic' },

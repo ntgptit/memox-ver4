@@ -61,7 +61,9 @@ export function Dialog({ icon, tone, title, text, body, children, actions, actio
         <Text
           accessibilityRole="header"
           style={[
-            t.font.text({ size: 'lg', weight: 'extrabold', letterSpacing: 'tight' }),
+            // Kit overlays render OUTSIDE `.app`, so the title keeps the browser's
+            // compact default line box (~1.2) — `tight` is the token that matches it.
+            t.font.text({ size: 'lg', weight: 'extrabold', letterSpacing: 'tight', lineHeight: 'tight' }),
             { color: t.color.text, textAlign: 'center' },
           ]}
         >

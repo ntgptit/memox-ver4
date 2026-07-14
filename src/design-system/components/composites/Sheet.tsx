@@ -49,7 +49,9 @@ export function Sheet({ title, node, children }: SheetProps) {
       {title !== undefined && (
         <Text
           style={[
-            t.font.text({ size: 'sm', weight: 'bold', letterSpacing: 'wide' }),
+            // Kit overlays render OUTSIDE `.app`, so this label keeps the browser's
+            // compact default line box (~1.2) — `tight` is the token that matches it.
+            t.font.text({ size: 'sm', weight: 'bold', letterSpacing: 'wide', lineHeight: 'tight' }),
             { color: t.color.textSecondary, textTransform: 'uppercase', marginBottom: t.space[2], marginLeft: t.space[2] },
           ]}
         >

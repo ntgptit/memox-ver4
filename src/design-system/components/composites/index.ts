@@ -18,3 +18,4 @@ export { DeckCard, type DeckCardProps } from './DeckCard';
 export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './Breadcrumb';
 export { DeckPlaySheet, type DeckPlaySheetProps } from './DeckPlaySheet';
 export { Skeleton, type SkeletonProps } from './Skeleton';
+export { StatusCardRow, type StatusCardRowProps, type CardStatus as StatusCardStatus } from './StatusCardRow';

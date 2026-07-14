@@ -121,7 +121,7 @@ export function SubdeckListScreen({
     return subdecks.filter((s) => s.name.toLowerCase().includes(needle));
   }, [subdecks, query]);
 
-  const back = <MxIconButton icon="arrow_back" accessibilityLabel="Back" onPress={onBack} node="subdeck-list/back" />;
+  const back = <MxIconButton icon="arrow_back" size="sm" accessibilityLabel="Back" onPress={onBack} node="subdeck-list/back" />;
   const nestedActions = (
     <>
       <MxIconButton icon="search" size="sm" accessibilityLabel="Search subdecks" onPress={() => setMode('search')} node="subdeck-list/search-open" />
