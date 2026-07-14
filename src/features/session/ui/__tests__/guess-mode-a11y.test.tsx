@@ -39,13 +39,13 @@ describe('GuessModeScreen a11y — roles & labels', () => {
 
   it('feedback is conveyed in the label text, not colour alone', () => {
     renderScreen(<GuessModeScreen {...props('wrong')} />);
-    expect(screen.getByLabelText('school (correct)')).toBeTruthy();
-    expect(screen.getByLabelText('park (your answer, wrong)')).toBeTruthy();
+    expect(screen.getByLabelText('school (correct). Tap to continue')).toBeTruthy();
+    expect(screen.getByLabelText('park (your answer, wrong). Tap to continue')).toBeTruthy();
   });
 
-  it('options announce disabled after feedback', () => {
+  it('options announce the continue affordance after feedback (kit: tap to continue)', () => {
     renderScreen(<GuessModeScreen {...props('correct')} />);
-    expect(screen.getByTestId('guess-mode/choice-1').props.accessibilityState).toMatchObject({ disabled: true });
+    expect(screen.getByTestId('guess-mode/choice-1').props.accessibilityLabel).toMatch(/Tap to continue$/);
   });
 });
 

@@ -5,8 +5,9 @@
  * horizontal padding for edge-to-edge content.
  */
 
+import { useContext } from 'react';
 import { ScrollView, View, type StyleProp, type ViewStyle } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import type { ReactNode } from 'react';
 
 import { useTheme } from '../../theme';
@@ -23,15 +24,19 @@ export interface MxScaffoldProps {
 
 export function MxScaffold({ appBar, bottomNav, fab, children, flush = false, node, style }: MxScaffoldProps) {
   const t = useTheme();
+  const insets = useContext(SafeAreaInsetsContext);
   const fabBottom = t.layout.bottomNavHeight + t.space[4];
+  // Kit: `--memox-safe-area-top: max(env(safe-area-inset-top), 24px)` — 24px floor.
+  const topInset = Math.max(insets?.top ?? 0, t.layout.safeAreaTopFallback);
 
   return (
-    <SafeAreaView edges={['top']} testID={node} style={[{ flex: 1, backgroundColor: t.color.bg }, style]}>
+    <View testID={node} style={[{ flex: 1, paddingTop: topInset, backgroundColor: t.color.bg }, style]}>
       {appBar}
       <View style={{ flex: 1, minHeight: 0 }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
+            flexGrow: 1, // lets a flex:1 child (EmptyState, tall study cards) fill the body like the kit
             paddingHorizontal: flush ? 0 : t.layout.gutter,
             paddingTop: t.space[4],
             paddingBottom: fab
@@ -47,6 +52,6 @@ export function MxScaffold({ appBar, bottomNav, fab, children, flush = false, no
         )}
       </View>
       {bottomNav}
-    </SafeAreaView>
+    </View>
   );
 }

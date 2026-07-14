@@ -68,7 +68,7 @@ export function MxFab({
       ]}
     >
       <View>
-        <Icon name={icon} size={t.iconSize.md} color={fg} />
+        <Icon name={icon} size={t.iconSize.lg} color={fg} />
       </View>
       {extended && (
         <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: fg }]}>{label}</Text>

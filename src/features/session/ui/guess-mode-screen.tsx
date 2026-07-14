@@ -8,11 +8,11 @@
  * continue go out. The container runs the session (start → step → persist).
  */
 
-import { Pressable, Text, View } from 'react-native';
+import { View } from 'react-native';
 
-import { AppScreen, MxButton, MxIconButton, Icon, useTheme, type Theme } from '@/design-system';
+import { AppScreen, MxIconButton, useTheme } from '@/design-system';
 
-import { ProgressHeader, StudyPromptCard, RoundComplete } from './study-chrome';
+import { ProgressHeader, StudyPromptCard, RoundComplete, ChoiceOption, type ChoiceTone } from './study-chrome';
 
 export type GuessPhase = 'waiting' | 'correct' | 'wrong' | 'complete';
 
@@ -30,9 +30,7 @@ export interface GuessModeScreenProps {
   onBack?: () => void;
 }
 
-type OptionTone = 'neutral' | 'correct' | 'wrong';
-
-function toneFor(phase: GuessPhase, i: number, correctIndex: number, pickedIndex: number | null): OptionTone {
+function toneFor(phase: GuessPhase, i: number, correctIndex: number, pickedIndex: number | null): ChoiceTone {
   if (phase !== 'correct' && phase !== 'wrong') return 'neutral';
   if (i === correctIndex) return 'correct';
   if (i === pickedIndex) return 'wrong';
@@ -52,6 +50,7 @@ export function GuessModeScreen(props: GuessModeScreenProps) {
         <ProgressHeader done={props.total} total={props.total} node="guess-mode/progress" />
         <RoundComplete
           node="guess-mode/complete"
+          ctaNode="guess-mode/next"
           title="Round complete!"
           text={`You answered ${props.done}/${props.total} correctly.`}
           onNext={props.onDone}
@@ -63,75 +62,30 @@ export function GuessModeScreen(props: GuessModeScreenProps) {
   return (
     <AppScreen node="guess-mode/screen" variant="nested" title="Guess" leading={back}>
       <ProgressHeader done={props.done} total={props.total} node="guess-mode/progress" />
-      <StudyPromptCard term={props.term} eyebrow="WHAT DOES THIS MEAN?" node="guess-mode/prompt" />
+      <StudyPromptCard term={props.term} nodePrefix="guess-mode" />
 
-      <View style={{ gap: t.space[3] }}>
-        {props.options.map((text, i) => (
-          <ChoiceOption
-            key={i}
-            theme={t}
-            index={i}
-            text={text}
-            tone={toneFor(phase, i, props.correctIndex, props.pickedIndex)}
-            disabled={revealed}
-            onPress={() => props.onPick(i)}
-          />
-        ))}
+      {/* Kit: the five options fill the remaining body height as equal rows — short
+          options grow to share the space, long meanings keep their content height — and
+          the grid reclaims the body's reserved bottom-nav padding. After the reveal
+          there is no Continue button; tapping any option advances. */}
+      <View style={{ flex: 1, gap: t.space[3], marginBottom: -t.layout.bottomNavHeight }}>
+        {props.options.map((text, i) => {
+          const tone = toneFor(phase, i, props.correctIndex, props.pickedIndex);
+          const stateLabel = tone === 'correct' ? ' (correct)' : tone === 'wrong' ? ' (your answer, wrong)' : '';
+          return (
+            <ChoiceOption
+              key={i}
+              node={`guess-mode/choice-${i}`}
+              text={text}
+              tone={tone}
+              accessibilityLabel={`${text}${stateLabel}${revealed ? '. Tap to continue' : ''}`}
+              accessibilityState={{ selected: i === props.pickedIndex }}
+              onPress={() => (revealed ? props.onContinue() : props.onPick(i))}
+              style={{ flexGrow: 1, flexBasis: 'auto' }}
+            />
+          );
+        })}
       </View>
-
-      {revealed && (
-        <MxButton variant="primary" icon="arrow_forward" block onPress={props.onContinue} node="guess-mode/continue">
-          Continue
-        </MxButton>
-      )}
     </AppScreen>
-  );
-}
-
-function ChoiceOption({
-  theme: t,
-  index,
-  text,
-  tone,
-  disabled,
-  onPress,
-}: {
-  theme: Theme;
-  index: number;
-  text: string;
-  tone: OptionTone;
-  disabled: boolean;
-  onPress: () => void;
-}) {
-  const border = tone === 'correct' ? t.color.success : tone === 'wrong' ? t.color.error : t.color.border;
-  const icon = tone === 'correct' ? 'check_circle' : tone === 'wrong' ? 'close' : null;
-  const iconColor = tone === 'correct' ? t.color.success : t.color.error;
-  const stateLabel = tone === 'correct' ? ' (correct)' : tone === 'wrong' ? ' (your answer, wrong)' : '';
-
-  return (
-    <Pressable
-      testID={`guess-mode/choice-${index}`}
-      accessibilityRole="button"
-      accessibilityState={{ disabled }}
-      accessibilityLabel={`${text}${stateLabel}`}
-      onPress={() => {
-        if (!disabled) onPress();
-      }}
-      style={{
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: t.space[3],
-        minHeight: t.space[9],
-        paddingHorizontal: t.space[4],
-        paddingVertical: t.space[3],
-        borderRadius: t.radius.md,
-        borderWidth: tone === 'neutral' ? t.stroke.hairline : t.stroke.emphasis,
-        borderColor: border,
-        backgroundColor: t.color.surface,
-      }}
-    >
-      <Text style={[t.font.text({ size: 'base' }), { color: t.color.text, flex: 1 }]}>{text}</Text>
-      {icon && <Icon name={icon} size="sm" color={iconColor} />}
-    </Pressable>
   );
 }

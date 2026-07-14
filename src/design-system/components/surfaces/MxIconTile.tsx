@@ -41,7 +41,7 @@ function toneColors(t: Theme, tone: MxIconTileTone, solid: boolean): { bg: strin
 export function MxIconTile({ icon, tone = 'default', size = 'md', solid = false, node }: MxIconTileProps) {
   const t = useTheme();
   const { bg, fg } = toneColors(t, tone, solid);
-  const box = size === 'lg' ? t.size.md : t.size.sm; // lg = 56, md = 40 (token sizes)
+  const box = size === 'lg' ? t.comp.iconTileLg : t.comp.iconTileMd; // lg = 60, md = 48
   const glyph = size === 'lg' ? t.iconSize.xl : t.iconSize.lg;
   const radius = size === 'lg' ? t.radius.lg : t.radius.tile;
 

@@ -55,8 +55,8 @@ export function MxSegmentedControl({ segments, value, onChange, block = false, n
                 flexDirection: 'row',
                 alignItems: 'center',
                 justifyContent: 'center',
-                gap: t.space[1],
-                minHeight: t.size.sm - t.space[2],
+                gap: t.space[2],
+                minHeight: t.comp.segmentedSegHeight,
                 paddingHorizontal: t.space[4],
                 borderRadius: t.radius.pill,
                 backgroundColor: active ? t.color.surface : 'transparent',
@@ -65,12 +65,12 @@ export function MxSegmentedControl({ segments, value, onChange, block = false, n
             ]}
           >
             {seg.icon !== undefined && (
-              <Icon name={seg.icon} size={t.iconSize.sm} color={active ? t.color.text : t.color.textSecondary} />
+              <Icon name={seg.icon} size={t.iconSize.sm} color={active ? t.color.primaryStrong : t.color.textSecondary} />
             )}
             <Text
               style={[
                 t.font.text({ size: 'sm', weight: active ? 'bold' : 'semibold' }),
-                { color: active ? t.color.text : t.color.textSecondary },
+                { color: active ? t.color.primaryStrong : t.color.textSecondary },
               ]}
             >
               {seg.label}

@@ -6,7 +6,7 @@
  * both tab and non-tab screens.
  */
 
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import {
   ScrollView,
   View,
@@ -15,7 +15,7 @@ import {
   type StyleProp,
   type ViewStyle,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaInsetsContext } from 'react-native-safe-area-context';
 import type { ReactNode } from 'react';
 
 import { useTheme } from '../theme';
@@ -50,6 +50,7 @@ export function AppScreen({
   contentStyle,
 }: AppScreenProps) {
   const t = useTheme();
+  const insets = useContext(SafeAreaInsetsContext);
   const [scrolled, setScrolled] = useState(false);
 
   const onScroll = (e: NativeSyntheticEvent<NativeScrollEvent>) => {
@@ -57,8 +58,12 @@ export function AppScreen({
     setScrolled((prev) => (prev === past ? prev : past));
   };
 
+  // Kit: `--memox-safe-area-top: max(env(safe-area-inset-top), 24px)` — a fixed 24px
+  // floor even where the platform reports no inset (web, older devices).
+  const topInset = Math.max(insets?.top ?? 0, t.layout.safeAreaTopFallback);
+
   return (
-    <SafeAreaView edges={['top']} testID={node} style={{ flex: 1, backgroundColor: t.color.bg }}>
+    <View testID={node} style={{ flex: 1, paddingTop: topInset, backgroundColor: t.color.bg }}>
       <MxContextualAppBar
         variant={variant}
         title={title}
@@ -77,9 +82,15 @@ export function AppScreen({
           showsVerticalScrollIndicator={false}
           contentContainerStyle={[
             {
+              flexGrow: 1, // lets a flex:1 child (EmptyState, tall study cards) fill the body like the kit
               paddingHorizontal: t.layout.gutter,
               paddingTop: t.space[4],
-              paddingBottom: fab ? t.space[4] + t.layout.fabSize + t.space[6] : t.space[6],
+              // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
+              // (+ the FAB clearance when present); screens that need the space back
+              // reclaim it with a negative margin, exactly like the kit.
+              paddingBottom: fab
+                ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
+                : t.layout.bottomNavHeight + t.space[6],
               gap: t.space[6],
             },
             contentStyle,
@@ -91,6 +102,6 @@ export function AppScreen({
           <View style={{ position: 'absolute', right: t.layout.gutter, bottom: t.space[4] }}>{fab}</View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

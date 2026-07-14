@@ -10,9 +10,9 @@
 
 import { KeyboardAvoidingView, Platform, Text, TextInput, View } from 'react-native';
 
-import { AppScreen, MxButton, MxIconButton, useTheme, type Theme } from '@/design-system';
+import { AppScreen, MxCard, MxButton, MxIconButton, SectionLabel, useTheme, type Theme } from '@/design-system';
 
-import { ProgressHeader, StudyPromptCard, FeedbackNote, RoundComplete } from './study-chrome';
+import { ProgressHeader, FeedbackNote, RoundComplete } from './study-chrome';
 
 export type FillPhase = 'waiting' | 'typing' | 'hint' | 'correct' | 'wrong' | 'complete';
 
@@ -43,7 +43,13 @@ export function FillModeScreen(props: FillModeScreenProps) {
     return (
       <AppScreen node="fill-mode/screen" variant="nested" title="Fill" leading={back}>
         <ProgressHeader done={props.total} total={props.total} node="fill-mode/progress" />
-        <RoundComplete node="fill-mode/complete" title="Round complete!" text="You typed the words correctly." onNext={props.onDone} />
+        <RoundComplete
+          node="fill-mode/complete"
+          ctaNode="fill-mode/next"
+          title="Round complete!"
+          text="You typed the words correctly."
+          onNext={props.onDone}
+        />
       </AppScreen>
     );
   }
@@ -53,10 +59,21 @@ export function FillModeScreen(props: FillModeScreenProps) {
 
   return (
     <AppScreen node="fill-mode/screen" variant="nested" title="Fill" leading={back}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ gap: t.space[4] }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1, gap: t.space[6] }}
+      >
         <ProgressHeader done={props.done} total={props.total} node="fill-mode/progress" />
 
-        <StudyPromptCard term={props.meaning} eyebrow="MEANING" node="fill-mode/meaning" />
+        {/* Kit: the meaning fills the free height — SectionLabel MEANING over the xl term. */}
+        <MxCard node="fill-mode/meaning" style={{ flex: 1, alignItems: 'center', justifyContent: 'center', gap: t.space[2] }}>
+          <SectionLabel uppercase style={{ margin: 0 }}>
+            Meaning
+          </SectionLabel>
+          <Text style={[t.font.text({ size: 'xl', weight: 'bold' }), { color: t.color.text, textAlign: 'center' }]}>
+            {props.meaning}
+          </Text>
+        </MxCard>
 
         <Text style={[t.font.text({ size: 'sm', weight: 'bold' }), { color: t.color.textSecondary }]}>Type the term</Text>
 
@@ -72,7 +89,10 @@ export function FillModeScreen(props: FillModeScreenProps) {
           </Text>
         )}
 
-        <Controls theme={t} canCheck={canCheck} {...props} />
+        {/* Kit: the controls reclaim the body's reserved bottom-nav padding. */}
+        <View style={{ marginBottom: -t.layout.bottomNavHeight }}>
+          <Controls theme={t} canCheck={canCheck} {...props} />
+        </View>
       </KeyboardAvoidingView>
     </AppScreen>
   );
@@ -95,20 +115,21 @@ function InputBox({
   onSubmit: () => void;
   editable: boolean;
 }) {
-  const border = phase === 'correct' ? t.color.success : phase === 'wrong' ? t.color.error : t.color.border;
+  // Kit InputBox: size-xl (96) min-height, radius-control, hairline DIVIDER ring that
+  // tints to an emphasis success/error ring, centered xl-extrabold content.
+  const border = phase === 'correct' ? t.color.success : phase === 'wrong' ? t.color.error : t.color.divider;
   const emphasised = phase === 'correct' || phase === 'wrong';
 
   return (
     <View
       style={{
-        minHeight: t.size.md,
-        borderRadius: t.radius.md,
+        minHeight: t.size.xl,
+        borderRadius: t.radius.control,
         borderWidth: emphasised ? t.stroke.emphasis : t.stroke.hairline,
         borderColor: border,
         backgroundColor: t.color.surface,
         justifyContent: 'center',
-        paddingHorizontal: t.space[4],
-        paddingVertical: t.space[3],
+        padding: t.space[4],
       }}
     >
       {phase === 'wrong' ? (
@@ -191,7 +212,7 @@ function Controls({
       <View style={{ flexDirection: 'row', gap: t.space[3] }}>
         <View style={{ flex: 1 }}>
           <MxButton variant="outline" block onPress={onAccept} node="fill-mode/accept">
-            I was right
+            Correct
           </MxButton>
         </View>
         <View style={{ flex: 1 }}>

@@ -38,14 +38,13 @@ export function MxSearchDock({
       flexDirection: 'row',
       alignItems: 'center',
       gap: t.space[3],
-      height: t.layout.touchMin,
+      height: t.comp.searchDockHeight,
       paddingHorizontal: t.space[4],
       backgroundColor: t.color.surface,
       borderRadius: t.radius.pill,
-      borderWidth: focused ? t.stroke.emphasis : 0,
-      borderColor: focused ? t.color.focusRing : 'transparent',
     },
     !flat && t.elevation.sm,
+    focused && { borderWidth: t.stroke.emphasis, borderColor: t.color.focusRing },
   ];
 
   return (

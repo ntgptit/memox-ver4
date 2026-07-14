@@ -16,13 +16,14 @@ export interface MxSwitchProps {
   node?: string;
 }
 
-const TRACK_W = 44;
-const TRACK_H = 26;
-const THUMB = 20;
-const PAD = 3;
-
 export function MxSwitch({ checked = false, disabled = false, onChange, ariaLabel, node }: MxSwitchProps) {
   const t = useTheme();
+  // Kit geometry (tokens/component.css): 52×32 track; thumb 22→24 when on;
+  // inset 4→2 plus a 20px travel. The kit draws the track ring as an inset
+  // box-shadow (no layout cost); RN's borderWidth shifts the content box, so the
+  // thumb offset compensates by the track border to keep the kit's coordinates.
+  const thumb = checked ? t.comp.switchThumbOn : t.comp.switchThumb;
+  const inset = checked ? t.comp.switchThumbInsetOn + t.comp.switchThumbTravel : t.comp.switchThumbInset;
 
   return (
     <Pressable
@@ -32,28 +33,27 @@ export function MxSwitch({ checked = false, disabled = false, onChange, ariaLabe
       accessibilityRole="switch"
       accessibilityState={{ checked, disabled }}
       accessibilityLabel={ariaLabel}
-      hitSlop={(t.layout.touchMin - TRACK_H) / 2}
+      hitSlop={(t.layout.touchMin - t.comp.switchHeight) / 2}
       style={{ opacity: disabled ? t.opacity.disabled : 1 }}
     >
       <View
         style={{
-          width: TRACK_W,
-          height: TRACK_H,
+          width: t.comp.switchWidth,
+          height: t.comp.switchHeight,
           borderRadius: t.radius.pill,
           justifyContent: 'center',
           backgroundColor: checked ? t.color.primary : t.color.surfaceSunken,
-          borderWidth: checked ? 0 : t.stroke.mid,
-          borderColor: t.color.border,
+          borderWidth: t.stroke.mid,
+          borderColor: checked ? 'transparent' : t.color.border,
         }}
       >
         <View
           style={{
-            width: THUMB,
-            height: THUMB,
-            borderRadius: t.radius.pill,
-            backgroundColor: checked ? t.color.onPrimary : t.color.surface,
-            marginLeft: checked ? TRACK_W - THUMB - PAD : PAD,
-            ...t.elevation.sm,
+            width: thumb,
+            height: thumb,
+            borderRadius: t.radius.full,
+            backgroundColor: checked ? t.color.onPrimary : t.color.textTertiary,
+            marginLeft: inset - t.stroke.mid,
           }}
         />
       </View>

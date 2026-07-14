@@ -11,7 +11,7 @@ import { useTheme, type Theme } from '../../theme';
 import { Icon, type IconName } from '../../icons';
 
 export type MxButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
-export type MxButtonSize = 'md' | 'sm';
+export type MxButtonSize = 'lg' | 'md' | 'sm';
 
 export interface MxButtonProps {
   children?: ReactNode;
@@ -27,19 +27,27 @@ export interface MxButtonProps {
   node?: string;
 }
 
-function palette(t: Theme, variant: MxButtonVariant, danger: boolean): { bg: string; fg: string; border?: string } {
-  const solid = danger ? { bg: t.color.error, fg: t.color.onError } : { bg: t.color.primary, fg: t.color.onPrimary };
-  const accentFg = danger ? t.color.error : t.color.primaryStrong;
+function palette(
+  t: Theme,
+  variant: MxButtonVariant,
+  danger: boolean,
+): { bg: string; fg: string; border?: string; borderWidth?: number } {
+  // Kit `.btn.danger` is a composed modifier: solid error fill for ANY variant,
+  // ring removed (components.css .btn.danger). So danger always wins over variant.
+  if (danger) return { bg: t.color.error, fg: t.color.onError };
   switch (variant) {
     case 'primary':
-      return solid;
+      return { bg: t.color.primary, fg: t.color.onPrimary };
     case 'secondary':
-      return { bg: t.color.primarySoft, fg: danger ? t.color.error : t.color.onPrimarySoft };
+      return { bg: t.color.primarySoft, fg: t.color.onPrimarySoft };
     case 'outline':
-      return { bg: 'transparent', fg: accentFg, border: danger ? t.color.error : t.color.borderStrong };
+      // Kit: text colour, stroke-mid inset ring in border-strong.
+      return { bg: 'transparent', fg: t.color.text, border: t.color.borderStrong, borderWidth: t.stroke.mid };
     case 'ghost':
     default:
-      return { bg: 'transparent', fg: accentFg };
+      // Kit: bright accent label + hairline border so it reads as a real button on
+      // any surface (transparent fill alone is near-invisible on dark).
+      return { bg: 'transparent', fg: t.color.accent, border: t.color.border, borderWidth: t.stroke.hairline };
   }
 }
 
@@ -57,8 +65,11 @@ export function MxButton({
   node,
 }: MxButtonProps) {
   const t = useTheme();
-  const { bg, fg, border } = palette(t, variant, danger);
-  const minHeight = size === 'sm' ? t.size.sm : t.layout.touchMin;
+  const { bg, fg, border, borderWidth } = palette(t, variant, danger);
+  // Kit sizes: sm = size-sm (40)/pad-4, md = touch-min (48)/pad-6, lg = size-md (56)/pad-7.
+  const minHeight = size === 'sm' ? t.size.sm : size === 'lg' ? t.size.md : t.layout.touchMin;
+  const padX = size === 'sm' ? t.space[4] : size === 'lg' ? t.space[7] : t.space[6];
+  const labelSize = size === 'sm' ? 'sm' : size === 'lg' ? 'md' : 'base';
 
   const container: StyleProp<ViewStyle> = {
     minHeight,
@@ -67,10 +78,10 @@ export function MxButton({
     justifyContent: 'center',
     alignSelf: block ? 'stretch' : 'flex-start',
     gap: t.space[2],
-    paddingHorizontal: t.space[6],
+    paddingHorizontal: padX,
     borderRadius: t.radius.control,
     backgroundColor: bg,
-    borderWidth: border ? t.stroke.hairline : 0,
+    borderWidth: border ? borderWidth ?? t.stroke.hairline : 0,
     borderColor: border,
   };
 
@@ -89,7 +100,7 @@ export function MxButton({
           <Icon name={icon} size={t.iconSize.md} color={fg} />
         </View>
       )}
-      <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: fg }]}>{children}</Text>
+      <Text style={[t.font.text({ size: labelSize, weight: 'bold' }), { color: fg }]}>{children}</Text>
       {trailingIcon !== undefined && (
         <View>
           <Icon name={trailingIcon} size={t.iconSize.md} color={fg} />

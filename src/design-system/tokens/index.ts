@@ -24,8 +24,10 @@ import {
 import { elevationTokens, focusRingWidth } from './elevation';
 import { duration, easing } from './motion';
 import { size, iconSize, stroke, opacity } from './size';
+import { comp } from './component';
 
 export * from './colors';
+export * from './component';
 export * from './spacing';
 export * from './radius';
 export * from './typography';
@@ -59,6 +61,7 @@ export const tokens = {
   iconSize,
   stroke,
   opacity,
+  comp,
 } as const;
 
 export type Tokens = typeof tokens;

@@ -5,9 +5,11 @@
  * single iOS shadow (`shadowColor/Offset/Opacity/Radius`) plus an Android
  * `elevation`. Per ADR 0004 each token is mapped to that RN shape, derived from
  * the DOMINANT CSS layer; in dark mode the token is a hairline ring (the CSS uses
- * `0 0 0 1px …`), mapped to a `borderColor`/`borderWidth` hint plus a soft ambient
- * shadow. The verbatim CSS string is retained as `webShadow` so parity with the
- * kit is auditable and there is no silent drift on the values that CAN be 1:1.
+ * `0 0 0 1px …`), mapped to REAL `borderColor`/`borderWidth` style props so that
+ * spreading the token into a `ViewStyle` renders the ring (`nav` is directional —
+ * `0 -1px 0` — so it maps to a top-only border). The verbatim CSS string is
+ * retained as `webShadow` so parity with the kit is auditable and there is no
+ * silent drift on the values that CAN be 1:1.
  *
  * Source of truth: docs/design/MemoX Design System_v4/tokens/elevation.css
  */
@@ -22,9 +24,15 @@ export interface ShadowStyle {
   shadowRadius: number;
   /** Android elevation (dp). */
   elevation: number;
-  /** Dark-mode hairline ring, when the CSS token is a `0 0 0 1px` inset. */
-  ringColor?: string;
-  ringWidth?: number;
+  /**
+   * Dark-mode hairline ring (`0 0 0 1px` layer) as real border props — RN drops
+   * unknown style keys silently, so these MUST be genuine `ViewStyle` fields.
+   */
+  borderColor?: string;
+  borderWidth?: number;
+  /** Directional dark-mode hairline (`0 -1px 0` layer on `nav`). */
+  borderTopColor?: string;
+  borderTopWidth?: number;
   /** Verbatim CSS `box-shadow` value, for parity auditing (not used by RN). */
   webShadow: string;
 }
@@ -81,8 +89,8 @@ const dark: Record<ElevationName, ShadowStyle> = {
     shadowOpacity: 0,
     shadowRadius: 0,
     elevation: 0,
-    ringColor: 'rgba(255, 255, 255, 0.09)',
-    ringWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.09)',
+    borderWidth: 1,
     webShadow: '0 0 0 1px rgba(255, 255, 255, 0.09)',
   },
   card: {
@@ -91,8 +99,8 @@ const dark: Record<ElevationName, ShadowStyle> = {
     shadowOpacity: 0.45,
     shadowRadius: 8,
     elevation: 4,
-    ringColor: 'rgba(255, 255, 255, 0.08)',
-    ringWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    borderWidth: 1,
     webShadow: '0 2px 8px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(255, 255, 255, 0.08)',
   },
   lg: {
@@ -101,8 +109,8 @@ const dark: Record<ElevationName, ShadowStyle> = {
     shadowOpacity: 0.6,
     shadowRadius: 48,
     elevation: 16,
-    ringColor: 'rgba(255, 255, 255, 0.08)',
-    ringWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.08)',
+    borderWidth: 1,
     webShadow: '0 20px 48px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.08)',
   },
   fab: {
@@ -119,8 +127,8 @@ const dark: Record<ElevationName, ShadowStyle> = {
     shadowOpacity: 0.55,
     shadowRadius: 16,
     elevation: 8,
-    ringColor: 'rgba(255, 255, 255, 0.06)',
-    ringWidth: 1,
+    borderTopColor: 'rgba(255, 255, 255, 0.06)',
+    borderTopWidth: 1,
     webShadow: '0 -2px 16px rgba(0, 0, 0, 0.55), 0 -1px 0 rgba(255, 255, 255, 0.06)',
   },
 };

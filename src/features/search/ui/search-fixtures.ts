@@ -11,11 +11,12 @@ export type SearchFilter = 'all' | CardStatus;
 /** What the body is showing right now. */
 export type SearchPhase = 'recent' | 'loading' | 'results' | 'no-results';
 
+// Kit chip order (search/components/Chips.jsx): All · New · Due · Mastered.
 export const SEARCH_FILTERS: { id: SearchFilter; label: string }[] = [
   { id: 'all', label: 'All' },
+  { id: 'new', label: 'New' },
   { id: 'due', label: 'Due' },
   { id: 'mastered', label: 'Mastered' },
-  { id: 'new', label: 'New' },
 ];
 
 const SAMPLE_HITS: readonly CardHit[] = [
