@@ -31,8 +31,11 @@ export function MxSectionHeader({
       testID={node}
       style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', gap: t.space[3] }}
     >
-      <View style={{ flexShrink: 1 }}>
-        <Text style={[t.font.text({ size: 'md', weight: 'semibold' }), { color: t.color.text }]}>{title}</Text>
+      {/* Kit .section-head__text: a column with a 2px title→caption gap. */}
+      <View style={{ flexShrink: 1, gap: t.space['05'], minWidth: 0 }}>
+        <Text style={[t.font.text({ size: 'md', weight: 'bold', letterSpacing: 'tight' }), { color: t.color.text }]}>
+          {title}
+        </Text>
         {caption !== undefined && (
           <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>{caption}</Text>
         )}

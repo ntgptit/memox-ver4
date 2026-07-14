@@ -19,3 +19,5 @@ export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './Breadcr
 export { DeckPlaySheet, type DeckPlaySheetProps } from './DeckPlaySheet';
 export { Skeleton, type SkeletonProps } from './Skeleton';
 export { StatusCardRow, type StatusCardRowProps, type CardStatus as StatusCardStatus } from './StatusCardRow';
+export { ProgressBar, type ProgressBarProps } from './ProgressBar';
+export { Note, type NoteProps, type NoteTone } from './Note';

@@ -31,6 +31,10 @@ export interface AppScreenProps {
   main?: ReactNode;
   /** Selection count for the `selection` variant (→ "N selected"). */
   count?: number;
+  /** Root-bar bell slot (kit `notification` prop — unread badge dot). */
+  notification?: { dot?: boolean; onPress?: () => void };
+  /** Root-bar avatar slot, rendered after the bell. */
+  avatar?: ReactNode;
   /**
    * The screen sits inside the tab shell, where a REAL bottom nav view already
    * occupies the nav band — the body then only pads the section gap (+ FAB
@@ -53,6 +57,8 @@ export function AppScreen({
   actions,
   main,
   count,
+  notification,
+  avatar,
   inTabs = false,
   fab,
   children,
@@ -82,6 +88,8 @@ export function AppScreen({
         count={count}
         leading={leading}
         actions={actions}
+        notification={notification}
+        avatar={avatar}
         scrolled={scrolled}
         node={node ? `${node}/appbar` : undefined}
       />

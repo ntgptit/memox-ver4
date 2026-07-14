@@ -14,6 +14,7 @@ import { Text, View } from 'react-native';
 import type { ReactNode } from 'react';
 
 import { useTheme } from '../../theme';
+import { MxIconButton } from '../navigation/MxIconButton';
 
 export type MxAppBarVariant = 'root' | 'nested' | 'search' | 'selection' | 'modal';
 
@@ -29,9 +30,45 @@ export interface MxContextualAppBarProps {
   count?: number;
   leading?: ReactNode;
   actions?: ReactNode;
+  /** Kit bell slot — an icon button with an unread badge dot (root bars). */
+  notification?: { dot?: boolean; onPress?: () => void };
+  /** Kit avatar slot — rendered after the bell (root bars). */
+  avatar?: ReactNode;
   /** Scrolled state: opaque surface + divider (vs the transparent top state). */
   scrolled?: boolean;
   node?: string;
+}
+
+/** Kit `.cappbar__badge--dot`: a 10px error pill pinned at the bell's top-right. */
+const BELL_DOT = { size: 10, inset: 7 };
+
+function Bell({ dot = false, onPress }: { dot?: boolean; onPress?: () => void }) {
+  const t = useTheme();
+  return (
+    <View>
+      <MxIconButton
+        icon="notifications"
+        size="sm"
+        accessibilityLabel={dot ? 'Notifications, unread' : 'Notifications'}
+        onPress={onPress}
+        node="shell/notifications"
+      />
+      {dot && (
+        <View
+          accessibilityElementsHidden
+          style={{
+            position: 'absolute',
+            top: BELL_DOT.inset,
+            right: BELL_DOT.inset,
+            width: BELL_DOT.size,
+            height: BELL_DOT.size,
+            borderRadius: t.radius.pill,
+            backgroundColor: t.color.error,
+          }}
+        />
+      )}
+    </View>
+  );
 }
 
 export function MxContextualAppBar({
@@ -42,6 +79,8 @@ export function MxContextualAppBar({
   count,
   leading,
   actions,
+  notification,
+  avatar,
   scrolled = false,
   node,
 }: MxContextualAppBarProps) {
@@ -101,8 +140,12 @@ export function MxContextualAppBar({
           </>
         )}
       </View>
-      {actions !== undefined && (
-        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[2] }}>{actions}</View>
+      {(actions !== undefined || notification !== undefined || avatar !== undefined) && (
+        <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[2] }}>
+          {actions}
+          {notification !== undefined && <Bell dot={notification.dot} onPress={notification.onPress} />}
+          {avatar}
+        </View>
       )}
     </View>
   );

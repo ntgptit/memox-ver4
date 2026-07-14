@@ -10,7 +10,7 @@ import type { ReactNode } from 'react';
 import { useTheme, type Theme } from '../../theme';
 import { Icon, type IconName } from '../../icons';
 
-export type MxButtonVariant = 'primary' | 'secondary' | 'outline' | 'ghost';
+export type MxButtonVariant = 'primary' | 'secondary' | 'contrast' | 'outline' | 'ghost';
 export type MxButtonSize = 'lg' | 'md' | 'sm';
 
 export interface MxButtonProps {
@@ -40,6 +40,9 @@ function palette(
       return { bg: t.color.primary, fg: t.color.onPrimary };
     case 'secondary':
       return { bg: t.color.primarySoft, fg: t.color.onPrimarySoft };
+    case 'contrast':
+      // Kit `.btn.contrast`: solid surface pill for use ON a primary card.
+      return { bg: t.color.onPrimary, fg: t.color.primary };
     case 'outline':
       // Kit: text colour, stroke-mid inset ring in border-strong.
       return { bg: 'transparent', fg: t.color.text, border: t.color.borderStrong, borderWidth: t.stroke.mid };

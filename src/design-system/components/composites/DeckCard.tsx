@@ -16,6 +16,7 @@ import { useTheme } from '../../theme';
 import { Icon, type IconName } from '../../icons';
 import { MxCard } from '../surfaces/MxCard';
 import { MxIconTile, type MxIconTileTone } from '../surfaces/MxIconTile';
+import { ProgressBar } from './ProgressBar';
 
 export interface DeckCardProps {
   icon?: IconName | string;
@@ -25,6 +26,8 @@ export interface DeckCardProps {
   titleWeight?: 'bold' | 'semibold';
   /** Meta line under the title (string or pre-colored Text nodes). */
   meta?: ReactNode;
+  /** Mastery percent — renders a slim progress bar under the meta (Dashboard). */
+  progress?: number;
   /** Selection mode: non-null renders the check/radio visual and hides `trailing`. */
   selected?: boolean;
   trailing?: ReactNode;
@@ -41,6 +44,7 @@ export function DeckCard({
   title,
   titleWeight = 'bold',
   meta,
+  progress,
   selected,
   trailing,
   onPress,
@@ -75,6 +79,11 @@ export function DeckCard({
           >
             {meta}
           </Text>
+        )}
+        {progress !== undefined && (
+          <View style={{ marginTop: t.space[2] }}>
+            <ProgressBar value={progress} height={6} accessibilityLabel={`${progress}% mastered`} />
+          </View>
         )}
       </View>
       {!selectionMode && trailing ? trailing : null}

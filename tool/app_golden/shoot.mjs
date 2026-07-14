@@ -41,7 +41,16 @@ const MAX_DIFF_RATIO = 0.01; // ≤1% of pixels may differ
 // The languages route (WBS 3.3) renders a deterministic, DB-free fixture preview when
 // given a `state` (and optional `theme`) query param — see src/app/settings/languages.tsx.
 const TARGETS = [
-  { name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' },
+  // Dashboard (WBS 5.3) — fixture preview via /?state=… (src/app/(tabs)/index.tsx).
+  { name: 'dashboard--loaded--light', path: '/?state=loaded', waitFor: 'text=Continue studying' },
+  { name: 'dashboard--not-studied--light', path: '/?state=not-studied', waitFor: 'text=You haven\'t studied today' },
+  { name: 'dashboard--goal-met--light', path: '/?state=goal-met', waitFor: 'text=Daily goal reached' },
+  { name: 'dashboard--streak-reset--light', path: '/?state=streak-reset', waitFor: 'text=Streak reset' },
+  { name: 'dashboard--caught-up--light', path: '/?state=caught-up', waitFor: 'text=all caught up' },
+  { name: 'dashboard--empty--light', path: '/?state=empty', waitFor: 'text=Start your first deck' },
+  { name: 'dashboard--loading--light', path: '/?state=loading', waitFor: 'text=Good evening' },
+  { name: 'dashboard--create-sheet--light', path: '/?state=create-sheet', waitFor: 'text=Add card' },
+  { name: 'dashboard--loaded--dark', path: '/?state=loaded&theme=dark', waitFor: 'text=Continue studying' },
   // Subdeck list (WBS 3.5) — fixture preview via /deck/preview?state=… (src/app/deck/[deckId]/index.tsx).
   { name: 'subdeck-list--loaded--light', path: '/deck/preview?state=loaded', waitFor: 'text=Greetings & introductions' },
   { name: 'subdeck-list--dense--light', path: '/deck/preview?state=dense', waitFor: 'text=Formal & Honorific' },
