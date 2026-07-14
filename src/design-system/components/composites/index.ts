@@ -14,3 +14,5 @@ export { Sheet, type SheetProps } from './Sheet';
 export { MenuItem, type MenuItemProps } from './MenuItem';
 export { Dialog, type DialogProps } from './Dialog';
 export { DialogInput, type DialogInputProps } from './DialogInput';
+export { DeckCard, type DeckCardProps } from './DeckCard';
+export { Skeleton, type SkeletonProps } from './Skeleton';

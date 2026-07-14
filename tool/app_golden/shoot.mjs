@@ -42,6 +42,20 @@ const MAX_DIFF_RATIO = 0.01; // ≤1% of pixels may differ
 // given a `state` (and optional `theme`) query param — see src/app/settings/languages.tsx.
 const TARGETS = [
   { name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' },
+  // Library (WBS 3.4) — fixture preview via /library?state=… (src/app/(tabs)/library.tsx).
+  { name: 'library--loaded--light', path: '/library?state=loaded', waitFor: 'text=Korean TOPIK I' },
+  { name: 'library--dense--light', path: '/library?state=dense', waitFor: 'text=Advanced Idiomatic' },
+  { name: 'library--empty--light', path: '/library?state=empty', waitFor: 'text=Build your learning library' },
+  { name: 'library--create-sheet--light', path: '/library?state=create-sheet', waitFor: 'text=Create deck' },
+  { name: 'library--search-active--light', path: '/library?state=search-active', waitFor: 'text=korean topik' },
+  { name: 'library--search-results--light', path: '/library?state=search-results', waitFor: 'text=4 results' },
+  { name: 'library--search-no-results--light', path: '/library?state=search-no-results', waitFor: 'text=No results' },
+  { name: 'library--filter-applied--light', path: '/library?state=filter-applied', waitFor: 'text=decks match' },
+  { name: 'library--filter-sheet--light', path: '/library?state=filter-sheet', waitFor: 'text=Sort & filter' },
+  { name: 'library--selection--light', path: '/library?state=selection', waitFor: 'text=3 selected' },
+  { name: 'library--loading--light', path: '/library?state=loading' },
+  { name: 'library--offline--light', path: '/library?state=offline', waitFor: 'text=Offline · showing saved data' },
+
   { name: 'languages--list--light', path: '/settings/languages?state=list', waitFor: 'text=한국어 → English' },
   { name: 'languages--empty--light', path: '/settings/languages?state=empty', waitFor: 'text=No language pairs yet' },
   { name: 'languages--add--light', path: '/settings/languages?state=add', waitFor: 'text=Meaning language' },

@@ -46,7 +46,7 @@ const PIXEL_THRESHOLD = 0.2;
 const args = process.argv.slice(2);
 const gateIdx = args.indexOf('--gate');
 const gatePct = gateIdx >= 0 ? Number(args[gateIdx + 1]) : null;
-const prefix = args.filter((a, i) => a !== '--gate' && i !== gateIdx + 1)[0] ?? '';
+const prefix = args.filter((a, i) => a !== '--gate' && (gateIdx < 0 || i !== gateIdx + 1))[0] ?? '';
 
 if (gateIdx >= 0 && (!Number.isFinite(gatePct) || gatePct <= 0)) {
   console.error('--gate requires a positive percentage, e.g. --gate 25');

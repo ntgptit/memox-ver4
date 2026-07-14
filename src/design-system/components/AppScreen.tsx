@@ -29,6 +29,14 @@ export interface AppScreenProps {
   actions?: ReactNode;
   /** Custom app-bar main content (e.g. a search dock for the `search` variant). */
   main?: ReactNode;
+  /** Selection count for the `selection` variant (→ "N selected"). */
+  count?: number;
+  /**
+   * The screen sits inside the tab shell, where a REAL bottom nav view already
+   * occupies the nav band — the body then only pads the section gap (+ FAB
+   * clearance), instead of the kit's reserved-band padding.
+   */
+  inTabs?: boolean;
   fab?: ReactNode;
   children?: ReactNode;
   node?: string;
@@ -44,6 +52,8 @@ export function AppScreen({
   leading,
   actions,
   main,
+  count,
+  inTabs = false,
   fab,
   children,
   node,
@@ -69,6 +79,7 @@ export function AppScreen({
         title={title}
         context={context}
         main={main}
+        count={count}
         leading={leading}
         actions={actions}
         scrolled={scrolled}
@@ -88,9 +99,13 @@ export function AppScreen({
               // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
               // (+ the FAB clearance when present); screens that need the space back
               // reclaim it with a negative margin, exactly like the kit.
-              paddingBottom: fab
-                ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
-                : t.layout.bottomNavHeight + t.space[6],
+              paddingBottom: inTabs
+                ? fab
+                  ? t.space[4] + t.layout.fabSize + t.space[6]
+                  : t.space[6]
+                : fab
+                  ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
+                  : t.layout.bottomNavHeight + t.space[6],
               gap: t.space[6],
             },
             contentStyle,
