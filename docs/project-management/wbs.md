@@ -158,7 +158,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 | ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 8.1 | Statistics slice | `statistics`: streaks/retention/heatmap/bars, scope switch, insufficient/loading/error | statistics (loaded, scope-switch, insufficient, loading, error) | 5.2, 7.4, 2.6 | Implemented | P1 | No | All 5 states; charts have axis labels; numbers from DB; scope re-derives; visual parity | `src/features/stats/ui/{statistics-screen,statistics-container,use-statistics,statistics-fixtures,statistics-components}.tsx/ts` + tests (streaks current/longest, 14-week heatmap intensity, minutes-per-weekday bars, Leitner reps→box 1–8 histogram, 30-day accuracy Donut, library overview — all derived from decks+sessions+attempts+SRS; `insufficient` under 10 attempts; This-pair/All scope re-derives); shared `Ring` composite over `react-native-svg` (DEP-SVG Approved); route `src/app/(tabs)/stats.tsx`; goldens `statistics--*.png` — all 5 states + dark < 3% vs kit (parity gate) | Opus + Design | 1f5d837 |
-| 8.2 | Reminder slice | `reminder`: daily study reminder on/off + time-picker; schedule local notifications | reminder (on, off, time-picker) | 0.5, 1.5, 1.7, DEP-NOTIFICATIONS, 2.6 | Blocked | P1 | No | All 3 states; scheduling gated on DEP-NOTIFICATIONS; choice persists across restart via the migration/storage strategy (0.5); day-chips + time render per shots | `.../specs/reminder.md`, `.../shots/reminder--*.png`; persistence needs 0.5 (hard prerequisite); needs DEP-NOTIFICATIONS | Opus | TBD |
+| 8.2 | Reminder slice | `reminder`: daily study reminder on/off + time-picker; schedule local notifications | reminder (on, off, time-picker) | 0.5, 1.5, 1.7, DEP-NOTIFICATIONS, 2.6 | Implemented | P1 | No | All 3 states; scheduling gated on DEP-NOTIFICATIONS; choice persists across restart via the migration/storage strategy (0.5); day-chips + time render per shots | `src/features/settings/ui/{reminder-screen,reminder-container,use-reminder,reminder-fixtures}.tsx/ts` + `src/features/settings/data/reminder-settings.ts` (typed config over the app_setting repo — restart-safe, corrupt JSON → default) + tests (every change persists AND reschedules; hour:minute picker emits HH:MM; off dims + disarms the time/day controls); scheduling via `expo-notifications` weekly triggers per chosen weekday (DEP-NOTIFICATIONS Approved; permissions requested lazily on enable; web no-op); route `src/app/settings/reminders.tsx`; goldens `reminder--*.png` — all 3 states + dark < 3% vs kit (parity gate) | Opus | TBD |
 
 ---
 
@@ -269,7 +269,7 @@ No package is self-approved. Any work package that depends on a `Pending` capabi
 | DEP-ICON-FONT | Canonical cross-platform icon font | Material Symbols Rounded variable-font asset (Apache-2.0; subset to the kit glyph set, bundled at `assets/fonts/MaterialSymbolsRounded.ttf`) | 1.4 | **Approved** (2026-07-13) | Yes — approved: Apache-2.0 license, sourced from google/material-design-icons, subset via pyftsubset to the 119 kit icons (~246 KB), bundled locally (no CDN); regenerate by re-subsetting from kit icon usage |
 | DEP-FILE-PICKER | File picker (import) | `expo-document-picker` | 9.1, 10.3 | Pending | Yes |
 | DEP-FILE-SHARING | File sharing (export) | `expo-sharing` (+ `expo-file-system`, installed via SDK) | 9.2, 10.3 | Pending | Yes |
-| DEP-NOTIFICATIONS | Local notifications | `expo-notifications` | 8.2 | Pending | Yes — approve + plan permissions |
+| DEP-NOTIFICATIONS | Local notifications | `expo-notifications` `^0.32.17` | 8.2 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 8.2 on start; see Notes). Permissions: requested lazily on first enable, weekly local triggers only, no push/remote | Yes — approved |
 | DEP-TTS | Text-to-speech | `expo-speech` `~14.0.0` | 4.4, 6.1, 7.3, 10.1 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 4.4 on start; see Notes) | Yes — approved |
 | DEP-AUTH | Google authentication | `expo-auth-session` / provider SDK | 10.2 | Pending | Yes — provider + OAuth config |
 | DEP-CLOUD | Cloud/Drive backup | Provider SDK (TBD) | 10.2, 10.3, 11.7 | Pending | Yes — choose provider |
@@ -426,10 +426,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 56 |
+| Implemented | 57 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 10 |
+| Blocked | 9 |
 | Future | 0 |
 | Deprecated | 0 |
 

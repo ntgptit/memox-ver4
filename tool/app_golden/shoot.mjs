@@ -178,6 +178,11 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // reminder (WBS 8.2) — DB-free fixture preview via /settings/reminders?state=/?theme=.
+  { name: 'reminder--on--light', path: '/settings/reminders?state=on', waitFor: 'text=13:00' },
+  { name: 'reminder--off--light', path: '/settings/reminders?state=off', waitFor: 'text=13:00' },
+  { name: 'reminder--time-picker--light', path: '/settings/reminders?state=time-picker', waitFor: 'text=Pick reminder time' },
+  { name: 'reminder--on--dark', path: '/settings/reminders?state=on&theme=dark', waitFor: 'text=13:00' },
   // statistics (WBS 8.1) — fixture preview via /stats?state=… (src/app/(tabs)/stats.tsx).
   { name: 'statistics--loaded--light', path: '/stats?state=loaded', waitFor: 'text=Study calendar' },
   { name: 'statistics--scope-switch--light', path: '/stats?state=scope-switch', waitFor: 'text=Study calendar' },

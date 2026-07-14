@@ -5,3 +5,4 @@
 
 export * from './settings-repository';
 export * from './theme-settings';
+export * from './reminder-settings';
