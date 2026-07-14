@@ -157,7 +157,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 
 | ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 8.1 | Statistics slice | `statistics`: streaks/retention/heatmap/bars, scope switch, insufficient/loading/error | statistics (loaded, scope-switch, insufficient, loading, error) | 5.2, 7.4, 2.6 | Blocked | P1 | No | All 5 states; charts have axis labels + legend; insufficient-data state; values from DB after finalization (7.4); visual parity. Does **not** block MVP B | `.../specs/statistics.md`, `.../shots/statistics--*.png` | Opus + Design | TBD |
+| 8.1 | Statistics slice | `statistics`: streaks/retention/heatmap/bars, scope switch, insufficient/loading/error | statistics (loaded, scope-switch, insufficient, loading, error) | 5.2, 7.4, 2.6 | Implemented | P1 | No | All 5 states; charts have axis labels; numbers from DB; scope re-derives; visual parity | `src/features/stats/ui/{statistics-screen,statistics-container,use-statistics,statistics-fixtures,statistics-components}.tsx/ts` + tests (streaks current/longest, 14-week heatmap intensity, minutes-per-weekday bars, Leitner reps→box 1–8 histogram, 30-day accuracy Donut, library overview — all derived from decks+sessions+attempts+SRS; `insufficient` under 10 attempts; This-pair/All scope re-derives); shared `Ring` composite over `react-native-svg` (DEP-SVG Approved); route `src/app/(tabs)/stats.tsx`; goldens `statistics--*.png` — all 5 states + dark < 3% vs kit (parity gate) | Opus + Design | TBD |
 | 8.2 | Reminder slice | `reminder`: daily study reminder on/off + time-picker; schedule local notifications | reminder (on, off, time-picker) | 0.5, 1.5, 1.7, DEP-NOTIFICATIONS, 2.6 | Blocked | P1 | No | All 3 states; scheduling gated on DEP-NOTIFICATIONS; choice persists across restart via the migration/storage strategy (0.5); day-chips + time render per shots | `.../specs/reminder.md`, `.../shots/reminder--*.png`; persistence needs 0.5 (hard prerequisite); needs DEP-NOTIFICATIONS | Opus | TBD |
 
 ---
@@ -276,6 +276,7 @@ No package is self-approved. Any work package that depends on a `Pending` capabi
 | DEP-TEST | Production test framework | `jest-expo` + `@testing-library/react-native` | 0.6, 0.8, 0.13, 1.8, 2.4, 3.1, 3.2, 4.1, 4.2, 5.1, 5.2, 11.1, 11.2, 11.3, 11.4 | **Approved** (2026-07-13) | Yes — approved; install/config in 0.13 |
 | DEP-GOLDEN | Screenshot/golden tests | Playwright (chromium, already a dep) screenshots of the Expo **web** build, pixel-diffed with `pixelmatch`/`pngjs` against committed baselines | 11.4 | **Approved** (2026-07-13) | Yes — approved: Playwright-on-web-build golden harness (`tool/app_golden/`), deterministic + CI-friendly |
 | DEP-DB-TESTDRIVER | Node SQLite driver for jest (test-only) | `better-sqlite3` + `@types/better-sqlite3` (devDeps) — backs the DEP-DB repository/migration tests (11.2) under jest, where `expo-sqlite` cannot run | 0.5, 3.2, 4.2, 5.2, 11.2 | **Approved** (2026-07-14, retro-registered by the 0.9 audit) | Yes — approved: test-only, never imported by production code |
+| DEP-SVG | Vector charts (stats ring/arcs) | `react-native-svg` `^15.15.5` | 8.1 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 8.1 on start; see Notes) | Yes — approved |
 
 Notes (2026-07-14, 0.9 audit): the project owner granted **standing pre-approval** for the autonomous WBS loop — Expo-SDK candidate capabilities with a named package (DEP-FILE-PICKER, DEP-FILE-SHARING, DEP-NOTIFICATIONS, DEP-TTS) may be flipped to Approved by the implementing row when it starts, citing this note; DEP-AUTH and DEP-CLOUD still require a human **provider choice** before approval. `expo-font`, `expo-router`, `expo-web-browser`, `react-native-*` are already in `package.json` (SDK 57) and need **no** new approval — section 1's tokens/theme/fonts and section 2's shell build on them. Row 1.4 loads its glyphs with the installed `expo-font`; the **Material Symbols Rounded font asset** (DEP-ICON-FONT, now **Approved**) is subset to the kit glyph set and bundled at `assets/fonts/MaterialSymbolsRounded.ttf` (no CDN). SF Symbols are deliberately not used (they would break cross-platform glyph parity with the kit).
 
@@ -424,10 +425,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 55 |
+| Implemented | 56 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 11 |
+| Blocked | 10 |
 | Future | 0 |
 | Deprecated | 0 |
 

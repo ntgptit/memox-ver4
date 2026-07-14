@@ -178,6 +178,13 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // statistics (WBS 8.1) — fixture preview via /stats?state=… (src/app/(tabs)/stats.tsx).
+  { name: 'statistics--loaded--light', path: '/stats?state=loaded', waitFor: 'text=Study calendar' },
+  { name: 'statistics--scope-switch--light', path: '/stats?state=scope-switch', waitFor: 'text=Study calendar' },
+  { name: 'statistics--insufficient--light', path: '/stats?state=insufficient', waitFor: 'text=Not enough data' },
+  { name: 'statistics--loading--light', path: '/stats?state=loading', waitFor: 'text=Stats' },
+  { name: 'statistics--error--light', path: '/stats?state=error', waitFor: 'text=Couldn\'t load stats' },
+  { name: 'statistics--loaded--dark', path: '/stats?state=loaded&theme=dark', waitFor: 'text=Study calendar' },
   // player (WBS 7.3) — DB-free fixture preview via /player?state=/?theme=.
   { name: 'player--playing--light', path: '/player?state=playing', waitFor: 'text=학교' },
   { name: 'player--paused--light', path: '/player?state=paused', waitFor: 'text=학교' },
