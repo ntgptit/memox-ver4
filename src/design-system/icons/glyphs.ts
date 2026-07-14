@@ -81,6 +81,7 @@ export const GLYPHS = {
   numbers: '\ueac7',
   open_in_new: '\ue89e',
   palette: '\ue40a',
+  pause: '\ue034',
   person: '\uf0d3',
   play_arrow: '\ue037',
   play_circle: '\ue1c4',

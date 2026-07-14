@@ -148,7 +148,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 7.1 | Recall-mode slice | `recall-mode` (stage 4): reveal + self-grade forgot/remembered | recall-mode (before-reveal, revealed, forgot, remembered, complete) | 5.1, 5.2, 1.5, 1.7, 2.6 | Implemented | P0 | No | All 5 states; grade pair equal-width ≥48px; grade persists to SRS; visual parity | `src/features/session/ui/*` (RecallModeScreen — progress header + prompt card + reveal/meaning panel + equal-width Forgot/Got-it grades + round-complete — + `use-recall-mode` **session-play** controller + container + fixtures), route `src/app/session/recall.tsx`; the controller starts a session (5.1), persists each grade via `recordAnswer` (5.2 transactional attempt+SRS; forgot→`again` re-queues, remembered→`good`), finalizes on completion; tests `.../ui/__tests__/{recall-mode-screen,recall-mode-a11y,use-recall-mode}` (23); golden `recall-mode--{before-reveal,revealed,remembered,complete}--light` + `revealed--dark` | Opus + Design | TBD |
 | 7.2 | Fill-mode slice | `fill-mode` (stage 5): type term, hint, correct/wrong; keyboard-aware | fill-mode (waiting, typing, hint, correct, wrong, complete) | 5.1, 5.2, 1.5, 1.7, 2.6 | Implemented | P0 | No | All 6 states; check reachable over keyboard; hint + char-compare; attempts persisted; visual parity | `src/features/session/ui/*` (FillModeScreen — meaning prompt + `TextInput` + Help/Check, wrapped in `KeyboardAvoidingView`; hint note; per-character `CharCompare` diff + answer on wrong; accept/retry — + `use-fill-mode` session-play controller + container + fixtures), route `src/app/session/fill.tsx`; controller reuses 7.1 session-play (start→check `normalize`d answer persists via `recordAnswer` correct→`good`/wrong→`again`; accept→`good` typo override; retry re-answers; finalize on completion); tests `.../ui/__tests__/{fill-mode-screen,fill-mode-a11y,use-fill-mode}` (26); golden `fill-mode--{waiting,hint,correct,wrong}--light` + `wrong--dark` | Opus + Design | TBD |
-| 7.3 | Player slice | `player`: hands-free audio playback of a deck, transport, speed, error/end | player (playing, paused, speed, error, end) | 5.1, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Blocked | P1 | No | All 5 states; transport ≥48px; audio gated on DEP-TTS; error/end handled; visual parity | `.../specs/player.md`, `.../shots/player--*.png` | Opus + Design | TBD |
+| 7.3 | Player slice | `player`: hands-free audio playback of a deck, transport, speed, error/end | player (playing, paused, speed, error, end) | 5.1, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Implemented | P1 | No | All 5 states; transport ≥48px; audio gated on DEP-TTS; error/end handled; visual parity | `src/features/session/ui/{player-screen,player-container,use-player,player-fixtures}.tsx/ts` + tests (hands-free loop: each card speaks term→meaning via `expo-speech` at the chosen rate and auto-advances on done; pause stops speech, play resumes; ×0.75/×1/×1.5 segments re-drive; speech failure → error+retry; end panel replays); icon font +`pause`; route `src/app/player.tsx`; goldens `player--*.png` — all 5 states + dark < 3% vs kit (parity gate) | Opus + Design | TBD |
 | 7.4 | Study-result + finalization slice | `study-result`: summary, goal-met/missed, many-wrong, finalizing/retry/finalize-error; commit SRS + streak | study-result (7 states) | 5.1, 5.2, 7.1, 7.2, 2.6 | Implemented | P0 | No | All 7 states; finalize is transactional with retry on error; result numbers from DB; visual parity | `src/features/session/ui/{study-result-screen,study-result-container,use-study-result,study-result-fixtures,study-result-components}.tsx/ts` + tests (finalize via `finalizeSessionUseCase` with retry; cards/correct/minutes/wrong/streak/goal derived from session+attempt history); shared `Stat` composite; route `src/app/session/result.tsx`; goldens `study-result--*.png` — all 7 states + dark < 3% vs kit (parity gate) | Opus + Design | 5b48622 |
 
 ---
@@ -423,10 +423,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 54 |
+| Implemented | 55 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 12 |
+| Blocked | 11 |
 | Future | 0 |
 | Deprecated | 0 |
 

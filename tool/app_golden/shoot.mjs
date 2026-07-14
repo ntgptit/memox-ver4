@@ -178,6 +178,13 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // player (WBS 7.3) — DB-free fixture preview via /player?state=/?theme=.
+  { name: 'player--playing--light', path: '/player?state=playing', waitFor: 'text=학교' },
+  { name: 'player--paused--light', path: '/player?state=paused', waitFor: 'text=학교' },
+  { name: 'player--speed--light', path: '/player?state=speed', waitFor: 'text=×1.5' },
+  { name: 'player--error--light', path: '/player?state=error', waitFor: 'text=Playback failed' },
+  { name: 'player--end--light', path: '/player?state=end', waitFor: 'text=All played' },
+  { name: 'player--playing--dark', path: '/player?state=playing&theme=dark', waitFor: 'text=학교' },
   // study-session (WBS 5.5) — DB-free fixture preview via /session/play?state=/?theme=.
   { name: 'study-session--stage1-review--light', path: '/session/play?state=stage1-review', waitFor: 'text=Stage 1 · Review' },
   { name: 'study-session--stage2-match--light', path: '/session/play?state=stage2-match', waitFor: 'text=Stage 2 · Match' },

@@ -116,3 +116,16 @@ export {
   AnswerSaveErrorDialog,
   ResumeErrorState,
 } from './study-session-components';
+
+export { PlayerScreen, type PlayerScreenProps } from './player-screen';
+export { PlayerContainer } from './player-container';
+export { usePlayer, type PlayerDeps, type PlayerController } from './use-player';
+export {
+  PLAYER_FIXTURES,
+  PLAYER_SPEEDS,
+  type PlayerData,
+  type PlayerFixture,
+  type PlayerFixtureKey,
+  type PlayerSpeed,
+  type PlayerUiState,
+} from './player-fixtures';
