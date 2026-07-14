@@ -178,6 +178,33 @@ const TARGETS = [
   { name: 'fill-mode--correct--light', path: '/session/fill?state=correct', waitFor: 'text=Next' },
   { name: 'fill-mode--wrong--light', path: '/session/fill?state=wrong', waitFor: 'text=Retry' },
   { name: 'fill-mode--wrong--dark', path: '/session/fill?state=wrong&theme=dark', waitFor: 'text=Retry' },
+  // flashcard-editor (WBS 4.4) — DB-free fixture preview via /card/new?state=/?theme=.
+  { name: 'flashcard-editor--create--light', path: '/card/new?state=create', waitFor: 'text=New card' },
+  { name: 'flashcard-editor--edit--light', path: '/card/new?state=edit', waitFor: 'text=Edit card' },
+  { name: 'flashcard-editor--validation--light', path: '/card/new?state=validation', waitFor: 'text=Enter a term.' },
+  { name: 'flashcard-editor--duplicate--light', path: '/card/new?state=duplicate', waitFor: 'text=already exists' },
+  {
+    name: 'flashcard-editor--additional-translation--light',
+    path: '/card/new?state=additional-translation',
+    waitFor: 'text=Translation · Tiếng Việt',
+  },
+  {
+    name: 'flashcard-editor--audio-generating--light',
+    path: '/card/new?state=audio-generating',
+    waitFor: 'text=Term · 한국어',
+  },
+  { name: 'flashcard-editor--submitting--light', path: '/card/new?state=submitting', waitFor: 'text=Saving…' },
+  {
+    name: 'flashcard-editor--submit-error--light',
+    path: '/card/new?state=submit-error',
+    waitFor: 'text=Couldn’t save the card',
+  },
+  {
+    name: 'flashcard-editor--submit-success--light',
+    path: '/card/new?state=submit-success',
+    waitFor: 'text=Card saved.',
+  },
+  { name: 'flashcard-editor--create--dark', path: '/card/new?state=create&theme=dark', waitFor: 'text=New card' },
   // study-result (WBS 7.4) — DB-free fixture preview via ?state=/?theme=.
   { name: 'study-result--standard--light', path: '/session/result?state=standard', waitFor: 'text=Session complete' },
   { name: 'study-result--goal-met--light', path: '/session/result?state=goal-met', waitFor: 'text=Daily goal reached!' },

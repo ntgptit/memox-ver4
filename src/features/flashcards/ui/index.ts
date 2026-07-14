@@ -21,3 +21,34 @@ export {
   type FlashcardView,
   type FlashcardFilter,
 } from './flashcard-list-fixtures';
+
+export { FlashcardEditorScreen, type FlashcardEditorScreenProps, type FieldErrors } from './flashcard-editor-screen';
+export { FlashcardEditorContainer, type FlashcardEditorContainerProps } from './flashcard-editor-container';
+export {
+  useFlashcardEditor,
+  type FlashcardEditorDeps,
+  type FlashcardEditorController,
+  type EditorPhase,
+} from './use-flashcard-editor';
+export {
+  EDITOR_DECK,
+  BLANK_VALUES,
+  FILLED_VALUES,
+  FLASHCARD_EDITOR_FIXTURES,
+  type EditorDeckContext,
+  type EditorValues,
+  type FlashcardEditorFixture,
+  type FlashcardEditorFixtureKey,
+  type FlashcardEditorUiState,
+} from './flashcard-editor-fixtures';
+export {
+  Field,
+  AudioRow,
+  DupBanner,
+  Banner,
+  TagsField,
+  VisibilityRow,
+  KeepAdding,
+  SaveBar,
+  DeckContext,
+} from './flashcard-editor-components';

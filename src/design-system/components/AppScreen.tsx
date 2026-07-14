@@ -42,6 +42,12 @@ export interface AppScreenProps {
    */
   inTabs?: boolean;
   fab?: ReactNode;
+  /**
+   * Kit MxScaffold `bottomNav` slot for NON-nav footers (e.g. a sticky save
+   * bar): rendered below the scroll region, occupying the nav band — the body
+   * then pads only its own section gap.
+   */
+  footer?: ReactNode;
   children?: ReactNode;
   node?: string;
   contentStyle?: StyleProp<ViewStyle>;
@@ -61,6 +67,7 @@ export function AppScreen({
   avatar,
   inTabs = false,
   fab,
+  footer,
   children,
   node,
   contentStyle,
@@ -107,13 +114,14 @@ export function AppScreen({
               // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
               // (+ the FAB clearance when present); screens that need the space back
               // reclaim it with a negative margin, exactly like the kit.
-              paddingBottom: inTabs
-                ? fab
-                  ? t.space[4] + t.layout.fabSize + t.space[6]
-                  : t.space[6]
-                : fab
-                  ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
-                  : t.layout.bottomNavHeight + t.space[6],
+              paddingBottom:
+                inTabs || footer !== undefined
+                  ? fab
+                    ? t.space[4] + t.layout.fabSize + t.space[6]
+                    : t.space[6]
+                  : fab
+                    ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
+                    : t.layout.bottomNavHeight + t.space[6],
               gap: t.space[6],
             },
             contentStyle,
@@ -136,6 +144,7 @@ export function AppScreen({
           </View>
         )}
       </View>
+      {footer}
     </View>
   );
 }
