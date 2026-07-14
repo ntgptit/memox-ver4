@@ -57,7 +57,9 @@ export function EmptyState({ icon, tone, title, text, action, node }: EmptyState
           </Text>
         )}
       </View>
-      {action}
+      {/* Hug + center the action: a non-block MxButton pins itself flex-start, so it
+          needs a self-centering wrapper to sit centered like the kit's inline-flex. */}
+      {action !== undefined && <View style={{ alignSelf: 'center', alignItems: 'center' }}>{action}</View>}
     </View>
   );
 }

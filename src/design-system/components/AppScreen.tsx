@@ -114,7 +114,18 @@ export function AppScreen({
           {children}
         </ScrollView>
         {fab !== undefined && fab !== null && (
-          <View style={{ position: 'absolute', right: t.layout.gutter, bottom: t.space[4] }}>{fab}</View>
+          // Kit: the FAB parks above the bottom-nav band (nav + space-4) even on
+          // screens without a nav; inside the tab shell the real nav already lifts
+          // the body, so space-4 from the body floor lands on the same spot.
+          <View
+            style={{
+              position: 'absolute',
+              right: t.layout.gutter,
+              bottom: inTabs ? t.space[4] : t.layout.bottomNavHeight + t.space[4],
+            }}
+          >
+            {fab}
+          </View>
         )}
       </View>
     </View>

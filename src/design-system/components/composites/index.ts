@@ -15,4 +15,6 @@ export { MenuItem, type MenuItemProps } from './MenuItem';
 export { Dialog, type DialogProps } from './Dialog';
 export { DialogInput, type DialogInputProps } from './DialogInput';
 export { DeckCard, type DeckCardProps } from './DeckCard';
+export { Breadcrumb, type BreadcrumbProps, type BreadcrumbItem } from './Breadcrumb';
+export { DeckPlaySheet, type DeckPlaySheetProps } from './DeckPlaySheet';
 export { Skeleton, type SkeletonProps } from './Skeleton';

@@ -42,6 +42,21 @@ const MAX_DIFF_RATIO = 0.01; // ≤1% of pixels may differ
 // given a `state` (and optional `theme`) query param — see src/app/settings/languages.tsx.
 const TARGETS = [
   { name: 'shell-dashboard--loaded--light', path: '/', waitFor: 'text=Today' },
+  // Subdeck list (WBS 3.5) — fixture preview via /deck/preview?state=… (src/app/deck/[deckId]/index.tsx).
+  { name: 'subdeck-list--loaded--light', path: '/deck/preview?state=loaded', waitFor: 'text=Greetings & introductions' },
+  { name: 'subdeck-list--dense--light', path: '/deck/preview?state=dense', waitFor: 'text=Formal & Honorific' },
+  { name: 'subdeck-list--deep--light', path: '/deck/preview?state=deep', waitFor: 'text=Irregular verbs' },
+  { name: 'subdeck-list--empty--light', path: '/deck/preview?state=empty', waitFor: 'text=No subdecks yet' },
+  { name: 'subdeck-list--search--light', path: '/deck/preview?state=search', waitFor: 'text=subdecks match' },
+  { name: 'subdeck-list--no-results--light', path: '/deck/preview?state=no-results', waitFor: 'text=No subdecks for' },
+  { name: 'subdeck-list--selection--light', path: '/deck/preview?state=selection', waitFor: 'text=2 selected' },
+  { name: 'subdeck-list--create-sheet--light', path: '/deck/preview?state=create-sheet', waitFor: 'text=Import subdecks' },
+  { name: 'subdeck-list--subdeck-actions--light', path: '/deck/preview?state=subdeck-actions', waitFor: 'text=Rename subdeck' },
+  { name: 'subdeck-list--play--light', path: '/deck/preview?state=play', waitFor: 'text=Single mode' },
+  { name: 'subdeck-list--loading--light', path: '/deck/preview?state=loading' },
+  { name: 'subdeck-list--offline--light', path: '/deck/preview?state=offline', waitFor: 'text=Offline · showing saved subdecks' },
+  { name: 'subdeck-list--error--light', path: '/deck/preview?state=error', waitFor: 'text=Couldn\'t load subdecks' },
+
   // Library (WBS 3.4) — fixture preview via /library?state=… (src/app/(tabs)/library.tsx).
   { name: 'library--loaded--light', path: '/library?state=loaded', waitFor: 'text=Korean TOPIK I' },
   { name: 'library--dense--light', path: '/library?state=dense', waitFor: 'text=Advanced Idiomatic' },

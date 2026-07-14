@@ -21,6 +21,8 @@ export interface DeckCardProps {
   icon?: IconName | string;
   tone?: MxIconTileTone;
   title: string;
+  /** Title weight — subdecks render semibold (kit SubdeckCard), decks bold. */
+  titleWeight?: 'bold' | 'semibold';
   /** Meta line under the title (string or pre-colored Text nodes). */
   meta?: ReactNode;
   /** Selection mode: non-null renders the check/radio visual and hides `trailing`. */
@@ -37,6 +39,7 @@ export function DeckCard({
   icon,
   tone = 'accent',
   title,
+  titleWeight = 'bold',
   meta,
   selected,
   trailing,
@@ -62,7 +65,7 @@ export function DeckCard({
     <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[4], minWidth: 0 }}>
       {visual}
       <View style={{ flex: 1, minWidth: 0 }}>
-        <Text numberOfLines={2} style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text }]}>
+        <Text numberOfLines={2} style={[t.font.text({ size: 'base', weight: titleWeight }), { color: t.color.text }]}>
           {title}
         </Text>
         {meta !== undefined && (
