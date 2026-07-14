@@ -16,8 +16,13 @@
 // reviewable, instead of silently self-certified.
 //
 //   node tool/parity/verify-app-parity.mjs              # report only (exit 0)
-//   node tool/parity/verify-app-parity.mjs --gate 25    # exit 1 if any pair > 25%
+//   node tool/parity/verify-app-parity.mjs --gate 3     # exit 1 if any pair > 3%
 //   node tool/parity/verify-app-parity.mjs languages    # only screens matching a prefix
+//
+// THE RULE (AGENTS.md / construction contract §8-9): every screen state × theme must
+// stay under 3% mismatch vs its kit reference (`npm run parity:gate`) BEFORE the
+// screen is considered done or the next screen is started. A pair may exceed the bar
+// only via parity-allowlist.json with a written semantic reason.
 //
 // Output: tool/parity/out/app-parity.json + tool/parity/out/diff/<name>.png
 
@@ -32,6 +37,7 @@ const KIT_SHOTS = join(ROOT, 'docs/design/MemoX Design System_v4/ui_kits/memox-a
 const APP_BASELINE = join(ROOT, 'tool/app_golden/baseline');
 const OUT_DIR = join(ROOT, 'tool/parity/out');
 const DIFF_DIR = join(OUT_DIR, 'diff');
+const ALLOWLIST_PATH = join(ROOT, 'tool/parity/parity-allowlist.json');
 
 // Per-pixel color threshold (pixelmatch): loose, since the two renderers rasterize
 // text/shadows differently. The score that matters is the mismatch percentage.
@@ -133,10 +139,35 @@ if (unmatched.length) {
 console.log(`\nreport: tool/parity/out/app-parity.json · diffs: tool/parity/out/diff/`);
 
 if (gatePct != null) {
-  const over = results.filter((r) => r.error || r.mismatchPct > gatePct);
+  // Allowlist: named pairs may exceed the gate for a WRITTEN semantic reason only
+  // (see parity-allowlist.json). Styling drift never belongs there.
+  let allowlist = {};
+  if (existsSync(ALLOWLIST_PATH)) {
+    allowlist = JSON.parse(readFileSync(ALLOWLIST_PATH, 'utf8'));
+    delete allowlist['//'];
+  }
+
+  const offending = results.filter((r) => r.error || r.mismatchPct > gatePct);
+  const allowed = offending.filter((r) => allowlist[r.name]);
+  const over = offending.filter((r) => !allowlist[r.name]);
+
+  for (const r of allowed) {
+    console.log(`\nallowlisted (${r.mismatchPct ?? r.error}%): ${r.name}\n  reason: ${allowlist[r.name]}`);
+  }
+  const stale = Object.keys(allowlist).filter(
+    (name) => !offending.some((r) => r.name === name),
+  );
+  for (const name of stale) {
+    console.log(`\nnote: allowlist entry now passes the gate — remove it: ${name}`);
+  }
+
   if (over.length) {
-    console.error(`\nGATE FAIL: ${over.length} pair(s) above ${gatePct}%`);
+    console.error(
+      `\nGATE FAIL: ${over.length} pair(s) above ${gatePct}% — fix the screen before moving on ` +
+        `(review tool/parity/out/diff/<name>.png; rule: AGENTS.md / contract §8).`,
+    );
+    for (const r of over) console.error(`  ${String(r.mismatchPct ?? '!').padStart(6)}%  ${r.name}`);
     process.exit(1);
   }
-  console.log(`\ngate OK: all pairs ≤ ${gatePct}%`);
+  console.log(`\ngate OK: all pairs ≤ ${gatePct}% (${allowed.length} allowlisted)`);
 }

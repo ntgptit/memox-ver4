@@ -143,6 +143,23 @@ Visual gate:
 - Empty, loading và error state phù hợp với cùng composition.
 - Long text không phá vỡ layout.
 - Primary action vẫn truy cập được khi keyboard mở.
+- **Kit ↔ app parity dưới 3%**: mọi state × theme của màn hình phải lệch **< 3%**
+  so với reference shot của kit, đo bằng `npm run parity:gate`
+  (`tool/parity/verify-app-parity.mjs --gate 3`).
+
+Quy trình parity (bắt buộc, chặn việc sang màn khác):
+
+1. Thêm các canonical state của màn hình vào `TARGETS` trong `tool/app_golden/shoot.mjs`.
+2. `npm run golden:update` để chụp baseline.
+3. `npm run parity:gate`. Nếu bất kỳ cặp nào của màn hình ≥ 3%: mở
+   `tool/parity/out/diff/<name>.png`, xác định vùng lệch bằng số đo pixel
+   (không kết luận bằng mắt), sửa, chụp lại, chạy lại gate.
+4. **Chỉ khi gate xanh mới được chuyển sang màn hình tiếp theo.**
+5. Fixture phải chung một nguồn dữ liệu với kit (`_features/<screen>/` ↔
+   `src/features/<feature>/ui/fixtures.ts`) — lệch data là một defect.
+6. Cặp vượt 3% chỉ được phép qua `tool/parity/parity-allowlist.json` kèm lý do
+   semantic/product (ghi trong `tool/parity/REMAINING-DIVERGENCES.md`);
+   lệch do styling không bao giờ được allowlist.
 
 ## 9. Definition of Done
 
@@ -160,6 +177,8 @@ Một màn hình chỉ được coi là hoàn thành khi có đủ:
 - Visual defect report.
 - Kết quả sửa defect.
 - Test hoặc guard tương ứng.
+- **Kit ↔ app parity gate xanh** (`npm run parity:gate`, mọi cặp của màn hình < 3%
+  hoặc có allowlist entry với lý do semantic).
 
 Không được tự đánh giá bằng các câu như "clean", "modern", "polished" hoặc "looks good".
 Mọi kết luận phải chỉ ra rule, fixture hoặc visual gate cụ thể đã đạt.

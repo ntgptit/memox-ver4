@@ -17,9 +17,16 @@ conversion self-certifies. This report closes that loop:
 
 ```bash
 npm run parity:app                     # ranked mismatch report, exit 0
+npm run parity:gate                    # THE RULE: exit 1 if any pair > 3%
 node tool/parity/verify-app-parity.mjs languages       # one screen prefix
-node tool/parity/verify-app-parity.mjs --gate 25       # exit 1 above 25%
 ```
+
+**The 3% rule (AGENTS.md + construction contract §8/§9):** every screen's
+state × theme pairs must be under 3% mismatch before the screen counts as
+done or the next screen is started. Pairs may exceed the bar only via
+`parity-allowlist.json` with a written semantic reason (documented in
+`REMAINING-DIVERGENCES.md`); the gate prints allowlisted pairs and nags
+when an entry starts passing and should be removed.
 
 For every `tool/app_golden/baseline/<screen>--<state>--<theme>.png` with a
 same-named kit reference in `ui_kits/memox-app/shots/`, it pixel-compares

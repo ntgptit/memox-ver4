@@ -22,3 +22,12 @@ Building any mobile screen is governed by **`docs/design/mobile-ui-construction-
 - **Do not close a task on the happy path alone.** Build the full state matrix (loading, loaded normal/min/dense, empty, recoverable error, long text, large font, narrow device, dark mode) and, for forms, the submit lifecycle (validation error, disabled, submitting, failure, success).
 - **Edge-data + visual verification are required** (steps 6–8): render each fixture, screenshot, diff against the reference, file numbered defects, fix, re-shoot, and pass every visual gate before marking done.
 - **Definition of Done** = all step-9 artifacts present. Never sign off with "clean/modern/polished/looks good" — every conclusion must cite the specific rule, fixture, or visual gate satisfied.
+
+# Kit ↔ App visual parity gate (bắt buộc, hard bar < 3%)
+
+Every production screen must pixel-match its kit reference shot. The measured bar is **under 3% mismatch per state × theme**, enforced by `npm run parity:gate` (`tool/parity/verify-app-parity.mjs --gate 3`, which diffs `tool/app_golden/baseline/` against the kit's `ui_kits/memox-app/shots/` at the shared 390×780 frame).
+
+- **Per-screen workflow — the gate blocks moving on:** build the screen → add its canonical states to `tool/app_golden/shoot.mjs` TARGETS → `npm run golden:update` → `npm run parity:gate`. If any of the screen's pairs is ≥ 3%, review its `tool/parity/out/diff/<name>.png`, fix, re-shoot, and re-run. **Do NOT start the next screen while the gate is red.** "Close enough" is not a pass — the number is.
+- Keep fixtures identical on both sides (kit `_features/<screen>/` ↔ app `src/features/<feature>/ui/fixtures.ts`); data drift makes the comparison meaningless and is itself a defect.
+- A pair may exceed 3% ONLY through `tool/parity/parity-allowlist.json`, with a written reason and a matching section in `tool/parity/REMAINING-DIVERGENCES.md` — reserved for genuine semantic/product divergences, never styling drift.
+- Diagnose with measurements, not eyes: the diff PNGs plus pixel measurement of element positions (see the gate's failure output). Declared CSS ≠ rendered result — trust the render.
