@@ -8,7 +8,7 @@
  * DeckContext pill and the sticky SaveBar.
  */
 
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { Pressable, Text, TextInput, View, type TextInput as TextInputT } from 'react-native';
 import type { ReactNode } from 'react';
 
@@ -82,6 +82,7 @@ export const Field = forwardRef<TextInputT, FieldProps>(function Field(
   ref,
 ) {
   const t = useTheme();
+  const [focused, setFocused] = useState(false);
   const hasError = error !== null && error !== undefined;
 
   return (
@@ -108,7 +109,7 @@ export const Field = forwardRef<TextInputT, FieldProps>(function Field(
           borderRadius: t.radius.control,
           backgroundColor: disabled ? t.color.surfaceSunken : t.color.surface,
           borderWidth: hasError ? t.stroke.emphasis : t.stroke.hairline,
-          borderColor: hasError ? t.color.error : t.color.divider,
+          borderColor: hasError ? t.color.error : focused ? t.color.focusRing : t.color.divider,
         }}
       >
         <TextInput
@@ -123,10 +124,12 @@ export const Field = forwardRef<TextInputT, FieldProps>(function Field(
           autoFocus={autoFocus}
           onChangeText={onChangeText}
           onSubmitEditing={onSubmitEditing}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           returnKeyType={returnKeyType}
           style={[
             t.font.text({ size: 'base', lineHeight: 'normal' }),
-            { flex: 1, minWidth: 0, color: t.color.text, padding: 0 },
+            { flex: 1, minWidth: 0, color: t.color.text, padding: 0, outlineStyle: 'none' },
           ]}
         />
         {trailing}

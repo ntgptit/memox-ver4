@@ -51,7 +51,7 @@ export function MxSearchDock({
     <View testID={node} style={container}>
       <Icon name="search" size={t.iconSize.md} color={t.color.textSecondary} />
       <TextInput
-        style={[t.font.text({ size: 'base' }), { flex: 1, color: t.color.text, padding: 0 }]}
+        style={[t.font.text({ size: 'base' }), { flex: 1, color: t.color.text, padding: 0, outlineStyle: 'none' }]}
         placeholder={placeholder}
         placeholderTextColor={t.color.textSecondary}
         value={value}

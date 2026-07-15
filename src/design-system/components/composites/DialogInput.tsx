@@ -5,6 +5,7 @@
  * divider ring. The kit's is static; this one wires a real TextInput.
  */
 
+import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 
 import { useTheme } from '../../theme';
@@ -21,6 +22,7 @@ export interface DialogInputProps {
 
 export function DialogInput({ label, placeholder, value, onChangeText, error, node }: DialogInputProps) {
   const t = useTheme();
+  const [focused, setFocused] = useState(false);
 
   return (
     <View style={{ gap: t.space[2], alignSelf: 'stretch' }}>
@@ -39,7 +41,7 @@ export function DialogInput({ label, placeholder, value, onChangeText, error, no
           borderRadius: t.radius.control,
           backgroundColor: t.color.surface,
           borderWidth: t.stroke.hairline,
-          borderColor: error ? t.color.error : t.color.divider,
+          borderColor: error ? t.color.error : focused ? t.color.focusRing : t.color.divider,
           justifyContent: 'center',
         }}
       >
@@ -47,10 +49,12 @@ export function DialogInput({ label, placeholder, value, onChangeText, error, no
           testID={node}
           value={value}
           onChangeText={onChangeText}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder={placeholder}
           placeholderTextColor={t.color.textTertiary}
           accessibilityLabel={label ?? placeholder}
-          style={[t.font.text({ size: 'base' }), { color: t.color.text, padding: 0 }]}
+          style={[t.font.text({ size: 'base' }), { color: t.color.text, padding: 0, outlineStyle: 'none' }]}
         />
       </View>
       {error !== undefined && (

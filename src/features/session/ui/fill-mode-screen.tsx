@@ -8,6 +8,7 @@
  * goes out. The container runs the session (start → check → persist).
  */
 
+import { useState } from 'react';
 import { KeyboardAvoidingView, Platform, Text, TextInput, View } from 'react-native';
 
 import { AppScreen, MxCard, MxButton, MxIconButton, SectionLabel, useTheme, type Theme } from '@/design-system';
@@ -117,7 +118,12 @@ function InputBox({
 }) {
   // Kit InputBox: size-xl (96) min-height, radius-control, hairline DIVIDER ring that
   // tints to an emphasis success/error ring, centered xl-extrabold content.
-  const border = phase === 'correct' ? t.color.success : phase === 'wrong' ? t.color.error : t.color.divider;
+  const [focused, setFocused] = useState(false);
+  const border =
+    phase === 'correct' ? t.color.success
+    : phase === 'wrong' ? t.color.error
+    : focused ? t.color.focusRing
+    : t.color.divider;
   const emphasised = phase === 'correct' || phase === 'wrong';
 
   return (
@@ -147,6 +153,8 @@ function InputBox({
           value={input}
           onChangeText={onChangeInput}
           onSubmitEditing={onSubmit}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           editable={editable}
           placeholder="Type the term…"
           placeholderTextColor={t.color.textTertiary}
@@ -154,7 +162,10 @@ function InputBox({
           autoCorrect={false}
           returnKeyType="done"
           accessibilityLabel="Type the term"
-          style={[t.font.text({ size: 'xl', weight: 'extrabold' }), { color: t.color.text, textAlign: 'center', padding: 0 }]}
+          style={[
+            t.font.text({ size: 'xl', weight: 'extrabold' }),
+            { color: t.color.text, textAlign: 'center', padding: 0, outlineStyle: 'none' },
+          ]}
         />
       )}
     </View>
