@@ -213,7 +213,8 @@ Source: the 2026-07-15 navigation audit (`docs/reports/navigation-audit-2026-07-
 | 12.8 | Nav tests: card flows | Editor entry/exit from every source + card actions + search chain | flashcard-editor, flashcard-list, search | 12.4, 12.5 | Specified | P1 | No | Editor reached from deck cards, subdeck cards, dashboard, library and mode-picker with the right deck context; Save, keep-adding and Cancel each return to the correct screen; card-actions paths (edit → editor → back; delete → dialog → confirm removes the row, cancel keeps it); search → result → editor → back chain | 12.5 suite | Opus | TBD |
 | 12.9 | Nav tests: study flows | Mode-picker, all 5 modes, full 5-stage session, exit dialog, player, result | mode-picker, study-session, all modes, player, study-result | 12.3, 12.5 | Specified | P0 | No | Scope sheet opens, picks and dismisses; each of the 5 modes entered from mode-picker over seeded due cards and exited via back mid-round; ONE full 5-stage session completed through every stage to the result screen and back to the deck; exit dialog asserted for both Stay and Leave mid-session; player transport (play, pause, next, prev, speed) plus back; result finalize-retry path | 12.5 suite | Opus | TBD |
 | 12.10 | Nav tests: settings & tools | Settings tree, pickers, import/export journeys, reminders, theme | settings, import, export, reminder, theme | 12.2, 12.5 | Specified | P1 | No | Every settings root row navigates and backs; hub children via real presses; words-per-round picker and reminder time-picker open, commit and dismiss (scrim + Done) with the committed value visible after reload; theme change survives reload; import journey over the seeded deck incl. the dup-warning branch (seed duplicate terms) through done → Back to deck; export config → done with Share/Save present; back asserted mid-flow in both journeys | 12.5 suite | Opus | TBD |
-| 12.11 | Dead controls: wire or remove | Move card, Hide card, subdeck Rename/Move/Delete, Import subdecks, dashboard bell (audit P1-5..7) | flashcard-list, subdeck-list, dashboard | Product decision | Blocked | P2 | Yes | Each control is either wired to a real flow (new WBS rows if screens are needed) or removed/hidden with a documented kit divergence; until decided the audit records them as known no-ops and 12.6–12.8 assert the documented behaviour | Audit defects 5–7; human product decision on wire-vs-remove | Opus + Human | TBD |
+| 12.11 | Dead controls: wire or remove | ALL dead controls from the mechanical inventory (`docs/navigation/nav-flows-final.md` gaps): Move/Hide card; subdeck Rename/Move/Delete + Import subdecks; dashboard bell; the ⋮ Options buttons on study-session, player and review-mode; review-mode text-size; the library filter/sort sheet internals (`fs-sort-recent/name/due`, `fs-f-due/new/sub` MenuItems have NO handlers — the sheet is decorative) and the `library/scope` + `library/sort` chips | flashcard-list, subdeck-list, dashboard, library, session, player | Product decision | Blocked | P2 | Yes | Each control is either wired to a real flow (new WBS rows if screens are needed) or removed/hidden with a documented kit divergence; until decided the inventory records them as known no-ops and 12.6–12.8 assert the documented behaviour | `docs/navigation/nav-flows-final.md` (generated); human product decision on wire-vs-remove | Opus + Human | TBD |
+| 12.12 | Fix: deck open branches by organisation | `/deck/[deckId]` always renders subdeck-list; a `cards`-organisation deck must land on its flashcard-list instead (today it shows an empty subdeck screen) | library, subdeck-list, flashcard-list | 3.4, 3.5, 4.3 | Specified | P1 | No | Opening a deck routes by `deck.organisation`: `subdecks` → subdeck-list, `cards` → flashcard-list; back returns to the library either way; covered by a nav-suite step over one deck of each organisation | Mechanical inventory follow-up (2026-07-15); `src/app/deck/[deckId]/index.tsx` | Opus | TBD |
 
 ---
 
@@ -450,13 +451,13 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 ## Status Summary
 
-78 work packages total (0.13 and 2.6 added; section 12 — navigation & interaction test suite — added from the 2026-07-15 audit).
+79 work packages total (0.13 and 2.6 added; section 12 — navigation & interaction test suite — added from the 2026-07-15 audit, 12.12 from the mechanical inventory).
 
 | Status | Count |
 |---|---:|
 | Implemented | 66 |
 | Partial | 0 |
-| Specified | 6 |
+| Specified | 7 |
 | Blocked | 6 |
 | Future | 0 |
 | Deprecated | 0 |

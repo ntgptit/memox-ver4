@@ -68,3 +68,24 @@ fixed: sheets did not close before navigating (flashcard-list add/actions,
 library create, subdeck create, deck-settings export), which blocked the
 pushed screen on web. Remaining documented no-ops: defects 5–7 (WBS 12.11,
 product decision) and the Backup/Restore row (WBS 10.3).
+
+## Method upgrade: mechanical inventory (2026-07-15, later)
+
+Reactive bug-hunting is replaced by a generated inventory
+(`tool/nav_audit/inventory.mjs`), built in three ordered steps:
+
+1. **Enumerate in/out for every defined router/button/dialog/bottom-sheet** →
+   `docs/navigation/nav-inventory.md` (28 routes · 270 interactive nodes ·
+   35 overlays, each with its resolved OUT edge and close affordances).
+2. **The full flow list, duplicates kept on purpose** →
+   `docs/navigation/nav-flows-raw.md` (440 flow lines; the same behaviour
+   listed under every entry point — retained as documentation).
+3. **Duplicates removed** → `docs/navigation/nav-flows-final.md`
+   (166 unique behaviours = the definitive walk list; its "Gaps" section IS
+   the dead-control backlog).
+
+The dedup immediately surfaced 8 dead controls the click-audit had missed:
+the entire library filter/sort sheet internals (6 MenuItems with no handlers),
+the `library/scope`/`library/sort` chips, and `review-mode/text-size` — plus
+re-confirmed the 3 dead ⋮ Options buttons (study-session, player, review-mode).
+All folded into WBS 12.11; the deck-open-by-organisation gap became WBS 12.12.
