@@ -21,6 +21,7 @@ export { Skeleton, type SkeletonProps } from './Skeleton';
 export { StatusCardRow, type StatusCardRowProps, type CardStatus as StatusCardStatus } from './StatusCardRow';
 export { ProgressBar, type ProgressBarProps } from './ProgressBar';
 export { Note, type NoteProps, type NoteTone } from './Note';
+export { ActionCallout, type ActionCalloutProps, type ActionCalloutTone } from './ActionCallout';
 export { Stat, type StatProps } from './Stat';
 export { Spinner, type SpinnerProps } from './Spinner';
 export { Ring, type RingProps } from './Ring';

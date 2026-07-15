@@ -283,6 +283,19 @@ const TARGETS = [
   { name: 'match-mode--correct--light', path: '/session/match?state=correct', waitFor: 'text=love' },
   { name: 'match-mode--almost--light', path: '/session/match?state=almost', waitFor: 'text=3/5' },
   { name: 'match-mode--playing--dark', path: '/session/match?state=playing&theme=dark', waitFor: 'text=friend' },
+  // import (WBS 9.1) — DB-free fixture preview via /settings/import?state=/?theme=.
+  { name: 'import--source--light', path: '/settings/import?state=source', waitFor: 'text=CHOOSE SOURCE' },
+  { name: 'import--mapping--light', path: '/settings/import?state=mapping', waitFor: 'text=COLUMN MAPPING' },
+  { name: 'import--preview--light', path: '/settings/import?state=preview', waitFor: 'text=Import 124 cards' },
+  {
+    name: 'import--dup-warning--light',
+    path: '/settings/import?state=dup-warning',
+    waitFor: 'text=import anyway?',
+  },
+  { name: 'import--importing--light', path: '/settings/import?state=importing', waitFor: 'text=Importing…' },
+  { name: 'import--import-error--light', path: '/settings/import?state=import-error', waitFor: 'text=Import failed' },
+  { name: 'import--done--light', path: '/settings/import?state=done', waitFor: 'text=Imported 124 cards' },
+  { name: 'import--source--dark', path: '/settings/import?state=source&theme=dark', waitFor: 'text=CHOOSE SOURCE' },
 ];
 
 const MIME = {
