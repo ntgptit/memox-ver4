@@ -205,8 +205,8 @@ const SCREENS = [
   { id: 'flashcard-list', title: 'Flashcard List', Comp: () => window.FlashcardList, states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error', 'not-found'] },
   // Manage deck metadata and lifecycle actions (no content list).
   { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
-  // Decide how a new, empty deck is organised (nested decks vs cards).
-  { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
+  // Name + organise + create a new deck on one screen: radio option cards, one primary CTA.
+  { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default', 'subdecks', 'validation', 'duplicate', 'submitting', 'submit-error'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'keyboard-open', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },

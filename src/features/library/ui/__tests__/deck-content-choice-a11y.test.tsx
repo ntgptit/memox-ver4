@@ -24,23 +24,30 @@ function renderScreen(ui: ReactElement) {
   );
 }
 
-const base = { onChoose: async () => ok(undefined) };
+const base = { onSubmit: async () => ok(undefined) };
 
 describe('DeckContentChoiceScreen a11y — roles & labels', () => {
-  it('the heading is announced as a header', () => {
-    renderScreen(<DeckContentChoiceScreen {...base} />);
-    expect(screen.getByRole('header', { name: 'How do you want to organise it?' })).toBeTruthy();
-  });
-
   it('the back control is a labelled button', () => {
     renderScreen(<DeckContentChoiceScreen {...base} onBack={() => {}} />);
     expect(screen.getByLabelText('Back')).toBeTruthy();
   });
 
-  it('each choice card exposes a descriptive label', () => {
+  it('each option card exposes a descriptive label and its selection state', () => {
     renderScreen(<DeckContentChoiceScreen {...base} />);
-    expect(screen.getByLabelText('Organise with subdecks. Create nested topics before adding cards.')).toBeTruthy();
-    expect(screen.getByLabelText('Add cards directly. Use this as a final study deck.')).toBeTruthy();
+    const cards = screen.getByLabelText('Add cards directly. Use this as a final study deck.');
+    const subdecks = screen.getByLabelText('Organise with subdecks. Create nested topics before adding cards.');
+    expect(cards.props.accessibilityState?.selected).toBe(true);
+    expect(subdecks.props.accessibilityState?.selected).toBe(false);
+  });
+
+  it('the options are grouped as a labelled radiogroup', () => {
+    renderScreen(<DeckContentChoiceScreen {...base} />);
+    expect(screen.getByLabelText('How to organise the deck')).toBeTruthy();
+  });
+
+  it('the primary CTA is a reachable labelled control', () => {
+    renderScreen(<DeckContentChoiceScreen {...base} />);
+    expect(screen.getByTestId('deck-content-choice/create')).toBeTruthy();
   });
 
   it('the name field is labelled', () => {

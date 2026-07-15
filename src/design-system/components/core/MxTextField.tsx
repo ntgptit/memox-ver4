@@ -17,6 +17,9 @@ export interface MxTextFieldProps {
   helper?: string;
   error?: string;
   onChangeText?: (text: string) => void;
+  /** Fires on keyboard submit (Enter / return) — lets a form's primary CTA double as the return action. */
+  onSubmitEditing?: () => void;
+  autoFocus?: boolean;
   secureTextEntry?: boolean;
   multiline?: boolean;
   node?: string;
@@ -29,6 +32,8 @@ export function MxTextField({
   helper,
   error,
   onChangeText,
+  onSubmitEditing,
+  autoFocus,
   secureTextEntry,
   multiline,
   node,
@@ -71,6 +76,8 @@ export function MxTextField({
           placeholder={placeholder}
           placeholderTextColor={t.color.textSecondary}
           onChangeText={onChangeText}
+          onSubmitEditing={onSubmitEditing}
+          autoFocus={autoFocus}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           secureTextEntry={secureTextEntry}

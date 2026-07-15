@@ -1,25 +1,29 @@
 /**
- * Deck-content-choice screen (WBS 3.6). The name-and-organise step for a brand-new,
- * empty deck: name it inline, then pick exactly one direction — subdecks or cards.
- * A read/navigation surface with no competing primary CTA; the two choice cards are
- * the actions, and Import is a tertiary link.
+ * Deck-content-choice screen (WBS 3.6, reworked as a FORM after the create-flow UX
+ * review): name the deck, pick how it is organised via radio option cards ("Add
+ * cards directly" is preselected as the common case), then commit with the single
+ * primary CTA — "Create deck" for a new deck, "Save" when reorganising an existing
+ * one. Import stays a tertiary link. A simple deck is created on this one screen.
  *
- * Presentational and prop-driven: `onChoose` persists (name + organisation) and
- * resolves to a {@link Result} so a blank name / save failure renders inline. The
- * container wires it to `setDeckContentUseCase` (3.1) + the deck repository (3.2).
+ * Presentational and prop-driven: `onSubmit` persists (name + organisation) and
+ * resolves to a {@link Result}. A validation error (blank or duplicate name, field
+ * `title`) renders inline under the field; other errors surface as a banner. The
+ * container wires it to `createDeck` / `setDeckContentUseCase` over the deck repos.
  */
 
 import { useState } from 'react';
-import { ActivityIndicator, Text, View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import {
   AppScreen,
+  MxButton,
   MxCard,
   MxIconButton,
   MxIconTile,
   MxTextField,
   MxLink,
   Icon,
+  SectionLabel,
   useTheme,
   type Theme,
 } from '@/design-system';
@@ -29,21 +33,16 @@ import { type Result, type AppError, isErr } from '@/shared';
 export interface DeckContentChoiceScreenProps {
   /** Current deck name (from the loaded deck); the field is seeded with it. */
   deckName?: string;
+  /** CTA wording: creating a brand-new deck vs saving an existing one. */
+  mode?: 'create' | 'save';
   onBack?: () => void;
   /** Persist name + organisation. Resolves to a Result so the screen can show errors. */
-  onChoose: (input: { title: string; organisation: DeckOrganisation }) => Promise<Result<unknown, AppError>>;
+  onSubmit: (input: { title: string; organisation: DeckOrganisation }) => Promise<Result<unknown, AppError>>;
   /** Tertiary: import cards from a file instead of organising by hand. */
   onImport?: () => void;
 }
 
-const CHOICES: { organisation: DeckOrganisation; icon: string; title: string; text: string; node: string }[] = [
-  {
-    organisation: 'subdecks',
-    icon: 'account_tree',
-    title: 'Organise with subdecks',
-    text: 'Create nested topics before adding cards.',
-    node: 'deck-content-choice/subdecks',
-  },
+const OPTIONS: { organisation: DeckOrganisation; icon: string; title: string; text: string; node: string }[] = [
   {
     organisation: 'cards',
     icon: 'playing_cards',
@@ -51,33 +50,48 @@ const CHOICES: { organisation: DeckOrganisation; icon: string; title: string; te
     text: 'Use this as a final study deck.',
     node: 'deck-content-choice/cards',
   },
+  {
+    organisation: 'subdecks',
+    icon: 'account_tree',
+    title: 'Organise with subdecks',
+    text: 'Create nested topics before adding cards.',
+    node: 'deck-content-choice/subdecks',
+  },
 ];
 
 function nameError(error: AppError | null): string | undefined {
   if (!error || error.kind !== 'validation') return undefined;
-  return error.issues.find((i) => i.field === 'title')?.message;
+  return error.issues.find((i) => i.field === 'title')?.message ?? error.message;
 }
 
-export function DeckContentChoiceScreen({ deckName = '', onBack, onChoose, onImport }: DeckContentChoiceScreenProps) {
+export function DeckContentChoiceScreen({
+  deckName = '',
+  mode = 'create',
+  onBack,
+  onSubmit,
+  onImport,
+}: DeckContentChoiceScreenProps) {
   const t = useTheme();
   const [name, setName] = useState(deckName);
+  const [organisation, setOrganisation] = useState<DeckOrganisation>('cards');
   const [error, setError] = useState<AppError | null>(null);
-  const [pending, setPending] = useState<DeckOrganisation | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const choose = async (organisation: DeckOrganisation) => {
-    if (pending) return;
-    setPending(organisation);
+  const submit = async () => {
+    if (submitting) return;
+    setSubmitting(true);
     setError(null);
-    const result = await onChoose({ title: name, organisation });
+    const result = await onSubmit({ title: name, organisation });
     if (isErr(result)) {
-      setPending(null);
+      setSubmitting(false);
       setError(result.error);
       return;
     }
-    // Success routes away (parent navigates); leave `pending` set so the card stays busy.
+    // Success routes away (parent navigates); leave `submitting` set so the CTA stays busy.
   };
 
   const bannerMessage = error && error.kind !== 'validation' ? error.message : null;
+  const ctaLabel = submitting ? (mode === 'create' ? 'Creating…' : 'Saving…') : mode === 'create' ? 'Create deck' : 'Save';
 
   return (
     <AppScreen
@@ -111,22 +125,37 @@ export function DeckContentChoiceScreen({ deckName = '', onBack, onChoose, onImp
         label="Deck name"
         placeholder="Name your deck"
         value={name}
+        autoFocus
         onChangeText={setName}
+        onSubmitEditing={submit}
         error={nameError(error)}
       />
 
-      <Text
-        accessibilityRole="header"
-        style={[t.font.text({ size: 'xl', weight: 'extrabold' }), { color: t.color.text }]}
-      >
-        How do you want to organise it?
-      </Text>
-
-      <View style={{ gap: t.space[3] }}>
-        {CHOICES.map((c) => (
-          <ChoiceCard key={c.organisation} theme={t} choice={c} busy={pending === c.organisation} onPress={() => choose(c.organisation)} />
-        ))}
+      <View style={{ gap: t.space[2] }}>
+        <SectionLabel>ORGANISE</SectionLabel>
+        <View style={{ gap: t.space[3] }} accessibilityRole="radiogroup" accessibilityLabel="How to organise the deck">
+          {OPTIONS.map((o) => (
+            <OrganiseOption
+              key={o.organisation}
+              theme={t}
+              option={o}
+              selected={organisation === o.organisation}
+              onPress={() => setOrganisation(o.organisation)}
+            />
+          ))}
+        </View>
       </View>
+
+      <MxButton
+        variant="primary"
+        icon={submitting ? undefined : 'add'}
+        block
+        disabled={submitting}
+        onPress={submit}
+        node="deck-content-choice/create"
+      >
+        {ctaLabel}
+      </MxButton>
 
       <View style={{ alignItems: 'center' }}>
         <MxLink size="sm" icon="upload_file" trailingIcon={null} onPress={onImport} node="deck-content-choice/import">
@@ -137,36 +166,41 @@ export function DeckContentChoiceScreen({ deckName = '', onBack, onChoose, onImp
   );
 }
 
-function ChoiceCard({
+function OrganiseOption({
   theme: t,
-  choice,
-  busy,
+  option,
+  selected,
   onPress,
 }: {
   theme: Theme;
-  choice: (typeof CHOICES)[number];
-  busy: boolean;
+  option: (typeof OPTIONS)[number];
+  selected: boolean;
   onPress: () => void;
 }) {
   return (
     <MxCard
-      node={choice.node}
-      padding="md"
+      node={option.node}
+      padding="sm"
       interactive
       onPress={onPress}
-      accessibilityLabel={`${choice.title}. ${choice.text}`}
+      accessibilityLabel={`${option.title}. ${option.text}`}
+      accessibilityState={{ selected }}
+      style={
+        selected
+          ? { borderWidth: t.stroke.emphasis, borderColor: t.color.primary, backgroundColor: t.color.stateSelected }
+          : { borderWidth: t.stroke.hairline, borderColor: t.color.divider }
+      }
     >
       <View style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[4] }}>
-        <MxIconTile icon={choice.icon} tone="accent" />
+        <MxIconTile icon={option.icon} tone="accent" />
         <View style={{ flex: 1, minWidth: 0 }}>
-          <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text }]}>{choice.title}</Text>
-          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>{choice.text}</Text>
+          <Text style={[t.font.text({ size: 'base', weight: 'bold' }), { color: t.color.text }]}>{option.title}</Text>
+          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>{option.text}</Text>
         </View>
-        {busy ? (
-          <ActivityIndicator color={t.color.primary} />
-        ) : (
-          <Icon name="chevron_right" color={t.color.textTertiary} />
-        )}
+        <Icon
+          name={selected ? 'check_circle' : 'radio_button_unchecked'}
+          color={selected ? t.color.primary : t.color.textTertiary}
+        />
       </View>
     </MxCard>
   );

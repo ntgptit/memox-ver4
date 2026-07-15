@@ -20,6 +20,8 @@ export interface MxCardProps {
   onPress?: () => void;
   node?: string;
   accessibilityLabel?: string;
+  /** Selection semantics for option-card usage (e.g. deck-content-choice radios). */
+  accessibilityState?: { selected?: boolean; disabled?: boolean };
   children?: ReactNode;
   style?: StyleProp<ViewStyle>;
 }
@@ -47,6 +49,7 @@ export function MxCard({
   onPress,
   node,
   accessibilityLabel,
+  accessibilityState,
   children,
   style,
 }: MxCardProps) {
@@ -66,6 +69,7 @@ export function MxCard({
         onPress={onPress}
         accessibilityRole="button"
         accessibilityLabel={accessibilityLabel}
+        accessibilityState={accessibilityState}
         style={({ pressed }) => [composed, pressed && { transform: [{ scale: 0.985 }] }]}
       >
         {children}
