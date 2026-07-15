@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import { createFlashcardRepositories } from '@/features/flashcards/data';
 import { createSessionRepositories } from '@/features/session/data';
 import { createSettingsRepository, loadStudySettings } from '@/features/settings/data';
-import type { CardRepository } from '@/features/flashcards/domain';
+import { studyableCardRepo, type CardRepository } from '@/features/flashcards/domain';
 import { isErr, ok } from '@/shared';
 import { randomId, systemClock } from '@/shared/runtime';
 
@@ -66,7 +66,8 @@ export function StudySessionContainer({
     ]).then(([flash, session, study]) => {
       if (alive) {
         setDeps({
-          cards: study.shuffle ? withShuffle(flash.cards) : flash.cards,
+          // 12.11 B2: hidden cards never enter a study session; 10.1 shuffle on top.
+          cards: study.shuffle ? withShuffle(studyableCardRepo(flash.cards)) : studyableCardRepo(flash.cards),
           sessions: session.sessions,
           attempts: session.attempts,
           srs: session.srs,

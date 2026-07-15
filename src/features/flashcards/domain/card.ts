@@ -17,6 +17,8 @@ export interface Card {
   readonly meaning: string;
   readonly tags: readonly string[];
   readonly audioRef: string | null;
+  /** Excluded from study when true (12.11 B2 "Hide card"); still listed. */
+  readonly hidden: boolean;
   readonly createdAt: number;
   readonly updatedAt: number;
 }
@@ -76,6 +78,7 @@ export interface MakeCardInput extends CardFields {
   id: string;
   deckId: string;
   subdeckId: string | null;
+  hidden?: boolean;
   createdAt: number;
 }
 
@@ -96,6 +99,7 @@ export function makeCard(input: MakeCardInput): Result<Card> {
     meaning: fields.value.meaning,
     tags: fields.value.tags,
     audioRef: input.audioRef,
+    hidden: input.hidden ?? false,
     createdAt: input.createdAt,
     updatedAt: input.createdAt,
   });

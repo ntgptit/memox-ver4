@@ -5,7 +5,7 @@
 
 import { ok, err, isOk, isErr, notFoundError } from '@/shared';
 import type { Deck, Subdeck, DeckRepository, SubdeckRepository } from '@/features/library/domain';
-import { createDeck, createSubdeck, moveSubdeckUseCase } from '@/features/library/domain';
+import { createDeck, createSubdeck, moveSubdeckUseCase, renameSubdeckUseCase } from '@/features/library/domain';
 
 class FakeDeckRepo implements DeckRepository {
   decks = new Map<string, Deck>();
@@ -129,5 +129,22 @@ describe('moveSubdeck (WBS 3.1 cycle guard)', () => {
     const r = await moveSubdeckUseCase({ subdecks }).execute({ subdeckId: 's1', newParentId: 's2' });
     expect(isErr(r)).toBe(true);
     if (isErr(r)) expect(r.error.kind).toBe('conflict');
+  });
+});
+
+describe('renameSubdeckUseCase (WBS 12.11 B3)', () => {
+  it('renames an existing subdeck', async () => {
+    const subdecks = new FakeSubdeckRepo();
+    await subdecks.save({ id: 's1', deckId: 'd1', parentId: null, title: 'Old', position: 0 });
+    const r = await renameSubdeckUseCase({ subdecks }).execute({ subdeckId: 's1', title: 'New name' });
+    expect(isOk(r)).toBe(true);
+    expect(subdecks.subs.get('s1')?.title).toBe('New name');
+  });
+
+  it('rejects an empty title (entity validation) and a missing subdeck', async () => {
+    const subdecks = new FakeSubdeckRepo();
+    await subdecks.save({ id: 's1', deckId: 'd1', parentId: null, title: 'Old', position: 0 });
+    expect(isErr(await renameSubdeckUseCase({ subdecks }).execute({ subdeckId: 's1', title: '  ' }))).toBe(true);
+    expect(isErr(await renameSubdeckUseCase({ subdecks }).execute({ subdeckId: 'ghost', title: 'X' }))).toBe(true);
   });
 });

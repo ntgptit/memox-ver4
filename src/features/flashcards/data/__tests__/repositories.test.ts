@@ -34,7 +34,7 @@ function card(id: string, term: string, tags: string[] = []): Card {
     term,
     meaning: 'm',
     tags,
-    audioRef: null,
+    audioRef: null, hidden: false,
     createdAt: 1,
     updatedAt: 1,
   };

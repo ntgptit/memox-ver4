@@ -49,6 +49,7 @@ const EMPTY_CARD: Card = {
   meaning: '',
   tags: [],
   audioRef: null,
+  hidden: false,
   createdAt: 0,
   updatedAt: 0,
 };

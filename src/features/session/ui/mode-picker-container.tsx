@@ -6,6 +6,7 @@
 import { useEffect, useState } from 'react';
 
 import { createFlashcardRepositories } from '@/features/flashcards/data';
+import { studyableCardRepo } from '@/features/flashcards/domain';
 import { createSessionRepositories } from '@/features/session/data';
 import type { SessionStage } from '@/features/session/domain';
 import { systemClock } from '@/shared/runtime';
@@ -31,7 +32,7 @@ export function ModePickerContainer({
   useEffect(() => {
     let alive = true;
     void Promise.all([createFlashcardRepositories(), createSessionRepositories()]).then(([flash, session]) => {
-      if (alive) setDeps({ cards: flash.cards, srs: session.srs, clock: systemClock });
+      if (alive) setDeps({ cards: studyableCardRepo(flash.cards), srs: session.srs, clock: systemClock });
     });
     return () => {
       alive = false;

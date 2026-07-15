@@ -21,7 +21,7 @@ import { sequentialIds, fixedClock } from '@/shared/testing/fixtures';
 import { useRecallMode, type RecallModeDeps } from '../use-recall-mode';
 
 function card(id: string, term: string, meaning: string): Card {
-  return { id, deckId: 'd1', subdeckId: null, term, meaning, tags: [], audioRef: null, createdAt: 0, updatedAt: 0 };
+  return { id, deckId: 'd1', subdeckId: null, term, meaning, tags: [], audioRef: null, hidden: false, createdAt: 0, updatedAt: 0 };
 }
 
 class FakeCardRepo implements CardRepository {

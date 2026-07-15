@@ -14,6 +14,7 @@ describe('flashcard mappers (WBS 4.2)', () => {
       meaning: 'hello',
       tags: '["greeting","a1"]',
       audio_ref: 'a.mp3',
+    hidden: 0,
       created_at: 10,
       updated_at: 20,
     });
@@ -31,6 +32,7 @@ describe('flashcard mappers (WBS 4.2)', () => {
       meaning: 'm',
       tags: 'not json',
       audio_ref: null,
+    hidden: 0,
       created_at: 0,
       updated_at: 0,
     });

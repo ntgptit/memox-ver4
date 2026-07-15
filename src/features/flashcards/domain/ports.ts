@@ -3,7 +3,7 @@
  * (WBS 4.2) over `expo-sqlite`; the domain knows only these interfaces.
  */
 
-import type { Repository, Observable, Result } from '@/shared';
+import { ok, type Repository, type Observable, type Result } from '@/shared';
 import type { Card } from './card';
 import type { CardTranslation } from './card-translation';
 
@@ -20,4 +20,26 @@ export interface CardRepository extends Repository<Card>, Observable {
 /** Persistence for a card's additional translations. */
 export interface CardTranslationRepository extends Repository<CardTranslation>, Observable {
   listByCard(cardId: string): Promise<Result<CardTranslation[]>>;
+}
+
+/**
+ * Study view of a card repository (12.11 B2): `listByDeck` drops HIDDEN cards so
+ * every study surface (session, modes, player, mode-picker counts) skips them,
+ * while the card-list screen keeps using the raw repo and still shows them.
+ */
+export function studyableCardRepo(cards: CardRepository): CardRepository {
+  return {
+    ...cards,
+    subscribe: (onChange) => cards.subscribe(onChange),
+    getById: (id) => cards.getById(id),
+    list: () => cards.list(),
+    save: (c) => cards.save(c),
+    remove: (id) => cards.remove(id),
+    countByDeck: (id) => cards.countByDeck(id),
+    countByDecks: (ids) => cards.countByDecks(ids),
+    async listByDeck(deckId) {
+      const r = await cards.listByDeck(deckId);
+      return r.ok ? ok(r.value.filter((c) => !c.hidden)) : r;
+    },
+  };
 }

@@ -78,3 +78,32 @@ No fixes have been applied on top of this snapshot; the generated inventory
 (`node tool/nav_audit/inventory.mjs`) re-derives categories A and B at any
 time, so this document can be diffed against a regenerated run after the fix
 wave.
+
+## Resolution — all 22 fixed (2026-07-15)
+
+Every flow in this snapshot was WIRED (disposition: no controls removed, so the
+kit↔app parity gate stays green — the default render of each screen is
+byte-identical, new behaviour lives only in overlays/handlers).
+
+- **A1–A8 (library sort/filter):** the Sort & filter sheet is now live — sort
+  (recent/name/due) and filters (due/new/subdecks) drive `visibleDecks`, Apply
+  commits a pending copy, Reset clears; the scope + A–Z chips gained handlers.
+- **A9/A11/A12 (⋮ Options):** study-session, player and review-mode each open a
+  real options bottom-sheet built from existing handlers (restart/end,
+  replay/close, study-now/back).
+- **A10 (text-size):** review-mode cycles S/M/L, scaling the meaning card.
+- **B1 Move card / B2 Hide card:** new `moveCardUseCase` + `setCardHiddenUseCase`
+  (+ a `hidden` column, migration 005) wired to a subdeck picker and a
+  hide/unhide toggle; `studyableCardRepo` excludes hidden cards from every study
+  surface while the list still shows them.
+- **B3/B4/B5 subdeck rename/move/delete:** new `renameSubdeckUseCase` +
+  existing move/delete wired to rename dialog / move sheet / delete confirm.
+- **B6 Import subdecks / B7 dashboard bell:** routed to import (deck-scoped) and
+  reminders respectively.
+- **C1** "Import from a file" → `/settings/import`; **C2** deck open branches by
+  organisation (cards → card list); **C3** Backup/Restore → export (local backup)
+  until WBS 10.3.
+
+Verification: `node tool/nav_audit/inventory.mjs` → **0 gaps** (was 22);
+`node tool/nav_audit/run.mjs` → **52/52**; 899 unit tests green; `npm run
+parity:gate` OK (no screen over 3%).

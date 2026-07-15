@@ -409,8 +409,24 @@ export function FlashcardListScreen({
               }}
               node="flashcard-list/action-edit"
             />
-            <MenuItem icon="drive_file_move" label="Move card" onPress={() => onMoveCard?.(active.id)} node="flashcard-list/action-move" />
-            <MenuItem icon="visibility_off" label="Hide card" onPress={() => onHideCard?.(active.id)} node="flashcard-list/action-hide" />
+            <MenuItem
+              icon="drive_file_move"
+              label="Move card"
+              onPress={() => {
+                setOverlay(null);
+                onMoveCard?.(active.id);
+              }}
+              node="flashcard-list/action-move"
+            />
+            <MenuItem
+              icon={active.hidden ? 'visibility' : 'visibility_off'}
+              label={active.hidden ? 'Unhide card' : 'Hide card'}
+              onPress={() => {
+                setOverlay(null);
+                onHideCard?.(active.id);
+              }}
+              node="flashcard-list/action-hide"
+            />
             <MenuItem icon="delete" label="Delete card" danger onPress={() => setOverlay('delete')} node="flashcard-list/action-delete" />
           </Sheet>
         </Scrim>

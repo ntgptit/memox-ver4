@@ -7,16 +7,20 @@
  * 5 states (contract §6).
  */
 
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 
 import {
   AppScreen,
   EmptyState,
+  MenuItem,
   MxButton,
   MxCard,
   MxFab,
   MxIconButton,
   MxSegmentedControl,
+  Scrim,
+  Sheet,
   useTheme,
 } from '@/design-system';
 
@@ -54,17 +58,46 @@ export function PlayerScreen({
 }: PlayerScreenProps) {
   const t = useTheme();
   const playing = ui !== 'paused';
+  const [optionsOpen, setOptionsOpen] = useState(false);
 
   const bar = {
     variant: 'nested' as const,
     title: data.status === 'ready' ? data.deckTitle : 'Player',
     leading: <MxIconButton icon="arrow_back" accessibilityLabel="Back" onPress={onBack} node="player/back" />,
-    actions: <MxIconButton icon="more_vert" accessibilityLabel="Options" node="player/options" />,
+    actions: (
+      <MxIconButton icon="more_vert" accessibilityLabel="Options" onPress={() => setOptionsOpen(true)} node="player/options" />
+    ),
   };
+
+  const optionsSheet = optionsOpen ? (
+    <Scrim align="end" onDismiss={() => setOptionsOpen(false)} node="player/options-scrim">
+      <Sheet title="Player options" node="player/options-sheet">
+        <MenuItem
+          icon="replay"
+          label="Restart from first card"
+          onPress={() => {
+            setOptionsOpen(false);
+            onReplay?.();
+          }}
+          node="player/opt-replay"
+        />
+        <MenuItem
+          icon="logout"
+          label="Close player"
+          onPress={() => {
+            setOptionsOpen(false);
+            onClose?.();
+          }}
+          node="player/opt-close"
+        />
+      </Sheet>
+    </Scrim>
+  ) : null;
 
   // ---- error ----------------------------------------------------------------------
   if (data.status === 'error') {
     return (
+    <>
       <AppScreen node="player/screen" {...bar}>
         <EmptyState
           node="player/error"
@@ -79,12 +112,15 @@ export function PlayerScreen({
           }
         />
       </AppScreen>
+      {optionsSheet}
+    </>
     );
   }
 
   // ---- end ------------------------------------------------------------------------
   if (ui === 'end') {
     return (
+    <>
       <AppScreen node="player/screen" {...bar}>
         <EmptyState
           node="player/end"
@@ -104,10 +140,13 @@ export function PlayerScreen({
           }
         />
       </AppScreen>
+      {optionsSheet}
+    </>
     );
   }
 
   return (
+    <>
     <AppScreen node="player/screen" {...bar}>
       {/* Kit Dots: 8-dot deck progress — played dots primary, the current one wider. */}
       <View testID="player/progress" style={{ flexDirection: 'row', gap: t.space[2], justifyContent: 'center' }}>
@@ -166,5 +205,7 @@ export function PlayerScreen({
         )}
       </View>
     </AppScreen>
+      {optionsSheet}
+    </>
   );
 }

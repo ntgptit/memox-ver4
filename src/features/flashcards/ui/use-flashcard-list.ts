@@ -10,7 +10,10 @@ import type { FlashcardListData, FlashcardView } from './flashcard-list-fixtures
 
 export interface FlashcardListDeps {
   getDeckTitle: (deckId: string) => Promise<string>;
-  listCards: (deckId: string, subdeckId?: string) => Promise<{ id: string; term: string; meaning: string }[]>;
+  listCards: (
+    deckId: string,
+    subdeckId?: string,
+  ) => Promise<{ id: string; term: string; meaning: string; hidden?: boolean }[]>;
   /** Card ids that are due at now. */
   dueCardIds: (cardIds: readonly string[]) => Promise<ReadonlySet<string>>;
   /** Card ids that have any SRS state (studied at least once). */
@@ -40,6 +43,7 @@ export function useFlashcardList(deckId: string, subdeckId: string | undefined, 
           term: c.term,
           meaning: c.meaning,
           status: due.has(c.id) ? 'due' : studied.has(c.id) ? 'mastered' : 'new',
+          hidden: c.hidden,
         }));
         if (!cancelled) {
           setDeckTitle(title);

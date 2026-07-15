@@ -28,6 +28,8 @@ export default function TodayRoute() {
       onCreateDeck={() => router.push('/deck/new/content')}
       onImportCards={() => router.push('/settings/import')}
       onSearch={() => router.push('/search')}
+      // B7 (nav audit): the bell's notification surface is the reminder settings.
+      onNotifications={() => router.push('/settings/reminders')}
     />
   );
 }

@@ -6,7 +6,7 @@ import type { Card } from '@/features/flashcards/domain';
 import { buildBoard, BOARD_SIZE } from '../match-board';
 
 function card(id: string, term: string, meaning: string): Card {
-  return { id, deckId: 'd', subdeckId: null, term, meaning, tags: [], audioRef: null, createdAt: 0, updatedAt: 0 };
+  return { id, deckId: 'd', subdeckId: null, term, meaning, tags: [], audioRef: null, hidden: false, createdAt: 0, updatedAt: 0 };
 }
 
 const CARDS = [

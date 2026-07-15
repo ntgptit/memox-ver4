@@ -99,6 +99,26 @@ export function LibraryScreen({
     initialUi === 'create-sheet' ? 'create' : initialUi === 'filter-sheet' ? 'filter' : null,
   );
   const [filterApplied, setFilterApplied] = useState(initialUi === 'filter-applied');
+  // 12.11 A1–A8: sort + filter are now live. Committed values drive the list;
+  // the sheet edits a pending copy until Apply. Defaults match the kit's
+  // hardcoded `selected` marks (sort=recent, filter=due) so goldens are stable.
+  const [sortBy, setSortBy] = useState<'recent' | 'name' | 'due'>('recent');
+  const [filters, setFilters] = useState<{ due: boolean; new: boolean; sub: boolean }>({
+    due: initialUi === 'filter-applied',
+    new: false,
+    sub: false,
+  });
+  const [pendingSort, setPendingSort] = useState(sortBy);
+  const [pendingFilters, setPendingFilters] = useState(filters);
+  const openFilterSheet = () => {
+    setPendingSort(sortBy);
+    // Seed from the committed filters; with none committed, propose Due-only —
+    // this matches the kit filter-sheet reference (its "Due cards" is pre-marked).
+    const anyCommitted = filters.due || filters.new || filters.sub;
+    setPendingFilters(anyCommitted ? filters : { due: true, new: false, sub: false });
+    setSheet('filter');
+  };
+  const toggleFilter = (k: 'due' | 'new' | 'sub') => setPendingFilters((f) => ({ ...f, [k]: !f[k] }));
   // Kit selection fixture: rows 0, 2, 3 selected.
   const [selectedIds, setSelectedIds] = useState<ReadonlySet<string>>(
     () => new Set(initialUi === 'selection' && data.status === 'ready' ? data.decks.filter((_, i) => [0, 2, 3].includes(i)).map((d) => d.id) : []),
@@ -325,7 +345,18 @@ export function LibraryScreen({
   }
 
   // ---- browse (loaded/dense/offline/filter-applied + sheets) -----------------------
-  const visibleDecks = filterApplied ? decks.filter((d) => (d.due ?? 0) > 0) : decks;
+  const activeFilterCount = (filters.due ? 1 : 0) + (filters.new ? 1 : 0) + (filters.sub ? 1 : 0);
+  const filtered = decks.filter(
+    (d) =>
+      (!filters.due || (d.due ?? 0) > 0) &&
+      (!filters.new || (d.newCards ?? 0) > 0) &&
+      (!filters.sub || d.subdecks > 0),
+  );
+  const visibleDecks = [...filtered].sort((a, b) => {
+    if (sortBy === 'name') return a.name.localeCompare(b.name);
+    if (sortBy === 'due') return (b.due ?? 0) - (a.due ?? 0);
+    return 0; // 'recent' keeps the stored order
+  });
   return (
     <AppScreen
       inTabs
@@ -359,7 +390,14 @@ export function LibraryScreen({
         </View>
       )}
 
-      <FilterRow theme={t} active={filterApplied} onFilters={() => setSheet('filter')} />
+      <FilterRow
+        theme={t}
+        active={filterApplied}
+        count={activeFilterCount}
+        sortBy={sortBy}
+        onFilters={openFilterSheet}
+        onCycleSort={() => setSortBy((s) => (s === 'recent' ? 'name' : s === 'name' ? 'due' : 'recent'))}
+      />
 
       {filterApplied && (
         <View testID="library/filter-summary" style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
@@ -406,24 +444,46 @@ export function LibraryScreen({
             <SectionLabel uppercase style={{ marginTop: 0, marginBottom: t.space[1] }}>
               Sort
             </SectionLabel>
-            <MenuItem icon="history" label="Recently studied" selected node="library/fs-sort-recent" />
-            <MenuItem icon="sort_by_alpha" label="Name A–Z" node="library/fs-sort-name" />
-            <MenuItem icon="priority_high" label="Most due" node="library/fs-sort-due" />
+            <MenuItem icon="history" label="Recently studied" selected={pendingSort === 'recent'} onPress={() => setPendingSort('recent')} node="library/fs-sort-recent" />
+            <MenuItem icon="sort_by_alpha" label="Name A–Z" selected={pendingSort === 'name'} onPress={() => setPendingSort('name')} node="library/fs-sort-name" />
+            <MenuItem icon="priority_high" label="Most due" selected={pendingSort === 'due'} onPress={() => setPendingSort('due')} node="library/fs-sort-due" />
             <SheetDivider theme={t} />
             <SectionLabel uppercase style={{ marginTop: 0, marginBottom: t.space[1] }}>
               Filter
             </SectionLabel>
-            <MenuItem icon="schedule" label="Due cards" selected node="library/fs-f-due" />
-            <MenuItem icon="fiber_new" label="New cards" node="library/fs-f-new" />
-            <MenuItem icon="account_tree" label="Has subdecks" node="library/fs-f-sub" />
+            <MenuItem icon="schedule" label="Due cards" selected={pendingFilters.due} onPress={() => toggleFilter('due')} node="library/fs-f-due" />
+            <MenuItem icon="fiber_new" label="New cards" selected={pendingFilters.new} onPress={() => toggleFilter('new')} node="library/fs-f-new" />
+            <MenuItem icon="account_tree" label="Has subdecks" selected={pendingFilters.sub} onPress={() => toggleFilter('sub')} node="library/fs-f-sub" />
             <View style={{ flexDirection: 'row', gap: t.space[3], marginTop: t.space[4] }}>
               <View style={{ flex: 1 }}>
-                <MxButton variant="ghost" block onPress={() => { setFilterApplied(false); setSheet(null); }} node="library/fs-reset">
+                <MxButton
+                  variant="ghost"
+                  block
+                  onPress={() => {
+                    setPendingSort('recent');
+                    setPendingFilters({ due: false, new: false, sub: false });
+                    setSortBy('recent');
+                    setFilters({ due: false, new: false, sub: false });
+                    setFilterApplied(false);
+                    setSheet(null);
+                  }}
+                  node="library/fs-reset"
+                >
                   Reset
                 </MxButton>
               </View>
               <View style={{ flex: 1 }}>
-                <MxButton variant="primary" block onPress={() => { setFilterApplied(true); setSheet(null); }} node="library/fs-apply">
+                <MxButton
+                  variant="primary"
+                  block
+                  onPress={() => {
+                    setSortBy(pendingSort);
+                    setFilters(pendingFilters);
+                    setFilterApplied(pendingFilters.due || pendingFilters.new || pendingFilters.sub);
+                    setSheet(null);
+                  }}
+                  node="library/fs-apply"
+                >
                   Apply
                 </MxButton>
               </View>
@@ -487,13 +547,30 @@ function LibraryDeckCard({
 }
 
 /** Kit FilterRow: scope chip · spacer · Filters · A–Z. */
-function FilterRow({ theme: t, active, onFilters }: { theme: Theme; active?: boolean; onFilters?: () => void }) {
+function FilterRow({
+  theme: t,
+  active,
+  count = 2,
+  sortBy,
+  onFilters,
+  onCycleSort,
+}: {
+  theme: Theme;
+  active?: boolean;
+  count?: number;
+  sortBy?: 'recent' | 'name' | 'due';
+  onFilters?: () => void;
+  onCycleSort?: () => void;
+}) {
   return (
     <View testID="library/controls" style={{ flexDirection: 'row', alignItems: 'center', gap: t.space[2] }}>
-      <MxChip label="All decks" node="library/scope" />
+      {/* A7: the scope chip opens the same Sort & filter sheet (its leftmost affordance). */}
+      <MxChip label="All decks" onPress={onFilters} node="library/scope" />
       <View style={{ flex: 1 }} />
-      <MxChip label={active ? 'Filters · 2' : 'Filters'} icon="tune" selected={active} onPress={onFilters} node="library/filters" />
-      <MxChip label="A–Z" icon="swap_vert" node="library/sort" />
+      <MxChip label={active ? `Filters · ${count}` : 'Filters'} icon="tune" selected={active} onPress={onFilters} node="library/filters" />
+      {/* A8: the sort chip cycles recent → name → due. Label stays "A–Z" per the
+          kit; `selected` reflects a non-default sort so the state is visible. */}
+      <MxChip label="A–Z" icon="swap_vert" selected={sortBy !== undefined && sortBy !== 'recent'} onPress={onCycleSort} node="library/sort" />
     </View>
   );
 }

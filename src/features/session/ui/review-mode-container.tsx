@@ -8,6 +8,7 @@ import { useEffect, useState } from 'react';
 import * as Speech from 'expo-speech';
 
 import { createFlashcardRepositories } from '@/features/flashcards/data';
+import { studyableCardRepo } from '@/features/flashcards/domain';
 import { createSessionRepositories } from '@/features/session/data';
 import { randomId, systemClock } from '@/shared/runtime';
 
@@ -30,7 +31,7 @@ export function ReviewModeContainer({
     void Promise.all([createFlashcardRepositories(), createSessionRepositories()]).then(([flash, session]) => {
       if (alive) {
         setDeps({
-          cards: flash.cards,
+          cards: studyableCardRepo(flash.cards),
           sessions: session.sessions,
           attempts: session.attempts,
           srs: session.srs,

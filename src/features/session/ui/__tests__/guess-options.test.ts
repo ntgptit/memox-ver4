@@ -6,7 +6,7 @@ import type { Card } from '@/features/flashcards/domain';
 import { buildOptions } from '../guess-options';
 
 function card(id: string, meaning: string): Card {
-  return { id, deckId: 'd', subdeckId: null, term: id, meaning, tags: [], audioRef: null, createdAt: 0, updatedAt: 0 };
+  return { id, deckId: 'd', subdeckId: null, term: id, meaning, tags: [], audioRef: null, hidden: false, createdAt: 0, updatedAt: 0 };
 }
 
 const CARDS = ['a', 'b', 'c', 'd', 'e', 'f'].map((m) => card(m, m));

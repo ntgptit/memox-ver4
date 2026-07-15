@@ -142,6 +142,25 @@ export function createSubdeck(deps: Pick<LibraryDeps, 'decks' | 'subdecks' | 'id
   };
 }
 
+export interface RenameSubdeckInput {
+  subdeckId: string;
+  title: string;
+}
+
+/** Rename a subdeck (12.11 B3) — re-validates the title via the entity rules. */
+export function renameSubdeckUseCase(deps: Pick<LibraryDeps, 'subdecks'>): UseCase<RenameSubdeckInput, Subdeck> {
+  return {
+    async execute(input) {
+      const found = await deps.subdecks.getById(input.subdeckId);
+      if (isErr(found)) {
+        return found;
+      }
+      const built = makeSubdeck({ ...found.value, title: input.title });
+      return built.ok ? deps.subdecks.save(built.value) : built;
+    },
+  };
+}
+
 export interface MoveSubdeckInput {
   subdeckId: string;
   newParentId: string | null;

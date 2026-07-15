@@ -44,6 +44,11 @@ export default function SubdeckListRoute() {
       onStartSession={() => router.push(`/session/play?deckId=${deckId}`)}
       onSingleMode={() => router.push(`/session/mode-picker?deckId=${deckId}`)}
       onListen={() => router.push(`/player?deckId=${deckId}`)}
+      // B6 (nav audit): subdeck import runs through the import flow scoped to this deck.
+      onImportSubdecks={() => router.push(`/settings/import?deckId=${deckId}`)}
+      // C2 (nav audit / WBS 12.12): a cards-organisation deck has no subdeck tree —
+      // it opens straight on its card list.
+      onCardsOrganisation={() => router.replace(`/deck/${deckId}/cards`)}
     />
   );
 }

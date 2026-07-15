@@ -12,6 +12,9 @@ const OPEN_ROUTES: Record<string, string> = {
   study: '/settings/study',
   theme: '/settings/theme',
   reminders: '/settings/reminders',
+  // C3 (nav audit): interim target until WBS 10.3 ships a real backup screen —
+  // "Local file · on device" maps to the export flow, the local-backup path.
+  backup: '/settings/export',
   export: '/settings/export',
 };
 

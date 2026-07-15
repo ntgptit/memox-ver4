@@ -70,14 +70,15 @@ export class SqliteCardRepository implements CardRepository {
 
   async save(entity: Card): Promise<Result<Card>> {
     await this.db.run(
-      `INSERT INTO card (id, deck_id, subdeck_id, term, meaning, tags, audio_ref, created_at, updated_at)
-       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+      `INSERT INTO card (id, deck_id, subdeck_id, term, meaning, tags, audio_ref, hidden, created_at, updated_at)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
        ON CONFLICT(id) DO UPDATE SET
          subdeck_id = excluded.subdeck_id,
          term = excluded.term,
          meaning = excluded.meaning,
          tags = excluded.tags,
          audio_ref = excluded.audio_ref,
+         hidden = excluded.hidden,
          updated_at = excluded.updated_at`,
       [
         entity.id,
@@ -87,6 +88,7 @@ export class SqliteCardRepository implements CardRepository {
         entity.meaning,
         serializeTags(entity.tags),
         entity.audioRef,
+        entity.hidden ? 1 : 0,
         entity.createdAt,
         entity.updatedAt,
       ],

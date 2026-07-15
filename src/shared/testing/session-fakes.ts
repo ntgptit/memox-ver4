@@ -15,7 +15,7 @@ import type {
 import { ok, err, notFoundError, type Result, type AppError } from '@/shared';
 
 export function makeCard(id: string, term: string, meaning: string): Card {
-  return { id, deckId: 'd1', subdeckId: null, term, meaning, tags: [], audioRef: null, createdAt: 0, updatedAt: 0 };
+  return { id, deckId: 'd1', subdeckId: null, term, meaning, tags: [], audioRef: null, hidden: false, createdAt: 0, updatedAt: 0 };
 }
 
 export class FakeCardRepo implements CardRepository {

@@ -8,9 +8,10 @@
  * full-screen ResumeErrorState. 10 states (contract §6).
  */
 
+import { useState } from 'react';
 import { Text, View } from 'react-native';
 
-import { AppScreen, MxButton, MxCard, MxIconButton, Note, useTheme } from '@/design-system';
+import { AppScreen, MenuItem, MxButton, MxCard, MxIconButton, Note, Scrim, Sheet, useTheme } from '@/design-system';
 
 import { ProgressHeader } from './study-chrome';
 import {
@@ -77,6 +78,7 @@ export function StudySessionScreen({
   onBackToDeck,
 }: StudySessionScreenProps) {
   const t = useTheme();
+  const [optionsOpen, setOptionsOpen] = useState(false);
 
   if (ui === 'resume-error') {
     return <ResumeErrorState onClose={onClose} onRestart={onRestart} onBackToDeck={onBackToDeck} />;
@@ -140,7 +142,14 @@ export function StudySessionScreen({
         variant="nested"
         leading={<MxIconButton icon="close" accessibilityLabel="Close session" onPress={onClose} node="study-session/close" />}
         main={<ProgressHeader done={m.done} total={m.total} node="study-session/progress" />}
-        actions={<MxIconButton icon="more_vert" accessibilityLabel="Options" node="study-session/options" />}
+        actions={
+          <MxIconButton
+            icon="more_vert"
+            accessibilityLabel="Options"
+            onPress={() => setOptionsOpen(true)}
+            node="study-session/options"
+          />
+        }
       >
         <Text
           testID="study-session/stage-label"
@@ -153,6 +162,31 @@ export function StudySessionScreen({
 
       {ui === 'exit' && <ExitDialog onStay={onExitStay} onLeave={onExitLeave} />}
       {ui === 'answer-save-error' && <AnswerSaveErrorDialog onBack={onSaveErrorBack} onRetry={onSaveErrorRetry} />}
+      {optionsOpen && (
+        <Scrim align="end" onDismiss={() => setOptionsOpen(false)} node="study-session/options-scrim">
+          <Sheet title="Session options" node="study-session/options-sheet">
+            <MenuItem
+              icon="restart_alt"
+              label="Restart session"
+              onPress={() => {
+                setOptionsOpen(false);
+                onRestart?.();
+              }}
+              node="study-session/opt-restart"
+            />
+            <MenuItem
+              icon="logout"
+              label="End session"
+              danger
+              onPress={() => {
+                setOptionsOpen(false);
+                onClose?.();
+              }}
+              node="study-session/opt-end"
+            />
+          </Sheet>
+        </Scrim>
+      )}
     </>
   );
 }

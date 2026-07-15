@@ -90,6 +90,43 @@ export function deleteCard(deps: Pick<FlashcardDeps, 'cards'>): UseCase<string, 
   };
 }
 
+export interface MoveCardInput {
+  cardId: string;
+  /** Destination subdeck within the same deck, or null for the deck root. */
+  subdeckId: string | null;
+}
+
+/** Move a card to another subdeck (or the deck root) — 12.11 B1. */
+export function moveCardUseCase(deps: Pick<FlashcardDeps, 'cards' | 'clock'>): UseCase<MoveCardInput, Card> {
+  return {
+    async execute(input) {
+      const found = await deps.cards.getById(input.cardId);
+      if (isErr(found)) {
+        return found;
+      }
+      return deps.cards.save({ ...found.value, subdeckId: input.subdeckId, updatedAt: deps.clock() });
+    },
+  };
+}
+
+export interface SetCardHiddenInput {
+  cardId: string;
+  hidden: boolean;
+}
+
+/** Hide/unhide a card from study — 12.11 B2. Kept in the list, skipped in sessions. */
+export function setCardHiddenUseCase(deps: Pick<FlashcardDeps, 'cards' | 'clock'>): UseCase<SetCardHiddenInput, Card> {
+  return {
+    async execute(input) {
+      const found = await deps.cards.getById(input.cardId);
+      if (isErr(found)) {
+        return found;
+      }
+      return deps.cards.save({ ...found.value, hidden: input.hidden, updatedAt: deps.clock() });
+    },
+  };
+}
+
 export interface AddTranslationInput {
   cardId: string;
   text: string;

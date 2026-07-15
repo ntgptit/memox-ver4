@@ -14,6 +14,7 @@ export interface CardRow {
   meaning: string;
   tags: string;
   audio_ref: string | null;
+  hidden: number;
   created_at: number;
   updated_at: number;
 }
@@ -47,6 +48,7 @@ export function rowToCard(row: CardRow): Card {
     meaning: row.meaning,
     tags: parseTags(row.tags),
     audioRef: row.audio_ref,
+    hidden: row.hidden === 1,
     createdAt: row.created_at,
     updatedAt: row.updated_at,
   };

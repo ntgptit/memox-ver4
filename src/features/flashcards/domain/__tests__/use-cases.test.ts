@@ -10,7 +10,14 @@ import type {
   CardRepository,
   CardTranslationRepository,
 } from '@/features/flashcards/domain';
-import { createCard, editCardUseCase, addTranslation } from '@/features/flashcards/domain';
+import {
+  createCard,
+  editCardUseCase,
+  addTranslation,
+  moveCardUseCase,
+  setCardHiddenUseCase,
+  studyableCardRepo,
+} from '@/features/flashcards/domain';
 
 class FakeCardRepo implements CardRepository {
   cards = new Map<string, Card>();
@@ -165,3 +172,63 @@ describe('addTranslation (WBS 4.1)', () => {
     if (isErr(r)) expect(r.error.kind).toBe('not-found');
   });
 });
+
+describe('moveCardUseCase (WBS 12.11 B1)', () => {
+  it('reassigns the card to a subdeck (and stamps updatedAt)', async () => {
+    const cards = new FakeCardRepo();
+    await createCard({ cards, ids: idSeq('c'), clock }).execute(input('hola'));
+    const [card] = [...cards.cards.values()];
+    const r = await moveCardUseCase({ cards, clock: () => 999 }).execute({ cardId: card.id, subdeckId: 'sd1' });
+    expect(isOk(r)).toBe(true);
+    const moved = cards.cards.get(card.id);
+    expect(moved?.subdeckId).toBe('sd1');
+    expect(moved?.updatedAt).toBe(999);
+  });
+
+  it('moves back to the deck root with null', async () => {
+    const cards = new FakeCardRepo();
+    await cards.save({ ...(await firstCard(cards)), subdeckId: 'sd1' });
+    const [card] = [...cards.cards.values()];
+    await moveCardUseCase({ cards, clock }).execute({ cardId: card.id, subdeckId: null });
+    expect(cards.cards.get(card.id)?.subdeckId).toBeNull();
+  });
+
+  it('fails for a missing card', async () => {
+    const cards = new FakeCardRepo();
+    const r = await moveCardUseCase({ cards, clock }).execute({ cardId: 'ghost', subdeckId: null });
+    expect(isErr(r)).toBe(true);
+  });
+});
+
+describe('setCardHiddenUseCase (WBS 12.11 B2)', () => {
+  it('hides and unhides a card', async () => {
+    const cards = new FakeCardRepo();
+    await createCard({ cards, ids: idSeq('c'), clock }).execute(input('hola'));
+    const [card] = [...cards.cards.values()];
+    await setCardHiddenUseCase({ cards, clock }).execute({ cardId: card.id, hidden: true });
+    expect(cards.cards.get(card.id)?.hidden).toBe(true);
+    await setCardHiddenUseCase({ cards, clock }).execute({ cardId: card.id, hidden: false });
+    expect(cards.cards.get(card.id)?.hidden).toBe(false);
+  });
+});
+
+describe('studyableCardRepo (WBS 12.11 B2)', () => {
+  it('listByDeck drops hidden cards; the raw repo keeps them', async () => {
+    const cards = new FakeCardRepo();
+    await createCard({ cards, ids: idSeq('a'), clock }).execute(input('visible'));
+    await createCard({ cards, ids: idSeq('b'), clock }).execute(input('hidden-one'));
+    const [, second] = [...cards.cards.values()];
+    await setCardHiddenUseCase({ cards, clock }).execute({ cardId: second.id, hidden: true });
+
+    const raw = await cards.listByDeck('d1');
+    const study = await studyableCardRepo(cards).listByDeck('d1');
+    expect(isOk(raw) && raw.value).toHaveLength(2);
+    expect(isOk(study) && study.value).toHaveLength(1);
+    expect(isOk(study) && study.value[0].term).toBe('visible');
+  });
+});
+
+async function firstCard(cards: FakeCardRepo): Promise<Card> {
+  await createCard({ cards, ids: idSeq('z'), clock }).execute(input('hola'));
+  return [...cards.cards.values()][0];
+}

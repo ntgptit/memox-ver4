@@ -43,7 +43,11 @@ export default function DeckContentChoiceRoute() {
     <DeckContentChoiceContainer
       deckId={String(deckId)}
       onBack={() => router.back()}
-      onImport={() => router.push(`/deck/${String(deckId)}/cards`)}
+      // C1 (nav audit): "Import from a file" goes to the IMPORT flow — the old
+      // target `/deck/new/cards` was the card list of a not-yet-existing deck.
+      onImport={() =>
+        router.push(deckId === 'new' ? '/settings/import' : `/settings/import?deckId=${String(deckId)}`)
+      }
       onChosen={go}
       onNeedLanguagePair={goAddPair}
     />

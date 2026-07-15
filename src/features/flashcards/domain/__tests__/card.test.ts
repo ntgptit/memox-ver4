@@ -14,7 +14,7 @@ function card(id: string, term: string): Card {
     term,
     meaning: 'm',
     tags: [],
-    audioRef: null,
+    audioRef: null, hidden: false,
     createdAt: 0,
     updatedAt: 0,
   };
@@ -29,7 +29,7 @@ describe('makeCard (WBS 4.1)', () => {
       term: '  hola ',
       meaning: ' hello ',
       tags: [],
-      audioRef: null,
+      audioRef: null, hidden: false,
       createdAt: 5,
     });
     expect(isOk(r)).toBe(true);
@@ -41,7 +41,7 @@ describe('makeCard (WBS 4.1)', () => {
   });
 
   it('rejects an empty term or meaning', () => {
-    const base = { id: 'c1', deckId: 'd1', subdeckId: null, tags: [], audioRef: null, createdAt: 0 };
+    const base = { id: 'c1', deckId: 'd1', subdeckId: null, tags: [], audioRef: null, hidden: false, createdAt: 0 };
     expect(isErr(makeCard({ ...base, term: '', meaning: 'x' }))).toBe(true);
     expect(isErr(makeCard({ ...base, term: 'x', meaning: '  ' }))).toBe(true);
   });
@@ -54,7 +54,7 @@ describe('makeCard (WBS 4.1)', () => {
       term: 'x',
       meaning: 'y',
       tags: [],
-      audioRef: null,
+      audioRef: null, hidden: false,
       createdAt: 0,
     });
     expect(isErr(r)).toBe(true);

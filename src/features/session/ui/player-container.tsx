@@ -9,6 +9,7 @@ import * as Speech from 'expo-speech';
 
 import { isErr } from '@/shared';
 import { createFlashcardRepositories } from '@/features/flashcards/data';
+import { studyableCardRepo } from '@/features/flashcards/domain';
 import { createLibraryRepositories } from '@/features/library/data';
 
 import { PlayerScreen } from './player-screen';
@@ -22,7 +23,7 @@ export function PlayerContainer({ deckId, onBack }: { deckId: string; onBack?: (
     void Promise.all([createFlashcardRepositories(), createLibraryRepositories()]).then(([flash, lib]) => {
       if (!alive) return;
       setDeps({
-        cards: flash.cards,
+        cards: studyableCardRepo(flash.cards),
         getDeckTitle: async (id) => {
           const r = await lib.decks.getById(id);
           return isErr(r) ? '' : r.value.title;

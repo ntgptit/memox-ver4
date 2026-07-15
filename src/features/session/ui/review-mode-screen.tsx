@@ -11,7 +11,7 @@
 import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 
-import { AppScreen, EmptyState, MxButton, MxCard, MxIconButton, SectionLabel, Skeleton, useTheme } from '@/design-system';
+import { AppScreen, EmptyState, MenuItem, MxButton, MxCard, MxIconButton, Scrim, SectionLabel, Sheet, Skeleton, useTheme } from '@/design-system';
 
 import { ProgressHeader, StudyPromptCard } from './study-chrome';
 import type { ReviewModeData, ReviewModeUiState } from './review-mode-fixtures';
@@ -48,6 +48,11 @@ export function ReviewModeScreen({
   onBackToDeck,
 }: ReviewModeScreenProps) {
   const t = useTheme();
+  // 12.11 A10: text-size cycles S → M → L (scale 1 → 1.15 → 1.3), applied to the
+  // review card copy. Default 1 keeps the golden identical.
+  const [textScale, setTextScale] = useState(1);
+  const [optionsOpen, setOptionsOpen] = useState(false);
+  const cycleTextSize = () => setTextScale((s) => (s === 1 ? 1.15 : s === 1.15 ? 1.3 : 1));
 
   const bar = {
     variant: 'nested' as const,
@@ -55,11 +60,36 @@ export function ReviewModeScreen({
     leading: <MxIconButton icon="arrow_back" accessibilityLabel="Back" onPress={onBack} node="review-mode/back" />,
     actions: (
       <>
-        <MxIconButton icon="format_size" accessibilityLabel="Text size" node="review-mode/text-size" />
-        <MxIconButton icon="more_vert" accessibilityLabel="Options" node="review-mode/options" />
+        <MxIconButton icon="format_size" accessibilityLabel="Text size" onPress={cycleTextSize} node="review-mode/text-size" />
+        <MxIconButton icon="more_vert" accessibilityLabel="Options" onPress={() => setOptionsOpen(true)} node="review-mode/options" />
       </>
     ),
   };
+
+  const optionsSheet = optionsOpen ? (
+    <Scrim align="end" onDismiss={() => setOptionsOpen(false)} node="review-mode/options-scrim">
+      <Sheet title="Review options" node="review-mode/options-sheet">
+        <MenuItem
+          icon="bolt"
+          label="Study now"
+          onPress={() => {
+            setOptionsOpen(false);
+            onStudyNow?.();
+          }}
+          node="review-mode/opt-study"
+        />
+        <MenuItem
+          icon="logout"
+          label="Back to deck"
+          onPress={() => {
+            setOptionsOpen(false);
+            onBackToDeck?.();
+          }}
+          node="review-mode/opt-back"
+        />
+      </Sheet>
+    </Scrim>
+  ) : null;
 
   // ---- loading ------------------------------------------------------------------
   if (data.status === 'loading') {
@@ -118,12 +148,14 @@ export function ReviewModeScreen({
   }
 
   return (
+    <>
     <AppScreen node="review-mode/screen" {...bar}>
       <ProgressHeader done={data.done} total={data.total} node="review-mode/progress" />
 
       <MeaningCard
         meaning={data.meaning}
         editing={ui === 'editing'}
+        textScale={textScale}
         onEditStart={onEditStart}
         onEditCancel={onEditCancel}
         onEditSave={onEditSave}
@@ -146,6 +178,8 @@ export function ReviewModeScreen({
         <MxIconButton icon="chevron_right" accessibilityLabel="Next card" onPress={onNext} node="review-mode/next" />
       </View>
     </AppScreen>
+      {optionsSheet}
+    </>
   );
 }
 
@@ -157,12 +191,14 @@ export function ReviewModeScreen({
 function MeaningCard({
   meaning,
   editing,
+  textScale = 1,
   onEditStart,
   onEditCancel,
   onEditSave,
 }: {
   meaning: string;
   editing: boolean;
+  textScale?: number;
   onEditStart?: () => void;
   onEditCancel?: () => void;
   onEditSave?: (meaning: string) => void;
@@ -221,7 +257,15 @@ function MeaningCard({
           </View>
         </>
       ) : (
-        <Text style={[t.font.text({ size: 'xl', weight: 'bold' }), { color: t.color.text }]}>{meaning}</Text>
+        <Text
+          style={[
+            t.font.text({ size: 'xl', weight: 'bold' }),
+            { color: t.color.text },
+            textScale !== 1 && { fontSize: t.font.size.xl * textScale, lineHeight: t.font.size.xl * textScale * 1.3 },
+          ]}
+        >
+          {meaning}
+        </Text>
       )}
     </MxCard>
   );
