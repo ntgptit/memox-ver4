@@ -296,6 +296,16 @@ const TARGETS = [
   { name: 'import--import-error--light', path: '/settings/import?state=import-error', waitFor: 'text=Import failed' },
   { name: 'import--done--light', path: '/settings/import?state=done', waitFor: 'text=Imported 124 cards' },
   { name: 'import--source--dark', path: '/settings/import?state=source&theme=dark', waitFor: 'text=CHOOSE SOURCE' },
+  // export (WBS 9.2) — DB-free fixture preview via /settings/export?state=/?theme=.
+  { name: 'export--config--light', path: '/settings/export?state=config', waitFor: 'text=Include review state' },
+  { name: 'export--exporting--light', path: '/settings/export?state=exporting', waitFor: 'text=Exporting…' },
+  {
+    name: 'export--export-error--light',
+    path: '/settings/export?state=export-error',
+    waitFor: 'text=Export failed',
+  },
+  { name: 'export--done--light', path: '/settings/export?state=done', waitFor: 'text=Exported 320 cards' },
+  { name: 'export--config--dark', path: '/settings/export?state=config&theme=dark', waitFor: 'text=Include review state' },
 ];
 
 const MIME = {

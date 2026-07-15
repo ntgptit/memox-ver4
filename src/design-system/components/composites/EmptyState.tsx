@@ -18,11 +18,13 @@ export interface EmptyStateProps {
   text?: string;
   /** Widen the copy column (+20) to match kit shots that wrap wider than 220. */
   wide?: boolean;
+  /** Stretch the action row so a kit `block` button spans the content width. */
+  blockAction?: boolean;
   action?: ReactNode;
   node?: string;
 }
 
-export function EmptyState({ icon, tone, title, text, wide = false, action, node }: EmptyStateProps) {
+export function EmptyState({ icon, tone, title, text, wide = false, blockAction = false, action, node }: EmptyStateProps) {
   const t = useTheme();
 
   return (
@@ -67,7 +69,11 @@ export function EmptyState({ icon, tone, title, text, wide = false, action, node
       </View>
       {/* Hug + center the action: a non-block MxButton pins itself flex-start, so it
           needs a self-centering wrapper to sit centered like the kit's inline-flex. */}
-      {action !== undefined && <View style={{ alignSelf: 'center', alignItems: 'center' }}>{action}</View>}
+      {action !== undefined && (
+        <View style={blockAction ? { alignSelf: 'stretch' } : { alignSelf: 'center', alignItems: 'center' }}>
+          {action}
+        </View>
+      )}
     </View>
   );
 }

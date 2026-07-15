@@ -89,6 +89,7 @@ export const GLYPHS = {
   playing_cards: '\uf5dc',
   psychology: '\uea4a',
   quiz: '\uf04c',
+  radio_button_checked: '\ue837',
   radio_button_unchecked: '\ue836',
   record_voice_over: '\ue91f',
   refresh: '\ue5d5',

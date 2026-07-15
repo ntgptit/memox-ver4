@@ -22,6 +22,8 @@ export interface ListRowProps {
   last?: boolean;
   /** Dims the row (kit `muted` → `--memox-opacity-muted`). */
   muted?: boolean;
+  /** Announces a radio-style row's selection (pressable rows only). */
+  selected?: boolean;
   onPress?: () => void;
   node?: string;
   style?: StyleProp<ViewStyle>;
@@ -35,6 +37,7 @@ export function ListRow({
   trailing,
   last = false,
   muted = false,
+  selected,
   onPress,
   node,
   style,
@@ -75,7 +78,13 @@ export function ListRow({
 
   if (onPress) {
     return (
-      <Pressable testID={node} onPress={onPress} accessibilityRole="button" accessibilityLabel={title}>
+      <Pressable
+        testID={node}
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityLabel={title}
+        accessibilityState={selected === undefined ? undefined : { selected }}
+      >
         {row}
       </Pressable>
     );

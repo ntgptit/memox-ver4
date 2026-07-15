@@ -7,5 +7,6 @@ export * from './card';
 export * from './card-translation';
 export * from './duplicate';
 export * from './import';
+export * from './export';
 export * from './ports';
 export * from './use-cases';

@@ -167,7 +167,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 | ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | 9.1 | Import slice | `import`: source/mapping/preview/dup-warning/importing/import-error/done; parse file or pasted text → cards | import (7 states) | 4.1, 4.2, 1.5, 1.7, DEP-FILE-PICKER, 2.6 | Implemented | P1 | No | All 7 states; column mapping + dup handling; transactional bulk insert with rollback; file picker gated on DEP-FILE-PICKER | `src/features/flashcards/ui/{import-screen,import-container,use-import,import-components,import-fixtures}.tsx/ts` + `src/features/flashcards/domain/import.ts` (`parseImportRows` tab/comma/semicolon with header skip + 1-based row-numbered failures; `countDuplicateRows` over normalized terms; `importCards` validates ALL rows before any write, per-card progress, and a mid-batch save failure rolls back the already-saved cards — compensated all-or-nothing) + shared `ActionCallout` composite (kit `_shared`); file picking via `expo-document-picker` (DEP-FILE-PICKER Approved; web `File.text()`, native uri fetch); tests (parser/dup/rollback, controller source→mapping→preview/dup-warning→importing→done/import-error + retry + column swap, screen 7-state matrix + interactions, a11y labels/progressbar/AA); route `src/app/settings/import.tsx`; goldens `import--*.png` — all 7 states + dark < 3% vs kit (parity gate, max 1.77%) | Opus + Design | 8c3ebd5 |
-| 9.2 | Export slice | `export`: config/exporting/error/done; write deck to shareable file format | export (config, exporting, export-error, done) | 4.2, 1.5, 1.7, DEP-FILE-SHARING, 2.6 | Blocked | P1 | No | All 4 states; export format valid + re-importable; error/done states; sharing gated on DEP-FILE-SHARING | `.../specs/export.md`, `.../shots/export--*.png` | Opus + Design | TBD |
+| 9.2 | Export slice | `export`: config/exporting/error/done; write deck to shareable file format | export (config, exporting, export-error, done) | 4.2, 1.5, 1.7, DEP-FILE-SHARING, 2.6 | Implemented | P1 | No | All 4 states; export format valid + re-importable; error/done states; sharing gated on DEP-FILE-SHARING | `src/features/flashcards/ui/{export-screen,export-container,use-export,export-components,export-fixtures}.tsx/ts` + `src/features/flashcards/domain/export.ts` (`serializeExport` — header + term/meaning per line, optional Leitner Box/Due columns, term-side separator/newline sanitizing; `exportDeck` — scope 'deck' root-only vs 'subtree', per-card SRS join + progress) with a TESTED import round-trip (serialize → 9.1 `parseImportRows` returns the cards verbatim); delivery via `expo-file-system` cache write + `expo-sharing` share sheet (DEP-FILE-SHARING Approved; web = blob download/clipboard; copy format = clipboard/share-sheet, no file); icon subset +`radio_button_checked` (125 glyphs); `ListRow` gained `selected` a11y state, `EmptyState` gained `blockAction` (kit block button in the action slot); tests (serializer/round-trip/scope/SRS-join, controller config→exporting→done/export-error + retry + share/save uri, screen 4-state matrix + interactions, a11y radio selection/progressbar/AA); route `src/app/settings/export.tsx`; goldens `export--*.png` — all 4 states + dark < 3% vs kit (parity gate, max 1.88%) | Opus + Design | TBD |
 
 ---
 
@@ -268,7 +268,7 @@ No package is self-approved. Any work package that depends on a `Pending` capabi
 | DEP-DB | Local database | `expo-sqlite` `~57.0.0` | 0.4, 0.5, 3.2, 4.2, 5.2, 11.2 | **Approved** (2026-07-13, ADR 0005) | Yes — approved: offline source-of-truth confirmed |
 | DEP-ICON-FONT | Canonical cross-platform icon font | Material Symbols Rounded variable-font asset (Apache-2.0; subset to the kit glyph set, bundled at `assets/fonts/MaterialSymbolsRounded.ttf`) | 1.4 | **Approved** (2026-07-13) | Yes — approved: Apache-2.0 license, sourced from google/material-design-icons, subset via pyftsubset to the 119 kit icons (~246 KB), bundled locally (no CDN); regenerate by re-subsetting from kit icon usage |
 | DEP-FILE-PICKER | File picker (import) | `expo-document-picker` `^57.0.0` | 9.1, 10.3 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 9.1 on start; see Notes) | Yes — approved |
-| DEP-FILE-SHARING | File sharing (export) | `expo-sharing` (+ `expo-file-system`, installed via SDK) | 9.2, 10.3 | Pending | Yes |
+| DEP-FILE-SHARING | File sharing (export) | `expo-sharing` `~14.0.0` + `expo-file-system` `~19.0.0` | 9.2, 10.3 | **Approved** (2026-07-15, standing WBS-loop pre-approval — named Expo-SDK packages, flipped by row 9.2 on start; see Notes) | Yes — approved |
 | DEP-NOTIFICATIONS | Local notifications | `expo-notifications` `^0.32.17` | 8.2 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 8.2 on start; see Notes). Permissions: requested lazily on first enable, weekly local triggers only, no push/remote | Yes — approved |
 | DEP-TTS | Text-to-speech | `expo-speech` `~14.0.0` | 4.4, 6.1, 7.3, 10.1 | **Approved** (2026-07-14, standing WBS-loop pre-approval — named Expo-SDK package, flipped by row 4.4 on start; see Notes) | Yes — approved |
 | DEP-AUTH | Google authentication | `expo-auth-session` / provider SDK | 10.2 | Pending | Yes — provider + OAuth config |
@@ -428,10 +428,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 58 |
+| Implemented | 59 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 8 |
+| Blocked | 7 |
 | Future | 0 |
 | Deprecated | 0 |
 
