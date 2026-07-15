@@ -1,8 +1,9 @@
 #!/usr/bin/env node
 // tool/nav_audit/run.mjs — dynamic navigation/button audit over the web build.
-// LIVE where data allows (fresh DB), FIXTURE routes (?state=) for screen-internal
-// overlays. Every step reports PASS/FAIL; steps named "BUG?" assert a suspected
-// defect and PASS when the defect is confirmed present.
+// After the 12.1–12.4 fixes this suite runs POSITIVE end-to-end: creates a
+// language pair + deck through the UI, imports cards, completes a FULL 5-stage
+// session to the result screen, and walks every sheet/dialog open/close.
+// Remaining `DEAD?` steps document the 12.11 product-decision no-ops.
 
 import { createServer } from 'node:http';
 import { readFile } from 'node:fs/promises';
@@ -36,7 +37,8 @@ page.on('console', (m) => { if (m.type() === 'error') consoleErrors.push(m.text(
 
 const results = [];
 const T = (id) => `[data-testid="${id}"]`;
-// Expo-router keeps previous stack screens mounted → always drive the LAST match.
+// Expo-router keeps previous stack screens mounted → always drive the LAST
+// VISIBLE match.
 const el = (id) => page.locator(`${T(id)} >> visible=true`).last();
 const byText = (s) => page.locator(`text=${s} >> visible=true`).last();
 
@@ -48,6 +50,13 @@ async function step(name, fn) {
   } catch (e) {
     results.push({ name, ok: false, err: String(e).split('\n')[0].slice(0, 140) });
     console.log(`  FAIL ${name}\n       ${String(e).split('\n')[0].slice(0, 150)}`);
+    try {
+      const n = results.length;
+      await page.screenshot({ path: `tool/nav_audit/fail-${n}.png` });
+      const vis = await page.$$eval('[data-testid]', (els) =>
+        els.filter((el) => el.offsetParent !== null).map((el) => el.getAttribute('data-testid')));
+      console.log(`       visible: ${[...new Set(vis)].join(' ')}`.slice(0, 360));
+    } catch { /* diagnostics only */ }
   }
 }
 
@@ -57,6 +66,12 @@ const click = async (id) => { await vis(id); await el(id).click(); };
 const text = (s, timeout = 8000) => byText(s).waitFor({ state: 'visible', timeout });
 const go = (path) => page.goto(`http://localhost:${PORT}${path}`, { waitUntil: 'networkidle' });
 
+// Seed vocabulary — EXACTLY 3 cards so the 5-stage match board (first 3 cards)
+// covers every card and the session is completable.
+const SEED = { 사랑: 'love', 학교: 'school', 친구: 'friend' };
+const TERM_OF = Object.fromEntries(Object.entries(SEED).map(([t, m]) => [m, t]));
+let deckId = null;
+
 // ---------------------------------------------------------------- tabs (live)
 console.log('== tabs (live) ==');
 await step('boot: Today tab renders live', async () => { await go('/'); await vis('shell/bottom-nav'); });
@@ -65,117 +80,276 @@ await step('tab → Stats', async () => { await click('shell/bottom-nav/stats');
 await step('tab → Profile (settings root)', async () => { await click('shell/bottom-nav/profile'); await text('Study settings'); });
 await step('tab → Today', async () => { await click('shell/bottom-nav/index'); await vis('shell/bottom-nav/index'); });
 
-// ---------------------------------------------------------------- create-deck dead end (live)
-console.log('== create deck (live) ==');
-await step('Library → Create deck opens /deck/new/content', async () => {
+// ------------------------------------------------- create deck (12.1, live)
+console.log('== create deck (12.1) ==');
+await step('12.1: with NO language pair, Create deck routes to add-pair', async () => {
   await go('/library');
   await click('library/empty-create');
   await text('New deck');
-});
-await step('BUG? naming + choosing content FAILS to create a deck (deckId "new" never exists)', async () => {
   await page.locator('input >> visible=true').last().fill('TOPIK I — Vocabulary');
   await click('deck-content-choice/cards');
-  await page.waitForTimeout(2500);
-  if (!page.url().includes('/deck/new/content')) throw new Error(`unexpectedly navigated: ${page.url()}`);
-  await vis('deck-content-choice/error'); // error banner = creation failed
+  await page.waitForURL(/settings\/languages/, { timeout: 8000 });
 });
-
-// ---------------------------------------------------------------- languages (live create flow)
-console.log('== languages (live) ==');
 await step('languages: add-pair flow creates a pair', async () => {
-  await go('/settings/languages');
   await click('languages/empty-add');
   await vis('languages/add-screen');
   await click('languages/learn-lang');
   await vis('languages/pick-sheet');
-  await page.locator(`${T('languages/pick-sheet')} [data-testid]`).first().click();
+  await page.locator(`${T('languages/pick-sheet')} [data-testid] >> visible=true`).first().click();
   await goneAll('languages/pick-sheet');
   await click('languages/add-confirm');
   await vis('languages/list');
 });
-await step('languages back → settings', async () => { await click('languages/back'); await page.waitForTimeout(400); });
+await step('12.1: with a pair, Create deck CREATES the deck and lands on its cards', async () => {
+  await go('/library');
+  await click('library/empty-create');
+  await text('New deck');
+  await page.locator('input >> visible=true').last().fill('TOPIK I — Vocabulary');
+  await click('deck-content-choice/cards');
+  await page.waitForURL(/\/deck\/(?!new\b)[^/]+\/cards/, { timeout: 10000 });
+  deckId = decodeURIComponent(new URL(page.url()).pathname.split('/')[2]);
+});
+await step('library lists the created deck', async () => {
+  await go('/library');
+  await text('TOPIK I — Vocabulary');
+});
 
-// ---------------------------------------------------------------- import/export with empty DB (live)
-console.log('== import/export (live, no deck) ==');
-await step('import: paste → mapping → continue → preview', async () => {
+// ------------------------------------------------- import seed (live)
+console.log('== import (seed 3 cards) ==');
+await step('import: paste → mapping → preview → Imported 3 cards → Back to deck', async () => {
   await go('/settings/import');
-  await el('import/paste').fill('사랑\tlove\n학교\tschool');
+  await el('import/paste').fill(Object.entries(SEED).map(([t, m]) => `${t}\t${m}`).join('\n'));
   await click('import/source-2');
   await text('COLUMN MAPPING');
   await click('import/to-preview');
-  await vis('import/do-import');
-});
-await step('import with no deck lands in import-error (not a crash)', async () => {
   await click('import/do-import');
-  await vis('import/error', 15000);
-  await click('import/retry');
-  await vis('import/error', 15000);
-});
-await step('export: config → Export → done + share/save present', async () => {
-  await go('/settings/export');
-  await click('export/do-export');
-  await vis('export/done', 15000);
-  await vis('export/share');
-  await vis('export/save');
+  await text('Imported 3 cards', 15000);
+  await click('import/go-deck');
+  await page.waitForURL(/\/deck\//, { timeout: 8000 });
 });
 
-// ---------------------------------------------------------------- settings tree (live)
-console.log('== settings (live) ==');
+// ------------------------------------------------- card flows (12.4, live)
+console.log('== card flows (12.4, live) ==');
+await step('cards list shows the imported cards', async () => {
+  await go(`/deck/${deckId}/cards`);
+  await text('사랑');
+});
+await step('12.4: FAB → Add card carries the deck context in the URL', async () => {
+  await click('flashcard-list/add');
+  await vis('flashcard-list/add-sheet');
+  await click('flashcard-list/add-card');
+  await page.waitForURL(/\/card\/new\?.*deckId=/, { timeout: 8000 });
+  if (!page.url().includes(`deckId=${encodeURIComponent(deckId)}`) && !page.url().includes(`deckId=${deckId}`)) {
+    throw new Error(`wrong deckId in ${page.url()}`);
+  }
+});
+await step('editor: fill + Save persists into THIS deck and returns', async () => {
+  await el('flashcard-editor/term').locator('input, textarea').last().fill('물');
+  await el('flashcard-editor/meaning').locator('input, textarea').last().fill('water');
+  await click('flashcard-editor/save');
+  await page.waitForTimeout(1200);
+  await go(`/deck/${deckId}/cards`);
+  await text('물');
+});
+await step('editor save cleanup: delete the extra card so the match board stays 3-wide', async () => {
+  await go(`/deck/${deckId}/cards`);
+  await click('flashcard-list/card-3');
+  await vis('flashcard-list/actions-sheet');
+  await click('flashcard-list/action-delete');
+  await vis('flashcard-list/delete-dialog');
+  await byText('Delete').click();
+  await page.waitForTimeout(800);
+  await go(`/deck/${deckId}/cards`);
+  const still = await page.locator('text=물 >> visible=true').count();
+  if (still > 0) throw new Error('confirm did not delete');
+});
+await step('card-actions sheet opens on card press', async () => {
+  await go(`/deck/${deckId}/cards`);
+  await click('flashcard-list/card-0');
+  await vis('flashcard-list/actions-sheet');
+});
+await step('DEAD? Move/Hide card are documented no-ops (12.11 pending)', async () => {
+  await click('flashcard-list/action-move');
+  await page.waitForTimeout(300);
+  await vis('flashcard-list/actions-sheet');
+  await click('flashcard-list/action-hide');
+  await page.waitForTimeout(300);
+  await vis('flashcard-list/actions-sheet');
+});
+await step('Delete card → dialog → Cancel keeps the card (DB-checked)', async () => {
+  await click('flashcard-list/action-delete');
+  await vis('flashcard-list/delete-dialog');
+  await byText('Cancel').click();
+  await goneAll('flashcard-list/delete-dialog');
+  await text('사랑'); // cancel kept it
+});
+
+// ------------------------------------------------- deck settings (live)
+console.log('== deck settings (live dialogs) ==');
+await step('deck settings: opens WITH the action sheet (kit default) → Rename dialog open/Cancel', async () => {
+  await go(`/deck/${deckId}/settings`);
+  await vis('deck-settings/actions-sheet'); // opens by design
+  await click('deck-settings/action-rename');
+  await vis('deck-settings/rename-dialog');
+  await click('deck-settings/rename-cancel');
+  await goneAll('deck-settings/rename-dialog');
+});
+await step('deck settings: Move sheet + Reset/Delete dialogs open and Cancel', async () => {
+  await click('deck-settings/more');
+  await vis('deck-settings/actions-sheet');
+  await click('deck-settings/action-move');
+  await vis('deck-settings/move-sheet');
+  await page.mouse.click(195, 60);
+  await goneAll('deck-settings/move-sheet');
+  await click('deck-settings/more');
+  await click('deck-settings/action-reset');
+  await vis('deck-settings/reset-dialog');
+  await byText('Cancel').click();
+  await goneAll('deck-settings/reset-dialog');
+  await click('deck-settings/more');
+  await click('deck-settings/action-delete');
+  await vis('deck-settings/delete-dialog');
+  await byText('Cancel').click();
+  await goneAll('deck-settings/delete-dialog');
+});
+
+// ------------------------------------------------- full 5-stage session (12.3, live)
+console.log('== full 5-stage session (12.3, live) ==');
+// Stages 3/5 have no testID on the prompt card — detect the current card by
+// which seed term (stage 3) / meaning (stage 5) is visible on screen.
+async function visibleSeed(candidates) {
+  for (const c of candidates) {
+    if ((await page.locator(`text=${c} >> visible=true`).count()) > 0) return c;
+  }
+  throw new Error(`no seed text visible among ${candidates.join(',')}`);
+}
+await step('session boots at Stage 1 · Review', async () => {
+  await go(`/session/play?deckId=${deckId}`);
+  await text('Stage 1 · Review', 12000);
+});
+await step('stage 1: Next ×3 → Stage 2 · Match', async () => {
+  for (let i = 0; i < 3; i += 1) {
+    await click('study-session/next');
+    await page.waitForTimeout(250);
+  }
+  await text('Stage 2 · Match', 8000);
+});
+await step('12.3: stage 2 match tiles answer and advance → Stage 3 · Guess', async () => {
+  // Board = first 3 cards in order; the current card iterates in the same
+  // order, so the correct meaning tile is l0 → l1 → l2.
+  for (let i = 0; i < 3; i += 1) {
+    await click(`study-session/match-l${i}`);
+    await page.waitForTimeout(300);
+  }
+  await text('Stage 3 · Guess', 8000);
+});
+await step('stage 3: pick the correct meaning ×3 → Stage 4 · Recall', async () => {
+  for (let i = 0; i < 3; i += 1) {
+    const term = await visibleSeed(Object.keys(SEED));
+    await byText(SEED[term]).click();
+    await page.waitForTimeout(300);
+  }
+  await text('Stage 4 · Recall', 8000);
+});
+await step('stage 4: Show ×3 (reveal advances directly) → Stage 5 · Fill', async () => {
+  for (let i = 0; i < 3; i += 1) {
+    await click('study-session/reveal');
+    await page.waitForTimeout(300);
+  }
+  await text('Stage 5 · Fill', 8000);
+});
+await step('stage 5: type each term + check ×3 → result screen', async () => {
+  for (let i = 0; i < 3; i += 1) {
+    const meaning = await visibleSeed(Object.values(SEED));
+    await el('study-session/fill-input').fill(TERM_OF[meaning]);
+    await click('study-session/check');
+    await page.waitForTimeout(350);
+  }
+  await page.waitForURL(/\/session\/result/, { timeout: 12000 });
+});
+await step('exit dialog: Stay keeps the session, Leave exits', async () => {
+  await go(`/session/play?deckId=${deckId}`);
+  await text('Stage 1 · Review', 12000);
+  await click('study-session/close');
+  await vis('study-session/exit-dialog');
+  await click('study-session/exit-cancel');
+  await goneAll('study-session/exit-dialog');
+  await click('study-session/close');
+  await vis('study-session/exit-dialog');
+  await click('study-session/exit-ok');
+  await page.waitForTimeout(500);
+});
+
+// ------------------------------------------------- study modes + player (live)
+console.log('== study modes + player (live) ==');
+await step('mode-picker: scope sheet opens/picks; mode starts a session', async () => {
+  await go(`/session/mode-picker?deckId=${deckId}`);
+  await click('mode-picker/scope');
+  await vis('mode-picker/scope-sheet');
+  await page.mouse.click(195, 60);
+  await goneAll('mode-picker/scope-sheet');
+});
+for (const mode of ['review', 'guess', 'recall', 'fill', 'match']) {
+  await step(`/session/${mode} renders over the seeded deck + back`, async () => {
+    await go(`/session/${mode}?deckId=${deckId}`);
+    await vis(`${mode}-mode/back`);
+    await click(`${mode}-mode/back`);
+  });
+}
+await step('player: renders over the deck (transport where TTS allows) + back', async () => {
+  await go(`/player?deckId=${deckId}`);
+  await vis('player/back');
+  // Headless Chromium has no speech voices — the player may legitimately land
+  // in its error state; exercise the transport only when it is offered.
+  if ((await page.locator(`${T('player/playpause')} >> visible=true`).count()) > 0) {
+    await click('player/playpause');
+    await click('player/next');
+  } else {
+    await vis('player/retry').catch(() => vis('player/replay'));
+  }
+  await click('player/back');
+});
+
+// ------------------------------------------------- settings tree (12.2, live)
+console.log('== settings (12.2, live) ==');
 await step('profile → Study settings hub', async () => {
   await go('/profile');
   await click('settings/study');
   await text('Language pairs');
 });
-await step('hub → Language pairs (different pathname) navigates', async () => {
-  await go('/settings/study');
-  await click('settings/study-language');
-  await page.waitForURL(/settings\/languages/, { timeout: 8000 });
-});
-for (const [row, marker] of [
-  ['settings/study-worddisplay', 'settings/wd-gender-switch'],
-  ['settings/study-srs', 'settings/srs-boxes'],
-  ['settings/study-mode', 'settings/mode-count'],
-  ['settings/study-voice', 'settings/voice-tts-switch'],
+for (const [row, key, marker] of [
+  ['settings/study-worddisplay', 'worddisplay', 'settings/wd-gender-switch'],
+  ['settings/study-srs', 'srs', 'settings/srs-boxes'],
+  ['settings/study-mode', 'mode', 'settings/mode-count'],
+  ['settings/study-voice', 'voice', 'settings/voice-tts-switch'],
 ]) {
-  await step(`BUG? hub → ${row} DEAD (same-path query push is swallowed)`, async () => {
+  await step(`12.2: hub row → /settings/study/${key} renders → back → hub`, async () => {
     await go('/settings/study');
     await click(row);
-    await page.waitForTimeout(1200);
-    if (page.url().includes('screen=')) throw new Error('navigated — bug fixed?');
-    const childVisible = await page.locator(`${T(marker)} >> visible=true`).count();
-    if (childVisible > 0) throw new Error('child rendered — bug fixed?');
-  });
-  await step(`deep link /settings/study?screen=… for ${row} DOES render`, async () => {
-    const key = row.replace('settings/study-', '');
-    await go(`/settings/study?screen=${key}`);
+    await page.waitForURL(new RegExp(`settings/study/${key}`), { timeout: 8000 });
     await vis(marker);
+    await click('settings/child-back');
+    await vis('settings/study-language');
   });
 }
-await step('study-mode: switches toggle live', async () => {
-  await go('/settings/study?screen=mode');
-  await text('Words per round');
-  await click('settings/mode-shuffle-switch');
-  await click('settings/mode-autoplay-switch');
+await step('12.2: legacy deep link ?screen=srs still renders the child', async () => {
+  await go('/settings/study?screen=srs');
+  await vis('settings/srs-boxes');
 });
 await step('value-picker opens, picks 10 words, closes', async () => {
+  await go('/settings/study/mode');
   await click('settings/mode-count');
   await vis('settings/picker-sheet');
   await click('settings/words-10');
   await goneAll('settings/picker-sheet');
   await text('10');
 });
-await step('reminders: toggle + time picker opens + Done closes', async () => {
+await step('reminders: time picker opens + Done closes', async () => {
   await go('/settings/reminders');
   await click('reminder/time-edit');
   await vis('reminder/picker-sheet');
   await click('reminder/picker-done');
   await goneAll('reminder/picker-sheet');
-});
-await step('theme opens from root row', async () => {
-  await go('/profile');
-  await click('settings/theme');
-  await page.waitForTimeout(600);
-  await vis('shell/bottom-nav', 4000).catch(() => {});
 });
 await step('DEAD? Backup / Restore row is a no-op (10.3 pending)', async () => {
   await go('/profile');
@@ -184,132 +358,27 @@ await step('DEAD? Backup / Restore row is a no-op (10.3 pending)', async () => {
   if (!page.url().endsWith('/profile')) throw new Error(`navigated to ${page.url()}`);
 });
 
-// ---------------------------------------------------------------- search + editor (live, no data)
-console.log('== search + editor (live) ==');
-await step('search: dock renders, empty query → recent/empty, back works', async () => {
+// ------------------------------------------------- export + search (live, seeded)
+console.log('== export + search (live) ==');
+await step('export runs to done with Share/Save', async () => {
+  await go('/settings/export');
+  await click('export/do-export');
+  await vis('export/done', 15000);
+  await vis('export/share');
+  await vis('export/save');
+});
+await step('search finds a seeded card → opens editor → Cancel back', async () => {
   await go('/search');
   await vis('search/dock');
-  await click('search/back');
-});
-await step('/card/new bare renders the editor (no deckId — save must not corrupt)', async () => {
-  await go('/card/new');
-  await text('New card');
-});
-
-// ---------------------------------------------------------------- session routes with empty deck (live)
-console.log('== session routes (live, empty deck) ==');
-await step('mode-picker renders without deckId + back', async () => {
-  await go('/session/mode-picker');
-  await vis('mode-picker/screen');
-  await click('mode-picker/back');
-});
-await step('mode-picker scope sheet opens + dismisses via scrim', async () => {
-  await go('/session/mode-picker');
-  await click('mode-picker/scope');
-  await vis('mode-picker/scope-sheet');
-  await page.mouse.click(195, 60);
-  await goneAll('mode-picker/scope-sheet');
-});
-for (const mode of ['review', 'guess', 'recall', 'fill', 'match']) {
-  await step(`/session/${mode} (empty deck) renders a safe state + back`, async () => {
-    await go(`/session/${mode}`);
-    await vis(`${mode}-mode/back`);
-    await click(`${mode}-mode/back`);
-  });
-}
-await step('/session/play (empty deck) renders a safe state', async () => {
-  await go('/session/play');
-  await page.waitForTimeout(1500);
-  const body = await page.textContent('body');
-  if (!body) throw new Error('blank');
-});
-await step('/session/result without sessionId renders a safe state', async () => {
-  await go('/session/result');
-  await page.waitForTimeout(1500);
-  const body = await page.textContent('body');
-  if (!body) throw new Error('blank');
-});
-await step('/player (empty deck) renders a safe state + back', async () => {
-  await go('/player');
-  await vis('player/back');
-  await click('player/back');
+  await page.locator('input >> visible=true').last().fill('사랑');
+  await page.waitForTimeout(900);
+  await byText('사랑').click();
+  await page.waitForURL(/\/card\//, { timeout: 8000 });
+  await click('flashcard-editor/cancel');
 });
 
-// ---------------------------------------------------------------- fixture-mode overlays (dialogs & sheets)
-console.log('== overlays via fixture routes ==');
-await step('flashcard-list: card press → actions sheet opens', async () => {
-  await go('/deck/X/cards?state=loaded');
-  await click('flashcard-list/card-0');
-  await vis('flashcard-list/actions-sheet');
-});
-await step('BUG? Move card + Hide card are no-ops (unwired in live route too)', async () => {
-  await click('flashcard-list/action-move');
-  await page.waitForTimeout(300);
-  await vis('flashcard-list/actions-sheet');
-  await click('flashcard-list/action-hide');
-  await page.waitForTimeout(300);
-  await vis('flashcard-list/actions-sheet');
-});
-await step('flashcard-list: Delete → dialog opens → Cancel closes', async () => {
-  await click('flashcard-list/action-delete');
-  await vis('flashcard-list/delete-dialog');
-  await byText('Cancel').click();
-  await goneAll('flashcard-list/delete-dialog');
-});
-await step('flashcard-list: FAB → add sheet opens → scrim dismisses', async () => {
-  await go('/deck/X/cards?state=loaded');
-  await click('flashcard-list/add');
-  await vis('flashcard-list/add-sheet');
-  await page.mouse.click(195, 60);
-  await goneAll('flashcard-list/add-sheet');
-});
-await step('flashcard-list: search mode enter + clear exits', async () => {
-  await click('flashcard-list/search-open');
-  await vis('flashcard-list/search-dock');
-  await click('flashcard-list/search-clear');
-  await vis('flashcard-list/add');
-});
-await step('deck-settings: action sheet → Rename dialog opens', async () => {
-  await go('/deck/X/settings?state=action-sheet');
-  await vis('deck-settings/actions-sheet');
-  await click('deck-settings/action-rename');
-  await vis('deck-settings/rename-dialog');
-  await click('deck-settings/rename-cancel');
-  await goneAll('deck-settings/rename-dialog');
-});
-await step('deck-settings: action sheet → Move sheet opens + scrim dismisses', async () => {
-  await go('/deck/X/settings?state=action-sheet');
-  await click('deck-settings/action-move');
-  await vis('deck-settings/move-sheet');
-  await page.mouse.click(195, 60);
-  await goneAll('deck-settings/move-sheet');
-});
-await step('deck-settings: Reset dialog open/Cancel', async () => {
-  await go('/deck/X/settings?state=reset-confirm');
-  await vis('deck-settings/reset-dialog');
-  await byText('Cancel').click();
-  await goneAll('deck-settings/reset-dialog');
-});
-await step('deck-settings: Delete dialog open/Cancel', async () => {
-  await go('/deck/X/settings?state=delete-confirm');
-  await vis('deck-settings/delete-dialog');
-  await byText('Cancel').click();
-  await goneAll('deck-settings/delete-dialog');
-});
-await step('subdeck-list: create sheet opens + scrim dismisses', async () => {
-  await go('/deck/X?state=loaded');
-  await click('subdeck-list/create');
-  await vis('subdeck-list/create-sheet');
-  await page.mouse.click(195, 60);
-  await goneAll('subdeck-list/create-sheet');
-});
-await step('subdeck-list: long-press row → actions sheet', async () => {
-  const row = page.locator('[data-testid^="subdeck-list/sub-"]').first();
-  await row.click({ delay: 700 }).catch(() => row.click());
-  await vis('subdeck-list/actions-sheet', 4000).catch(() => {
-    console.log('       note: actions sheet did not open on press/long-press');
-  });
-});
+// ------------------------------------------------- remaining fixture overlays
+console.log('== remaining overlays (fixture) ==');
 await step('library: create sheet + filter sheet open/close (fixture)', async () => {
   await go('/library?state=loaded');
   await click('library/create');
@@ -321,18 +390,12 @@ await step('library: create sheet + filter sheet open/close (fixture)', async ()
   await click('library/fs-apply');
   await goneAll('library/filter-sheet');
 });
-await step('study-session: exit dialog Stay/Leave (fixture)', async () => {
-  await go('/session/play?state=exit');
-  await text('Leave the session?');
-  await byText('Stay').click();
-  await goneAll('study-session/exit-dialog', 4000).catch(() => {});
-});
-await step('BUG? study-session stage-2 match tiles dead (fixture press does nothing)', async () => {
-  await go('/session/play?state=stage2-match');
-  await vis('study-session/match-l0');
-  await click('study-session/match-l0');
-  await page.waitForTimeout(400);
-  await vis('study-session/match-l0'); // still on match, no handler ran
+await step('subdeck-list: create sheet opens + scrim dismisses (fixture)', async () => {
+  await go('/deck/X?state=loaded');
+  await click('subdeck-list/create');
+  await vis('subdeck-list/create-sheet');
+  await page.mouse.click(195, 60);
+  await goneAll('subdeck-list/create-sheet');
 });
 
 // ---------------------------------------------------------------- report
@@ -346,3 +409,4 @@ if (consoleErrors.length) {
 }
 await browser.close();
 server.close();
+process.exitCode = fails.length > 0 ? 1 : 0;

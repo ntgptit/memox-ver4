@@ -354,8 +354,8 @@ export function SubdeckListScreen({
       {sheet === 'create' && (
         <Scrim node="subdeck-list/create-scrim" align="end" onDismiss={() => setSheet(null)}>
           <Sheet title="Create" node="subdeck-list/create-sheet">
-            <MenuItem icon="library_add" label="Create subdeck" onPress={onCreateSubdeck} node="subdeck-list/create-subdeck" />
-            <MenuItem icon="account_tree" label="Import subdecks" onPress={onImportSubdecks} node="subdeck-list/create-import" />
+            <MenuItem icon="library_add" label="Create subdeck" onPress={() => { setSheet(null); onCreateSubdeck?.(); }} node="subdeck-list/create-subdeck" />
+            <MenuItem icon="account_tree" label="Import subdecks" onPress={() => { setSheet(null); onImportSubdecks?.(); }} node="subdeck-list/create-import" />
           </Sheet>
         </Scrim>
       )}

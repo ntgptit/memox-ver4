@@ -149,7 +149,17 @@ function ActionsSheet({
         <MenuItem icon="edit" label="Rename deck" onPress={onRename} node="deck-settings/action-rename" />
         <MenuItem icon="drive_file_move" label="Move deck" onPress={onMove} node="deck-settings/action-move" />
         {onExport && (
-          <MenuItem icon="ios_share" label="Export deck" onPress={onExport} node="deck-settings/action-export" />
+          <MenuItem
+            icon="ios_share"
+            label="Export deck"
+            // Close the sheet BEFORE navigating (audit: a sheet left open blocks
+            // the pushed screen on web and lingers behind it on native).
+            onPress={() => {
+              onDismiss();
+              onExport();
+            }}
+            node="deck-settings/action-export"
+          />
         )}
         <MenuItem icon="restart_alt" label="Reset progress" onPress={onReset} node="deck-settings/action-reset" />
         <MenuItem icon="delete" label="Delete deck" danger onPress={onDelete} node="deck-settings/action-delete" />

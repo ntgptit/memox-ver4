@@ -54,3 +54,17 @@ open-close in the app. Two layers, both reproducible:
    hide/disable the entry points that have none.
 5. Either wire Move/Hide card + subdeck rename/move/delete to real flows or
    drop the menu items until their WBS rows exist.
+
+## Resolution (same day)
+
+P0-1/P0-2/P0-3 and P1-4 are FIXED (WBS 12.1–12.4) and the dynamic suite now
+runs fully positive: **46/46 steps**, including a fresh-install create-deck
+journey (no-pair → add-pair → deck created), all four study-hub children
+opened from real hub presses (root cause: `screen` is a RESERVED React
+Navigation param name — the child route param is `[section]`), a COMPLETE live
+5-stage session driven to the result screen, and Add-card entries carrying
+their deck context end-to-end. Fixing 12.4 surfaced one more defect, also
+fixed: sheets did not close before navigating (flashcard-list add/actions,
+library create, subdeck create, deck-settings export), which blocked the
+pushed screen on web. Remaining documented no-ops: defects 5–7 (WBS 12.11,
+product decision) and the Backup/Restore row (WBS 10.3).

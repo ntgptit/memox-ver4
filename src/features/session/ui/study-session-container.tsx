@@ -93,6 +93,9 @@ export function StudySessionContainer({
       onFillChange={ctrl.setFillValue}
       onNext={ctrl.next}
       onPickOption={ctrl.pickOption}
+      // 12.3: stage-2 match tiles answer against the current card (its meaning
+      // tile grades `good`, anything else `again`) — same contract as options.
+      onPickTile={ctrl.pickOption}
       onReveal={ctrl.reveal}
       onCheck={ctrl.check}
       onDueRelearn={ctrl.dueRelearn}

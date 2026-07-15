@@ -373,8 +373,26 @@ export function FlashcardListScreen({
       {overlay === 'add' && (
         <Scrim node="flashcard-list/add-scrim" align="end" onDismiss={() => setOverlay(null)}>
           <Sheet title="Add" node="flashcard-list/add-sheet">
-            <MenuItem icon="note_add" label="Add card" onPress={onAddCard} node="flashcard-list/add-card" />
-            <MenuItem icon="upload_file" label="Import cards" onPress={onImportCards} node="flashcard-list/add-import" />
+            {/* 12.4/audit: close the sheet BEFORE navigating — a sheet left open
+                blocks the pushed screen on web and lingers behind it on native. */}
+            <MenuItem
+              icon="note_add"
+              label="Add card"
+              onPress={() => {
+                setOverlay(null);
+                onAddCard?.();
+              }}
+              node="flashcard-list/add-card"
+            />
+            <MenuItem
+              icon="upload_file"
+              label="Import cards"
+              onPress={() => {
+                setOverlay(null);
+                onImportCards?.();
+              }}
+              node="flashcard-list/add-import"
+            />
           </Sheet>
         </Scrim>
       )}
@@ -382,7 +400,15 @@ export function FlashcardListScreen({
       {overlay === 'actions' && active && (
         <Scrim node="flashcard-list/actions-scrim" align="end" onDismiss={() => setOverlay(null)}>
           <Sheet title={active.term} node="flashcard-list/actions-sheet">
-            <MenuItem icon="edit" label="Edit card" onPress={() => onEditCard?.(active.id)} node="flashcard-list/action-edit" />
+            <MenuItem
+              icon="edit"
+              label="Edit card"
+              onPress={() => {
+                setOverlay(null);
+                onEditCard?.(active.id);
+              }}
+              node="flashcard-list/action-edit"
+            />
             <MenuItem icon="drive_file_move" label="Move card" onPress={() => onMoveCard?.(active.id)} node="flashcard-list/action-move" />
             <MenuItem icon="visibility_off" label="Hide card" onPress={() => onHideCard?.(active.id)} node="flashcard-list/action-hide" />
             <MenuItem icon="delete" label="Delete card" danger onPress={() => setOverlay('delete')} node="flashcard-list/action-delete" />

@@ -40,7 +40,7 @@ export default function ModePickerRoute() {
     <ModePickerContainer
       deckId={id}
       onBack={() => router.back()}
-      onAddWords={() => router.push('/card/new')}
+      onAddWords={() => router.push(id ? `/card/new?deckId=${id}` : '/card/new')}
       onStart={(mode, scope) => router.push(`/session/${mode}?deckId=${id}&scope=${scope}`)}
     />
   );

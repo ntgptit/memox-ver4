@@ -392,10 +392,10 @@ export function LibraryScreen({
       {sheet === 'create' && (
         <Scrim node="library/create-scrim" align="end" onDismiss={() => setSheet(null)}>
           <Sheet title="Create" node="library/create-sheet">
-            <MenuItem icon="note_add" label="Add card" onPress={onAddCard} node="library/create-card" />
-            <MenuItem icon="stacks" label="Create deck" onPress={onCreateDeck} node="library/create-deck" />
+            <MenuItem icon="note_add" label="Add card" onPress={() => { setSheet(null); onAddCard?.(); }} node="library/create-card" />
+            <MenuItem icon="stacks" label="Create deck" onPress={() => { setSheet(null); onCreateDeck?.(); }} node="library/create-deck" />
             <SheetDivider theme={t} />
-            <MenuItem icon="upload_file" label="Import cards" onPress={onImport} node="library/create-import" />
+            <MenuItem icon="upload_file" label="Import cards" onPress={() => { setSheet(null); onImport?.(); }} node="library/create-import" />
           </Sheet>
         </Scrim>
       )}

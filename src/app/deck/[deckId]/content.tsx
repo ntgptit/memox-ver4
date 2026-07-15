@@ -25,6 +25,7 @@ export default function DeckContentChoiceRoute() {
   const go = (organisation: DeckOrganisation, id: string) => {
     router.replace(organisation === 'subdecks' ? `/deck/${id}` : `/deck/${id}/cards`);
   };
+  const goAddPair = () => router.push('/settings/languages');
 
   if (state && state in DECK_CONTENT_CHOICE_FIXTURES) {
     const preview = (
@@ -44,6 +45,7 @@ export default function DeckContentChoiceRoute() {
       onBack={() => router.back()}
       onImport={() => router.push(`/deck/${String(deckId)}/cards`)}
       onChosen={go}
+      onNeedLanguagePair={goAddPair}
     />
   );
 }

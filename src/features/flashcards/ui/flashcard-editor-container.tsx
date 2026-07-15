@@ -71,8 +71,15 @@ export function FlashcardEditorContainer({
   useEffect(() => {
     let alive = true;
     void Promise.all([createLibraryRepositories(), createFlashcardRepositories()]).then(async ([lib, flash]) => {
+      // 12.4: entry points without a deck in context (dashboard/library quick
+      // actions) resolve the library's first deck — same default as import/export.
+      let targetDeckId = deckId;
+      if (targetDeckId === '') {
+        const decks = await lib.decks.list();
+        if (!isErr(decks) && decks.value.length > 0) targetDeckId = decks.value[0].id;
+      }
       // Deck-driven labels: deck title + its language pair names.
-      const deckR = await lib.decks.getById(deckId);
+      const deckR = await lib.decks.getById(targetDeckId);
       const deckRow = isErr(deckR) ? null : deckR.value;
       const pairR = deckRow === null ? null : await lib.languagePairs.getById(deckRow.languagePairId);
       const pair = pairR === null || isErr(pairR) ? null : pairR.value;
@@ -112,7 +119,7 @@ export function FlashcardEditorContainer({
             // Add anyway: domain-build (validation intact), skip the dup rejection.
             const built = makeCard({
               id: randomId(),
-              deckId,
+              deckId: targetDeckId,
               subdeckId: subdeckId ?? null,
               term: values.term,
               meaning: values.meaning,
@@ -124,7 +131,7 @@ export function FlashcardEditorContainer({
             return await flash.cards.save(built.value);
           }
           return await create.execute({
-            deckId,
+            deckId: targetDeckId,
             subdeckId: subdeckId ?? null,
             term: values.term,
             meaning: values.meaning,

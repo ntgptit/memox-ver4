@@ -35,7 +35,9 @@ export default function FlashcardListRoute() {
       deckId={deckId}
       subdeckId={subdeckId}
       onBack={() => router.back()}
-      onAddCard={() => router.push('/card/new')}
+      onAddCard={() =>
+        router.push(`/card/new?deckId=${deckId}${subdeckId ? `&subdeckId=${subdeckId}` : ''}`)
+      }
       onImportCards={() => router.push('/settings/import')}
       onDeckSettings={() => router.push(`/deck/${deckId}/settings`)}
       onEditCard={(id) => router.push(`/card/${id}`)}
