@@ -8,8 +8,10 @@
 
 import { useContext, useState } from 'react';
 import {
+  FlatList,
   ScrollView,
   View,
+  type ListRenderItem,
   type NativeSyntheticEvent,
   type NativeScrollEvent,
   type StyleProp,
@@ -43,6 +45,20 @@ export interface AppScreenProps {
   inTabs?: boolean;
   fab?: ReactNode;
   /**
+   * Virtualized body (11.5): when set, the scroll container is a FlatList so an
+   * unbounded item list (e.g. a large deck's cards) mounts lazily instead of
+   * rendering every row. `header` renders above the items with the standard
+   * section gap; `gap` is the item gap (default 12 = MxList). In this mode
+   * `children` render OUTSIDE the scroll region (overlays only).
+   */
+  body?: {
+    data: readonly unknown[];
+    renderItem: ListRenderItem<never>;
+    keyExtractor: (item: never, index: number) => string;
+    header?: ReactNode;
+    gap?: number;
+  };
+  /**
    * Kit MxScaffold `bottomNav` slot for NON-nav footers (e.g. a sticky save
    * bar): rendered below the scroll region, occupying the nav band — the body
    * then pads only its own section gap.
@@ -67,6 +83,7 @@ export function AppScreen({
   avatar,
   inTabs = false,
   fab,
+  body,
   footer,
   children,
   node,
@@ -101,34 +118,70 @@ export function AppScreen({
         node={node ? `${node}/appbar` : undefined}
       />
       <View style={{ flex: 1, minHeight: 0 }}>
-        <ScrollView
-          testID={node ? `${node}/scroll` : undefined}
-          onScroll={onScroll}
-          scrollEventThrottle={16}
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={[
-            {
-              flexGrow: 1, // lets a flex:1 child (EmptyState, tall study cards) fill the body like the kit
-              paddingHorizontal: t.layout.gutter,
-              paddingTop: t.space[4],
-              // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
-              // (+ the FAB clearance when present); screens that need the space back
-              // reclaim it with a negative margin, exactly like the kit.
-              paddingBottom:
-                inTabs || footer !== undefined
-                  ? fab
-                    ? t.space[4] + t.layout.fabSize + t.space[6]
-                    : t.space[6]
-                  : fab
-                    ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
-                    : t.layout.bottomNavHeight + t.space[6],
-              gap: t.space[6],
-            },
-            contentStyle,
-          ]}
-        >
-          {children}
-        </ScrollView>
+        {(() => {
+          // Kit `.app__body`: bottom padding ALWAYS reserves the bottom-nav band
+          // (+ the FAB clearance when present); screens that need the space back
+          // reclaim it with a negative margin, exactly like the kit.
+          const paddingBottom =
+            inTabs || footer !== undefined
+              ? fab
+                ? t.space[4] + t.layout.fabSize + t.space[6]
+                : t.space[6]
+              : fab
+                ? t.layout.bottomNavHeight + t.space[4] + t.layout.fabSize + t.space[6]
+                : t.layout.bottomNavHeight + t.space[6];
+          const frame = {
+            paddingHorizontal: t.layout.gutter,
+            paddingTop: t.space[4],
+            paddingBottom,
+          } as const;
+
+          if (body !== undefined) {
+            const itemGap = body.gap ?? t.space[3];
+            return (
+              <FlatList
+                testID={node ? `${node}/scroll` : undefined}
+                data={body.data as never[]}
+                renderItem={body.renderItem}
+                keyExtractor={body.keyExtractor}
+                onScroll={onScroll}
+                scrollEventThrottle={16}
+                showsVerticalScrollIndicator={false}
+                // The header keeps the ScrollView mode's section gap both between
+                // its own blocks and against the first item.
+                ListHeaderComponent={
+                  body.header !== undefined ? (
+                    <View style={{ gap: t.space[6], marginBottom: t.space[6] }}>{body.header}</View>
+                  ) : undefined
+                }
+                ItemSeparatorComponent={() => <View style={{ height: itemGap }} />}
+                initialNumToRender={12}
+                maxToRenderPerBatch={16}
+                windowSize={7}
+                contentContainerStyle={[frame, contentStyle]}
+              />
+            );
+          }
+
+          return (
+            <ScrollView
+              testID={node ? `${node}/scroll` : undefined}
+              onScroll={onScroll}
+              scrollEventThrottle={16}
+              showsVerticalScrollIndicator={false}
+              contentContainerStyle={[
+                {
+                  flexGrow: 1, // lets a flex:1 child (EmptyState, tall study cards) fill the body like the kit
+                  ...frame,
+                  gap: t.space[6],
+                },
+                contentStyle,
+              ]}
+            >
+              {children}
+            </ScrollView>
+          );
+        })()}
         {fab !== undefined && fab !== null && (
           // Kit: the FAB parks above the bottom-nav band (nav + space-4) even on
           // screens without a nav; inside the tab shell the real nav already lifts
@@ -144,6 +197,8 @@ export function AppScreen({
           </View>
         )}
       </View>
+      {/* Virtualized mode: children are overlays (Scrim/Sheet), not scroll content. */}
+      {body !== undefined && children}
       {footer}
     </View>
   );

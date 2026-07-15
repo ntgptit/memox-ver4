@@ -134,6 +134,17 @@ describe('SRS state persistence (WBS 5.2)', () => {
     const r = await srs.dueCards([], 100);
     if (isOk(r)) expect(r.value).toEqual([]);
   });
+
+  it('dueCountByDeck aggregates due cards per deck in ONE read (WBS 11.5)', async () => {
+    await srs.save({ ...srsState('c1', 1), dueAt: 50 });
+    await srs.save({ ...srsState('c2', 1), dueAt: 500 }); // not due yet
+    const r = await srs.dueCountByDeck(100);
+    expect(isOk(r)).toBe(true);
+    if (isOk(r)) {
+      expect(r.value.get('d1')).toBe(1);
+      expect(r.value.size).toBe(1);
+    }
+  });
 });
 
 describe('persistAnswer — transactional attempt + SRS (WBS 5.2)', () => {

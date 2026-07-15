@@ -6,7 +6,6 @@
 
 import { useCallback, useEffect, useState } from 'react';
 
-import { isErr, type Result } from '@/shared';
 import type { Deck, Subdeck } from '../domain';
 
 import type { LibraryData, LibraryDeckView, LibrarySubdeckView } from './library-fixtures';
@@ -14,10 +13,12 @@ import type { LibrarySearchResults } from './library-screen';
 
 export interface LibraryDeps {
   listDecks: () => Promise<Deck[]>;
-  listSubdecksByDeck: (deckId: string) => Promise<Subdeck[]>;
-  countCardsByDeck: (deckId: string) => Promise<number>;
-  /** Due-card count for a deck at `now` (SRS states, 5.2). */
-  countDueByDeck: (deckId: string) => Promise<number>;
+  /** ALL subdecks in one read (11.5: no per-deck subdeck query). */
+  listAllSubdecks: () => Promise<Subdeck[]>;
+  /** Card counts for all decks in one read (11.5: no per-deck count query). */
+  countCardsByDecks: (deckIds: readonly string[]) => Promise<ReadonlyMap<string, number>>;
+  /** Due-card counts per deck at now, in one read (SRS states, 5.2 / 11.5). */
+  countDueByDecks: () => Promise<ReadonlyMap<string, number>>;
 }
 
 export interface LibraryController {
@@ -35,15 +36,26 @@ export function useLibrary(deps: LibraryDeps): LibraryController {
     let cancelled = false;
     (async () => {
       try {
+        // 11.5: a FIXED number of reads regardless of library size (was 1 + 4
+        // per deck) — one deck list, one subdeck list, one count map, one due map.
         const decks = await deps.listDecks();
+        const [allSubdecks, cardCounts, dueCounts] = await Promise.all([
+          deps.listAllSubdecks(),
+          deps.countCardsByDecks(decks.map((d) => d.id)),
+          deps.countDueByDecks(),
+        ]);
+        const subsByDeck = new Map<string, Subdeck[]>();
+        for (const s of allSubdecks) {
+          const list = subsByDeck.get(s.deckId);
+          if (list === undefined) subsByDeck.set(s.deckId, [s]);
+          else list.push(s);
+        }
         const views: LibraryDeckView[] = [];
         const subViews: LibrarySubdeckView[] = [];
         for (const deck of decks) {
-          const [subs, cards, due] = await Promise.all([
-            deps.listSubdecksByDeck(deck.id),
-            deps.countCardsByDeck(deck.id),
-            deps.countDueByDeck(deck.id),
-          ]);
+          const subs = subsByDeck.get(deck.id) ?? [];
+          const cards = cardCounts.get(deck.id) ?? 0;
+          const due = dueCounts.get(deck.id) ?? 0;
           views.push({
             id: deck.id,
             icon: 'style',
@@ -88,16 +100,3 @@ export function useLibrary(deps: LibraryDeps): LibraryController {
   return { data, reload: () => setGeneration((g) => g + 1), searchLibrary };
 }
 
-/** Small helper for wiring the SRS due count from repository primitives. */
-export function makeCountDueByDeck(deps: {
-  listCardIdsByDeck: (deckId: string) => Promise<string[]>;
-  dueCards: (cardIds: readonly string[], now: number) => Promise<Result<unknown[]>>;
-  now: () => number;
-}): (deckId: string) => Promise<number> {
-  return async (deckId) => {
-    const ids = await deps.listCardIdsByDeck(deckId);
-    if (ids.length === 0) return 0;
-    const due = await deps.dueCards(ids, deps.now());
-    return isErr(due) ? 0 : due.value.length;
-  };
-}

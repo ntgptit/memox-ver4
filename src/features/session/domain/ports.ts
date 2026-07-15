@@ -23,4 +23,6 @@ export interface AttemptRepository extends Repository<Attempt>, Observable {
 export interface SrsStateRepository extends Repository<SrsState>, Observable {
   /** Cards due at or before `now`, across a set of cards. */
   dueCards(cardIds: readonly string[], now: number): Promise<Result<SrsState[]>>;
+  /** Due-card counts per deck in one read (11.5: the library must not walk every deck's cards). */
+  dueCountByDeck(now: number): Promise<Result<ReadonlyMap<string, number>>>;
 }

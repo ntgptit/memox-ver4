@@ -56,6 +56,18 @@ export class SqliteCardRepository implements CardRepository {
     return row ? ok(row.card_count) : err(notFoundError('Deck'));
   }
 
+  async countByDecks(deckIds: readonly string[]): Promise<Result<ReadonlyMap<string, number>>> {
+    if (deckIds.length === 0) {
+      return ok(new Map());
+    }
+    const placeholders = deckIds.map(() => '?').join(', ');
+    const rows = await this.db.all<{ id: string; card_count: number }>(
+      `SELECT id, card_count FROM deck WHERE id IN (${placeholders})`,
+      [...deckIds],
+    );
+    return ok(new Map(rows.map((r) => [r.id, r.card_count])));
+  }
+
   async save(entity: Card): Promise<Result<Card>> {
     await this.db.run(
       `INSERT INTO card (id, deck_id, subdeck_id, term, meaning, tags, audio_ref, created_at, updated_at)

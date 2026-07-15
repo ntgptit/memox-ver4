@@ -92,6 +92,9 @@ class FakeSrsRepo implements SrsStateRepository {
         .filter((s): s is SrsState => s !== undefined && isDue(s, now)),
     );
   }
+  async dueCountByDeck() {
+    return ok(new Map<string, number>());
+  }
   async save(s: SrsState) {
     this.items.set(s.cardId, s);
     return ok(s);

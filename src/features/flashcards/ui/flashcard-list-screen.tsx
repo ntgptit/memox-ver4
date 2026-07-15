@@ -164,7 +164,14 @@ export function FlashcardListScreen({
       <StatusCardRow term={c.term} meaning={c.meaning} status={c.status} hidden={c.hidden} tightTerm clampMeaning />
     </MxCard>
   );
-  const cardList = (arr: readonly FlashcardView[]) => <MxList>{arr.map(cardRow)}</MxList>;
+  // 11.5: the card list is unbounded (large decks), so loaded modes hand it to
+  // AppScreen's virtualized body instead of eagerly mounting every row.
+  const cardBody = (arr: readonly FlashcardView[], header: React.ReactNode) => ({
+    data: arr,
+    renderItem: ({ item, index }: { item: FlashcardView; index: number }) => cardRow(item, index),
+    keyExtractor: (c: FlashcardView) => c.id,
+    header,
+  });
 
   // ---- loading ------------------------------------------------------------------
   if (data.status === 'loading') {
@@ -230,16 +237,24 @@ export function FlashcardListScreen({
             node="flashcard-list/search-clear"
           />
         }
+        body={
+          noResults
+            ? undefined
+            : cardBody(
+                hits,
+                <>
+                  {filterRow}
+                  <SectionLabel uppercase>Cards</SectionLabel>
+                </>,
+              )
+        }
       >
-        {filterRow}
         {noResults ? (
-          <EmptyState node="flashcard-list/no-results" icon="search_off" tone="warning" title="No cards found" text={`Nothing matched “${query}”. Try another term.`} />
-        ) : (
           <>
-            <SectionLabel uppercase>Cards</SectionLabel>
-            {cardList(hits)}
+            {filterRow}
+            <EmptyState node="flashcard-list/no-results" icon="search_off" tone="warning" title="No cards found" text={`Nothing matched “${query}”. Try another term.`} />
           </>
-        )}
+        ) : null}
       </AppScreen>
     );
   }
@@ -270,14 +285,14 @@ export function FlashcardListScreen({
             <MxIconButton icon="more_vert" size="sm" accessibilityLabel="More actions" onPress={() => setMode('browse')} node="flashcard-list/sel-more" />
           </>
         }
-      >
-        <SectionLabel uppercase>Cards</SectionLabel>
-        <MxList>
-          {cards.map((c, i) => {
+        body={{
+          data: cards,
+          keyExtractor: (c: FlashcardView) => c.id,
+          header: <SectionLabel uppercase>Cards</SectionLabel>,
+          renderItem: ({ item: c, index: i }: { item: FlashcardView; index: number }) => {
             const sel = selectedIds.has(c.id);
             return (
               <MxCard
-                key={c.id}
                 padding="sm"
                 interactive
                 variant={sel ? 'primary-soft' : 'elevated'}
@@ -297,9 +312,9 @@ export function FlashcardListScreen({
                 </View>
               </MxCard>
             );
-          })}
-        </MxList>
-      </AppScreen>
+          },
+        }}
+      />
     );
   }
 
@@ -330,21 +345,31 @@ export function FlashcardListScreen({
   // ---- browse (loaded/dense/min/long/offline/filter-applied + overlays) --------------
   const showFilterSummary = filter !== 0;
   return (
-    <AppScreen node="flashcard-list/screen" variant="nested" title={deckTitle} leading={back} actions={nestedActions} fab={fab}>
-      {crumbsAndBanner()}
-      {filterRow}
-      {showFilterSummary ? (
+    <AppScreen
+      node="flashcard-list/screen"
+      variant="nested"
+      title={deckTitle}
+      leading={back}
+      actions={nestedActions}
+      fab={fab}
+      body={cardBody(
+        filtered,
         <>
-          <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>
-            {filtered.length} {FLASHCARD_FILTERS[filter].toLowerCase()} cards
-          </Text>
-          <SectionLabel uppercase>Cards</SectionLabel>
-        </>
-      ) : (
-        cardHead(filtered)
+          {crumbsAndBanner()}
+          {filterRow}
+          {showFilterSummary ? (
+            <>
+              <Text style={[t.font.text({ size: 'sm' }), { color: t.color.textSecondary }]}>
+                {filtered.length} {FLASHCARD_FILTERS[filter].toLowerCase()} cards
+              </Text>
+              <SectionLabel uppercase>Cards</SectionLabel>
+            </>
+          ) : (
+            cardHead(filtered)
+          )}
+        </>,
       )}
-      {cardList(filtered)}
-
+    >
       {overlay === 'add' && (
         <Scrim node="flashcard-list/add-scrim" align="end" onDismiss={() => setOverlay(null)}>
           <Sheet title="Add" node="flashcard-list/add-sheet">

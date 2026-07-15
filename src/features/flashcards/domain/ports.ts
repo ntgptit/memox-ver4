@@ -13,6 +13,8 @@ export interface CardRepository extends Repository<Card>, Observable {
   listByDeck(deckId: string): Promise<Result<Card[]>>;
   /** The deck's maintained card count (for library/deck headers). */
   countByDeck(deckId: string): Promise<Result<number>>;
+  /** Card counts for MANY decks in one read (11.5: the library must not issue one count query per deck). */
+  countByDecks(deckIds: readonly string[]): Promise<Result<ReadonlyMap<string, number>>>;
 }
 
 /** Persistence for a card's additional translations. */

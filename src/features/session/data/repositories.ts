@@ -159,6 +159,17 @@ export class SqliteSrsStateRepository implements SrsStateRepository {
     return ok(rows.map(rowToSrsState));
   }
 
+  async dueCountByDeck(now: number): Promise<Result<ReadonlyMap<string, number>>> {
+    const rows = await this.db.all<{ deck_id: string; due: number }>(
+      `SELECT c.deck_id AS deck_id, COUNT(*) AS due
+         FROM srs_state s JOIN card c ON c.id = s.card_id
+        WHERE s.due_at <= ?
+        GROUP BY c.deck_id`,
+      [now],
+    );
+    return ok(new Map(rows.map((r) => [r.deck_id, r.due])));
+  }
+
   async save(entity: SrsState): Promise<Result<SrsState>> {
     await this.db.run(
       `INSERT INTO srs_state (card_id, due_at, interval, ease, reps, lapses, stage)

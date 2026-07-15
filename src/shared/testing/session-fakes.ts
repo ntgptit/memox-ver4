@@ -29,6 +29,9 @@ export class FakeCardRepo implements CardRepository {
   async countByDeck(): Promise<Result<number, AppError>> {
     return ok(this.cards.length);
   }
+  async countByDecks(deckIds: readonly string[]): Promise<Result<ReadonlyMap<string, number>, AppError>> {
+    return ok(new Map(deckIds.map((id) => [id, this.cards.filter((c) => c.deckId === id).length])));
+  }
   async getById(id: string): Promise<Result<Card, AppError>> {
     const c = this.cards.find((x) => x.id === id);
     return c ? ok(c) : err(notFoundError('Card'));
@@ -98,6 +101,9 @@ export class FakeSrsRepo implements SrsStateRepository {
   }
   async dueCards(): Promise<Result<SrsState[], AppError>> {
     return ok([...this.saved.values()]);
+  }
+  async dueCountByDeck(): Promise<Result<ReadonlyMap<string, number>, AppError>> {
+    return ok(new Map());
   }
   async getById(id: string): Promise<Result<SrsState, AppError>> {
     const s = this.saved.get(id);

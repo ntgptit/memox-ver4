@@ -46,9 +46,13 @@ describe('FlashcardListScreen — state matrix (contract §6)', () => {
     expect(screen.getAllByText('Show more').length).toBeGreaterThan(0);
   });
 
-  it('dense: 16 rows render', () => {
+  it('dense: the first window renders and the tail stays virtualized (11.5)', () => {
     renderState('dense');
-    expect(screen.getByTestId('flashcard-list/card-15')).toBeTruthy();
+    expect(screen.getByTestId('flashcard-list/card-0')).toBeTruthy();
+    expect(screen.getByTestId('flashcard-list/card-11')).toBeTruthy();
+    // Row 16 is beyond the initial window — the virtualized body must NOT
+    // eagerly mount every card of a large deck.
+    expect(screen.queryByTestId('flashcard-list/card-15')).toBeNull();
   });
 
   it('minimum-data: a single short card renders with the aggregate', () => {

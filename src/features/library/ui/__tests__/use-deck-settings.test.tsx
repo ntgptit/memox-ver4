@@ -74,6 +74,9 @@ class FakeCardRepo implements CardRepository {
   async countByDeck(): Promise<Result<number, AppError>> {
     return ok(this.cards.length);
   }
+  async countByDecks(deckIds: readonly string[]): Promise<Result<ReadonlyMap<string, number>, AppError>> {
+    return ok(new Map(deckIds.map((id) => [id, this.cards.length])));
+  }
   async getById(): Promise<Result<Card, AppError>> {
     return ok(this.cards[0]);
   }

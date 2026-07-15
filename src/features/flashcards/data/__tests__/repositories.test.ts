@@ -136,6 +136,29 @@ describe('FK cascade + translations (WBS 4.2)', () => {
   });
 });
 
+describe('batched counts (WBS 11.5 — no per-deck query)', () => {
+  it('countByDecks returns every requested deck in ONE read, skipping ghosts', async () => {
+    await db.run(
+      'INSERT INTO deck (id, title, language_pair_id, organisation, created_at, updated_at) VALUES (?,?,?,?,?,?)',
+      ['d2', 'Verbs', 'lp1', 'cards', 1, 1],
+    );
+    await cards.save(card('c1', 'hola'));
+    await cards.save(card('c2', 'adiós'));
+    const r = await cards.countByDecks(['d1', 'd2', 'ghost']);
+    expect(isOk(r)).toBe(true);
+    if (isOk(r)) {
+      expect(r.value.get('d1')).toBe(2);
+      expect(r.value.get('d2')).toBe(0);
+      expect(r.value.has('ghost')).toBe(false);
+    }
+  });
+
+  it('countByDecks on an empty id set returns an empty map', async () => {
+    const r = await cards.countByDecks([]);
+    expect(isOk(r) && r.value.size).toBe(0);
+  });
+});
+
 function translation(id: string, cardId: string, text: string): CardTranslation {
   return { id, cardId, text, position: 0 };
 }

@@ -12,7 +12,7 @@ import { createFlashcardRepositories } from '@/features/flashcards/data';
 import { createSessionRepositories } from '@/features/session/data';
 
 import { LibraryScreen } from './library-screen';
-import { useLibrary, makeCountDueByDeck, type LibraryDeps } from './use-library';
+import { useLibrary, type LibraryDeps } from './use-library';
 
 export interface LibraryContainerProps {
   onOpenDeck?: (id: string) => void;
@@ -35,22 +35,18 @@ export function LibraryContainer(props: LibraryContainerProps) {
             const r = await lib.decks.list();
             return isErr(r) ? [] : r.value;
           },
-          listSubdecksByDeck: async (deckId) => {
-            const r = await lib.subdecks.listByDeck(deckId);
+          listAllSubdecks: async () => {
+            const r = await lib.subdecks.list();
             return isErr(r) ? [] : r.value;
           },
-          countCardsByDeck: async (deckId) => {
-            const r = await flash.cards.countByDeck(deckId);
-            return isErr(r) ? 0 : r.value;
+          countCardsByDecks: async (deckIds) => {
+            const r = await flash.cards.countByDecks(deckIds);
+            return isErr(r) ? new Map() : r.value;
           },
-          countDueByDeck: makeCountDueByDeck({
-            listCardIdsByDeck: async (deckId) => {
-              const r = await flash.cards.listByDeck(deckId);
-              return isErr(r) ? [] : r.value.map((c) => c.id);
-            },
-            dueCards: (ids, now) => session.srs.dueCards(ids, now),
-            now: systemClock,
-          }),
+          countDueByDecks: async () => {
+            const r = await session.srs.dueCountByDeck(systemClock());
+            return isErr(r) ? new Map() : r.value;
+          },
         });
       },
     );
