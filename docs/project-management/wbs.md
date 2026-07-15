@@ -197,6 +197,26 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 
 ---
 
+## 12. Navigation & Interaction Test Suite
+
+Source: the 2026-07-15 navigation audit (`docs/reports/navigation-audit-2026-07-15.md`, tooling `tool/nav_audit/`). The parity gate proves screens LOOK right; this section proves the app WIRES right. Standing rules for every 12.x test row: (a) buttons deep in child screens are reached through the SAME path a user would take, over seeded data — deep links are allowed only as bug-workaround assertions until the blocking fix lands; (b) every back control (app-bar back, cancel, browser/hardware back) is in scope and must return to the exact parent state; (c) every dialog/sheet is asserted to OPEN and to CLOSE via each of its close affordances (action button, Cancel, scrim); (d) destructive confirms are verified against the DB (confirm mutates, cancel does not).
+
+| ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 12.1 | Fix: create-deck flow | Wire the domain `createDeck` use case into `/deck/new/content` (audit P0-1: every Create-deck button dead-ends on deck id `new`) | deck-content-choice | 3.1, 3.6 | Specified | P0 | No | From a fresh install, Create deck (dashboard, library empty-state, library create-sheet) produces a real named deck via `createDeck` and lands on its content screen; with NO language pair yet, the flow routes to add-pair instead of erroring; the nav-audit `BUG?` step flips to a positive assertion | Audit defect 1; `src/features/library/ui/use-deck-content-choice.ts` | Opus | TBD |
+| 12.2 | Fix: study-hub child navigation | Hub rows push `/settings/study?screen=…` — a same-pathname query-only push expo-router web swallows (audit P0-2) | settings | 10.1 | Specified | P0 | Yes | Word display / SRS / Mode / Voice each open from a real hub-row press (own child pathnames or a params-object push); back returns to the hub; existing deep links keep working; the four `BUG?` steps flip | Audit defect 2; `src/app/settings/study.tsx` | Opus | TBD |
+| 12.3 | Fix: session stage-2 match input | `StudySessionScreen` feeds tiles `onPickTile`, container only passes `onPickOption` — stage 2 unanswerable (audit P0-3) | study-session | 5.5 | Specified | P0 | No | Match tiles answer stage 2 (correct grades `good`, wrong grades `again` + relearn tail); a full 5-stage session is completable end-to-end to the result screen; the `BUG?` step flips | Audit defect 3; `src/features/session/ui/study-session-container.tsx` | Opus | TBD |
+| 12.4 | Fix: card-editor deck context | `/card/new` is pushed WITHOUT `deckId` from every entry point, editor falls back to a fixture deck name and Save fails validation after the form is filled (audit P1-4) | flashcard-editor | 4.4, 12.1 | Specified | P1 | Yes | Every Add-card entry passes its real deck context (`deckId` + `subdeckId` from the cards screen); entry points with no deck in context resolve one explicitly (picker or default) or hide the action; Save from each entry persists into the correct deck (asserted in DB) | Audit defect 4; `src/app/deck/[deckId]/cards.tsx` and sibling entries | Opus | TBD |
+| 12.5 | Nav-test harness + data seeding | Promote `tool/nav_audit` to a first-class suite (`npm run test:nav`): deterministic DB seeding so deep screens are reachable through real user paths | all | 0.5, 4.2, 5.2, 2.6 | Specified | P0 | No | One command exports/serves the web build and runs the Playwright suite headless with a CI exit code; a deterministic seed (language pairs, decks incl. a subdeck tree, cards with new/due/mastered SRS states, session history) is injected before the run; per-step PASS/FAIL report retained; `BUG?` assertions documented as flip-on-fix | `tool/nav_audit/{static,run}.mjs` (baseline 53/53) | Opus | TBD |
+| 12.6 | Nav tests: shell & tabs | Tab bar, root app bars, stack back behaviour | app shell | 12.5 | Specified | P1 | Yes | All 4 tabs switch in both directions with state preserved per tab; browser/hardware back from every pushed screen returns to its exact parent (asserted per stack); +not-found renders and recovers; root-bar controls asserted (search opens `/search`; bell asserted once 12.11 decides it) | 11.4 harness + 12.5 suite | Opus | TBD |
+| 12.7 | Nav tests: content tree | Library → deck → subdeck → flashcard-list drill-down + every content overlay | library, subdeck-list, deck-settings | 12.1, 12.5 | Specified | P1 | No | Drill-down over the seeded tree with back at EVERY level returning to the parent state; library create/filter sheets, subdeck create/actions sheets and all four deck-settings overlays (rename, move, reset, delete) each open AND close via button, Cancel and scrim; delete/reset confirm mutates the DB, cancel does not | 12.5 suite | Opus | TBD |
+| 12.8 | Nav tests: card flows | Editor entry/exit from every source + card actions + search chain | flashcard-editor, flashcard-list, search | 12.4, 12.5 | Specified | P1 | No | Editor reached from deck cards, subdeck cards, dashboard, library and mode-picker with the right deck context; Save, keep-adding and Cancel each return to the correct screen; card-actions paths (edit → editor → back; delete → dialog → confirm removes the row, cancel keeps it); search → result → editor → back chain | 12.5 suite | Opus | TBD |
+| 12.9 | Nav tests: study flows | Mode-picker, all 5 modes, full 5-stage session, exit dialog, player, result | mode-picker, study-session, all modes, player, study-result | 12.3, 12.5 | Specified | P0 | No | Scope sheet opens, picks and dismisses; each of the 5 modes entered from mode-picker over seeded due cards and exited via back mid-round; ONE full 5-stage session completed through every stage to the result screen and back to the deck; exit dialog asserted for both Stay and Leave mid-session; player transport (play, pause, next, prev, speed) plus back; result finalize-retry path | 12.5 suite | Opus | TBD |
+| 12.10 | Nav tests: settings & tools | Settings tree, pickers, import/export journeys, reminders, theme | settings, import, export, reminder, theme | 12.2, 12.5 | Specified | P1 | No | Every settings root row navigates and backs; hub children via real presses; words-per-round picker and reminder time-picker open, commit and dismiss (scrim + Done) with the committed value visible after reload; theme change survives reload; import journey over the seeded deck incl. the dup-warning branch (seed duplicate terms) through done → Back to deck; export config → done with Share/Save present; back asserted mid-flow in both journeys | 12.5 suite | Opus | TBD |
+| 12.11 | Dead controls: wire or remove | Move card, Hide card, subdeck Rename/Move/Delete, Import subdecks, dashboard bell (audit P1-5..7) | flashcard-list, subdeck-list, dashboard | Product decision | Blocked | P2 | Yes | Each control is either wired to a real flow (new WBS rows if screens are needed) or removed/hidden with a documented kit divergence; until decided the audit records them as known no-ops and 12.6–12.8 assert the documented behaviour | Audit defects 5–7; human product decision on wire-vs-remove | Opus + Human | TBD |
+
+---
+
 ## Vertical Slice Quality Ownership
 
 Quality is **not** deferred to Wave 11. Each screen slice (sections 3–10) owns its own quality work and adds it in the slice's own PR:
@@ -428,14 +448,14 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 ## Status Summary
 
-67 work packages total (0.13 and 2.6 added).
+78 work packages total (0.13 and 2.6 added; section 12 — navigation & interaction test suite — added from the 2026-07-15 audit).
 
 | Status | Count |
 |---|---:|
 | Implemented | 62 |
 | Partial | 0 |
-| Specified | 0 |
-| Blocked | 5 |
+| Specified | 10 |
+| Blocked | 6 |
 | Future | 0 |
 | Deprecated | 0 |
 
