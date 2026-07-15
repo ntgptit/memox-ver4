@@ -175,7 +175,7 @@ Every token in a **Dependencies** cell is either a **WBS id** (`N.N`) or a **cap
 
 | ID | Work package | Scope | UI-kit mapping | Dependencies | Status | Priority | Parallel | Acceptance criteria | Evidence/Source | Owner | Commit |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| 10.1 | Settings hub slice | `settings`: navigation hub + study sub-screens (word-display/SRS/mode/voice) + value-picker | settings (loaded, study-hub, study-worddisplay, study-srs, study-mode, study-voice, value-picker) | 2.3, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Blocked | P1 | No | All 7 states; sub-settings persist + feed study behavior; value-picker; voice gated on DEP-TTS; visual parity | `.../specs/settings.md`, `.../shots/settings--*.png` | Opus + Design | TBD |
+| 10.1 | Settings hub slice | `settings`: navigation hub + study sub-screens (word-display/SRS/mode/voice) + value-picker | settings (loaded, study-hub, study-worddisplay, study-srs, study-mode, study-voice, value-picker) | 2.3, 5.2, 1.5, 1.7, DEP-TTS, 2.6 | Implemented | P1 | No | All 7 states; sub-settings persist + feed study behavior; value-picker; voice gated on DEP-TTS; visual parity | `src/features/settings/ui/{settings-screen,settings-container,use-settings,settings-fixtures}.tsx/ts` + `src/features/settings/data/study-settings.ts` (typed StudySettings over the app_setting repo — restart-safe, shape-validated, corrupt JSON → kit defaults) + shared `ProfileCard`/`SelectSheet` composites (kit `_shared`); root = the Profile tab (`src/app/(tabs)/profile.tsx` — profile card · STUDY entry · APP rows routing to theme/reminders/export; Backup awaits 10.3), hub + children on `src/app/settings/study.tsx?screen=`; words-per-round ValuePickerSheet persists via the value-picker; **feeds study behavior**: the 5.5 study-session container decorates its card repo with a Fisher-Yates order when `shuffle` is on; voice screen persists tts/stt (DEP-TTS Approved); icon subset +`circle` (126 glyphs); tests (persistence defaults/corrupt/round-trip, controller load/toggle-persists-whole-config/picker-commit, screen 7-state matrix + interactions, a11y switch labels/selection/AA); goldens `settings--*.png` — all 7 states + dark < 3% vs kit (parity gate, max 2.31%) | Opus + Design | TBD |
 | 10.2 | Account & sync slice | `account-sync`: sign-in + cloud sync states signed-out/in/syncing/conflict/offline | account-sync (5 states) | 5.5, 7.4, DEP-AUTH, DEP-CLOUD, 2.6 | Blocked | P2 | No | All 5 states; the 5-stage study session works (5.5) and session finalization + SRS update work (7.4) before this starts — account/sync must not begin before a usable learning flow; sign-in gated on DEP-AUTH; conflict resolution defined | `.../specs/account-sync.md`, `.../shots/account-sync--*.png` | Opus + Human | TBD |
 | 10.3 | Backup & restore | Local backup export + restore import; cloud backup gated on approved provider | account-sync, settings | 4.2, 5.2, 5.5, 7.4, DEP-FILE-PICKER, DEP-FILE-SHARING, DEP-CLOUD, 2.6 | Blocked | P2 | No | Local backup export; local restore import; restore validation before write; backup/restore round-trips losslessly; must not begin before a usable learning flow (5.5 + 7.4); cloud backup only runs when DEP-CLOUD is approved | `.../specs/account-sync.md`; Dependency Approval Register | Opus + Human | TBD |
 
@@ -429,10 +429,10 @@ Newest first. Update on every merged slice with the actual squash-merge hash and
 
 | Status | Count |
 |---|---:|
-| Implemented | 59 |
+| Implemented | 60 |
 | Partial | 0 |
 | Specified | 1 |
-| Blocked | 7 |
+| Blocked | 6 |
 | Future | 0 |
 | Deprecated | 0 |
 

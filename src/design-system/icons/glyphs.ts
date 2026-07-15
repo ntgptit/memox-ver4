@@ -26,6 +26,7 @@ export const GLYPHS = {
   check_circle: '\uf0be',
   chevron_left: '\ue5cb',
   chevron_right: '\ue5cc',
+  circle: '\uef4a',
   close: '\ue5cd',
   cloud_done: '\ue2bf',
   cloud_off: '\ue2c1',

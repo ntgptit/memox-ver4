@@ -306,6 +306,19 @@ const TARGETS = [
   },
   { name: 'export--done--light', path: '/settings/export?state=done', waitFor: 'text=Exported 320 cards' },
   { name: 'export--config--dark', path: '/settings/export?state=config&theme=dark', waitFor: 'text=Include review state' },
+  // settings (WBS 10.1) — root/value-picker preview on the profile tab, study screens on /settings/study.
+  { name: 'settings--loaded--light', path: '/profile?state=loaded', waitFor: 'text=Study settings' },
+  { name: 'settings--study-hub--light', path: '/settings/study?state=study-hub', waitFor: 'text=Language pairs' },
+  {
+    name: 'settings--study-worddisplay--light',
+    path: '/settings/study?state=study-worddisplay',
+    waitFor: 'text=Color by gender',
+  },
+  { name: 'settings--study-srs--light', path: '/settings/study?state=study-srs', waitFor: 'text=Leitner boxes' },
+  { name: 'settings--study-mode--light', path: '/settings/study?state=study-mode', waitFor: 'text=Words per round' },
+  { name: 'settings--study-voice--light', path: '/settings/study?state=study-voice', waitFor: 'text=Text-to-speech' },
+  { name: 'settings--value-picker--light', path: '/profile?state=value-picker', waitFor: 'text=10 words' },
+  { name: 'settings--loaded--dark', path: '/profile?state=loaded&theme=dark', waitFor: 'text=Study settings' },
 ];
 
 const MIME = {

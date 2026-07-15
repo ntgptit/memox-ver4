@@ -8,10 +8,40 @@ import { useEffect, useState } from 'react';
 
 import { createFlashcardRepositories } from '@/features/flashcards/data';
 import { createSessionRepositories } from '@/features/session/data';
+import { createSettingsRepository, loadStudySettings } from '@/features/settings/data';
+import type { CardRepository } from '@/features/flashcards/domain';
+import { isErr, ok } from '@/shared';
 import { randomId, systemClock } from '@/shared/runtime';
 
 import { StudySessionScreen } from './study-session-screen';
 import { useStudySession, type StudySessionDeps, type StudySessionMode } from './use-study-session';
+
+/**
+ * Study-settings behavior (WBS 10.1): with `shuffle` on, the deck's cards enter
+ * the session in a randomized order — a thin decorator over the card repo so
+ * the orchestrator stays unchanged.
+ */
+function withShuffle(cards: CardRepository): CardRepository {
+  return {
+    ...cards,
+    getById: (id) => cards.getById(id),
+    list: () => cards.list(),
+    save: (c) => cards.save(c),
+    remove: (id) => cards.remove(id),
+    countByDeck: (deckId) => cards.countByDeck(deckId),
+    subscribe: (onChange) => cards.subscribe(onChange),
+    async listByDeck(deckId) {
+      const r = await cards.listByDeck(deckId);
+      if (isErr(r)) return r;
+      const out = [...r.value];
+      for (let i = out.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [out[i], out[j]] = [out[j], out[i]];
+      }
+      return ok(out);
+    },
+  };
+}
 
 export function StudySessionContainer({
   deckId,
@@ -29,10 +59,14 @@ export function StudySessionContainer({
 
   useEffect(() => {
     let alive = true;
-    void Promise.all([createFlashcardRepositories(), createSessionRepositories()]).then(([flash, session]) => {
+    void Promise.all([
+      createFlashcardRepositories(),
+      createSessionRepositories(),
+      createSettingsRepository().then(loadStudySettings),
+    ]).then(([flash, session, study]) => {
       if (alive) {
         setDeps({
-          cards: flash.cards,
+          cards: study.shuffle ? withShuffle(flash.cards) : flash.cards,
           sessions: session.sessions,
           attempts: session.attempts,
           srs: session.srs,

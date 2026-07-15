@@ -22,6 +22,8 @@ export { StatusCardRow, type StatusCardRowProps, type CardStatus as StatusCardSt
 export { ProgressBar, type ProgressBarProps } from './ProgressBar';
 export { Note, type NoteProps, type NoteTone } from './Note';
 export { ActionCallout, type ActionCalloutProps, type ActionCalloutTone } from './ActionCallout';
+export { ProfileCard, type ProfileCardProps } from './ProfileCard';
+export { SelectSheet, type SelectSheetProps, type SelectSheetOption } from './SelectSheet';
 export { Stat, type StatProps } from './Stat';
 export { Spinner, type SpinnerProps } from './Spinner';
 export { Ring, type RingProps } from './Ring';

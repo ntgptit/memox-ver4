@@ -6,3 +6,4 @@
 export * from './settings-repository';
 export * from './theme-settings';
 export * from './reminder-settings';
+export * from './study-settings';
