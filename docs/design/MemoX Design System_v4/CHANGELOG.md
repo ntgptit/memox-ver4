@@ -96,6 +96,19 @@ there is no separate "Subdeck" object. A "subdeck" is only a Deck one level down
   `library` + `subdeck-list` into one screen, then re-baseline against `library--nested-*` and
   retire the `subdeck-list--*` shots. See `tool/parity/REMAINING-DIVERGENCES.md`.
 
+### Changed — flat app bar, no elevate-on-scroll (2026-07-17) [value]
+`MxContextualAppBar` no longer changes colour or gains a surface / divider / shadow when the body
+scrolls. root/nested/search now use **one flat background = the screen colour** (`--memox-bg`) at
+every scroll position — `top` and `scrolled` render identically, so the safe area, bar and body
+read as a single unbroken block in both light and dark. Only `selection` / `modal` keep a surface
++ hairline (they are transient MODE bars, not scroll states).
+- `components.css`: `.cappbar` background = `--memox-bg`; `.cappbar--top`/`--scrolled` flat with a
+  transparent bottom border; a new `.cappbar--selection`/`--modal` rule carries the mode surface +
+  divider; the notification-badge ring keys off `.cappbar--root` (always the flat bg).
+- The `collapsed` prop is retained only to pin gallery states — it has no visual effect now.
+- Value-only: no token / `Mx*` / class / `data-mx-node` id changed. Only `app-bar--root-scrolled`
+  re-baselined (it now matches `root-top`); all other shots are pixel-unchanged.
+
 ### Notes
 - The audit batch is additive/doc/asset changes; the Deck-model workstream is additive to the
   frozen contract (see above). No consumer migration required; no token/`Mx*`/class/

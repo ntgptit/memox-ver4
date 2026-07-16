@@ -1,15 +1,16 @@
 import type { ReactNode } from 'react';
 
 export type MxContextualAppBarVariant =
-  | 'root'        // tab destination: left title + actions/notification/avatar (elevate-on-scroll)
-  | 'nested'      // detail screen: back + title + actions (elevate-on-scroll)
-  | 'search'      // search mode: back + filled search field + clear (elevate-on-scroll)
-  | 'selection'   // selection mode: close + "N selected" + selection actions
-  | 'modal';      // full-screen form/task: close + centered title + primary action
+  | 'root'        // tab destination: left title + actions/notification/avatar (flat, no scroll change)
+  | 'nested'      // detail screen: back + title + actions (flat, no scroll change)
+  | 'search'      // search mode: back + filled search field + clear (flat, no scroll change)
+  | 'selection'   // selection MODE bar: close + "N selected" + selection actions (surface + hairline)
+  | 'modal';      // full-screen form/task MODE bar: close + centered title + primary action (surface + hairline)
 
 export interface MxContextualAppBarProps {
   variant?: MxContextualAppBarVariant;
-  /** root/nested/search only. `undefined` = elevate automatically on scroll; boolean pins the state. */
+  /** root/nested/search only. Retained to pin gallery states; it NO LONGER changes the bar visually
+   *  (top == scrolled — the bar is flat at every scroll position). */
   collapsed?: boolean;
   /** Destination / nested title (single line, truncates). Centered in the `modal` variant. */
   title?: string;
@@ -30,8 +31,9 @@ export interface MxContextualAppBarProps {
 }
 
 /**
- * The one app bar — a minimal Material-3 top bar at a single 56px height. Base class `cappbar`.
- * Variants root/nested/search elevate on scroll (transparent at top → surface + hairline divider).
+ * The one app bar — a minimal top bar at a single 56px height. Base class `cappbar`.
+ * Variants root/nested/search are FLAT: one background = the screen colour, no surface/divider/shadow
+ * on scroll (top == scrolled). selection/modal are mode bars carrying a surface + hairline.
  *
  * Accessibility contract:
  * - Reading / focus order: leading nav → title → actions → notification → avatar.
@@ -39,7 +41,7 @@ export interface MxContextualAppBarProps {
  * - Every icon-only action has an aria-label; the notification label announces unread count
  *   ("Notifications, 3 unread"); the selection count uses role="status".
  * - Foreground/divider/badge use theme tokens meeting >=4.5:1 for text.
- * - Reduced motion: the top→scrolled swap fades only (no translation); honours
- *   prefers-reduced-motion.
+ * - The bar background does not animate on scroll (root/nested/search are flat); only the title
+ *   fade-in honours prefers-reduced-motion.
  */
 export function MxContextualAppBar(props: MxContextualAppBarProps): JSX.Element;

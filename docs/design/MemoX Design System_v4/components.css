@@ -87,16 +87,23 @@
   padding: 0 var(--memox-gutter);          /* same horizontal grid as content */
   color: var(--memox-text);
   flex-shrink: 0;
+  /* ONE flat colour = the screen background, opaque so scrolling content can't show through.
+     No divider by default. The bar does NOT change colour or gain a surface/shadow on scroll —
+     the top edge (safe area), the bar and the body read as a single unbroken block. */
+  background: var(--memox-bg);
   border-bottom: var(--memox-stroke-hairline) solid transparent;
-  transition: background var(--memox-duration-base) var(--memox-ease-standard),
-    border-color var(--memox-duration-base) var(--memox-ease-standard);
 }
-/* State A — at top: blends into the screen hero, no surface/divider */
-.cappbar--top {
-  background: transparent;
-}
-/* State B — scrolled/collapsed: surface + subtle divider so content can't show through */
+/* root / nested / search — seamless at every scroll position: `top` and `scrolled` render
+   IDENTICALLY (same flat background, no divider). There is no elevate-on-scroll transition. */
+.cappbar--top,
 .cappbar--scrolled {
+  background: var(--memox-bg);
+  border-bottom-color: transparent;
+}
+/* selection & modal — deliberate mode bars, not scroll states: a surface + hairline separates
+   the transient mode chrome from the content below. These never toggle on scroll. */
+.cappbar--selection,
+.cappbar--modal {
   background: var(--memox-surface);
   border-bottom-color: var(--memox-divider);
 }
@@ -162,7 +169,9 @@
   border: var(--memox-stroke-emphasis) solid var(--memox-surface); /* rings the badge off the bell */
   pointer-events: none;
 }
-.cappbar--top .cappbar__badge {
+/* the notification bell lives only on the root bar, which is always the flat screen bg —
+   ring the badge with that same colour at every scroll position */
+.cappbar--root .cappbar__badge {
   border-color: var(--memox-bg);
 }
 .cappbar__badge--dot {
