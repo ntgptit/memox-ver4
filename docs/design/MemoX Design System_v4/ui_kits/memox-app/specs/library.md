@@ -6,7 +6,7 @@
 
 ## Objective (contract §1)
 
-Browse and manage the deck library.
+Browse and manage decks at any level: the library root (parentId null) and the decks nested inside a deck.
 
 Primary CTA: **Create deck**
 
@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.DeckCard`
+`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.DeckCard`, `window.SubdeckList`
 
-## State matrix (contract §6) — 12 states, each rendered light + dark
+## State matrix (contract §6) — 27 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -40,6 +40,21 @@ composition; the component map below is the authoritative set of pieces in play.
 | 10 | `selection` |
 | 11 | `loading` |
 | 12 | `offline` |
+| 13 | `nested-loaded` |
+| 14 | `nested-dense` |
+| 15 | `nested-deep` |
+| 16 | `nested-empty` |
+| 17 | `nested-search` |
+| 18 | `nested-no-results` |
+| 19 | `nested-selection` |
+| 20 | `nested-create-sheet` |
+| 21 | `nested-subdeck-actions` |
+| 22 | `nested-long-menu` |
+| 23 | `nested-play` |
+| 24 | `nested-loading` |
+| 25 | `nested-offline` |
+| 26 | `nested-error` |
+| 27 | `nested-not-found` |
 
 ## Handoff notes
 

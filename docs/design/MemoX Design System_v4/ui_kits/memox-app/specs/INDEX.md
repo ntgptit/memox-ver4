@@ -9,8 +9,7 @@
 | ID | Screen | Spec file | States |
 | --- | --- | --- | --- |
 | dashboard | Today | `dashboard.md` | 8 |
-| library | Library | `library.md` | 12 |
-| subdeck-list | Nested Decks | `subdeck-list.md` | 15 |
+| library | Library | `library.md` | 27 |
 | flashcard-list | Flashcard List | `flashcard-list.md` | 16 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
@@ -34,4 +33,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 25 screens · 170 states.
+Total: 24 screens · 170 states.

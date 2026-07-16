@@ -25,9 +25,31 @@ allowlisted:
 | --- | --- | --- |
 | `deck-content-choice--default` (light + dark) | ~3.3–3.5 | Kit reads "Organise with nested decks" (unified model) while the app still says "subdecks"; the branch kit is also the pre-rework single-state screen vs the app's reworked create-deck flow (`deck-content-choice--named` is an app-only baseline). Chrome + choice-card anatomy match; copy + state model differ. **Follow-up:** align the app's create-deck copy to the unified Deck model, then drop this allowlist entry. |
 
-Frozen contract kept stable per AGENTS.md golden rule: the `subdeck-list` screen id, group
-`SubdeckList`, and all `subdeck-*` / `subdeck-list/*` `data-mx-node` ids are unchanged (the app
-maps onto them). Only display copy, fixtures and internal component file names changed.
+Frozen contract kept stable per AGENTS.md golden rule: the group `SubdeckList` and all
+`subdeck-*` / `subdeck-list/*` `data-mx-node` ids are unchanged (the app maps onto them). Only
+display copy, fixtures and internal component file names changed.
+
+### One screen for every deck level (kit leads the app)
+
+Because a nested deck IS a Deck (just `parentId != null`), the kit now models **one deck-list
+screen** — `library` — for every level, instead of two. The library screen renders the root
+(`parentId: null`, bottom-nav tab) directly and **delegates its `nested-*` states** to the same
+`SubdeckList` render module (a deck's child decks: pushed chrome, back + breadcrumb + Deck
+Settings). The `subdeck-list` **registry/spec screen entry was retired** (folded into `library`);
+its render module, `SubdeckList` group and every `subdeck-list/*` node id are **kept frozen** — the
+delegation renders those exact node ids, so no app-mapping identifier moved.
+
+Kit ↔ app screen-count divergence (app alignment tracked):
+
+| Concern | Kit (now) | App (still) |
+| --- | --- | --- |
+| Deck list | **1** screen `library` (root + `nested-*`) | **2** screens `library` + `subdeck-list` |
+| Parity refs | `library--nested-*` shots (kit-only, no app baseline yet) | `subdeck-list--*` baselines still diff the **frozen** `subdeck-list--*` kit shots (kept) — all ≤ 3% |
+
+The frozen `subdeck-list--*` kit shots are retained precisely so the app's still-present
+subdeck-list screen keeps a real parity reference until the app merges its two screens. **Follow-up:**
+collapse the app's `library` + `subdeck-list` into one screen, re-baseline its goldens against
+`library--nested-*`, then retire the `subdeck-list--*` shots.
 
 ## Accepted residual (below 3%, no action)
 
@@ -41,3 +63,8 @@ band-by-band with pixel measurements, not by eye.
 - `deck-content-choice--named` and `shell-dashboard--loaded` have no
   same-named kit reference shot; they are listed by the report but cannot
   be scored. The dashboard is still a placeholder slice (WBS 5.3).
+- `library--nested-*` (15 states × 2 themes) are **kit-only** — the merged
+  library screen's nested mode has no app baseline yet (the app still ships a
+  separate `subdeck-list` screen). They are not scored until the app screen
+  merge lands; the app's `subdeck-list--*` pairs remain scored against the
+  retained frozen kit shots in the meantime.
