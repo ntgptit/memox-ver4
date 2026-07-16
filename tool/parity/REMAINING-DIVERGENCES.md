@@ -47,9 +47,12 @@ Kit ↔ app screen-count divergence (app alignment tracked):
 | Parity refs | `library--nested-*` shots (kit-only, no app baseline yet) | `subdeck-list--*` baselines still diff the **frozen** `subdeck-list--*` kit shots (kept) — all ≤ 3% |
 
 The frozen `subdeck-list--*` kit shots are retained precisely so the app's still-present
-subdeck-list screen keeps a real parity reference until the app merges its two screens. **Follow-up:**
-collapse the app's `library` + `subdeck-list` into one screen, re-baseline its goldens against
-`library--nested-*`, then retire the `subdeck-list--*` shots.
+subdeck-list screen keeps a real parity reference until the app merges its two screens. They show
+the **pre-chrome-merge** nested design (no controls row / bottom nav), matching the app as shipped;
+the newer `library--nested-*` shots show the merged design where nested mode is **chrome-identical
+to the Library root** (FilterRow + bottom nav, back + breadcrumb). **Follow-up:** collapse the
+app's `library` + `subdeck-list` into one screen with the shared chrome, re-baseline its goldens
+against `library--nested-*`, then retire the `subdeck-list--*` shots.
 
 ## Accepted residual (below 3%, no action)
 

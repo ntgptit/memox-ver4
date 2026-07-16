@@ -79,10 +79,14 @@ there is no separate "Subdeck" object. A "subdeck" is only a Deck one level down
   identifiers). `SCOPE.md` §Domain model documents the contract.
 - **Library is now the ONE deck-list screen for every level.** The `library` screen renders the
   root (`parentId: null`, bottom-nav tab) and **delegates its 15 new `nested-*` states** to the
-  `SubdeckList` render module (a deck's child decks: pushed chrome, back + breadcrumb + Deck
-  Settings). Added `library--nested-*` canonical shots (15 states × light+dark). The
-  `subdeck-list` **registry/spec screen entry was folded into `library`** (its generated
-  `specs/subdeck-list.md` removed).
+  `SubdeckList` render module (a deck's child decks). The nested mode is now **chrome-identical to
+  the root** — same `FilterRow` controls (All decks / Filters / A–Z) and the same bottom nav
+  (passed down from `library`, Library tab active) — differing only by the back button +
+  breadcrumb it adds for navigating up. `FilterRow` gained an additive `prefix` prop so its node
+  ids scope to the host screen (`library/*` at root, `subdeck-list/*` nested). Added
+  `library--nested-*` canonical shots (15 states × light+dark). The `subdeck-list`
+  **registry/spec screen entry was folded into `library`** (its generated `specs/subdeck-list.md`
+  removed).
 - **Frozen contract preserved (golden rule):** the group `SubdeckList`, its render module, and
   every `subdeck-*` / `subdeck-list/*` `data-mx-node` id are **unchanged** — the delegation
   renders those exact ids, so no app-mapping identifier moved. The frozen `subdeck-list--*` kit

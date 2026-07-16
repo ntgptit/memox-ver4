@@ -27,8 +27,12 @@ function Library({ state = 'loaded' }) {
   // decks one level down — same deck-list, pushed chrome (back + breadcrumb + Deck Settings).
   // Reuses the SubdeckList render module (retired as a standalone screen, kept as this screen's
   // nested renderer; its subdeck-list/* node ids stay frozen — app-mapping contract).
-  // state 'nested-<x>' -> SubdeckList state '<x>'.
-  if (state.indexOf('nested-') === 0) return window.SubdeckList({ state: state.slice(7) });
+  // state 'nested-<x>' -> SubdeckList state '<x>'. Pass the SAME bottom nav so the nested
+  // deck list is chrome-identical to the root (library body + bottom-nav) — it differs only
+  // by the back button + breadcrumb the nested renderer adds.
+  if (state.indexOf('nested-') === 0) {
+    return window.SubdeckList({ state: state.slice(7), nav: <MxBottomNav items={NAV} value="library" node="shell/bottom-nav" /> });
+  }
   const LIB = window.MemoXLibrary;
   const { DECKS, DENSE, SUBDECKS, deckMeta, Status, DeckRowCard, FilterRow } = LIB;
   const DeckCard = window.DeckCard, MxList = NS.MxList;
