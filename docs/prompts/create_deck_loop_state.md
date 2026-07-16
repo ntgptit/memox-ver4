@@ -58,3 +58,7 @@ touch ≥44 · long/large/narrow/dark don't break · all canonical states parity
 
 ## Progress log
 - (init) plan written; branch `claude/create-deck-flow-spec` created off main.
+
+## ✅ COMPLETE (all phases A–H)
+Stop condition MET: full `verify:ui-kit` PASS (28 screens / 210 states / 6720 responsive combos, 0 unaccepted findings) + `parity:gate` OK (≤3%, 3 allowlisted). §20 state matrix fully implemented; §22 acceptance satisfied (create ≠ dialog on first run; no Default view; create makes empty deck; content choice after creation; parent≠Add-card; leaf≠Create-nested; global Add-card excludes parents; one primary CTA; input kept after error; narrow/large/long/dark hold).
+New screens: create-deck-firstrun, create-deck-dialog, empty-deck, add-card-target. Modified: flashcard-list (§14 convert), import (§17 parent-target). Retired: deck-content-choice (frozen module+shots kept for app parity). Branch: claude/create-deck-flow-spec. Commits: ff7e0de, 247f7c8, dcd4052, e4569fa, b0cf24b, d2e05b0, 8856022, cf52a3e.
