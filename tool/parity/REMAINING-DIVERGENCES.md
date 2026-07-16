@@ -23,7 +23,7 @@ allowlisted:
 
 | Screen | % | Why |
 | --- | --- | --- |
-| `deck-content-choice--default` (light + dark) | ~3.3–3.5 | Kit reads "Organise with nested decks" (unified model) while the app still says "subdecks"; the branch kit is also the pre-rework single-state screen vs the app's reworked create-deck flow (`deck-content-choice--named` is an app-only baseline). Chrome + choice-card anatomy match; copy + state model differ. **Follow-up:** align the app's create-deck copy to the unified Deck model, then drop this allowlist entry. |
+| `deck-content-choice--default` (light + dark) | ~6 | Kit + app now BOTH ship the reworked create-deck flow (name field + organise radiogroup + one Create CTA). A ~6% residual remains between the kit form and the app screen, and the app has a `deck-content-choice--named` state with no kit counterpart. Not yet diagnosed as pure text/AA vs a real layout/copy gap. **Follow-up:** diagnose the residual (review `tool/parity/out/diff/deck-content-choice--default--*.png`); if it is render-only, re-baseline app_golden against the kit on current `main` and drop this allowlist entry. |
 
 Frozen contract kept stable per AGENTS.md golden rule: the group `SubdeckList` and all
 `subdeck-*` / `subdeck-list/*` `data-mx-node` ids are unchanged (the app maps onto them). Only
