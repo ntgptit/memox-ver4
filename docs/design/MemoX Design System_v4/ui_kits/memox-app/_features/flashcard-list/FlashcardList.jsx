@@ -81,6 +81,25 @@ function FlashcardList({ state = 'loaded' }) {
     );
   }
 
+  /* not-found — the parent deck was deleted/moved on another device while open
+     (KIT-23-02, deleted-entity detail state). Friendly copy + a safe back action;
+     the nested app bar drops search/more since the entity is gone. */
+  // registry-state: not-found
+  if (state === 'not-found') {
+    const goneBar = (
+      <MxContextualAppBar variant="nested" node="flashcard-list/appbar" title="Numbers & counting"
+        actions={<span aria-hidden="true" />} />
+    );
+    return (
+      <MxScaffold node="flashcard-list/screen" appBar={goneBar}>
+        <EmptyState node="flashcard-list/not-found" icon="folder_off" tone="warning"
+          title="This deck no longer exists"
+          text="It may have been deleted or moved on another device. Head back to your library to keep studying."
+          action={<MxButton variant="primary" icon="arrow_back" node="flashcard-list/not-found-back">Back to Library</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   /* search / no-results — CARDS only, placeholder "Search cards" */
   if (state === 'search' || state === 'no-results') {
     const q = state === 'search' ? '하' : 'zzz';

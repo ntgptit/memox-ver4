@@ -16,13 +16,13 @@ Detail
 
 ## Composition map (contract §3)
 
-Top → bottom: **nested MxContextualAppBar** → primary content → primary action (Sign in).
+Top → bottom: **primary MxContextualAppBar** → primary content → primary action (Sign in).
 Exact layout order is owned by the source (`../_features/account-sync/AccountSync.jsx`) and the reference PNGs — read those for pixel
 composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxBadge`, `MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `window.ProfileCard`
+`MxBadge`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `window.KeyboardInset`, `window.ProfileCard`
 
 ## State matrix (contract §6) — 5 states, each rendered light + dark
 

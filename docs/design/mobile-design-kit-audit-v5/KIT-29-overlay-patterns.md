@@ -16,7 +16,7 @@ Audit dialog, sheet, menu, popover và stacking.
   - **Evidence mong đợi:** Sheet stress evidence.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-29-03 — Menu/action sheet có selected, disabled, destructive và overflow rules.**
+- [x] **KIT-29-03 — Menu/action sheet có selected, disabled, destructive và overflow rules.**
   - **Cách kiểm:** VM-04 + VM-05 — render menu states.
   - **Evidence mong đợi:** Menu state matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -47,17 +47,17 @@ Audit dialog, sheet, menu, popover và stacking.
 | KIT-29-05 | `kit-helpers.jsx:107-113` (Scrim); `_features/*` overlay states | FAIL | Kit tĩnh — back đóng overlay trên cùng và focus trở về trigger không được render/document (readme: no navigation logic). Overlay có affordance dismiss (X, Cancel) nhưng focus-return + back-key không được đặc tả. |
 | KIT-29-06 | `kit-helpers.jsx:107-113` (Scrim zIndex 60); toàn bộ overlay states trong `_features/*` | FAIL | Không có approved/forbidden overlay matrix được document. Thực tế mọi fixture chỉ render 1 overlay/lúc (Scrim bọc đúng 1 Sheet hoặc Dialog), no-nesting giữ trong thực hành; chỉ thiếu ma trận liệt kê tường minh. |
 | KIT-29-02 | kit-helpers.jsx Sheet maxHeight 85% + overflow scroll | FIXED | Remediation — audit v5 fix loop. |
-| KIT-29-03 | MenuItem disabled state + long-menu overflow rule not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-29-03 | components/feedback/MxMenu (disabled item) + kit-helpers.jsx MenuItem disabled + long-menu fixture | FIXED | Remediation — audit v5 fix loop. |
 | KIT-29-05 | kit-helpers.jsx Scrim onDismiss + focus-return contract | FIXED | Remediation — audit v5 fix loop. |
 | KIT-29-06 | guidelines/navigation-overlays.md §4 overlay-combination matrix | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
+Final status: PASS
 Open P0: 
 Open P1: 
-Open P2: ISS-KIT-29-03
+Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16

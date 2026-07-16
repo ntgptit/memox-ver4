@@ -143,17 +143,74 @@ function Sheet({ title, children, node }) {
   );
 }
 
-/* Full-width row button inside a Sheet. */
-function MenuItem({ icon, label, tone, danger, trailing, selected, node, onClick }) {
-  const color = danger ? 'var(--memox-error)' : 'inherit';
+/* Full-width row button inside a Sheet.
+   `disabled` (KIT-29-03): an unavailable action — dimmed to muted opacity, the
+   native button `disabled` (clicks blocked, removed from the tab order) plus
+   `aria-disabled` for AT, and a not-allowed cursor. Additive: no existing
+   MenuItem passes `disabled`, so `disabled` stays undefined (React omits the
+   attribute), opacity stays 1 and the cursor stays pointer — pixel-identical to
+   before. For a MENU that can grow past the frame, wrap the items in a
+   <Sheet> (capped at 85% height + own scroll) or a `<MenuList>` (below). */
+function MenuItem({ icon, label, tone, danger, trailing, selected, disabled, node, onClick }) {
+  const color = disabled ? 'var(--memox-text-tertiary)' : danger ? 'var(--memox-error)' : 'inherit';
+  const iconColor = disabled ? 'var(--memox-text-tertiary)' : danger ? 'var(--memox-error)' : (tone || 'var(--memox-text-secondary)');
   // `selected` renders the primary-tinted check; an explicit `trailing` still wins.
   const mark = selected ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : trailing;
   return (
-    <button data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', font: 'inherit', color, padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left' }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: danger ? 'var(--memox-error)' : (tone || 'var(--memox-text-secondary)') }}>{icon}</span>
+    <button data-mx-node={node} onClick={disabled ? undefined : onClick} disabled={disabled || undefined} aria-disabled={disabled ? 'true' : undefined} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : 'pointer', font: 'inherit', color, opacity: disabled ? 'var(--memox-opacity-muted)' : 1, padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: iconColor }}>{icon}</span>
       <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-base)' }}>{label}</span>
       {mark}
     </button>
+  );
+}
+
+/* Scrollable menu container for a LONG menu (KIT-29-03) — caps its height and
+   scrolls its own body so a menu that would exceed the frame can never push its
+   items off-screen or grow taller than the viewport. Parity-safe: only used by
+   new long-menu fixtures; short menus never reach the cap so no scrollbar shows.
+   `max` defaults to 60% of the frame; inside a <Sheet> the Sheet's own 85% cap
+   still applies on top. Additive helper — nothing existing renders it. */
+function MenuList({ children, max = '60vh', node }) {
+  return (
+    <div data-mx-node={node} style={{ maxHeight: max, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
+      {children}
+    </div>
+  );
+}
+
+/* Faux on-screen keyboard inset (KIT-25-04 / KIT-35-01) — a static block sized
+   like the software keyboard, used ONLY by `keyboard-open` fixture states to
+   verify keyboard-avoidance: the sticky SaveBar / primary action is rendered
+   ABOVE this inset (pass both in MxScaffold's bottomNav slot, SaveBar first)
+   so it stays visible and reachable while the keyboard is up. Additive helper —
+   no existing state renders it, so no existing shot changes. Height ~44% of the
+   390×780 frame approximates a portrait phone keyboard. */
+function KeyboardInset({ node }) {
+  const keys = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'];
+  const Key = ({ ch, grow }) => (
+    <div style={{ flex: grow || 1, minWidth: 0, height: 'var(--memox-space-9)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-sm)', boxShadow: 'var(--memox-shadow-sm)', fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text)' }}>{ch}</div>
+  );
+  const row = (from, to, pad) => (
+    <div style={{ display: 'flex', gap: 'var(--memox-space-1)', padding: pad ? '0 var(--memox-space-6)' : 0 }}>
+      {keys.slice(from, to).map((c) => <Key key={c} ch={c} />)}
+    </div>
+  );
+  return (
+    <div data-mx-node={node} aria-hidden="true" style={{ background: 'var(--memox-surface-sunken)', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-safe-area-bottom)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', borderTop: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+      {row(0, 10)}
+      {row(10, 19, true)}
+      <div style={{ display: 'flex', gap: 'var(--memox-space-1)' }}>
+        <Key ch="⇧" grow={1.5} />
+        {keys.slice(19).map((c) => <Key key={c} ch={c} />)}
+        <Key ch="⌫" grow={1.5} />
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--memox-space-1)' }}>
+        <Key ch="123" grow={1.5} />
+        <Key ch="space" grow={5} />
+        <Key ch="return" grow={1.5} />
+      </div>
+    </div>
   );
 }
 
@@ -238,4 +295,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });

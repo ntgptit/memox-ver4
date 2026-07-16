@@ -7,7 +7,11 @@
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink } = NS;
-const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton } = window;
+const { Scrim, Sheet, MenuItem, MenuList, SectionLabel, EmptyState, Skeleton } = window;
+// i18n consumers (KIT-37-06/37-04/20-04) — safe accessors: if the i18n modules
+// are not loaded the fallback returns the exact current literal (parity-neutral).
+const t = (window.MemoXI18n && window.MemoXI18n.t) || ((k, fb) => fb);
+const fmt = window.MemoXFormat || { relativeTime: (v, u) => Math.abs(v) + ' ' + u + (Math.abs(v) === 1 ? '' : 's') + (v < 0 ? ' ago' : '') };
 
 const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ariaLabel={'Study ' + name} />;
 
@@ -62,8 +66,8 @@ function SubdeckList({ state = 'loaded' }) {
         {crumbs()}
         <div data-mx-node="subdeck-list/offline-banner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-card)', background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)' }}>
           <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)' }}>cloud_off</span>
-          <div style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>Offline · showing saved subdecks. Last synced 2 hours ago.</div>
-          <MxLink size="sm" trailingIcon={null} node="subdeck-list/offline-retry">Retry</MxLink>
+          <div style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>{t('subdeck.offline', 'Offline · showing saved subdecks. Last synced 2 hours ago.', { rel: fmt.relativeTime(-2, 'hour') })}</div>
+          <MxLink size="sm" trailingIcon={null} node="subdeck-list/offline-retry">{t('common.retry', 'Retry')}</MxLink>
         </div>
         {subHead(SUBDECKS)}
         {list(SUBDECKS)}
@@ -174,6 +178,56 @@ function SubdeckList({ state = 'loaded' }) {
         {subHead(SUBDECKS)}
         {list(SUBDECKS)}
       </MxScaffold>
+    );
+  }
+
+  /* not-found — the deck was deleted/moved on another device while it was open
+     (KIT-23-02, deleted-entity detail state). Friendly copy + a SAFE back action
+     to the Library (never a dead nested app bar with actions on a gone entity).
+     App bar drops search/more (there is nothing here to search or configure). */
+  // registry-state: not-found
+  if (state === 'not-found') {
+    const goneBar = (
+      <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Korean TOPIK I"
+        actions={<span aria-hidden="true" />} />
+    );
+    return (
+      <MxScaffold node="subdeck-list/screen" appBar={goneBar}>
+        <EmptyState node="subdeck-list/not-found" icon="folder_off" tone="warning"
+          title={t('subdeck.notFound.title', 'This deck no longer exists')}
+          text={t('subdeck.notFound.body', 'It may have been deleted or moved on another device. Head back to your library to keep studying.')}
+          action={<MxButton variant="primary" icon="arrow_back" node="subdeck-list/not-found-back">{t('subdeck.notFound.cta', 'Back to Library')}</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
+  /* long-menu — a subdeck action sheet grown past the frame (KIT-29-03): the
+     Sheet caps at 85% height and its body scrolls; one action ("Move subdeck")
+     is DISABLED (unavailable — this subdeck can't be moved out of a locked
+     parent) to render the MenuItem disabled state. MenuList adds its own cap so
+     the same overflow rule holds outside a Sheet too. */
+  // registry-state: long-menu
+  if (state === 'long-menu') {
+    return (
+      <React.Fragment>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <Scrim align="end" node="subdeck-list/long-menu-scrim">
+          <Sheet title="Greetings & introductions" node="subdeck-list/long-menu-sheet">
+            <MenuList node="subdeck-list/long-menu-list">
+              <MenuItem icon="bolt" label="Study subdeck" node="subdeck-list/lm-study" />
+              <MenuItem icon="edit" label="Rename subdeck" node="subdeck-list/lm-rename" />
+              <MenuItem icon="drive_file_move" label="Move subdeck" disabled node="subdeck-list/lm-move" />
+              <MenuItem icon="content_copy" label="Duplicate subdeck" node="subdeck-list/lm-duplicate" />
+              <MenuItem icon="push_pin" label="Pin to top" node="subdeck-list/lm-pin" />
+              <MenuItem icon="label" label="Manage tags" node="subdeck-list/lm-tags" />
+              <MenuItem icon="ios_share" label="Share subdeck" node="subdeck-list/lm-share" />
+              <MenuItem icon="download" label="Export subdeck" node="subdeck-list/lm-export" />
+              <MenuItem icon="archive" label="Archive subdeck" node="subdeck-list/lm-archive" />
+              <MenuItem icon="delete" label="Delete subdeck" danger node="subdeck-list/lm-delete" />
+            </MenuList>
+          </Sheet>
+        </Scrim>
+      </React.Fragment>
     );
   }
 

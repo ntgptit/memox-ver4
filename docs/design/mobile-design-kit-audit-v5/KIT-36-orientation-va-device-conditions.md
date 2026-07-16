@@ -26,7 +26,7 @@ Audit rotation, extreme size và capability-dependent fallback.
   - **Evidence mong đợi:** Extreme-size report.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-36-05 — Capability-dependent action có unavailable/permission-denied fallback.**
+- [x] **KIT-36-05 — Capability-dependent action có unavailable/permission-denied fallback.**
   - **Cách kiểm:** VM-09 + VM-12 — inspect camera/biometric/haptic examples if in scope.
   - **Evidence mong đợi:** Capability-state matrix.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,10 +46,10 @@ Audit rotation, extreme size và capability-dependent fallback.
 | KIT-36-04 | `shoot.mjs:32` `WIDTHS=[320,360,390,430]` + hOverflow gate (`:204`) + font-scale stress (narrowest × largest, `:41`); `components.css` bottom-nav `min-width:0` fit 320px; `--memox-touch-min:48px` | PASS | Biên hẹp 320px được test + gate chống overflow ngang; touch target ≥48; nội dung cao scroll (overflow-y auto). |
 | KIT-36-05 | `_features/account-sync/components/SyncBlock.jsx:19` offline fallback ("Will sync when you're back online"); nhưng không có permission-denied fallback (notifications/audio) | FAIL | Network-capability degradation có fallback nhưng không có capability-state matrix cho device-permission (camera/biometric/notification) bị từ chối. |
 | KIT-36-06 | readme KNOWN CAVEATS chỉ nêu logo/copy/validation; không có statement portrait-only hay landscape/tablet unsupported | FAIL | Scope phone-portrait là giả định im lặng, không được tài liệu hóa rõ ràng. |
-| KIT-36-01 | components.css scroll + min-height documented; shortest-portrait stress shot pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-36-01 | short-portrait stress note + keyboard-open body scroll; shortest-portrait shot pending CI | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-36-02 | SCOPE.md: landscape unsupported | ACCEPTED | Remediation — audit v5 fix loop. |
 | KIT-36-03 | SCOPE.md: orientation change unsupported; state-preservation rule documented | ACCEPTED | Remediation — audit v5 fix loop. |
-| KIT-36-05 | Device-permission-denied (camera/biometric/notification) capability-state matrix not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-36-05 | guidelines/permissions-capabilities.md + reminder permission-denied fixture | FIXED | Remediation — audit v5 fix loop. |
 | KIT-36-06 | SCOPE.md: phone-portrait-only explicit statement | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
@@ -58,7 +58,7 @@ Audit rotation, extreme size và capability-dependent fallback.
 Final status: BLOCKED
 Open P0: 
 Open P1: ISS-KIT-36-01
-Open P2: ISS-KIT-36-05
+Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16

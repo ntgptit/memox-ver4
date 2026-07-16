@@ -26,7 +26,7 @@ Audit insets, system bars, cutouts và edge-to-edge.
   - **Evidence mong đợi:** Edge-to-edge screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-34-05 — Status/navigation bar icon mode và color phù hợp light/dark surface.**
+- [x] **KIT-34-05 — Status/navigation bar icon mode và color phù hợp light/dark surface.**
   - **Cách kiểm:** VM-05 — compare system-bar specs by theme.
   - **Evidence mong đợi:** System UI theme matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -47,15 +47,15 @@ Audit insets, system bars, cutouts và edge-to-edge.
 | KIT-34-05 | Grep `statusBar/barStyle/light-content/dark-content/system-ui` trong readme/SKILL/tokens/components/specs = 0 | FAIL | Không có spec status-bar icon mode (dark/light icons) hay system nav bar appearance theo light/dark surface cho production RN. |
 | KIT-34-06 | `tool/ui_kit_shots/shoot.mjs:136` chỉ render frame portrait (height 780); không có landscape device frame | FAIL | Không có landscape safe-area report; side cutout/rounded corner ngang chưa được kiểm. |
 | KIT-34-02 | tokens/spacing.css --memox-safe-area-bottom + components.css bottom-nav wiring | FIXED | Remediation — audit v5 fix loop. |
-| KIT-34-05 | Status-bar icon-mode / system nav-bar appearance spec not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-34-05 | guidelines/system-ui.md status-bar/system nav appearance spec | FIXED | Remediation — audit v5 fix loop. |
 | KIT-34-06 | SCOPE.md: landscape unsupported (no landscape cutout frame) | ACCEPTED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PARTIAL
 Open P0: 
-Open P1: ISS-KIT-34-05
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

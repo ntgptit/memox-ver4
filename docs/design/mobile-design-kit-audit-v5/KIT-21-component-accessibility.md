@@ -16,7 +16,7 @@ Audit accessibility ở cấp component; end-to-end task thuộc KIT-42.
   - **Evidence mong đợi:** Focus screenshots and order list.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-21-03 — Selected, checked, expanded, disabled, loading và error được announce.**
+- [x] **KIT-21-03 — Selected, checked, expanded, disabled, loading và error được announce.**
   - **Cách kiểm:** VM-10 — inspect state announcements.
   - **Evidence mong đợi:** Announcement matrix.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -47,15 +47,15 @@ Audit accessibility ở cấp component; end-to-end task thuộc KIT-42.
 | KIT-21-05 | `tokens/spacing.css:29` `--memox-touch-min:48px`; `components.css:979-1013` `::after` hit-area overlays lift chip/switch/btn--sm/icon-btn--sm/segmented/section-action/accent-swatch to 48px; `:320,414,924` min-height touch-min on btn/link/field; gesture alt: `review-mode` swipe has study-flow **Next** button | PASS | Targets meet ≥48px (M3) and the only gesture has a button alternative. |
 | KIT-21-06 | Reduced-motion covers only `components.css:206` (.cappbar) + `:1098` (.spinner); press-scale transforms, card/sheet transitions and skeleton pulse (`motion.css:17`) are NOT reduced. No 200% text-scale renders among 336 shots (grep large/font/scale = 0) | FAIL | Reduced-motion coverage is partial and there is no text-scaling-200% verification evidence. P1 (default). |
 | KIT-21-02 | components.css text-input :focus-visible ring | FIXED | Remediation — audit v5 fix loop. |
-| KIT-21-03 | MxBottomNav aria-current + button spinner role=status; standalone card-more aria-expanded still pending | PARTIAL | Remediation — audit v5 fix loop. |
-| KIT-21-06 | components.css global reduced-motion reset; 200% text-scaling shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-21-03 | aria-expanded on collapsibles + role=status/aria-busy on SyncBlock + MxBottomNav aria-current | FIXED | Remediation — audit v5 fix loop. |
+| KIT-21-06 | global reduced-motion reset done; 200% text-scaling shots pending CI | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: BLOCKED
 Open P0: 
-Open P1: ISS-KIT-21-03, ISS-KIT-21-06
+Open P1: ISS-KIT-21-06
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

@@ -88,8 +88,16 @@
 <script type="text/babel-src" src="../../components/surfaces/MxSectionHeader.jsx"></script>
 <script type="text/babel-src" src="../../components/surfaces/MxContextualAppBar.jsx"></script>
 <script type="text/babel-src" src="../../components/surfaces/MxList.jsx"></script>
+<script type="text/babel-src" src="../../components/feedback/MxDialog.jsx"></script>
+<script type="text/babel-src" src="../../components/feedback/MxSheet.jsx"></script>
+<script type="text/babel-src" src="../../components/feedback/MxMenu.jsx"></script>
+<script type="text/babel-src" src="../../components/feedback/MxBanner.jsx"></script>
+<script type="text/babel-src" src="../../components/feedback/MxProgress.jsx"></script>
 <!-- Shared helpers load before any screen entry (screens read them at render). -->
 <script type="text/babel-src" src="kit-helpers.jsx"></script>
+<!-- i18n string catalog + Intl format helpers (fallback returns literals → parity-neutral). -->
+<script type="text/babel-src" src="i18n/strings.js"></script>
+<script type="text/babel-src" src="i18n/format.js"></script>
 <!-- Shared app composites (_shared/, used by 2+ screens) load after helpers, before features. -->
 <script type="text/babel-src" src="_shared/ConfirmDialog.jsx"></script>
 <script type="text/babel-src" src="_shared/StatusCardRow.jsx"></script>

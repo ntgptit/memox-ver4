@@ -46,8 +46,32 @@ existing 390×780 light+dark shots are pixel-unchanged.**
   taxonomy (KIT-01-02, KIT-01-06, KIT-32-06, KIT-33-*, KIT-36-06).
 - `CHANGELOG.md` — this file (KIT-02-06, KIT-48-05).
 
+### Added — remediation round 2: documentation & assets (2026-07-16) [docs] [additive]
+- `governance/theme-onboarding.md` — new-theme onboarding checklist (define values → contrast
+  gate → capture shots → parity check → sign off) + a worked completed run for the existing
+  dark theme (KIT-07-05).
+- `guidelines/system-ui.md` — status-bar icon-mode and Android system nav-bar appearance spec,
+  mapped by theme + surface luminance (KIT-34-05).
+- `guidelines/input-autofill.md` — autofill / password-manager spec: `autoComplete` +
+  `textContentType` (+ keyboard/capitalization) mapping per field type (KIT-35-05).
+- `guidelines/permissions-capabilities.md` — device-permission capability-state matrix
+  (camera / microphone / notification / biometric × granted / denied / restricted → UI +
+  recovery) (KIT-36-05).
+- `guidelines/keyboard-focus-order.md` §5 — concrete tab-by-tab "add a card" keyboard
+  walkthrough with no-trap + completion proofs, as an executable checklist (KIT-42-02).
+- `assets/memox-wordmark.svg` + `assets/memox-wordmark-dark.svg` — MemoX's own typographic
+  wordmark (Plus Jakarta Sans Extrabold; `#4b3a8c` light, `#f6f5fc` on dark), plus a full
+  clear-space / min-size / light-dark usage spec in `governance/asset-export-spec.md`. Remains
+  a typographic wordmark pending a bespoke brand icon (KIT-14-05); `exception-register.md`
+  EXC-02 narrowed to the icon/app-icon gap.
+- `SCOPE.md` §Accepted scope decisions — swipe/drag gesture motion (KIT-38-04), push/pop/modal
+  transition clips (KIT-38-02), and platform flow recordings (KIT-33-02) recorded as ACCEPTED
+  out-of-scope for the button-driven static reference kit, each with rationale + revisit trigger.
+
 ### Notes
-- These are additive/doc changes. No consumer migration required.
+- These are additive/doc/asset changes. No consumer migration required; no token/`Mx*`/class/
+  `data-mx-node` identifier renamed or removed; existing 390×780 light+dark shots unchanged
+  (the new specs govern RN-runtime OS chrome / states that no existing fixture triggers).
 - Open P0/P1 audit items (e.g. RTL/i18n KIT-37, responsive KIT-32, some a11y) remain
   tracked; release stays **BLOCKED** per `governance/release-signoff.md`.
 

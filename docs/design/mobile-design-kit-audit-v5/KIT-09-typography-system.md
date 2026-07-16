@@ -46,8 +46,8 @@ Audit type roles, metrics và scaling; raw primitive values thuộc KIT-04.
 | KIT-09-04 | tokens/typography.css:15-16; grep high-contrast/script docs = 0 | FAIL | Stack Plus Jakarta Sans + system fallback phủ Vietnamese, nhưng không có danh sách fallback theo script (CJK/RTL) và không có screenshot từng script; scope script chưa được tài liệu hóa. |
 | KIT-09-05 | tokens/typography.css:20-28 (px cố định); tokens/component.css (chiều cao control cố định); không có before/after 200% | FAIL | Không có evidence text-scaling 200%; kit dùng px cố định + control chiều cao cố định (chip 34/appbar 56/nav 80); chưa kiểm chứng (production map sang RN scalable type) — verification gap. |
 | KIT-09-06 | components.css:118-121,128-129,1020-1059 (nowrap+ellipsis cục bộ) | FAIL | Có truncation cục bộ trong CSS (cappbar title/context nowrap+ellipsis, breadcrumb nowrap) nhưng không có matrix wrapping/truncation/max-lines theo component/content importance. |
-| KIT-09-04 | guidelines/i18n-localization.md per-script fallback list; per-script rendered shots pending | PARTIAL | Remediation — audit v5 fix loop. |
-| KIT-09-05 | guidelines/i18n-localization.md 200% guidance; rendered 200% before/after shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-09-04 | i18n per-script fallback documented; per-script rendered shots pending CI (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-09-05 | shoot.mjs renders font-scale up to 1.5 + i18n 200% guidance; committed 200% shots pending CI (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-09-06 | guidelines/component-constraints-matrix.md §1 text-wrap/truncation matrix | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm

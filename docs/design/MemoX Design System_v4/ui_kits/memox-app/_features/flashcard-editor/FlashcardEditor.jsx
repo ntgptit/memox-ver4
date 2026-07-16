@@ -111,8 +111,11 @@ function SaveBar({ label, disabled, keepAdding }) {
 }
 
 function FlashcardEditor({ state = 'create' }) {
-  // discard-confirm is the edit form with the discard overlay on top — render the form as 'edit'.
-  const view = state === 'discard-confirm' ? 'edit' : state;
+  // discard-confirm renders the form as 'edit' (overlay on top); keyboard-open renders the
+  // populated edit form with a simulated software keyboard raised (KIT-25-04/35-01/36-01).
+  // registry-state: keyboard-open
+  const keyboardOpen = state === 'keyboard-open';
+  const view = state === 'discard-confirm' || keyboardOpen ? 'edit' : state;
   const blank = view === 'create' || view === 'validation';
   const invalid = view === 'validation';
   const submitting = view === 'submitting';
@@ -142,8 +145,18 @@ function FlashcardEditor({ state = 'create' }) {
       actions={<span aria-hidden="true" />} />
   );
 
+  // Keyboard-avoidance layout (KIT-25-04/35-01): the SaveBar is the first child of the
+  // bottomNav slot and the faux keyboard is BELOW it, so the sticky primary action stays
+  // pinned directly above the keyboard and never gets covered. Short-portrait stress
+  // (KIT-36-01): the body scrolls under the app bar so on the shortest supported portrait
+  // (~640px tall) Term + Meaning + SaveBar remain reachable — the keyboard only ever
+  // overlays the scrolling body, never the SaveBar.
+  const bottomBar = keyboardOpen
+    ? <React.Fragment><SaveBar label={saveLabel} disabled={saveDisabled} keepAdding /><window.KeyboardInset node="flashcard-editor/keyboard" /></React.Fragment>
+    : <SaveBar label={saveLabel} disabled={saveDisabled} keepAdding={view === 'edit'} />;
+
   const screen = (
-    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={<SaveBar label={saveLabel} disabled={saveDisabled} keepAdding={view === 'edit'} />}>
+    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={bottomBar}>
       <DeckContext />
 
       {view === 'duplicate' ? <DupBanner /> : null}
@@ -156,6 +169,7 @@ function FlashcardEditor({ state = 'create' }) {
         <Field label={'Term · ' + DECK.term.label} required node="flashcard-editor/term"
           value={term} placeholder="Enter a term"
           lang={DECK.term.code} inputMode="text" autoFocus={view === 'create'} enterKeyHint="next"
+          focused={keyboardOpen}
           error={invalid ? 'Enter a term.' : null} disabled={disabledForm}
           trailing={<AudioRow status={view === 'audio-generating' ? 'generating' : 'auto'} />} />
 
@@ -178,13 +192,17 @@ function FlashcardEditor({ state = 'create' }) {
       {/* MORE OPTIONS — collapsed by default so the base form stays Term → Meaning. Holds the
           optional Example pair and the advanced Hide-during-study switch. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+        {/* Collapsible show-more control (KIT-21-03): aria-expanded exposes the
+            open/closed state to AT, aria-controls points at the region it toggles.
+            Attribute-only — no pixel change to the existing shots. */}
         <button type="button" onClick={() => setMoreOpen((v) => !v)} data-mx-node="flashcard-editor/more-toggle"
+          aria-expanded={moreOpen} aria-controls="flashcard-editor/more-region"
           style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 'var(--memox-space-1)', padding: 'var(--memox-space-2) 0', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>
           <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{moreOpen ? 'expand_less' : 'expand_more'}</span>
           More options
         </button>
         {moreOpen ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+          <div id="flashcard-editor/more-region" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
             <Field label="Example" multiline node="flashcard-editor/example"
               value={blank ? '' : '오늘 날씨가 좋네요.'} placeholder="Add an example sentence"
               lang={DECK.term.code} disabled={disabledForm} />

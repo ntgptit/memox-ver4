@@ -47,7 +47,7 @@ Audit composition và behavior của form; component field states thuộc KIT-18
 | KIT-25-05 | `_features/flashcard-editor/FlashcardEditor.jsx:117-119,138-139`; `shots/flashcard-editor--{submitting,submit-success,submit-error}--light.png` | PASS | `saveDisabled` gồm `submitting` (chặn double-tap), `disabledForm` freeze controls; label "Saving…"/"Done"; banner error+retry giữ input, banner success. Đủ loading/success/failure. |
 | KIT-25-06 | `_features/flashcard-editor/FlashcardEditor.jsx:10,129`; `_shared/ConfirmDialog.jsx`; `_features/study-session/components/ExitDialog.jsx` | FAIL | Dirty-cancel chỉ được THAM CHIẾU (dùng shared ConfirmDialog) — không có discard-confirm state/copy cho editor và không có dirty/clean logic. Surface ConfirmDialog tồn tại và được dùng ở study-session/deck-settings nhưng instance editor chưa render. |
 | KIT-25-03 | Field.jsx validation-timing note + aria-invalid + role=alert | FIXED | Remediation — audit v5 fix loop. |
-| KIT-25-04 | guidelines/keyboard-focus-order.md + sticky SaveBar; keyboard-open render pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-25-04 | flashcard-editor keyboard-open fixture (SaveBar above KeyboardInset) added; canonical shot pending CI render (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-25-06 | FlashcardEditor.jsx isDirty + discard-confirm state | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm

@@ -35,6 +35,9 @@ assumption.
 | **Platform-specific (iOS vs. Android) adaptation** | Not supported | Single visual language; MemoX does **not** adapt controls to Cupertino/Material per platform. See platform decisions below. |
 | **RTL** (right-to-left) | Not supported | No logical properties/mirroring; directional icons (`chevron_right`, `arrow_back`) do not mirror. Product is LTR-only. |
 | **i18n / string externalization** | Not supported | Copy is English-only, hardcoded in JSX; no locale-format layer for number/date/plural/unit. |
+| **Swipe / drag gesture motion** | Not supported (accepted) | No follow-finger / cancel-return gesture motion. Every action is button-driven. See §Accepted scope decisions (KIT-38-04). |
+| **Push / pop / modal transition clips** | Not supported (accepted) | Duration/easing tokens exist, but no recorded transition clips are produced. See §Accepted scope decisions (KIT-38-02). |
+| **Platform flow recordings** (back-gesture / modal / nav) | Not supported (accepted) | One presentation documented; no per-platform flow recordings. See §Accepted scope decisions (KIT-33-02). |
 
 ## Planned (future, not yet in the kit)
 
@@ -61,6 +64,21 @@ Cupertino or platform-native controls. The relevant component/interaction choice
 
 There is intentionally **no** platform-parity matrix that adapts these controls per OS —
 the parity is "identical on both," which is the design decision, not a gap.
+
+## Accepted scope decisions (gesture motion & flow recordings)
+
+MemoX v4 is a **button-driven, static visual reference kit**: it defines tokens,
+components, and screen *states* rendered as still frames at 390×780. The following are
+**ACCEPTED as out of scope** — a deliberate boundary of that kit, not an unaddressed gap.
+
+| ID | Decision (ACCEPTED, out of scope) | Rationale | Revisit trigger |
+| --- | --- | --- | --- |
+| **KIT-38-04** | **Swipe / drag gesture motion** (follow-finger tracking, cancel-return, rubber-banding) is not designed or demonstrated. | The kit is button-driven by design — every action has an explicit `Mx*` control (buttons, sheets, toggles). Continuous gesture *motion* is a runtime interaction concern delegated to React Native gesture/navigation libraries, not a static design-reference artifact. Demonstrating follow-finger physics needs a live runtime, not the still-frame kit. | Introduce a product feature whose primary interaction **is** a gesture (e.g. swipe-to-delete as the only affordance), or stand up an interaction-prototype layer. Then spec the gesture motion + cancel/commit thresholds. |
+| **KIT-38-02** | **Push / pop / modal / pane transition clips** are not produced. | The motion **tokens** (`--memox-duration-*`, easing) exist and govern transitions at runtime, and reduced-motion is handled (`--memox-duration-none`). Recording animated transition *clips* requires a running app and a video pipeline outside the still-frame + pixel-parity contract; capturing them would not feed the 390×780 parity gate. | Add a motion-spec / video-capture pipeline, or a requirement to certify specific transition curves. Then record push/pop/modal clips against the duration tokens. |
+| **KIT-33-02** | **Platform flow recordings** (per-OS back-gesture, modal presentation, navigation flow) are not produced. | MemoX ships **one** visual language on both platforms (see §Platform decisions). Platform gesture/navigation behaviour is delegated to RN navigation at runtime; recording per-OS flows would document runtime navigation, not the kit's single-presentation design. | Adopt a per-platform navigation divergence (contradicting the single-visual-language decision), or add a runtime-QA layer that certifies platform flows. Then record them. |
+
+These decisions are **reviewed each release** (see `governance/versioning.md`); if a
+revisit trigger fires, the item moves from ACCEPTED to Planned and is scoped in.
 
 ## Artifact status taxonomy (Current / Future / Deprecated)
 

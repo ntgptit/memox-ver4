@@ -75,3 +75,33 @@ can complete it end to end:
 4. State changes (selection count, expand/collapse, loading, success/error) are announced
    (`aria-current`, `aria-expanded`, `aria-busy`, `role="status"`/`"alert"`).
 5. Record the resulting focus-order log as the evidence artifact (code-agent deliverable).
+
+---
+
+## 5. Worked walkthrough — the "add a card" task (executable checklist)
+
+A concrete, tab-by-tab keyboard run for a representative primary task (add a flashcard to
+a deck). Tick each stop; a failure at any row is a blocking defect. Autofill hints on the
+text fields follow `input-autofill.md` and must not disturb this order.
+
+| # | Focus stop (component) | Key(s) | Expected behaviour | Announced |
+| --- | --- | --- | --- | --- |
+| 0 | *(screen mounts)* | — | Focus rests on the app frame, **not** trapped; first Tab enters the app bar. | Screen primary heading is the first heading landmark. |
+| 1 | App-bar leading **close** (`MxIconButton`) | Tab → Enter | Focusable, visible ring; Enter discards + returns to the list (confirm-if-dirty). | `aria-label="Close"`. |
+| 2 | *(title text)* | Tab | **Skipped** — non-focusable contextual text. | — |
+| 3 | App-bar trailing **Save** action | Tab | Reached but **disabled** until the form is valid; `aria-disabled` so it's announced, and Tab still passes through. | `aria-disabled="true"` while invalid. |
+| 4 | **Front** field (`MxTextField`) | Tab → type | Label associated; caret in field; visible focus ring; autofill hint `off` (free text). | Label + any helper read. |
+| 5 | **Back** field (`MxTextField`) | Tab → type | Same; the two fields are in DOM/reading order front→back. | Label read. |
+| 6 | **Deck** selector (`MxCard interactive` → opens `SelectSheet`) | Tab → Enter | Single tab stop (`role="button"`, no focusable child); Enter opens the sheet. | `aria-haspopup`, `aria-expanded`. |
+| 6a | *(sheet open)* deck options | Arrow/Tab → Enter | Focus **traps** in the sheet; Enter selects; Esc closes. | `role="dialog"`, option `aria-selected`. |
+| 6b | *(sheet closes)* | — | Focus **restores** to the Deck selector (stop 6), never lost (overlays guide §2). | Selected deck name announced. |
+| 7 | **Add** primary CTA (`MxButton`) | Tab → Enter/Space | Now the last body stop; enabled once fields valid; Enter/Space submits. | `role="button"`; on press `aria-busy="true"`. |
+| 7a | submit → **error** | — | Focus moves to the first invalid field or the `role="alert"` summary; no trap. | Error announced via `role="alert"`. |
+| 7b | submit → **success** | — | Success is announced (`role="status"`); focus moves to a defined anchor (new-row or a fresh empty Front field to add another). | Success status announced. |
+| 8 | **Bottom nav** (`MxBottomNav`) | Tab | Destinations reachable last, left-to-right; no earlier stop is skipped or duplicated. | `role="tab"` + `aria-current`. |
+
+**No-trap proof:** from stop 1 you can Tab forward through 8 and Shift+Tab back to 1
+without getting stuck (the only intended trap is the deck sheet 6a, which releases on
+close). **Completion proof:** a keyboard-only user reaches and activates the single primary
+CTA (stop 7) and lands on a defined post-submit anchor (7a/7b). Capture the actual focus
+order as the log artifact (code-agent deliverable) and diff it against this table.

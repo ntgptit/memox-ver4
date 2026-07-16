@@ -1204,3 +1204,303 @@
 [dir='rtl'] .material-symbols-rounded.mx-icon--directional {
   transform: scaleX(-1);
 }
+
+/* ============================================================
+   FEEDBACK / OVERLAY family (KIT-15-05) — frozen Mx* components
+   promoted out of ad-hoc feature composites. One STABLE base class
+   each; all values reference Layer-1 tokens; variants are modifiers.
+   These classes are NOT used by any existing fixture, so adding them
+   changes no rendered pixel of any current state (parity-neutral).
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   MxDialog  ·  .dialog   (centered modal decision surface)
+   The overlay host centers the panel and paints the scrim; the panel
+   is the surface that carries title / body / actions.
+   ------------------------------------------------------------ */
+.dialog-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--memox-space-6);
+}
+.dialog__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--memox-overlay);
+}
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-4);
+  width: 100%;
+  max-width: var(--memox-size-5xl); /* caps the panel on wide screens */
+  padding: var(--memox-space-6);
+  background: var(--memox-surface-raised);
+  border-radius: var(--memox-radius-2xl);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.dialog:focus {
+  outline: none; /* panel takes programmatic focus for the trap; no visible ring on the container */
+}
+.dialog__title {
+  font-size: var(--memox-font-size-md);
+  font-weight: var(--memox-font-weight-bold);
+  letter-spacing: var(--memox-letter-spacing-tight);
+  color: var(--memox-text);
+}
+.dialog__body {
+  font-size: var(--memox-font-size-base);
+  line-height: var(--memox-line-height-relaxed);
+  color: var(--memox-text-secondary);
+}
+.dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--memox-space-2);
+  margin-top: var(--memox-space-2);
+}
+
+/* ------------------------------------------------------------
+   MxSheet  ·  .sheet   (bottom sheet with drag handle)
+   Host pins the sheet to the bottom edge and paints the scrim; the
+   sheet honours the bottom safe-area and caps height with an inner
+   scroll region.
+   ------------------------------------------------------------ */
+.sheet-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--memox-overlay);
+}
+.sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 88%; /* leave the top of the screen visible behind the sheet */
+  padding: var(--memox-space-6);
+  padding-bottom: var(--memox-safe-area-bottom);
+  background: var(--memox-surface-raised);
+  border-top-left-radius: var(--memox-radius-2xl);
+  border-top-right-radius: var(--memox-radius-2xl);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.sheet__handle {
+  flex-shrink: 0;
+  width: var(--memox-space-9); /* 48 — comfortable grab width */
+  height: var(--memox-space-1); /* 4 */
+  margin: 0 auto var(--memox-space-4);
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-border-strong);
+}
+.sheet__title {
+  flex-shrink: 0;
+  margin-bottom: var(--memox-space-3);
+  font-size: var(--memox-font-size-md);
+  font-weight: var(--memox-font-weight-bold);
+  letter-spacing: var(--memox-letter-spacing-tight);
+}
+.sheet__body {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-3);
+}
+
+/* ------------------------------------------------------------
+   MxMenu  ·  .menu   (action menu / list of items)
+   Supersedes the ad-hoc MenuItem for the frozen layer, including the
+   item disabled state (closes KIT-29-03 for the frozen component).
+   ------------------------------------------------------------ */
+.menu {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--memox-size-3xl); /* 220 */
+  max-height: var(--memox-size-4xl); /* 280 — overflow scrolls */
+  overflow-y: auto;
+  padding: var(--memox-space-2);
+  background: var(--memox-surface-raised);
+  border-radius: var(--memox-radius-lg);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-3);
+  width: 100%;
+  min-height: var(--memox-touch-min);
+  padding: 0 var(--memox-space-3);
+  border: none;
+  border-radius: var(--memox-radius-control);
+  background: transparent;
+  color: var(--memox-text);
+  font-family: inherit;
+  font-size: var(--memox-font-size-base);
+  font-weight: var(--memox-font-weight-medium);
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard);
+}
+.menu__item:hover {
+  background: var(--memox-state-hover);
+}
+.menu__item:active {
+  background: var(--memox-state-pressed);
+}
+.menu__item:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
+.menu__item .material-symbols-rounded {
+  font-size: var(--memox-icon-size-md);
+  flex-shrink: 0;
+}
+.menu__item-label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu__item--selected {
+  background: var(--memox-state-selected);
+  color: var(--memox-on-primary-soft);
+  font-weight: var(--memox-font-weight-bold);
+}
+.menu__item--destructive {
+  color: var(--memox-error);
+}
+.menu__item--destructive:hover {
+  background: var(--memox-error-soft);
+}
+.menu__item[disabled],
+.menu__item--disabled {
+  pointer-events: none;
+  opacity: var(--memox-opacity-disabled);
+}
+
+/* ------------------------------------------------------------
+   MxBanner  ·  .banner   (inline tone banner; info base)
+   ------------------------------------------------------------ */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--memox-space-3);
+  padding: var(--memox-space-4);
+  border-radius: var(--memox-radius-card);
+  background: var(--memox-info-soft);
+  color: var(--memox-on-info-soft);
+}
+.banner__icon {
+  flex-shrink: 0;
+  font-size: var(--memox-icon-size-md);
+  color: inherit;
+}
+.banner__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-05);
+}
+.banner__title {
+  font-size: var(--memox-font-size-base);
+  font-weight: var(--memox-font-weight-bold);
+}
+.banner__body {
+  font-size: var(--memox-font-size-sm);
+  line-height: var(--memox-line-height-normal);
+  color: inherit;
+}
+.banner__action {
+  flex-shrink: 0;
+  align-self: center;
+}
+.banner--success {
+  background: var(--memox-success-soft);
+  color: var(--memox-on-success-soft);
+}
+.banner--warning {
+  background: var(--memox-warning-soft);
+  color: var(--memox-on-warning-soft);
+}
+.banner--error {
+  background: var(--memox-error-soft);
+  color: var(--memox-on-error-soft);
+}
+
+/* ------------------------------------------------------------
+   MxProgress  ·  .progress   (determinate bar + indeterminate + spinner)
+   Honours prefers-reduced-motion: the looping animations settle.
+   ------------------------------------------------------------ */
+.progress {
+  display: block;
+  width: 100%;
+}
+.progress__track {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: var(--memox-space-1); /* 4 */
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-surface-muted);
+}
+.progress__fill {
+  height: 100%;
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-primary);
+  transition: width var(--memox-duration-base) var(--memox-ease-standard);
+}
+.progress--indeterminate .progress__fill {
+  width: 40%;
+  animation: mx-progress-slide var(--memox-duration-slow) var(--memox-ease-standard) infinite;
+}
+@keyframes mx-progress-slide {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+/* spinner form — inline circular indeterminate indicator */
+.progress--spinner {
+  display: inline-flex;
+  width: auto;
+}
+.progress__spinner {
+  width: var(--memox-icon-size-lg);
+  height: var(--memox-icon-size-lg);
+  border-radius: var(--memox-radius-full);
+  border: var(--memox-stroke-focus) solid var(--memox-surface-muted);
+  border-top-color: var(--memox-primary);
+  animation: mx-progress-spin var(--memox-duration-slow) linear infinite;
+}
+@keyframes mx-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress--indeterminate .progress__fill,
+  .progress__spinner {
+    animation-duration: var(--memox-duration-none);
+  }
+}

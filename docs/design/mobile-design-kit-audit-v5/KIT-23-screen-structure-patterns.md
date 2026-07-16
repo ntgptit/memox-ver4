@@ -11,7 +11,7 @@ Audit cấu trúc generic của các loại screen.
   - **Evidence mong đợi:** List pattern coverage.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-23-02 — Detail pattern có title, content hierarchy, actions, not-found và safe back.**
+- [x] **KIT-23-02 — Detail pattern có title, content hierarchy, actions, not-found và safe back.**
   - **Cách kiểm:** VM-09 + VM-12 — walkthrough detail template.
   - **Evidence mong đợi:** Detail flow/state evidence.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,14 +46,14 @@ Audit cấu trúc generic của các loại screen.
 | KIT-23-04 | `specs/dashboard.md` (Dashboard) Primary CTA "Start review" (single next action); composition surfaces StreakCard/GoalCard/TodaySummary; `mobile-ui-construction-contract.md:72-78` hierarchy rules (primary weight highest, not every section a card) | PASS | Dashboard prioritises the next action and avoids competing cards. |
 | KIT-23-05 | `specs/settings.md` component map `window.ListRow` (nav rows) + `MxSwitch` (toggles) + `value-picker` state (value rows); destructive section handled in `specs/deck-settings.md` action-sheet/reset-confirm/delete-confirm | PASS | Settings pattern distinguishes navigation row, toggle, value row and destructive section. |
 | KIT-23-06 | `specs/search.md` states empty-recent/results/filtered/no-results/loading (normal vs searching vs no-results); `specs/library.md` states search-active/search-results/search-no-results + `selection` mode; `MxContextualAppBar` search/selection variants | PASS | Search/selection modes (normal, searching, no-results, selection) are distinct states. |
-| KIT-23-02 | Detail not-found/deleted-entity state variant not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-23-02 | subdeck-list + flashcard-list not-found (deleted-entity) state | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PASS
 Open P0: 
-Open P1: ISS-KIT-23-02
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

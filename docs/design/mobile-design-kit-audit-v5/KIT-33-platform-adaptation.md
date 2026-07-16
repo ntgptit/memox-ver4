@@ -47,7 +47,7 @@ Audit shared core vs platform-specific presentation/behavior.
 | KIT-33-05 | Một type scale (`tokens/typography.css`), Material Symbols cho cả 2 platform, `--memox-touch-min:48px` chung | FAIL | Không có annotated platform comparison. De-escalate P1→P2: type/icon/touch đồng nhất cả hai platform nên không có khác biệt đổi meaning; chỉ thiếu statement mô tả — impact nhỏ. |
 | KIT-33-06 | Scan `--memox-*` token names + `Mx*` component names: 0 tên chứa react/native/flutter/ios/android/cupertino; framework terms chỉ nằm trong doc comment (`ConfirmDialog.md` "Flutter target") | PASS | Public token/component names sạch, không phụ thuộc tên framework. |
 | KIT-33-01 | SCOPE.md: single visual language, no per-platform adaptation | FIXED | Remediation — audit v5 fix loop. |
-| KIT-33-02 | SCOPE.md documents single-presentation decision; platform flow recordings not produced | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-33-02 | SCOPE.md: platform flow recordings out of scope (single visual language, RN runtime) | ACCEPTED | Remediation — audit v5 fix loop. |
 | KIT-33-03 | SCOPE.md picker decision table (custom TimePickerSheet rationale) | FIXED | Remediation — audit v5 fix loop. |
 | KIT-33-04 | SCOPE.md platform component parity decision table | FIXED | Remediation — audit v5 fix loop. |
 | KIT-33-05 | SCOPE.md: typography/icon/touch uniform both platforms | FIXED | Remediation — audit v5 fix loop. |
@@ -59,7 +59,7 @@ Final status: PARTIAL
 Open P0: 
 Open P1: 
 Open P2: 
-Open P3: ISS-KIT-33-02
+Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

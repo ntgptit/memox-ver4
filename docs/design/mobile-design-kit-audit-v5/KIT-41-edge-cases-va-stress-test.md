@@ -46,7 +46,7 @@ Audit extreme content/data/state combinations.
 | KIT-41-04 | `shots/library--dense--*.png`, `flashcard-list--dense--*.png`, `subdeck-list--dense--*.png`; mixed-height qua long-text card | PASS | Danh sách dày, mixed-height và min-data giữ structure/controls usable. |
 | KIT-41-05 | `shots/flashcard-list--offline--light.png` ("Offline · showing saved cards. Last synced 2 hours ago" + Retry); `account-sync--conflict--light.png` (merged data); `*--error--*.png`, `dashboard--loading--*.png` | PASS | Offline+stale và conflict+partial data có state riêng; loading/error tách biệt. |
 | KIT-41-06 | Không có RTL (KIT-37-03); không có shot 200% text / landscape (toàn bộ 390×780 portrait) | FAIL | Combined worst-case RTL + long text + 200% + landscape không được test. |
-| KIT-41-06 | RTL/logical + reduced-motion + HC now present; combined worst-case rendered stress pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-41-06 | RTL/logical + reduced-motion + HC present; combined worst-case rendered stress pending CI | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 

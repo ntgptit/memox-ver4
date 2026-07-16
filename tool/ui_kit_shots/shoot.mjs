@@ -80,7 +80,9 @@ const run = async () => {
   await mkdir(OUT, { recursive: true });
   if (CANON) await mkdir(SHOTS_DIR, { recursive: true });
   const server = serve(KIT).listen(PORT);
-  const browser = await chromium.launch();
+  // MXH_CHROME lets a prebuilt-browser environment point at an existing Chromium
+  // (e.g. /opt/pw-browsers/chromium) instead of a version-pinned download. Unset → default.
+  const browser = await chromium.launch(process.env.MXH_CHROME ? { executablePath: process.env.MXH_CHROME } : {});
   const page = await browser.newPage({ deviceScaleFactor: 2 });
   page.on('pageerror', (e) => console.warn('page error:', e.message));
 

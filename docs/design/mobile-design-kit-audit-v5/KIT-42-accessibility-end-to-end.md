@@ -47,9 +47,9 @@ Audit task flow hoàn chỉnh, không lặp semantics từng component của KIT
 | KIT-42-05 | Không có high-contrast profile (KIT-39-05); không có shot 200% text; reduced-motion không đủ (KIT-38-06) | FAIL | Không xác nhận được task hoàn thành dưới 200% text / high-contrast / reduced-motion. |
 | KIT-42-06 | Không có accessibility issue register / sign-off / release gate trong kit | FAIL | Thiếu biên bản phê duyệt accessibility với owner, retest và release gate. |
 | KIT-42-01 | MxContextualAppBar + MxSectionHeader role=heading/aria-level | FIXED | Remediation — audit v5 fix loop. |
-| KIT-42-02 | guidelines/keyboard-focus-order.md focus-order contract; runtime keyboard harness + focus-order log pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-42-02 | guidelines/keyboard-focus-order.md full add-card walkthrough; runtime keyboard harness + focus log pending | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-42-04 | export/import/study-result aria-live status/alert regions added | FIXED | Remediation — audit v5 fix loop. |
-| KIT-42-05 | high-contrast + reduced-motion now exist; 200% task-completion shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-42-05 | high-contrast + reduced-motion verified; 200% task-completion shots pending CI | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-42-06 | governance/release-signoff.md a11y gate + accessibility owner sign-off row | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
