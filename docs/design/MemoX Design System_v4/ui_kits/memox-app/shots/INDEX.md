@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 195-state matrix (26 screens).
+always matches the 207-state matrix (27 screens).
 
 ## dashboard — Today
 
@@ -110,6 +110,23 @@ always matches the 195-state matrix (26 screens).
 | success | `create-deck-firstrun--success--light.png` | `create-deck-firstrun--success--dark.png` |
 | import branch | `create-deck-firstrun--import-branch--light.png` | `create-deck-firstrun--import-branch--dark.png` |
 | not now | `create-deck-firstrun--not-now--light.png` | `create-deck-firstrun--not-now--dark.png` |
+
+## create-deck-dialog — Create Deck · Dialog
+
+| State | Light | Dark |
+| --- | --- | --- |
+| root default | `create-deck-dialog--root-default--light.png` | `create-deck-dialog--root-default--dark.png` |
+| root multi pair | `create-deck-dialog--root-multi-pair--light.png` | `create-deck-dialog--root-multi-pair--dark.png` |
+| root missing pair | `create-deck-dialog--root-missing-pair--light.png` | `create-deck-dialog--root-missing-pair--dark.png` |
+| nested | `create-deck-dialog--nested--light.png` | `create-deck-dialog--nested--dark.png` |
+| optional expanded | `create-deck-dialog--optional-expanded--light.png` | `create-deck-dialog--optional-expanded--dark.png` |
+| validation | `create-deck-dialog--validation--light.png` | `create-deck-dialog--validation--dark.png` |
+| duplicate root | `create-deck-dialog--duplicate-root--light.png` | `create-deck-dialog--duplicate-root--dark.png` |
+| duplicate sibling | `create-deck-dialog--duplicate-sibling--light.png` | `create-deck-dialog--duplicate-sibling--dark.png` |
+| submitting | `create-deck-dialog--submitting--light.png` | `create-deck-dialog--submitting--dark.png` |
+| submit failure | `create-deck-dialog--submit-failure--light.png` | `create-deck-dialog--submit-failure--dark.png` |
+| long name | `create-deck-dialog--long-name--light.png` | `create-deck-dialog--long-name--dark.png` |
+| keyboard open | `create-deck-dialog--keyboard-open--light.png` | `create-deck-dialog--keyboard-open--dark.png` |
 
 ## flashcard-editor — Card Editor
 

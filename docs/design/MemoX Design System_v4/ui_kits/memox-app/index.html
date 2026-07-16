@@ -122,6 +122,7 @@
 <script type="text/babel-src" src="_features/dashboard/components/OnboardingStep.jsx"></script>
 <script type="text/babel-src" src="_features/dashboard/Dashboard.jsx"></script>
 <script type="text/babel-src" src="_features/create-deck-firstrun/CreateDeckFirstRun.jsx"></script>
+<script type="text/babel-src" src="_features/create-deck-dialog/CreateDeckDialog.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/libFixtures.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/DeckRowCard.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
@@ -210,6 +211,8 @@ const SCREENS = [
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default', 'subdecks', 'validation', 'duplicate', 'submitting', 'submit-error'] },
   // First-run only (§4–7): landing → Step 1 learning setup → Step 2 first deck. Create makes an EMPTY deck (no card/nested/Default-view). Outcome states compose where the flow lands (Library+callout / Import / Dashboard-empty).
   { id: 'create-deck-firstrun', title: 'Create Deck · First run', Comp: () => window.CreateDeckFirstRun, states: ['landing', 'step1', 'step1-validation', 'step2', 'step2-optional', 'duplicate', 'submitting', 'submit-failure', 'resume-draft', 'success', 'import-branch', 'not-now'] },
+  // Dialog (§8) for the 2nd deck onward. Root picks a language pair; nested inherits it (read-only) and shows "Inside <parent>". Creates an EMPTY deck; one primary CTA; no cards-vs-nested question.
+  { id: 'create-deck-dialog', title: 'Create Deck · Dialog', Comp: () => window.CreateDeckDialog, states: ['root-default', 'root-multi-pair', 'root-missing-pair', 'nested', 'optional-expanded', 'validation', 'duplicate-root', 'duplicate-sibling', 'submitting', 'submit-failure', 'long-name', 'keyboard-open'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'keyboard-open', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },

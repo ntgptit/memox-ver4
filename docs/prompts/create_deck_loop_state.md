@@ -31,7 +31,7 @@ So the old "organise radiogroup at create time" (cecade1's `deck-content-choice`
 ## Phases (ordered; each = build → registry → gen → canonical shoot → verify:ui-kit + parity:gate)
 
 - [x] **A. `create-deck-firstrun`** — 12 states built + registered + shot (24 combos, 0 findings); landing visually verified. gates green. (revisit for cross-cutting §H: narrow/large-font/long-text)
-- [ ] **B. `create-deck-dialog`** — states: root-default, root-multi-pair, root-missing-pair, nested, optional-expanded, validation, duplicate-root, duplicate-sibling, submitting, submit-failure, long-name, keyboard-open (§20 Create Deck dialog)
+- [x] **B. `create-deck-dialog`** — 12 states built + shot (24 combos, 0 findings); root-default verified. gates green.
 - [ ] **C. `empty-deck`** — states: default, create-nested-dialog, import-target (§11,§17)
 - [ ] **D. `add-card-target`** — states: picker, no-target (§16)
 - [ ] **E. `flashcard-list` leaf conversion** — states: convert-dialog, convert-submitting, convert-failure; leaf-empty-after-delete (§14, §20)
