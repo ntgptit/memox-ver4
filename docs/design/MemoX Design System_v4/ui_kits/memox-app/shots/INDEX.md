@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 183-state matrix (25 screens).
+always matches the 195-state matrix (26 screens).
 
 ## dashboard — Today
 
@@ -93,6 +93,23 @@ always matches the 183-state matrix (25 screens).
 | duplicate | `deck-content-choice--duplicate--light.png` | `deck-content-choice--duplicate--dark.png` |
 | submitting | `deck-content-choice--submitting--light.png` | `deck-content-choice--submitting--dark.png` |
 | submit error | `deck-content-choice--submit-error--light.png` | `deck-content-choice--submit-error--dark.png` |
+
+## create-deck-firstrun — Create Deck · First run
+
+| State | Light | Dark |
+| --- | --- | --- |
+| landing | `create-deck-firstrun--landing--light.png` | `create-deck-firstrun--landing--dark.png` |
+| step1 | `create-deck-firstrun--step1--light.png` | `create-deck-firstrun--step1--dark.png` |
+| step1 validation | `create-deck-firstrun--step1-validation--light.png` | `create-deck-firstrun--step1-validation--dark.png` |
+| step2 | `create-deck-firstrun--step2--light.png` | `create-deck-firstrun--step2--dark.png` |
+| step2 optional | `create-deck-firstrun--step2-optional--light.png` | `create-deck-firstrun--step2-optional--dark.png` |
+| duplicate | `create-deck-firstrun--duplicate--light.png` | `create-deck-firstrun--duplicate--dark.png` |
+| submitting | `create-deck-firstrun--submitting--light.png` | `create-deck-firstrun--submitting--dark.png` |
+| submit failure | `create-deck-firstrun--submit-failure--light.png` | `create-deck-firstrun--submit-failure--dark.png` |
+| resume draft | `create-deck-firstrun--resume-draft--light.png` | `create-deck-firstrun--resume-draft--dark.png` |
+| success | `create-deck-firstrun--success--light.png` | `create-deck-firstrun--success--dark.png` |
+| import branch | `create-deck-firstrun--import-branch--light.png` | `create-deck-firstrun--import-branch--dark.png` |
+| not now | `create-deck-firstrun--not-now--light.png` | `create-deck-firstrun--not-now--dark.png` |
 
 ## flashcard-editor — Card Editor
 

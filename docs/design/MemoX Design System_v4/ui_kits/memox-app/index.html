@@ -121,6 +121,7 @@
 <script type="text/babel-src" src="_features/dashboard/components/OnboardingHero.jsx"></script>
 <script type="text/babel-src" src="_features/dashboard/components/OnboardingStep.jsx"></script>
 <script type="text/babel-src" src="_features/dashboard/Dashboard.jsx"></script>
+<script type="text/babel-src" src="_features/create-deck-firstrun/CreateDeckFirstRun.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/libFixtures.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/DeckRowCard.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
@@ -207,6 +208,8 @@ const SCREENS = [
   { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
   // Name + organise + create a new deck on one screen: radio option cards, one primary CTA.
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default', 'subdecks', 'validation', 'duplicate', 'submitting', 'submit-error'] },
+  // First-run only (§4–7): landing → Step 1 learning setup → Step 2 first deck. Create makes an EMPTY deck (no card/nested/Default-view). Outcome states compose where the flow lands (Library+callout / Import / Dashboard-empty).
+  { id: 'create-deck-firstrun', title: 'Create Deck · First run', Comp: () => window.CreateDeckFirstRun, states: ['landing', 'step1', 'step1-validation', 'step2', 'step2-optional', 'duplicate', 'submitting', 'submit-failure', 'resume-draft', 'success', 'import-branch', 'not-now'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'keyboard-open', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },
