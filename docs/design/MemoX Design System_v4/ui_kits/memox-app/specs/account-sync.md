@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxBadge`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `window.KeyboardInset`, `window.ProfileCard`
 
-## State matrix (contract §6) — 5 states, each rendered light + dark
+## State matrix (contract §6) — 8 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -33,6 +33,9 @@ composition; the component map below is the authoritative set of pieces in play.
 | 3 | `syncing` |
 | 4 | `conflict` |
 | 5 | `offline` |
+| 6 | `sign-in-form` |
+| 7 | `sign-in-keyboard` |
+| 8 | `expansion` |
 
 ## Handoff notes
 

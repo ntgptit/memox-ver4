@@ -224,7 +224,7 @@ function Dialog({ icon, tone, title, text, actions, node }) {
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
         {text ? <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', lineHeight: 'var(--memox-line-height-normal)' }}>{text}</div> : null}
       </div>
-      <div style={{ display: 'flex', gap: 'var(--memox-space-3)', width: '100%', marginTop: 'var(--memox-space-1)' }}>{actions}</div>
+      <div className="mx-dialog-actions" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--memox-space-3)', width: '100%', marginTop: 'var(--memox-space-1)' }}>{actions}</div>
     </div>
   );
 }

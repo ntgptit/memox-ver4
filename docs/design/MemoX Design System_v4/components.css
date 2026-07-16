@@ -348,6 +348,17 @@
 .btn--block {
   width: 100%;
 }
+/* Dialog action row (KIT-09-05 / KIT-21-06 / KIT-42-05 — 200% text scaling): the two
+   confirm/cancel buttons sit side by side, but their labels are `white-space: nowrap`, so at
+   200% text on the narrowest 320px phone their combined min-width exceeds the dialog and used
+   to overflow it. Give them a content-based flex basis inside the wrapping `.mx-dialog-actions`
+   row: at ≤150% they still fit and stay side by side (basis grows to a 50/50 split — pixel-
+   identical to the previous `width:100%` + shrink), and only the 200%×320 extreme wraps them to
+   stacked full-width buttons. Parity-safe: the canonical 390px / 100% render is unchanged. */
+.mx-dialog-actions > .btn {
+  flex: 1 1 auto;
+  width: auto;
+}
 /* loading / submitting — inert while a spinner replaces the press affordance. The button
    keeps its label so width/height are stable; the spinner rides on currentColor so it works
    on every variant. Announced via aria-busy + the spinner's role="status" (set in JSX). */

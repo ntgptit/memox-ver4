@@ -16,6 +16,20 @@
     'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   --memox-font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 
+  /* Per-script fallback stacks (KIT-09-04, KIT-37-02) — additive; name-frozen once shipped.
+     The primary family (Plus Jakarta Sans) fully covers Latin AND Vietnamese diacritics, so
+     --memox-font-vietnamese is the primary itself — declared explicitly so the coverage is
+     documented, not assumed. CJK (Korean/Japanese/Chinese) is NOT in the primary and must fall
+     through to a platform CJK family; --memox-font-cjk makes that fallback EXPLICIT so a glyph
+     is never left to an undefined default. Production (React Native) maps each to a per-field
+     fontFamily fallback array keyed off the field/deck language; the web prototype uses the CSS
+     stack directly. RTL shaping is layout (dir/logical props), not a font — see i18n-localization.md. */
+  --memox-font-vietnamese: var(--memox-font-sans);
+  --memox-font-cjk: 'Plus Jakarta Sans', 'Noto Sans CJK KR', 'Noto Sans KR',
+    'Noto Sans CJK JP', 'Noto Sans JP', 'Noto Sans CJK SC', 'Noto Sans SC',
+    'Malgun Gothic', 'Yu Gothic', 'Hiragino Sans', 'Microsoft YaHei',
+    'Apple SD Gothic Neo', 'PingFang SC', sans-serif;
+
   /* font sizes */
   --memox-font-size-xs: 12px;
   --memox-font-size-sm: 13px;

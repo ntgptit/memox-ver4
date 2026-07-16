@@ -10,11 +10,11 @@
 | --- | --- | --- | --- |
 | dashboard | Today | `dashboard.md` | 8 |
 | library | Library | `library.md` | 12 |
-| subdeck-list | Subdeck List | `subdeck-list.md` | 13 |
-| flashcard-list | Flashcard List | `flashcard-list.md` | 15 |
+| subdeck-list | Subdeck List | `subdeck-list.md` | 15 |
+| flashcard-list | Flashcard List | `flashcard-list.md` | 16 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
-| flashcard-editor | Card Editor | `flashcard-editor.md` | 9 |
+| flashcard-editor | Card Editor | `flashcard-editor.md` | 10 |
 | mode-picker | Mode Picker | `mode-picker.md` | 3 |
 | review-mode | Review | `review-mode.md` | 6 |
 | match-mode | Match | `match-mode.md` | 6 |
@@ -25,13 +25,13 @@
 | study-result | Study Result | `study-result.md` | 7 |
 | search | Search | `search.md` | 5 |
 | statistics | Stats | `statistics.md` | 5 |
-| reminder | Reminders | `reminder.md` | 3 |
-| account-sync | Account & Sync | `account-sync.md` | 5 |
+| reminder | Reminders | `reminder.md` | 5 |
+| account-sync | Account & Sync | `account-sync.md` | 8 |
 | theme | Theme | `theme.md` | 3 |
 | import | Import | `import.md` | 7 |
 | export | Export | `export.md` | 4 |
-| languages | Language Pairs | `languages.md` | 5 |
+| languages | Language Pairs | `languages.md` | 6 |
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 25 screens · 160 states.
+Total: 25 screens · 170 states.

@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 168-state matrix (26 screens).
+always matches the 178-state matrix (26 screens).
 
 ## dashboard — Today
 
@@ -50,10 +50,12 @@ always matches the 168-state matrix (26 screens).
 | selection | `subdeck-list--selection--light.png` | `subdeck-list--selection--dark.png` |
 | create sheet | `subdeck-list--create-sheet--light.png` | `subdeck-list--create-sheet--dark.png` |
 | subdeck actions | `subdeck-list--subdeck-actions--light.png` | `subdeck-list--subdeck-actions--dark.png` |
+| long menu | `subdeck-list--long-menu--light.png` | `subdeck-list--long-menu--dark.png` |
 | play | `subdeck-list--play--light.png` | `subdeck-list--play--dark.png` |
 | loading | `subdeck-list--loading--light.png` | `subdeck-list--loading--dark.png` |
 | offline | `subdeck-list--offline--light.png` | `subdeck-list--offline--dark.png` |
 | error | `subdeck-list--error--light.png` | `subdeck-list--error--dark.png` |
+| not found | `subdeck-list--not-found--light.png` | `subdeck-list--not-found--dark.png` |
 
 ## flashcard-list — Flashcard List
 
@@ -74,6 +76,7 @@ always matches the 168-state matrix (26 screens).
 | loading | `flashcard-list--loading--light.png` | `flashcard-list--loading--dark.png` |
 | offline | `flashcard-list--offline--light.png` | `flashcard-list--offline--dark.png` |
 | error | `flashcard-list--error--light.png` | `flashcard-list--error--dark.png` |
+| not found | `flashcard-list--not-found--light.png` | `flashcard-list--not-found--dark.png` |
 
 ## deck-settings — Deck Settings
 
@@ -101,6 +104,7 @@ always matches the 168-state matrix (26 screens).
 | duplicate | `flashcard-editor--duplicate--light.png` | `flashcard-editor--duplicate--dark.png` |
 | additional translation | `flashcard-editor--additional-translation--light.png` | `flashcard-editor--additional-translation--dark.png` |
 | audio generating | `flashcard-editor--audio-generating--light.png` | `flashcard-editor--audio-generating--dark.png` |
+| keyboard open | `flashcard-editor--keyboard-open--light.png` | `flashcard-editor--keyboard-open--dark.png` |
 | submitting | `flashcard-editor--submitting--light.png` | `flashcard-editor--submitting--dark.png` |
 | submit error | `flashcard-editor--submit-error--light.png` | `flashcard-editor--submit-error--dark.png` |
 | submit success | `flashcard-editor--submit-success--light.png` | `flashcard-editor--submit-success--dark.png` |
@@ -215,6 +219,8 @@ always matches the 168-state matrix (26 screens).
 | on | `reminder--on--light.png` | `reminder--on--dark.png` |
 | off | `reminder--off--light.png` | `reminder--off--dark.png` |
 | time picker | `reminder--time-picker--light.png` | `reminder--time-picker--dark.png` |
+| permission denied | `reminder--permission-denied--light.png` | `reminder--permission-denied--dark.png` |
+| permission denied expansion | `reminder--permission-denied-expansion--light.png` | `reminder--permission-denied-expansion--dark.png` |
 
 ## account-sync — Account & Sync
 
@@ -225,6 +231,9 @@ always matches the 168-state matrix (26 screens).
 | syncing | `account-sync--syncing--light.png` | `account-sync--syncing--dark.png` |
 | conflict | `account-sync--conflict--light.png` | `account-sync--conflict--dark.png` |
 | offline | `account-sync--offline--light.png` | `account-sync--offline--dark.png` |
+| sign in form | `account-sync--sign-in-form--light.png` | `account-sync--sign-in-form--dark.png` |
+| sign in keyboard | `account-sync--sign-in-keyboard--light.png` | `account-sync--sign-in-keyboard--dark.png` |
+| expansion | `account-sync--expansion--light.png` | `account-sync--expansion--dark.png` |
 
 ## theme — Theme
 
@@ -264,6 +273,7 @@ always matches the 168-state matrix (26 screens).
 | empty | `languages--empty--light.png` | `languages--empty--dark.png` |
 | add | `languages--add--light.png` | `languages--add--dark.png` |
 | remove | `languages--remove--light.png` | `languages--remove--dark.png` |
+| scripts | `languages--scripts--light.png` | `languages--scripts--dark.png` |
 
 ## study-session — Study Session (5 stages)
 
