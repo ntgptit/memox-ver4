@@ -23,7 +23,7 @@ allowlisted:
 
 | Screen | % | Why |
 | --- | --- | --- |
-| `deck-content-choice--default` (light + dark) | ~6 | Kit + app now BOTH ship the reworked create-deck flow (name field + organise radiogroup + one Create CTA). A ~6% residual remains between the kit form and the app screen, and the app has a `deck-content-choice--named` state with no kit counterpart. Not yet diagnosed as pure text/AA vs a real layout/copy gap. **Follow-up:** diagnose the residual (review `tool/parity/out/diff/deck-content-choice--default--*.png`); if it is render-only, re-baseline app_golden against the kit on current `main` and drop this allowlist entry. |
+| `deck-content-choice--default` (light + dark) | ~6 | **Kit screen RETIRED** (create_deck_change_note spec §1/§22): creation no longer asks cards-vs-nested and has no Default view — that decision moved to the new `empty-deck` screen, and creation is `create-deck-firstrun` / `create-deck-dialog`. The frozen `deck-content-choice--*` shots are kept ONLY as the parity reference for the app's still-shipping screen (~6% vs app baseline; app also has a `deck-content-choice--named` state with no kit counterpart). **Follow-up:** migrate the app to the new create flow, then retire the `deck-content-choice--*` pair + this allowlist entry. |
 
 Frozen contract kept stable per AGENTS.md golden rule: the group `SubdeckList` and all
 `subdeck-*` / `subdeck-list/*` `data-mx-node` ids are unchanged (the app maps onto them). Only

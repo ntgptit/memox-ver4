@@ -40,11 +40,12 @@ export const SCREENS = [
     note: 'Manage deck metadata and lifecycle actions (no content list).',
     states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'],
     sample: null },
-  { id: 'deck-content-choice', title: 'Deck Content Choice', group: 'DeckContentChoice',
-    archetype: 'Form', objective: 'Name a new deck, choose how it is organised, and create it in one step.', cta: 'Create deck',
-    note: 'Name + organise + create a new deck on one screen: radio option cards, one primary CTA.',
-    states: ['default', 'subdecks', 'validation', 'duplicate', 'submitting', 'submit-error'],
-    sample: ['default', 'duplicate'] },
+  // deck-content-choice RETIRED (spec §1/§22): create no longer asks cards-vs-nested and has no
+  // "Default view" — creation is name + language pair (→ create-deck-firstrun / create-deck-dialog)
+  // and the content decision moved AFTER creation to the empty-deck screen. Its render module,
+  // DeckContentChoice group and deck-content-choice/* node ids stay frozen (app-mapping contract,
+  // subdeck-list precedent); the frozen deck-content-choice--* shots are kept as the parity
+  // reference for the app's still-shipping screen until the app adopts the new flow.
   { id: 'create-deck-firstrun', title: 'Create Deck · First run', group: 'CreateDeckFirstRun',
     archetype: 'Focused task/study flow', objective: 'Create the first deck on a fresh install: learning setup then deck name — full screen, no dialog.', cta: 'Create deck',
     note: 'First-run only (§4–7): landing → Step 1 learning setup → Step 2 first deck. Create makes an EMPTY deck (no card/nested/Default-view). Outcome states compose where the flow lands (Library+callout / Import / Dashboard-empty).',

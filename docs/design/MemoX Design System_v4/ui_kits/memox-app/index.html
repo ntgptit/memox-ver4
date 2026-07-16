@@ -209,8 +209,6 @@ const SCREENS = [
   { id: 'flashcard-list', title: 'Flashcard List', Comp: () => window.FlashcardList, states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'convert-dialog', 'convert-submitting', 'convert-failure', 'loading', 'offline', 'error', 'not-found'] },
   // Manage deck metadata and lifecycle actions (no content list).
   { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
-  // Name + organise + create a new deck on one screen: radio option cards, one primary CTA.
-  { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default', 'subdecks', 'validation', 'duplicate', 'submitting', 'submit-error'] },
   // First-run only (§4–7): landing → Step 1 learning setup → Step 2 first deck. Create makes an EMPTY deck (no card/nested/Default-view). Outcome states compose where the flow lands (Library+callout / Import / Dashboard-empty).
   { id: 'create-deck-firstrun', title: 'Create Deck · First run', Comp: () => window.CreateDeckFirstRun, states: ['landing', 'step1', 'step1-validation', 'step2', 'step2-optional', 'duplicate', 'submitting', 'submit-failure', 'resume-draft', 'success', 'import-branch', 'not-now'] },
   // Dialog (§8) for the 2nd deck onward. Root picks a language pair; nested inherits it (read-only) and shows "Inside <parent>". Creates an EMPTY deck; one primary CTA; no cards-vs-nested question.

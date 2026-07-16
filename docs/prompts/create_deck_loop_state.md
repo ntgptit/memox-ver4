@@ -36,7 +36,7 @@ So the old "organise radiogroup at create time" (cecade1's `deck-content-choice`
 - [x] **D. `add-card-target`** — 2 states (picker, no-target) built + shot; picker verified (parent disabled + helper). gates green.
 - [x] **E. `flashcard-list` leaf conversion** — 3 states (convert-dialog, convert-submitting, convert-failure §14) added + shot; convert-dialog verified. gates green. NOTE(§F): leaf-empty + parent-empty should route to empty-deck screen (offer Create-nested).
 - [x] **F. dashboard/import/library** — dashboard create-sheet already §9-compliant (Add card/Create deck/Import); import gained parent-target (§17). §20 matrix now fully covered. TODO(H): library §10 created-snackbar + leaf-empty→empty-deck are §22 refinements, optional.
-- [ ] **G. Retire `deck-content-choice` screen entry** (fold; keep node ids); reconcile parity-allowlist/REMAINING
+- [x] **G. Retire deck-content-choice** — registry entry removed (superseded by create-deck-firstrun/dialog + empty-deck per §1/§22); module + node ids + shots frozen (app-map); orphan spec deleted; allowlist/REMAINING updated. gates green.
 - [ ] **H. Cross-cutting per §20**: every canonical state × light/dark + narrow-width + large-font + long-text; parity < 3% all pairs
 
 ## Validation copy (§19) — canonical strings

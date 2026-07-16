@@ -12,7 +12,6 @@
 | library | Library | `library.md` | 27 |
 | flashcard-list | Flashcard List | `flashcard-list.md` | 19 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
-| deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 6 |
 | create-deck-firstrun | Create Deck · First run | `create-deck-firstrun.md` | 12 |
 | create-deck-dialog | Create Deck · Dialog | `create-deck-dialog.md` | 12 |
 | empty-deck | Empty Deck | `empty-deck.md` | 3 |
@@ -37,4 +36,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 28 screens · 208 states.
+Total: 27 screens · 202 states.
