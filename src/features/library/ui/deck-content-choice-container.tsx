@@ -54,9 +54,10 @@ export function DeckContentChoiceContainer({
     <DeckContentChoiceScreen
       key={ctrl.deckName ?? 'loading'}
       deckName={ctrl.deckName ?? ''}
+      mode={creating ? 'create' : 'save'}
       onBack={onBack}
       onImport={onImport}
-      onChoose={async (input) => {
+      onSubmit={async (input) => {
         if (creating) {
           // 12.1: actually CREATE the deck (the old flow only set organisation
           // on the non-existent id 'new' — every Create-deck button dead-ended).

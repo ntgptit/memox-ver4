@@ -244,6 +244,7 @@ function MeaningCard({
                 borderRadius: t.radius.control,
                 paddingVertical: t.space[3],
                 paddingHorizontal: t.space[4],
+                outlineStyle: 'none',
               },
             ]}
           />

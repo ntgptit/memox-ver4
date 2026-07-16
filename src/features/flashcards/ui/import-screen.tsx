@@ -7,6 +7,7 @@
  * import-error and done (EmptyStates).
  */
 
+import { useState } from 'react';
 import { Text, TextInput, View } from 'react-native';
 
 import {
@@ -59,6 +60,7 @@ export function ImportScreen({
   onGoDeck,
 }: ImportScreenProps) {
   const t = useTheme();
+  const [pasteFocused, setPasteFocused] = useState(false);
 
   return (
     <AppScreen
@@ -123,6 +125,8 @@ export function ImportScreen({
             multiline
             value={data.pasted}
             onChangeText={onChangePasted}
+            onFocus={() => setPasteFocused(true)}
+            onBlur={() => setPasteFocused(false)}
             placeholder={IMPORT_PASTE_PLACEHOLDER}
             placeholderTextColor={t.color.textTertiary}
             style={[
@@ -130,12 +134,13 @@ export function ImportScreen({
               {
                 borderWidth: t.stroke.hairline,
                 borderStyle: 'dashed',
-                borderColor: t.color.divider,
+                borderColor: pasteFocused ? t.color.focusRing : t.color.divider,
                 borderRadius: t.radius.control,
                 minHeight: t.size.xl,
                 padding: t.space[4],
                 color: t.color.text,
                 textAlignVertical: 'top',
+                outlineStyle: 'none',
               },
             ]}
           />

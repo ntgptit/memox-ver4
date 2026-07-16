@@ -12,7 +12,7 @@
 | library | Library | `library.md` | 27 |
 | flashcard-list | Flashcard List | `flashcard-list.md` | 16 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
-| deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |
+| deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 6 |
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 10 |
 | mode-picker | Mode Picker | `mode-picker.md` | 3 |
 | review-mode | Review | `review-mode.md` | 6 |
@@ -33,4 +33,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 24 screens · 170 states.
+Total: 24 screens · 175 states.

@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 178-state matrix (25 screens).
+always matches the 183-state matrix (25 screens).
 
 ## dashboard — Today
 
@@ -88,6 +88,11 @@ always matches the 178-state matrix (25 screens).
 | State | Light | Dark |
 | --- | --- | --- |
 | default | `deck-content-choice--default--light.png` | `deck-content-choice--default--dark.png` |
+| subdecks | `deck-content-choice--subdecks--light.png` | `deck-content-choice--subdecks--dark.png` |
+| validation | `deck-content-choice--validation--light.png` | `deck-content-choice--validation--dark.png` |
+| duplicate | `deck-content-choice--duplicate--light.png` | `deck-content-choice--duplicate--dark.png` |
+| submitting | `deck-content-choice--submitting--light.png` | `deck-content-choice--submitting--dark.png` |
+| submit error | `deck-content-choice--submit-error--light.png` | `deck-content-choice--submit-error--dark.png` |
 
 ## flashcard-editor — Card Editor
 

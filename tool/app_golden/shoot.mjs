@@ -114,17 +114,17 @@ const TARGETS = [
   {
     name: 'deck-content-choice--default--light',
     path: '/deck/preview/content?state=default',
-    waitFor: 'text=How do you want to organise it?',
+    waitFor: 'text=Create deck',
   },
   {
     name: 'deck-content-choice--named--light',
     path: '/deck/preview/content?state=named',
-    waitFor: 'text=How do you want to organise it?',
+    waitFor: 'text=Create deck',
   },
   {
     name: 'deck-content-choice--default--dark',
     path: '/deck/preview/content?state=default&theme=dark',
-    waitFor: 'text=How do you want to organise it?',
+    waitFor: 'text=Create deck',
   },
   // mode-picker (WBS 5.4) — DB-free fixture preview via ?state=/?theme=.
   { name: 'mode-picker--default--light', path: '/session/mode-picker?state=default', waitFor: 'text=Card source' },

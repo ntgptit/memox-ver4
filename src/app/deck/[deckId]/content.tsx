@@ -33,7 +33,7 @@ export default function DeckContentChoiceRoute() {
         deckName={DECK_CONTENT_CHOICE_FIXTURES[state as DeckContentChoiceFixtureKey].deckName}
         onBack={() => router.back()}
         onImport={() => {}}
-        onChoose={async () => ok(undefined)}
+        onSubmit={async () => ok(undefined)}
       />
     );
     return theme === 'dark' ? <ThemeProvider initialMode="dark">{preview}</ThemeProvider> : preview;

@@ -54,10 +54,11 @@ function renderNew(props: { onChosen?: jest.Mock; onNeedLanguagePair?: jest.Mock
   );
 }
 
-async function nameAndChoose(title: string) {
-  await waitFor(() => expect(screen.getByTestId('deck-content-choice/cards')).toBeTruthy());
+async function nameAndCreate(title: string) {
+  await waitFor(() => expect(screen.getByTestId('deck-content-choice/create')).toBeTruthy());
   fireEvent.changeText(screen.getByTestId('deck-content-choice/name'), title);
-  fireEvent.press(screen.getByTestId('deck-content-choice/cards'));
+  // cards is the preselected organisation; the Create CTA commits.
+  fireEvent.press(screen.getByTestId('deck-content-choice/create'));
 }
 
 beforeEach(() => {
@@ -70,7 +71,7 @@ describe('DeckContentChoiceContainer — new-deck flow (12.1)', () => {
     mockPairs = [{ id: 'lp1' }];
     const onChosen = jest.fn();
     renderNew({ onChosen });
-    await nameAndChoose('TOPIK I — Vocabulary');
+    await nameAndCreate('TOPIK I — Vocabulary');
     await waitFor(() => expect(onChosen).toHaveBeenCalled());
     const [organisation, createdId] = onChosen.mock.calls[0];
     expect(organisation).toBe('cards');
@@ -79,11 +80,29 @@ describe('DeckContentChoiceContainer — new-deck flow (12.1)', () => {
     expect(mockDecks.get(createdId)?.languagePairId).toBe('lp1');
   });
 
+  it('a duplicate deck name is rejected inline and creates nothing', async () => {
+    mockPairs = [{ id: 'lp1' }];
+    mockDecks.set('d1', {
+      id: 'd1',
+      title: 'Korean TOPIK I',
+      languagePairId: 'lp1',
+      organisation: 'cards',
+      createdAt: 0,
+      updatedAt: 0,
+    } as Deck);
+    const onChosen = jest.fn();
+    renderNew({ onChosen });
+    await nameAndCreate('  korean topik i ');
+    await waitFor(() => expect(screen.getByText('A deck with this name already exists.')).toBeTruthy());
+    expect(onChosen).not.toHaveBeenCalled();
+    expect(mockDecks.size).toBe(1);
+  });
+
   it('with NO language pair, routes to add-pair and creates nothing', async () => {
     const onChosen = jest.fn();
     const onNeedLanguagePair = jest.fn();
     renderNew({ onChosen, onNeedLanguagePair });
-    await nameAndChoose('TOPIK I — Vocabulary');
+    await nameAndCreate('TOPIK I — Vocabulary');
     await waitFor(() => expect(onNeedLanguagePair).toHaveBeenCalled());
     expect(onChosen).not.toHaveBeenCalled();
     expect(mockDecks.size).toBe(0);

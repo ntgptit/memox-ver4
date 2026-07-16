@@ -6,29 +6,34 @@
 
 ## Objective (contract §1)
 
-Decide how a new, empty deck is organised (nested decks vs cards).
+Name a new deck, choose how it is organised, and create it in one step.
 
-Primary CTA: _none — a read / navigation surface (no competing CTA)_
+Primary CTA: **Create deck**
 
 ## Archetype (contract §2)
 
-Detail
+Form
 
 ## Composition map (contract §3)
 
-Top → bottom: **nested MxContextualAppBar** → primary content → no primary action.
+Top → bottom: **nested MxContextualAppBar** → primary content → primary action (Create deck).
 Exact layout order is owned by the source (`../_shared/DeckContentChoice.jsx`) and the reference PNGs — read those for pixel
 composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxCard`, `MxContextualAppBar`, `MxIconTile`, `MxLink`, `MxScaffold`, `MxTextField`, `window.SectionLabel`
+`MxButton`, `MxContextualAppBar`, `MxIconTile`, `MxLink`, `MxScaffold`, `MxTextField`, `window.ActionCallout`, `window.SectionLabel`
 
-## State matrix (contract §6) — 1 states, each rendered light + dark
+## State matrix (contract §6) — 6 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
 | 1 | `default` |
+| 2 | `subdecks` |
+| 3 | `validation` |
+| 4 | `duplicate` |
+| 5 | `submitting` |
+| 6 | `submit-error` |
 
 ## Handoff notes
 

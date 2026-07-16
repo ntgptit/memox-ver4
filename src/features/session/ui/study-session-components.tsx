@@ -6,6 +6,7 @@
  * confirm overlays and the full-screen ResumeErrorState.
  */
 
+import { useState } from 'react';
 import { Pressable, Text, TextInput, View } from 'react-native';
 
 import {
@@ -170,13 +171,14 @@ export function StageFill({
   onCheck?: () => void;
 }) {
   const t = useTheme();
+  const [focused, setFocused] = useState(false);
   return (
     <>
       <PromptCard term={content.meaning} sub="MEANING" />
       <View
         style={{
           borderWidth: t.stroke.hairline,
-          borderColor: t.color.divider,
+          borderColor: focused ? t.color.focusRing : t.color.divider,
           backgroundColor: t.color.surface,
           borderRadius: t.radius.control,
           padding: t.space[4],
@@ -189,9 +191,11 @@ export function StageFill({
           accessibilityLabel="Type the answer"
           value={value}
           onChangeText={onChange}
+          onFocus={() => setFocused(true)}
+          onBlur={() => setFocused(false)}
           placeholder="Type the Korean word…"
           placeholderTextColor={t.color.textTertiary}
-          style={[t.font.text({ size: 'base', weight: 'semibold' }), { color: t.color.text, padding: 0 }]}
+          style={[t.font.text({ size: 'base', weight: 'semibold' }), { color: t.color.text, padding: 0, outlineStyle: 'none' }]}
         />
       </View>
       <View style={{ flexDirection: 'row', gap: t.space[3] }}>
