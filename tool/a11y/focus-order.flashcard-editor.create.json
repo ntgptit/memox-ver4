@@ -1,0 +1,238 @@
+{
+  "screen": "flashcard-editor",
+  "state": "create",
+  "note": "executableFocusOrder = real Tab stops (buttons/switches/checkboxes). Text Fields are non-focusable design-intent spans in the static kit (see Field.jsx / keyboard-focus-order.md); they appear in readingOrder with annotatedField=true and map to real inputs in production.",
+  "executableFocusOrder": [
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Cancel",
+      "node": "flashcard-editor/cancel",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Play pronunciation",
+      "node": "flashcard-editor/audio-play",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Add Tiếng Việt translation",
+      "node": "flashcard-editor/add-translation",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "expand_moreMore options",
+      "node": "flashcard-editor/more-toggle",
+      "ariaDisabled": null,
+      "ariaExpanded": "false",
+      "ariaChecked": null
+    }
+  ],
+  "readingOrder": [
+    {
+      "node": "flashcard-editor/screen",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "closeNew cardfolderDeckBeginner GrammarTerm · 한국어*"
+    },
+    {
+      "node": "flashcard-editor/appbar",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "closeNew card"
+    },
+    {
+      "node": "flashcard-editor/cancel",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Cancel"
+    },
+    {
+      "node": null,
+      "role": "heading",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "New card"
+    },
+    {
+      "node": "flashcard-editor/deck-context",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "folderDeckBeginner Grammar"
+    },
+    {
+      "node": "flashcard-editor/term",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Term · 한국어*Enter a termvolume_up"
+    },
+    {
+      "node": null,
+      "role": "label",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Term · 한국어*"
+    },
+    {
+      "node": null,
+      "role": null,
+      "focusable": false,
+      "annotatedField": true,
+      "live": null,
+      "name": "Enter a termvolume_up"
+    },
+    {
+      "node": "flashcard-editor/audio-row",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "volume_up"
+    },
+    {
+      "node": "flashcard-editor/audio-play",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Play pronunciation"
+    },
+    {
+      "node": "flashcard-editor/meaning",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Meaning · English*addEnter the meaning"
+    },
+    {
+      "node": null,
+      "role": "label",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Meaning · English*"
+    },
+    {
+      "node": "flashcard-editor/add-translation",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Add Tiếng Việt translation"
+    },
+    {
+      "node": null,
+      "role": null,
+      "focusable": false,
+      "annotatedField": true,
+      "live": null,
+      "name": "Enter the meaning"
+    },
+    {
+      "node": "flashcard-editor/tags",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "TagssellAdd tags — e.g. #TOPIK_I, #동사"
+    },
+    {
+      "node": null,
+      "role": "label",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Tags"
+    },
+    {
+      "node": "flashcard-editor/more-toggle",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "expand_moreMore options"
+    },
+    {
+      "node": "flashcard-editor/save-bar",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "check_box_outline_blankCreate another card after s"
+    },
+    {
+      "node": "flashcard-editor/keep-adding",
+      "role": "checkbox",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "check_box_outline_blankCreate another card after s"
+    },
+    {
+      "node": "flashcard-editor/save",
+      "role": "button",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Save"
+    }
+  ],
+  "annotatedFieldStops": [
+    null,
+    null
+  ],
+  "checks": [
+    {
+      "check": "no-forward-trap",
+      "pass": true
+    },
+    {
+      "check": "reversible-shift-tab",
+      "pass": true,
+      "forward": 4,
+      "backward": 4
+    },
+    {
+      "check": "all-stops-named",
+      "pass": true,
+      "unnamed": 0
+    }
+  ]
+}

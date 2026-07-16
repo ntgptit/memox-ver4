@@ -105,3 +105,32 @@ without getting stuck (the only intended trap is the deck sheet 6a, which releas
 close). **Completion proof:** a keyboard-only user reaches and activates the single primary
 CTA (stop 7) and lands on a defined post-submit anchor (7a/7b). Capture the actual focus
 order as the log artifact (code-agent deliverable) and diff it against this table.
+
+---
+
+## 6. Dismiss-keyboard behaviour matrix (KIT-35-04)
+
+How each keyboard-dismissal path behaves for a form with unsaved input (the Card Editor is
+the reference). The invariant: **the software keyboard is dismissed without submitting the
+form and without discarding typed input, unless the user explicitly confirms a discard.**
+Submit happens ONLY through the primary CTA (`flashcard-editor/save`), never as a side effect
+of a dismissal gesture. Text fields declare their runtime intent via `data-enter-key-hint` /
+`data-input-mode` / `data-validate-on` (see `Field.jsx`); production maps these to React
+Native `enterKeyHint` / `inputMode` / `onSubmitEditing` and the OS keyboard.
+
+| Dismiss path | Keyboard | Submits? | Input kept? | Focus after | Production contract |
+| --- | --- | --- | --- | --- | --- |
+| Hardware BACK (Android) / edge-swipe (iOS), keyboard open | closes | no | yes | stays on field | First BACK only lowers the keyboard (`keyboardWillHide`); the screen is NOT popped. |
+| BACK again (keyboard already down) | — | no | only if confirmed | leaves screen | Guarded by the dirty-check (KIT-25-06): `isDirty` → `discard-confirm` overlay; clean → close. Input is discarded ONLY after the user confirms discard. |
+| Tap outside a field (inert background) | closes | no | yes | no focused field | Blur runs validate-on-blur for **touched** fields only (`data-validate-on="blur-then-submit"`); a pristine field is never error-flagged. |
+| Tap another field | stays | no | yes | new field | Focus moves field→field; the keyboard morphs to the new field's `inputMode`. |
+| Scroll / drag the form body | stays\* | no | yes | stays on field | \*iOS interactive-dismiss lowers it on drag; Android keeps it up. Never submits; the sticky SaveBar stays reachable above `--memox-safe-area-bottom`. |
+| Return / Done key (`enterKeyHint`) | field-dependent | no\*\* | yes | next field or none | `next` → advances to the next field; `done` → lowers the keyboard. \*\*Only an explicit single-field search/send (`enterKeyHint="search"`/`"send"`) runs its action — a multi-field editor's Done never auto-submits. |
+| OS interruption (app switch, call, notification) | closes | no | yes | restores on return | Draft state and caret position are preserved and restored on resume. |
+
+**Verification.** The overlay-dismiss half of this matrix is executable and is exercised by
+`tool/a11y/keyboard-walkthrough.mjs` (Esc / overlay close + focus restore; a dirty BACK
+surfaces `discard-confirm`). The field-level blur / scroll / enter-key semantics are a runtime
+contract — the static kit's text fields are non-focusable design-intent spans (§3 and
+`Field.jsx`), so, exactly like the autofill hints in `input-autofill.md`, they are annotated
+on the fields and asserted in production rather than executed in the static kit.

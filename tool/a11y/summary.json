@@ -1,0 +1,159 @@
+{
+  "generatedBy": "tool/a11y/keyboard-walkthrough.mjs",
+  "walked": [
+    {
+      "screen": "flashcard-editor",
+      "state": "edit",
+      "stops": 9,
+      "checks": [
+        {
+          "check": "no-forward-trap",
+          "pass": true
+        },
+        {
+          "check": "reversible-shift-tab",
+          "pass": true,
+          "forward": 9,
+          "backward": 9
+        },
+        {
+          "check": "all-stops-named",
+          "pass": true,
+          "unnamed": 0
+        },
+        {
+          "check": "primary-cta-reachable",
+          "pass": true,
+          "cta": "flashcard-editor/save"
+        }
+      ]
+    },
+    {
+      "screen": "flashcard-editor",
+      "state": "create",
+      "stops": 4,
+      "checks": [
+        {
+          "check": "no-forward-trap",
+          "pass": true
+        },
+        {
+          "check": "reversible-shift-tab",
+          "pass": true,
+          "forward": 4,
+          "backward": 4
+        },
+        {
+          "check": "all-stops-named",
+          "pass": true,
+          "unnamed": 0
+        }
+      ]
+    },
+    {
+      "screen": "subdeck-list",
+      "state": "long-menu",
+      "stops": 19,
+      "checks": [
+        {
+          "check": "no-forward-trap",
+          "pass": true
+        },
+        {
+          "check": "reversible-shift-tab",
+          "pass": true,
+          "forward": 19,
+          "backward": 19
+        },
+        {
+          "check": "all-stops-named",
+          "pass": true,
+          "unnamed": 0
+        }
+      ]
+    },
+    {
+      "screen": "reminder",
+      "state": "permission-denied",
+      "stops": 3,
+      "checks": [
+        {
+          "check": "no-forward-trap",
+          "pass": true
+        },
+        {
+          "check": "reversible-shift-tab",
+          "pass": true,
+          "forward": 3,
+          "backward": 3
+        },
+        {
+          "check": "all-stops-named",
+          "pass": true,
+          "unnamed": 0
+        }
+      ]
+    }
+  ],
+  "axe": [
+    {
+      "screen": "dashboard",
+      "state": "loaded",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    },
+    {
+      "screen": "library",
+      "state": "loaded",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    },
+    {
+      "screen": "flashcard-editor",
+      "state": "edit",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 1
+    },
+    {
+      "screen": "flashcard-list",
+      "state": "loaded",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 1
+    },
+    {
+      "screen": "settings",
+      "state": "loaded",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    },
+    {
+      "screen": "account-sync",
+      "state": "sign-in-form",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    },
+    {
+      "screen": "reminder",
+      "state": "permission-denied",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    },
+    {
+      "screen": "mode-picker",
+      "state": "default",
+      "structural": 0,
+      "seriousStructural": 0,
+      "contrastObservations": 0
+    }
+  ],
+  "pageErrors": [],
+  "failures": [],
+  "status": "PASS"
+}
