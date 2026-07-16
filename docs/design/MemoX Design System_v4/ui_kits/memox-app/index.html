@@ -122,12 +122,12 @@
 <script type="text/babel-src" src="_features/dashboard/components/OnboardingStep.jsx"></script>
 <script type="text/babel-src" src="_features/dashboard/Dashboard.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/libFixtures.jsx"></script>
-<script type="text/babel-src" src="_features/library/components/SubdeckCard.jsx"></script>
+<script type="text/babel-src" src="_features/library/components/DeckRowCard.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/LibraryCreateSheet.jsx"></script>
 <script type="text/babel-src" src="_features/library/Library.jsx"></script>
 <script type="text/babel-src" src="_features/subdeck-list/components/subdeckFixtures.jsx"></script>
-<script type="text/babel-src" src="_features/subdeck-list/components/CreateSubdeckSheet.jsx"></script>
+<script type="text/babel-src" src="_features/subdeck-list/components/CreateDeckSheet.jsx"></script>
 <script type="text/babel-src" src="_features/subdeck-list/SubdeckList.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-list/components/cardFixtures.jsx"></script>
 <script type="text/babel-src" src="_features/flashcard-list/components/AddCardSheet.jsx"></script>
@@ -200,13 +200,13 @@
 const SCREENS = [
   { id: 'dashboard', title: 'Today', Comp: () => window.Dashboard, states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'] },
   { id: 'library', title: 'Library', Comp: () => window.Library, states: ['loaded', 'dense', 'empty', 'create-sheet', 'search-active', 'search-results', 'search-no-results', 'filter-applied', 'filter-sheet', 'selection', 'loading', 'offline'] },
-  // Browse and manage subdecks inside the current deck (subdecks only).
-  { id: 'subdeck-list', title: 'Subdeck List', Comp: () => window.SubdeckList, states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'long-menu', 'play', 'loading', 'offline', 'error', 'not-found'] },
+  // Browse and manage the nested decks inside the current deck (no cards). A nested deck is a Deck with parentId set — not a separate model.
+  { id: 'subdeck-list', title: 'Nested Decks', Comp: () => window.SubdeckList, states: ['loaded', 'dense', 'deep', 'empty', 'search', 'no-results', 'selection', 'create-sheet', 'subdeck-actions', 'long-menu', 'play', 'loading', 'offline', 'error', 'not-found'] },
   // Browse, filter and manage flashcards in the current final deck (cards only).
   { id: 'flashcard-list', title: 'Flashcard List', Comp: () => window.FlashcardList, states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error', 'not-found'] },
   // Manage deck metadata and lifecycle actions (no content list).
   { id: 'deck-settings', title: 'Deck Settings', Comp: () => window.DeckSettings, states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'] },
-  // Decide how a new, empty deck is organised (subdecks vs cards).
+  // Decide how a new, empty deck is organised (nested decks vs cards).
   { id: 'deck-content-choice', title: 'Deck Content Choice', Comp: () => window.DeckContentChoice, states: ['default'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'keyboard-open', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },

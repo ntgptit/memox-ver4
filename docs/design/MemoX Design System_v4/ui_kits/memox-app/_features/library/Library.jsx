@@ -4,7 +4,7 @@
    Subdeck List (subdecks) or Flashcard List (cards) screens, not an inline nested view.
    Orchestrates shared chrome (MxContextualAppBar,
    MxBottomNav, MxFab, Scrim/Sheet, EmptyState) + shared DeckCard + MxList (standard
-   spacing) + library-local components (SubdeckCard, FilterRow, LibraryCreateSheet,
+   spacing) + library-local components (DeckRowCard, FilterRow, LibraryCreateSheet,
    fixtures) from _features/library/components/. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
@@ -22,7 +22,7 @@ const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ar
 
 function Library({ state = 'loaded' }) {
   const LIB = window.MemoXLibrary;
-  const { DECKS, DENSE, SUBDECKS, deckMeta, Status, SubdeckCard, FilterRow } = LIB;
+  const { DECKS, DENSE, SUBDECKS, deckMeta, Status, DeckRowCard, FilterRow } = LIB;
   const DeckCard = window.DeckCard, MxList = NS.MxList;
 
   const nav = <MxBottomNav items={NAV} value="library" node="shell/bottom-nav" />;
@@ -79,7 +79,7 @@ function Library({ state = 'loaded' }) {
     const q = state === 'search-active' ? 'korea' : state === 'search-results' ? 'korean' : 'business Korean';
     const bar = (
       <MxContextualAppBar variant="search" node="library/appbar"
-        search={{ value: q, placeholder: 'Search decks and subdecks' }}
+        search={{ value: q, placeholder: 'Search decks' }}
         actions={<MxIconButton icon="close" size="sm" node="library/search-clear" ariaLabel="Clear search" />} />
     );
     let body;
@@ -93,9 +93,9 @@ function Library({ state = 'loaded' }) {
           <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>4 results for “korean”</div>
           <SectionLabel>DECKS</SectionLabel>
           <MxList>{deckCard(DECKS[0], 0)}</MxList>
-          <SectionLabel>SUBDECKS</SectionLabel>
-          {/* subdeck results show their PARENT deck instead of the status line */}
-          <MxList>{[SUBDECKS[0], SUBDECKS[2]].map((s, i) => <SubdeckCard key={i} s={s} index={'sr-' + i} meta={<span>in Korean TOPIK I · {s.cards} cards</span>} />)}</MxList>
+          <SectionLabel>NESTED DECKS</SectionLabel>
+          {/* nested-deck results show their PARENT deck instead of the status line */}
+          <MxList>{[SUBDECKS[0], SUBDECKS[2]].map((s, i) => <DeckRowCard key={i} s={s} index={'sr-' + i} meta={<span>in Korean TOPIK I · {s.cards} cards</span>} />)}</MxList>
         </React.Fragment>
       );
     }
@@ -157,7 +157,7 @@ function Library({ state = 'loaded' }) {
             <SectionLabel style={{ margin: '0 0 var(--memox-space-1) var(--memox-space-2)' }}>FILTER</SectionLabel>
             {item('schedule', 'Due cards', true, 'f-due')}
             {item('fiber_new', 'New cards', false, 'f-new')}
-            {item('account_tree', 'Has subdecks', false, 'f-sub')}
+            {item('account_tree', 'Has nested decks', false, 'f-sub')}
             <div style={{ display: 'flex', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-4)' }}>
               <MxButton variant="ghost" block node="library/fs-reset">Reset</MxButton>
               <MxButton variant="primary" block node="library/fs-apply">Apply</MxButton>

@@ -11,6 +11,22 @@ support**, and what is **planned**. Anything not listed as supported is out of s
 must not be assumed to work. This replaces the previously silent phone-portrait
 assumption.
 
+## Domain model
+
+The kit models **one `Deck` object**, distinguished by `parentId`:
+
+- `parentId: null` → a **root deck** (listed in the Library).
+- `parentId: <deck id>` → a **nested deck** (shown in the UI as a deck inside another deck).
+
+There is **no separate "Subdeck" model** — a "subdeck" is only a Deck one level down. A Deck
+holds nested decks (a `children` count) and/or cards. Hierarchy: **Library › Deck (→ nested Deck…)
+› Card** — no Folder / Collection / Category / Workspace / Notebook layer.
+
+User-facing copy and internal component names use "Deck" / "nested deck" (`DeckCard`,
+`DeckRowCard`, `CreateDeckSheet`). Per the AGENTS.md golden rule the `subdeck-list` screen **id**,
+its group `SubdeckList`, and the `subdeck-*` / `subdeck-list/*` `data-mx-node` ids stay **stable**
+(frozen app-mapping contract) even though the display reads "Deck".
+
 ## Supported (in scope, verified)
 
 | Dimension | Supported value | Evidence |

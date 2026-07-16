@@ -33,7 +33,7 @@ function DeckContentChoice() {
       </div>
       <h1 data-mx-node="deck-content-choice/heading" style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>How do you want to organise it?</h1>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
-        <Choice icon="account_tree" title="Organise with subdecks" text="Create nested topics before adding cards." node="deck-content-choice/subdecks" />
+        <Choice icon="account_tree" title="Organise with nested decks" text="Create nested topics before adding cards." node="deck-content-choice/subdecks" />
         <Choice icon="playing_cards" title="Add cards directly" text="Use this as a final study deck." node="deck-content-choice/cards" />
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>

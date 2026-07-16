@@ -2,7 +2,7 @@
    current deck. SUBDECKS ONLY — never a CARDS section, never Add card. The same screen is
    reused at every tree level (Korean › TOPIK I › Grammar › …). Nested screen: back +
    deck title + search + More(→ Deck Settings). Create-subdeck FAB.
-   Reuses shared SubdeckCard (from Library) + MxList + contextual app bar + Breadcrumb
+   Reuses shared DeckRowCard (from Library) + MxList + contextual app bar + Breadcrumb
    (the multi-level deck path). */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
@@ -17,31 +17,31 @@ const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ar
 
 function SubdeckList({ state = 'loaded' }) {
   const SL = window.MemoXSubdeckList;
-  const { SUBDECKS, DENSE, summary, CreateSubdeckSheet, TRAIL, TRAIL_DEEP } = SL;
-  const SubdeckCard = window.MemoXLibrary.SubdeckCard;
+  const { SUBDECKS, DENSE, summary, CreateDeckSheet, TRAIL, TRAIL_DEEP } = SL;
+  const DeckRowCard = window.MemoXLibrary.DeckRowCard;
   const MxList = NS.MxList;
   const Breadcrumb = window.Breadcrumb;
 
-  const fab = <MxFab icon="add" node="subdeck-list/create" ariaLabel="Create subdeck" />;
+  const fab = <MxFab icon="add" node="subdeck-list/create" ariaLabel="Create deck" />;
   const nestedBar = (
     <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Korean TOPIK I"
       actions={<React.Fragment>
-        <MxIconButton icon="search" size="sm" node="subdeck-list/search-open" ariaLabel="Search subdecks" />
+        <MxIconButton icon="search" size="sm" node="subdeck-list/search-open" ariaLabel="Search decks" />
         <MxIconButton icon="more_vert" size="sm" node="subdeck-list/more" ariaLabel="Deck settings" />
       </React.Fragment>} />
   );
   // SUBDECKS section label carrying the deck aggregate as a compact muted annotation,
   // instead of a separate full-width summary row.
-  const subHead = (arr) => <SectionLabel>SUBDECKS <span style={{ fontWeight: 'var(--memox-font-weight-medium)', letterSpacing: 'normal', color: 'var(--memox-text-tertiary)' }}>· {summary(arr)}</span></SectionLabel>;
+  const subHead = (arr) => <SectionLabel>DECKS <span style={{ fontWeight: 'var(--memox-font-weight-medium)', letterSpacing: 'normal', color: 'var(--memox-text-tertiary)' }}>· {summary(arr)}</span></SectionLabel>;
   const crumbs = (trail = TRAIL) => <Breadcrumb items={trail} node="subdeck-list/breadcrumb" />;
-  const list = (arr) => <MxList>{arr.map((s, i) => <SubdeckCard key={i} s={s} index={i} nodePrefix="subdeck-list" />)}</MxList>;
+  const list = (arr) => <MxList>{arr.map((s, i) => <DeckRowCard key={i} s={s} index={i} nodePrefix="subdeck-list" />)}</MxList>;
 
   /* loading */
   if (state === 'loading') {
     return (
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
         <Skeleton w="55%" h={13} />
-        <SectionLabel>SUBDECKS</SectionLabel>
+        <SectionLabel>DECKS</SectionLabel>
         <MxList>{[0, 1, 2, 3].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={40} h={40} r={999} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</MxList>
       </MxScaffold>
     );
@@ -52,9 +52,9 @@ function SubdeckList({ state = 'loaded' }) {
   if (state === 'empty') {
     return (
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
-        <EmptyState node="subdeck-list/empty" icon="account_tree" title="No subdecks yet"
-          text="Create a subdeck to organise this deck into nested topics."
-          action={<MxButton variant="primary" icon="library_add" node="subdeck-list/empty-create">Create subdeck</MxButton>} />
+        <EmptyState node="subdeck-list/empty" icon="account_tree" title="No nested decks yet"
+          text="Create a nested deck to organise this deck into topics."
+          action={<MxButton variant="primary" icon="library_add" node="subdeck-list/empty-create">Create deck</MxButton>} />
       </MxScaffold>
     );
   }
@@ -66,7 +66,7 @@ function SubdeckList({ state = 'loaded' }) {
         {crumbs()}
         <div data-mx-node="subdeck-list/offline-banner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-card)', background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)' }}>
           <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)' }}>cloud_off</span>
-          <div style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>{t('subdeck.offline', 'Offline · showing saved subdecks. Last synced 2 hours ago.', { rel: fmt.relativeTime(-2, 'hour') })}</div>
+          <div style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>{t('subdeck.offline', 'Offline · showing saved decks. Last synced 2 hours ago.', { rel: fmt.relativeTime(-2, 'hour') })}</div>
           <MxLink size="sm" trailingIcon={null} node="subdeck-list/offline-retry">{t('common.retry', 'Retry')}</MxLink>
         </div>
         {subHead(SUBDECKS)}
@@ -79,7 +79,7 @@ function SubdeckList({ state = 'loaded' }) {
   if (state === 'error') {
     return (
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar}>
-        <EmptyState node="subdeck-list/error" icon="cloud_off" tone="error" title="Couldn't load subdecks"
+        <EmptyState node="subdeck-list/error" icon="cloud_off" tone="error" title="Couldn't load decks"
           text="Something went wrong. Check your connection and try again."
           action={<MxButton variant="primary" icon="refresh" node="subdeck-list/retry">Retry</MxButton>} />
       </MxScaffold>
@@ -91,17 +91,17 @@ function SubdeckList({ state = 'loaded' }) {
     const q = state === 'search' ? 'gr' : 'zzz';
     const bar = (
       <MxContextualAppBar variant="search" node="subdeck-list/appbar"
-        search={{ value: q, placeholder: 'Search subdecks' }}
+        search={{ value: q, placeholder: 'Search decks' }}
         actions={<MxIconButton icon="close" size="sm" node="subdeck-list/search-clear" ariaLabel="Clear search" />} />
     );
     if (state === 'no-results') {
-      return <MxScaffold node="subdeck-list/screen" appBar={bar}><EmptyState node="subdeck-list/no-results" icon="search_off" tone="warning" title={'No subdecks for “zzz”'} text="Try another keyword." action={<MxButton variant="secondary" icon="close" node="subdeck-list/clear">Clear search</MxButton>} /></MxScaffold>;
+      return <MxScaffold node="subdeck-list/screen" appBar={bar}><EmptyState node="subdeck-list/no-results" icon="search_off" tone="warning" title={'No decks for “zzz”'} text="Try another keyword." action={<MxButton variant="secondary" icon="close" node="subdeck-list/clear">Clear search</MxButton>} /></MxScaffold>;
     }
     const hits = SUBDECKS.filter((s) => /gr|fa/i.test(s.name));
     return (
       <MxScaffold node="subdeck-list/screen" appBar={bar}>
-        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{hits.length} subdecks match</div>
-        <SectionLabel>SUBDECKS</SectionLabel>
+        <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{hits.length} decks match</div>
+        <SectionLabel>DECKS</SectionLabel>
         {list(hits)}
       </MxScaffold>
     );
@@ -119,8 +119,8 @@ function SubdeckList({ state = 'loaded' }) {
     const sel = [true, false, true, false, false];
     return (
       <MxScaffold node="subdeck-list/screen" appBar={bar}>
-        <SectionLabel>SUBDECKS</SectionLabel>
-        <MxList>{SUBDECKS.map((s, i) => <SubdeckCard key={i} s={s} index={i} selected={sel[i]} nodePrefix="subdeck-list" />)}</MxList>
+        <SectionLabel>DECKS</SectionLabel>
+        <MxList>{SUBDECKS.map((s, i) => <DeckRowCard key={i} s={s} index={i} selected={sel[i]} nodePrefix="subdeck-list" />)}</MxList>
       </MxScaffold>
     );
   }
@@ -130,7 +130,7 @@ function SubdeckList({ state = 'loaded' }) {
     return (
       <React.Fragment>
         <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
-        <CreateSubdeckSheet />
+        <CreateDeckSheet />
       </React.Fragment>
     );
   }
@@ -142,10 +142,10 @@ function SubdeckList({ state = 'loaded' }) {
         <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
         <Scrim align="end" node="subdeck-list/actions-scrim">
           <Sheet title="Greetings & introductions" node="subdeck-list/actions-sheet">
-            <MenuItem icon="bolt" label="Study subdeck" node="subdeck-list/action-study" />
-            <MenuItem icon="edit" label="Rename subdeck" node="subdeck-list/action-rename" />
-            <MenuItem icon="drive_file_move" label="Move subdeck" node="subdeck-list/action-move" />
-            <MenuItem icon="delete" label="Delete subdeck" danger node="subdeck-list/action-delete" />
+            <MenuItem icon="bolt" label="Study deck" node="subdeck-list/action-study" />
+            <MenuItem icon="edit" label="Rename deck" node="subdeck-list/action-rename" />
+            <MenuItem icon="drive_file_move" label="Move deck" node="subdeck-list/action-move" />
+            <MenuItem icon="delete" label="Delete deck" danger node="subdeck-list/action-delete" />
           </Sheet>
         </Scrim>
       </React.Fragment>
@@ -168,7 +168,7 @@ function SubdeckList({ state = 'loaded' }) {
     const deepBar = (
       <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Irregular verbs"
         actions={<React.Fragment>
-          <MxIconButton icon="search" size="sm" node="subdeck-list/search-open" ariaLabel="Search subdecks" />
+          <MxIconButton icon="search" size="sm" node="subdeck-list/search-open" ariaLabel="Search decks" />
           <MxIconButton icon="more_vert" size="sm" node="subdeck-list/more" ariaLabel="Deck settings" />
         </React.Fragment>} />
     );
@@ -214,16 +214,16 @@ function SubdeckList({ state = 'loaded' }) {
         <Scrim align="end" node="subdeck-list/long-menu-scrim">
           <Sheet title="Greetings & introductions" node="subdeck-list/long-menu-sheet">
             <MenuList node="subdeck-list/long-menu-list">
-              <MenuItem icon="bolt" label="Study subdeck" node="subdeck-list/lm-study" />
-              <MenuItem icon="edit" label="Rename subdeck" node="subdeck-list/lm-rename" />
-              <MenuItem icon="drive_file_move" label="Move subdeck" disabled node="subdeck-list/lm-move" />
-              <MenuItem icon="content_copy" label="Duplicate subdeck" node="subdeck-list/lm-duplicate" />
+              <MenuItem icon="bolt" label="Study deck" node="subdeck-list/lm-study" />
+              <MenuItem icon="edit" label="Rename deck" node="subdeck-list/lm-rename" />
+              <MenuItem icon="drive_file_move" label="Move deck" disabled node="subdeck-list/lm-move" />
+              <MenuItem icon="content_copy" label="Duplicate deck" node="subdeck-list/lm-duplicate" />
               <MenuItem icon="push_pin" label="Pin to top" node="subdeck-list/lm-pin" />
               <MenuItem icon="label" label="Manage tags" node="subdeck-list/lm-tags" />
-              <MenuItem icon="ios_share" label="Share subdeck" node="subdeck-list/lm-share" />
-              <MenuItem icon="download" label="Export subdeck" node="subdeck-list/lm-export" />
-              <MenuItem icon="archive" label="Archive subdeck" node="subdeck-list/lm-archive" />
-              <MenuItem icon="delete" label="Delete subdeck" danger node="subdeck-list/lm-delete" />
+              <MenuItem icon="ios_share" label="Share deck" node="subdeck-list/lm-share" />
+              <MenuItem icon="download" label="Export deck" node="subdeck-list/lm-export" />
+              <MenuItem icon="archive" label="Archive deck" node="subdeck-list/lm-archive" />
+              <MenuItem icon="delete" label="Delete deck" danger node="subdeck-list/lm-delete" />
             </MenuList>
           </Sheet>
         </Scrim>

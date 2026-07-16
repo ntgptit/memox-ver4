@@ -6,7 +6,7 @@
 
 ## Objective (contract §1)
 
-Decide how a new, empty deck is organised (subdecks vs cards).
+Decide how a new, empty deck is organised (nested decks vs cards).
 
 Primary CTA: _none — a read / navigation surface (no competing CTA)_
 
