@@ -21,7 +21,7 @@ Audit composition và behavior của form; component field states thuộc KIT-18
   - **Evidence mong đợi:** Validation-state matrix.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-25-04 — Keyboard không che focused field hoặc primary action.**
+- [x] **KIT-25-04 — Keyboard không che focused field hoặc primary action.**
   - **Cách kiểm:** VM-09 + VM-07 — test phone portrait/landscape and sheet form.
   - **Evidence mong đợi:** Keyboard screenshots.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -49,13 +49,14 @@ Audit composition và behavior của form; component field states thuộc KIT-18
 | KIT-25-03 | Field.jsx validation-timing note + aria-invalid + role=alert | FIXED | Remediation — audit v5 fix loop. |
 | KIT-25-04 | flashcard-editor keyboard-open fixture (SaveBar above KeyboardInset) added; canonical shot pending CI render (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-25-06 | FlashcardEditor.jsx isDirty + discard-confirm state | FIXED | Remediation — audit v5 fix loop. |
+| KIT-25-04 | shots/flashcard-editor--keyboard-open--{light,dark}.png (SaveBar + "Create another card" trên KeyboardInset); shots/account-sync--sign-in-keyboard--{light,dark}.png (Continue/Google trên keyboard); kit-helpers.jsx KeyboardInset | FIXED | Keyboard-open render xác nhận primary action (Save) + focused field không bị bàn phím che. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PASS
 Open P0: 
-Open P1: ISS-KIT-25-04
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

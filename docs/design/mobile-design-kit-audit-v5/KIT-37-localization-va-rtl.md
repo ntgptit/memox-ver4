@@ -11,7 +11,7 @@ Audit expansion, scripts, RTL và locale formats.
   - **Evidence mong đợi:** Localization stress screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-37-02 — Vietnamese diacritics, CJK glyph và mixed-script baseline hiển thị đúng.**
+- [x] **KIT-37-02 — Vietnamese diacritics, CJK glyph và mixed-script baseline hiển thị đúng.**
   - **Cách kiểm:** VM-08 — run script corpus with fallback fonts.
   - **Evidence mong đợi:** Script rendering evidence.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -52,13 +52,14 @@ Audit expansion, scripts, RTL và locale formats.
 | KIT-37-04 | i18n/format.js Intl date/number/relative-time/plural layer wired | FIXED | Remediation — audit v5 fix loop. |
 | KIT-37-05 | components.css logical properties (start/end) | FIXED | Remediation — audit v5 fix loop. |
 | KIT-37-06 | ui_kits/memox-app/i18n/strings.js keyed catalog (byte-identical) wired in 4 features | FIXED | Remediation — audit v5 fix loop. |
+| KIT-37-02 | shots/languages--scripts--{light,dark}.png (Tiếng Việt diacritics + Korean/Japanese/Chinese CJK + mixed-script render qua --memox-font-cjk); tokens/typography.css:18-33 (--memox-font-cjk + --memox-font-vietnamese); shots/flashcard-editor--keyboard-open (Korean) | FIXED | Vietnamese diacritics + CJK glyph (ko/ja/zh) + mixed-script render đúng, không tofu; per-script fallback stack đã khai báo + wire. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PASS
 Open P0: 
-Open P1: ISS-KIT-37-02
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

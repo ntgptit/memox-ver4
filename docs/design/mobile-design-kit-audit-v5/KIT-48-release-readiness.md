@@ -6,12 +6,12 @@ Audit gate cuối; không lặp toàn bộ nội dung chi tiết.
 
 ## Checklist
 
-- [ ] **KIT-48-01 — 48 nhóm checklist có final status và evidence link.**
+- [x] **KIT-48-01 — 48 nhóm checklist có final status và evidence link.**
   - **Cách kiểm:** VM-12 — parse summary and verify links.
   - **Evidence mong đợi:** Báo cáo độ bao phủ đạt 48/48 nhóm.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-48-02 — Không còn issue P0/P1; mọi P2/P3 có owner và target.**
+- [x] **KIT-48-02 — Không còn issue P0/P1; mọi P2/P3 có owner và target.**
   - **Cách kiểm:** VM-13 — query issue register.
   - **Evidence mong đợi:** Bảng tổng hợp severity.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -51,12 +51,14 @@ Audit gate cuối; không lặp toàn bộ nội dung chi tiết.
 | KIT-48-04 | governance/coverage-report.md coverage aggregate | FIXED | Remediation — audit v5 fix loop. |
 | KIT-48-05 | CHANGELOG.md + governance/versioning.md version metadata | FIXED | Remediation — audit v5 fix loop. |
 | KIT-48-06 | governance/release-signoff.md sign-off record (design/a11y/governance rows) | FIXED | Remediation — audit v5 fix loop. |
+| KIT-48-01 | mobile-design-kit-audit-v5/audit-summary.md (48/48 nhóm có final status: 40 PASS · 8 PARTIAL · 0 BLOCKED); validation-report.json (kit_file_count 48, status PASS); mỗi nhóm có Evidence Log links | FIXED | 48/48 nhóm có final status + evidence link; 0 nhóm BLOCKED. |
+| KIT-48-02 | issue-register.md severity tally (P0 0 · P1 0 open; FIXED 105 · ACCEPTED 14 · PARTIAL 0 · OPEN 0); governance/release-signoff.md (3 owner sign-off Approved) | FIXED | Không còn P0/P1 mở; P2/P3 (asset G1 + scoped items) có owner + target. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0: ISS-KIT-48-01, ISS-KIT-48-02
+Final status: PASS
+Open P0: 
 Open P1: 
 Open P2: 
 Open P3: 

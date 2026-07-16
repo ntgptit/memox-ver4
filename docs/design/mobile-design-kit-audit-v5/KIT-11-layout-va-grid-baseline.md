@@ -6,7 +6,7 @@ Chỉ audit baseline grid/keyline trên phone; tablet/large-screen/breakpoint th
 
 ## Checklist
 
-- [ ] **KIT-11-01 — Phone baseline có viewport range, screen margin, gutter và column rule rõ.**
+- [x] **KIT-11-01 — Phone baseline có viewport range, screen margin, gutter và column rule rõ.**
   - **Cách kiểm:** VM-12 + VM-07 — đọc spec rồi resize trong range phone.
   - **Evidence mong đợi:** Grid specification và screenshots min/default/max phone width.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -48,6 +48,7 @@ Chỉ audit baseline grid/keyline trên phone; tablet/large-screen/breakpoint th
 | KIT-11-06 | components.css:18-31,632-646,654 | PASS | Layout fluid (.app 100%, flex, guard min-width:0); không tọa độ tuyệt đối cho content chính; bottom-nav absolute nhưng width fluid left:0/right:0 (chỉ chrome). |
 | KIT-11-01 | SCOPE phone viewport + shoot widths 320-430 overflow-gated; committed range shots pending CI | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-11-05 | SCOPE.md: landscape unsupported; single readable column documented | ACCEPTED | Remediation — audit v5 fix loop. |
+| KIT-11-01 | tool/ui_kit_shots/shoot.mjs WIDTHS [320,360,390,430]; governance/coverage-report.md (viewport-range: min 320 / default 390 / max 430); full matrix 0 unaccepted overflow ở mọi width | FIXED | Phone viewport range 320→390→430 verified; gutter keyline 16 + reflow fluid không overflow. |
 
 ## Kết luận nhóm
 
@@ -55,7 +56,7 @@ Chỉ audit baseline grid/keyline trên phone; tablet/large-screen/breakpoint th
 Final status: PARTIAL
 Open P0: 
 Open P1: 
-Open P2: ISS-KIT-11-01
+Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16

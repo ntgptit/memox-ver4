@@ -6,7 +6,7 @@ Audit rotation, extreme size và capability-dependent fallback.
 
 ## Checklist
 
-- [ ] **KIT-36-01 — Portrait baseline có min height và scroll behavior rõ.**
+- [x] **KIT-36-01 — Portrait baseline có min height và scroll behavior rõ.**
   - **Cách kiểm:** VM-07 — test shortest supported portrait frame.
   - **Evidence mong đợi:** Portrait stress evidence.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -51,13 +51,14 @@ Audit rotation, extreme size và capability-dependent fallback.
 | KIT-36-03 | SCOPE.md: orientation change unsupported; state-preservation rule documented | ACCEPTED | Remediation — audit v5 fix loop. |
 | KIT-36-05 | guidelines/permissions-capabilities.md + reminder permission-denied fixture | FIXED | Remediation — audit v5 fix loop. |
 | KIT-36-06 | SCOPE.md: phone-portrait-only explicit statement | FIXED | Remediation — audit v5 fix loop. |
+| KIT-36-01 | shots/flashcard-editor--keyboard-open--{light,dark}.png + shots/account-sync--sign-in-keyboard--{light,dark}.png (nội dung trong portrait height rút gọn ~56% do keyboard: .app__body scroll, SaveBar pinned, primary action reachable); components.css .app__body overflow-y:auto; 390×780 baseline; governance/coverage-report.md | FIXED | Portrait min-height 780 baseline + scroll rõ; shortest-portrait stress (keyboard-reduced height) không dead-end. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PARTIAL
 Open P0: 
-Open P1: ISS-KIT-36-01
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

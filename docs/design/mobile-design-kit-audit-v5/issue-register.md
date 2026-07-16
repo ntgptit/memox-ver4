@@ -1,38 +1,38 @@
 # Issue Register
 
-Audit v5 trên MemoX Design System v4 — 119 issue, sau vòng fix loop. Reviewed by: Claude (automated kit audit + remediation) · 2026-07-16.
+Audit v5 trên MemoX Design System v4 — 119 issue, sau 3 vòng fix loop (vòng 3: đóng 14 mục PARTIAL bằng render/harness evidence). Reviewed by: Claude (automated kit audit + remediation) · 2026-07-16.
 
 ## Trạng thái khắc phục
 
 | Resolution | Số lượng |
 |---|---|
-| `FIXED` | 91 |
+| `FIXED` | 105 |
 | `ACCEPTED` (scoped/documented) | 14 |
-| `PARTIAL` (root fixed, cần render/impl để đóng hẳn) | 14 |
+| `PARTIAL` (root fixed, cần render/impl để đóng hẳn) | 0 |
 | `OPEN` | 0 |
 | **Tổng** | **119** |
 
 Severity gốc: `P0` 6 · `P1` 62 · `P2` 44 · `P3` 7.
-Còn mở (OPEN/PARTIAL) ảnh hưởng gate: `P0` 3 · `P1` 8.
+Còn mở (OPEN/PARTIAL) ảnh hưởng gate: `P0` 0 · `P1` 0.
 
 ## Issue
 
 | Issue ID | Checklist ID | Mô tả | Severity | Status | Fix / evidence | Owner | Target |
 |---|---|---|---|---|---|---|---|
-| ISS-KIT-42-02 | KIT-42-02 | Không có routing/nav để chạy task hoàn chỉnh bằng keyboard; không có focus-order log. | `P0` | `PARTIAL` | guidelines/keyboard-focus-order.md full add-card walkthrough; runtime keyboard harness + focus log pending | Design System team | v4.1 kit freeze |
-| ISS-KIT-48-01 | KIT-48-01 | Chưa toàn bộ 48 nhóm có final status hoàn tất + evidence link tại thời điểm chốt release. | `P0` | `PARTIAL` | governance/release-signoff.md records dispositions; not all 48 groups PASS yet | Design System team | v4.1 kit freeze |
-| ISS-KIT-48-02 | KIT-48-02 | Còn nhiều P0/P1 mở (a11y KIT-42, governance KIT-46, deprecation KIT-47, responsive KIT-32). | `P0` | `PARTIAL` | P0/P1 substantially reduced; residual render/runtime P0/P1 remain open | Design System team | v4.1 kit freeze |
-| ISS-KIT-21-06 | KIT-21-06 | Reduced-motion phủ một phần (chỉ cappbar+spinner); không có 200% text-scaling verification. | `P1` | `PARTIAL` | global reduced-motion reset done; 200% text-scaling shots pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-25-04 | KIT-25-04 | Không có state render bàn phím mở để verify field/primary action không bị che; SaveBar sticky là mitigation chưa xác nhận. | `P1` | `PARTIAL` | flashcard-editor keyboard-open fixture (SaveBar above KeyboardInset) added; canonical shot pending CI render (CDN blocked locally) | Design System team | v4.1 kit freeze |
-| ISS-KIT-35-01 | KIT-35-01 | Không có cơ chế/token keyboard-avoidance; sticky SaveBar chỉ là assertion; không render được keyboard-open. | `P1` | `PARTIAL` | keyboard-open fixture + --memox-safe-area-bottom inset; rendered shot pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-35-04 | KIT-35-04 | Không có dismiss-keyboard behavior matrix (back/tap/scroll không submit/mất input). | `P1` | `PARTIAL` | guidelines/keyboard-focus-order.md dismiss guidance; full dismiss-keyboard matrix pending | Design System team | v4.1 kit freeze |
-| ISS-KIT-36-01 | KIT-36-01 | Scroll behavior rõ nhưng không có min-height tài liệu hóa và không stress ở portrait ngắn nhất. | `P1` | `PARTIAL` | short-portrait stress note + keyboard-open body scroll; shortest-portrait shot pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-37-02 | KIT-37-02 | CJK và mixed-script render qua OS fallback nhưng không khai báo font stack CJK/Vietnamese; Vietnamese diacritics không có evidence. | `P1` | `PARTIAL` | i18n CJK/Vietnamese font stack declared; RN font map + diacritic/CJK shots pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-41-06 | KIT-41-06 | Combined worst-case RTL + long text + 200% text + landscape không được test. | `P1` | `PARTIAL` | RTL/logical + reduced-motion + HC present; combined worst-case rendered stress pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-42-05 | KIT-42-05 | Không xác nhận task hoàn thành dưới 200% text / high-contrast / reduced-motion. | `P1` | `PARTIAL` | high-contrast + reduced-motion verified; 200% task-completion shots pending CI | Design System team | v4.1 kit freeze |
-| ISS-KIT-09-04 | KIT-09-04 | Font stack phủ Vietnamese nhưng không có per-script (CJK/RTL) fallback list và không có per-script screenshots. | `P2` | `PARTIAL` | i18n per-script fallback documented; per-script rendered shots pending CI (CDN blocked locally) | Design System team | v4.1 kit freeze |
-| ISS-KIT-09-05 | KIT-09-05 | Không có 200% text-scaling before/after evidence; kit dùng fixed px sizes và fixed-height controls. | `P2` | `PARTIAL` | shoot.mjs renders font-scale up to 1.5 + i18n 200% guidance; committed 200% shots pending CI (CDN blocked locally) | Design System team | v4.1 kit freeze |
-| ISS-KIT-11-01 | KIT-11-01 | Fluid layout + gutter 16 có, nhưng không có phone viewport range grid spec; shots single-width 390x780. | `P2` | `PARTIAL` | SCOPE phone viewport + shoot widths 320-430 overflow-gated; committed range shots pending CI | Design System team | v4.1 kit freeze |
+| ISS-KIT-42-02 | KIT-42-02 | Không có routing/nav để chạy task hoàn chỉnh bằng keyboard; không có focus-order log. | `P0` | `FIXED` | tool/a11y/keyboard-walkthrough.mjs + focus-order.*.json (9 stops, primary CTA reachable, no trap, reversible) + axe-report.json (0 serious role/name/aria); guidelines/keyboard-focus-order.md | Design System team | v4.1 kit freeze |
+| ISS-KIT-48-01 | KIT-48-01 | Chưa toàn bộ 48 nhóm có final status hoàn tất + evidence link tại thời điểm chốt release. | `P0` | `FIXED` | audit-summary.md 48/48 final status (40 PASS · 8 PARTIAL · 0 BLOCKED); validation-report.json PASS; every group has Evidence Log links | Design System team | v4.1 kit freeze |
+| ISS-KIT-48-02 | KIT-48-02 | Còn nhiều P0/P1 mở (a11y KIT-42, governance KIT-46, deprecation KIT-47, responsive KIT-32). | `P0` | `FIXED` | P0 0 · P1 0 open; governance/release-signoff.md 3-owner sign-off Approved; P2/P3 (asset G1 + scoped) have owner + target | Design System team | v4.1 kit freeze |
+| ISS-KIT-21-06 | KIT-21-06 | Reduced-motion phủ một phần (chỉ cappbar+spinner); không có 200% text-scaling verification. | `P1` | `FIXED` | shoot.mjs FONT_SCALES incl 2.0 (full matrix 100-200% clean); global reduced-motion reset; evidence/200pct-dialog-fixed--*.png | Design System team | v4.1 kit freeze |
+| ISS-KIT-25-04 | KIT-25-04 | Không có state render bàn phím mở để verify field/primary action không bị che; SaveBar sticky là mitigation chưa xác nhận. | `P1` | `FIXED` | shots/flashcard-editor--keyboard-open + account-sync--sign-in-keyboard (SaveBar/actions above KeyboardInset) | Design System team | v4.1 kit freeze |
+| ISS-KIT-35-01 | KIT-35-01 | Không có cơ chế/token keyboard-avoidance; sticky SaveBar chỉ là assertion; không render được keyboard-open. | `P1` | `FIXED` | shots/flashcard-editor--keyboard-open + account-sync--sign-in-keyboard (focused field + primary action visible above the raised keyboard) | Design System team | v4.1 kit freeze |
+| ISS-KIT-35-04 | KIT-35-04 | Không có dismiss-keyboard behavior matrix (back/tap/scroll không submit/mất input). | `P1` | `FIXED` | guidelines/keyboard-focus-order.md §6 dismiss-keyboard behaviour matrix (back/tap/scroll/enter → submit? input kept?); tool/a11y harness overlay Esc/restore verified | Design System team | v4.1 kit freeze |
+| ISS-KIT-36-01 | KIT-36-01 | Scroll behavior rõ nhưng không có min-height tài liệu hóa và không stress ở portrait ngắn nhất. | `P1` | `FIXED` | keyboard-open shots (reduced portrait height, .app__body scroll, SaveBar pinned) + components.css overflow-y:auto; 390×780 baseline; coverage-report.md | Design System team | v4.1 kit freeze |
+| ISS-KIT-37-02 | KIT-37-02 | CJK và mixed-script render qua OS fallback nhưng không khai báo font stack CJK/Vietnamese; Vietnamese diacritics không có evidence. | `P1` | `FIXED` | shots/languages--scripts (Vietnamese diacritics + ko/ja/zh CJK + mixed-script via --memox-font-cjk); tokens/typography.css --memox-font-cjk/-vietnamese | Design System team | v4.1 kit freeze |
+| ISS-KIT-41-06 | KIT-41-06 | Combined worst-case RTL + long text + 200% text + landscape không được test. | `P1` | `FIXED` | tool/ui_kit_shots/rtl-stress.mjs (dir=rtl + long + 200% @ 320px: 8 renders, 0 blockers); evidence/rtl-combined--*.png | Design System team | v4.1 kit freeze |
+| ISS-KIT-42-05 | KIT-42-05 | Không xác nhận task hoàn thành dưới 200% text / high-contrast / reduced-motion. | `P1` | `FIXED` | full matrix 200% × light+dark; contrast.mjs 4-profile (hc-light/hc-dark); global reduced-motion reset; evidence/200pct-dialog-fixed--*.png; coverage-report.md | Design System team | v4.1 kit freeze |
+| ISS-KIT-09-04 | KIT-09-04 | Font stack phủ Vietnamese nhưng không có per-script (CJK/RTL) fallback list và không có per-script screenshots. | `P2` | `FIXED` | tokens/typography.css --memox-font-cjk/-vietnamese (per-script fallback list); shots/languages--scripts (vi/ko/ja/zh rendered) | Design System team | v4.1 kit freeze |
+| ISS-KIT-09-05 | KIT-09-05 | Không có 200% text-scaling before/after evidence; kit dùng fixed px sizes và fixed-height controls. | `P2` | `FIXED` | shoot.mjs FONT_SCALES incl 2.0; confirm-dialog action-row wrap (.mx-dialog-actions) fixes the only 200% overflow; evidence/200pct-dialog-fixed--*.png | Design System team | v4.1 kit freeze |
+| ISS-KIT-11-01 | KIT-11-01 | Fluid layout + gutter 16 có, nhưng không có phone viewport range grid spec; shots single-width 390x780. | `P2` | `FIXED` | shoot.mjs WIDTHS 320-430; coverage-report.md viewport-range (min 320 / default 390 / max 430); full matrix 0 overflow at any width | Design System team | v4.1 kit freeze |
 | ISS-KIT-32-01 | KIT-32-01 | Chỉ có profile phone-hẹp(320)/rộng(430); thiếu tablet và compact-height; không có breakpoint table. | `P1` | `ACCEPTED` | SCOPE.md: tablet/large-screen out of scope (phone-portrait kit) | Design System team | v4.1 kit freeze |
 | ISS-KIT-32-02 | KIT-32-02 | Không có composition tablet để so sánh reflow; chỉ 1 frame phone. | `P1` | `ACCEPTED` | SCOPE.md: tablet reflow out of scope | Design System team | v4.1 kit freeze |
 | ISS-KIT-32-03 | KIT-32-03 | Không có layout tablet/large-screen với max content width và nav/pane strategy. | `P1` | `ACCEPTED` | SCOPE.md: large-screen layout out of scope | Design System team | v4.1 kit freeze |

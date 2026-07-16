@@ -21,12 +21,12 @@ Audit type roles, metrics và scaling; raw primitive values thuộc KIT-04.
   - **Evidence mong đợi:** Annotated screenshots chỉ rõ role trên từng vùng.
   - **Severity mặc định nếu không đạt:** `P3`
 
-- [ ] **KIT-09-04 — Font fallback hỗ trợ Vietnamese, CJK và RTL theo scope, không cắt glyph.**
+- [x] **KIT-09-04 — Font fallback hỗ trợ Vietnamese, CJK và RTL theo scope, không cắt glyph.**
   - **Cách kiểm:** VM-08 — thay sample text và inspect baseline/diacritics.
   - **Evidence mong đợi:** Screenshots từng script và danh sách fallback fonts.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-09-05 — Text scaling tới 200% không cắt nội dung hoặc khóa hành động chính.**
+- [x] **KIT-09-05 — Text scaling tới 200% không cắt nội dung hoặc khóa hành động chính.**
   - **Cách kiểm:** VM-08 + VM-07 — tăng text size trên representative components/patterns.
   - **Evidence mong đợi:** Before/after evidence và issue list.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -49,14 +49,16 @@ Audit type roles, metrics và scaling; raw primitive values thuộc KIT-04.
 | KIT-09-04 | i18n per-script fallback documented; per-script rendered shots pending CI (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-09-05 | shoot.mjs renders font-scale up to 1.5 + i18n 200% guidance; committed 200% shots pending CI (CDN blocked locally) | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-09-06 | guidelines/component-constraints-matrix.md §1 text-wrap/truncation matrix | FIXED | Remediation — audit v5 fix loop. |
+| KIT-09-04 | tokens/typography.css:18-33 (--memox-font-cjk + --memox-font-vietnamese fallback stacks); shots/languages--scripts--{light,dark}.png (vi + ko + ja + zh rendered qua --memox-font-cjk); shots/flashcard-editor--keyboard-open (Korean), flashcard-editor additional-translation (Vietnamese) | FIXED | Per-script fallback stack đã khai báo + wire; Vietnamese diacritics + CJK (Korean/Japanese/Chinese) + mixed-script render không tofu. Xem governance/coverage-report.md. |
+| KIT-09-05 | tool/ui_kit_shots/shoot.mjs FONT_SCALES gồm 2.0; full matrix 320-430px × 100-200% sạch sau khi wrap confirm-dialog action row (components.css .mx-dialog-actions + kit-helpers.jsx Dialog); evidence/200pct-dialog-fixed--*.png | FIXED | 200% text scaling: overflow duy nhất (nút dialog trên 320px) đã fix; không cắt nội dung, không khóa hành động chính. Xem governance/coverage-report.md. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
+Final status: PASS
 Open P0: 
 Open P1: 
-Open P2: ISS-KIT-09-04, ISS-KIT-09-05
+Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16

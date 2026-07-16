@@ -31,7 +31,7 @@ Audit accessibility ở cấp component; end-to-end task thuộc KIT-42.
   - **Evidence mong đợi:** Target/alternative report.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-21-06 — Component chịu text scaling 200% và reduced motion.**
+- [x] **KIT-21-06 — Component chịu text scaling 200% và reduced motion.**
   - **Cách kiểm:** VM-08 + VM-15 — run stress profiles.
   - **Evidence mong đợi:** Accessibility profile screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -49,13 +49,14 @@ Audit accessibility ở cấp component; end-to-end task thuộc KIT-42.
 | KIT-21-02 | components.css text-input :focus-visible ring | FIXED | Remediation — audit v5 fix loop. |
 | KIT-21-03 | aria-expanded on collapsibles + role=status/aria-busy on SyncBlock + MxBottomNav aria-current | FIXED | Remediation — audit v5 fix loop. |
 | KIT-21-06 | global reduced-motion reset done; 200% text-scaling shots pending CI | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-21-06 | tool/ui_kit_shots/shoot.mjs FONT_SCALES incl 2.0; full matrix 100-200% × 320-430px sạch sau khi wrap dialog action row; global reduced-motion reset (motion.css); evidence/200pct-dialog-fixed--*.png | FIXED | Component chịu 200% text scaling (không cắt/khóa) + reduced-motion reset toàn cục. Xem governance/coverage-report.md. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PASS
 Open P0: 
-Open P1: ISS-KIT-21-06
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)

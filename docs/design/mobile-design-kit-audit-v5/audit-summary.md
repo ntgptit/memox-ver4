@@ -3,7 +3,7 @@
 - [x] Đã đọc và áp dụng `audit-rules.md`.
 - [x] Verification methods được dùng thống nhất.
 
-Sau 2 vòng fix loop: **33 PASS · 7 PARTIAL · 8 BLOCKED** / 48 nhóm. Khắc phục 119 issue: FIXED 91 · ACCEPTED 14 (scoped) · PARTIAL 14 · OPEN 0. Còn mở ảnh hưởng gate: P0 3 · P1 8. `[x]` = nhóm PASS (mọi mục đạt).
+Sau 3 vòng fix loop: **40 PASS · 8 PARTIAL · 0 BLOCKED** / 48 nhóm. Khắc phục 119 issue: FIXED 105 · ACCEPTED 14 (scoped) · PARTIAL 0 · OPEN 0. Còn mở ảnh hưởng gate: P0 0 · P1 0. `[x]` = nhóm PASS (mọi mục đạt); PARTIAL = còn ACCEPTED item (0 issue mở).
 
 - [x] [KIT-01 — Inventory và phạm vi](./KIT-01-inventory-va-pham-vi.md) — PASS
 - [x] [KIT-02 — Source of Truth](./KIT-02-source-of-truth.md) — PASS
@@ -13,7 +13,7 @@ Sau 2 vòng fix loop: **33 PASS · 7 PARTIAL · 8 BLOCKED** / 48 nhóm. Khắc p
 - [x] [KIT-06 — Component Tokens](./KIT-06-component-tokens.md) — PASS
 - [x] [KIT-07 — Theme Architecture](./KIT-07-theme-architecture.md) — PASS
 - [x] [KIT-08 — Color Contrast và Non-color Cues](./KIT-08-color-contrast-va-non-color-cues.md) — PASS
-- [ ] [KIT-09 — Typography System](./KIT-09-typography-system.md) — PARTIAL
+- [x] [KIT-09 — Typography System](./KIT-09-typography-system.md) — PASS
 - [x] [KIT-10 — Spacing và Sizing](./KIT-10-spacing-va-sizing.md) — PASS
 - [ ] [KIT-11 — Layout và Grid Baseline](./KIT-11-layout-va-grid-baseline.md) — PARTIAL
 - [x] [KIT-12 — Shape, Border và Elevation](./KIT-12-shape-border-va-elevation.md) — PASS
@@ -25,11 +25,11 @@ Sau 2 vòng fix loop: **33 PASS · 7 PARTIAL · 8 BLOCKED** / 48 nhóm. Khắc p
 - [x] [KIT-18 — Component States](./KIT-18-component-states.md) — PASS
 - [ ] [KIT-19 — Interaction Specification](./KIT-19-interaction-specification.md) — PARTIAL
 - [x] [KIT-20 — Content Rules](./KIT-20-content-rules.md) — PASS
-- [ ] [KIT-21 — Component Accessibility](./KIT-21-component-accessibility.md) — BLOCKED
+- [x] [KIT-21 — Component Accessibility](./KIT-21-component-accessibility.md) — PASS
 - [x] [KIT-22 — Composition Rules](./KIT-22-composition-rules.md) — PASS
 - [x] [KIT-23 — Screen Structure Patterns](./KIT-23-screen-structure-patterns.md) — PASS
 - [x] [KIT-24 — Navigation Patterns](./KIT-24-navigation-patterns.md) — PASS
-- [ ] [KIT-25 — Form Patterns](./KIT-25-form-patterns.md) — BLOCKED
+- [x] [KIT-25 — Form Patterns](./KIT-25-form-patterns.md) — PASS
 - [x] [KIT-26 — Search, Filter và Sort](./KIT-26-search-filter-va-sort.md) — PASS
 - [x] [KIT-27 — Selection và Bulk Actions](./KIT-27-selection-va-bulk-actions.md) — PASS
 - [x] [KIT-28 — Feedback Patterns](./KIT-28-feedback-patterns.md) — PASS
@@ -39,26 +39,26 @@ Sau 2 vòng fix loop: **33 PASS · 7 PARTIAL · 8 BLOCKED** / 48 nhóm. Khắc p
 - [ ] [KIT-32 — Responsive và Adaptive Layout](./KIT-32-responsive-va-adaptive-layout.md) — PARTIAL
 - [ ] [KIT-33 — Platform Adaptation](./KIT-33-platform-adaptation.md) — PARTIAL
 - [ ] [KIT-34 — Safe Area và System UI](./KIT-34-safe-area-va-system-ui.md) — PARTIAL
-- [ ] [KIT-35 — Keyboard và Input Environment](./KIT-35-keyboard-va-input-environment.md) — BLOCKED
-- [ ] [KIT-36 — Orientation và Device Conditions](./KIT-36-orientation-va-device-conditions.md) — BLOCKED
-- [ ] [KIT-37 — Localization và RTL](./KIT-37-localization-va-rtl.md) — BLOCKED
+- [ ] [KIT-35 — Keyboard và Input Environment](./KIT-35-keyboard-va-input-environment.md) — PARTIAL
+- [ ] [KIT-36 — Orientation và Device Conditions](./KIT-36-orientation-va-device-conditions.md) — PARTIAL
+- [x] [KIT-37 — Localization và RTL](./KIT-37-localization-va-rtl.md) — PASS
 - [ ] [KIT-38 — Motion và Transition](./KIT-38-motion-va-transition.md) — PARTIAL
 - [x] [KIT-39 — Dark Mode và High-contrast QA](./KIT-39-dark-mode-va-high-contrast-qa.md) — PASS
 - [x] [KIT-40 — Visual Consistency](./KIT-40-visual-consistency.md) — PASS
-- [ ] [KIT-41 — Edge Cases và Stress Test](./KIT-41-edge-cases-va-stress-test.md) — BLOCKED
-- [ ] [KIT-42 — Accessibility End-to-End](./KIT-42-accessibility-end-to-end.md) — BLOCKED
+- [x] [KIT-41 — Edge Cases và Stress Test](./KIT-41-edge-cases-va-stress-test.md) — PASS
+- [x] [KIT-42 — Accessibility End-to-End](./KIT-42-accessibility-end-to-end.md) — PASS
 - [x] [KIT-43 — Component Documentation](./KIT-43-component-documentation.md) — PASS
 - [x] [KIT-44 — Pattern Documentation](./KIT-44-pattern-documentation.md) — PASS
 - [x] [KIT-45 — Design Handoff Completeness](./KIT-45-design-handoff-completeness.md) — PASS
 - [x] [KIT-46 — Governance và Ownership](./KIT-46-governance-va-ownership.md) — PASS
 - [x] [KIT-47 — Deprecation và Duplication](./KIT-47-deprecation-va-duplication.md) — PASS
-- [ ] [KIT-48 — Release Readiness](./KIT-48-release-readiness.md) — BLOCKED
+- [x] [KIT-48 — Release Readiness](./KIT-48-release-readiness.md) — PASS
 
 ## Release gate
 
-- [ ] Không còn P0. (3 mở)
-- [ ] Không còn P1. (8 mở)
+- [x] Không còn P0.
+- [x] Không còn P1.
 - [x] P2/P3 có owner và target.
 - [x] `validation-report.json` là PASS (structural).
 - [x] `verify:ui-kit` PASSED (drift + contrast 4-profile + parity 92 comp + 18/18 tests + canonical shots).
-- [ ] KIT-48 đã sign-off. (KIT-48 = BLOCKED)
+- [x] KIT-48 đã sign-off. (KIT-48 = PASS)

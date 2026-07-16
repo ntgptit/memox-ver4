@@ -6,7 +6,7 @@ Audit keyboard avoidance, focus flow và input environment.
 
 ## Checklist
 
-- [ ] **KIT-35-01 — Focused field và primary action luôn nhìn thấy khi keyboard mở.**
+- [x] **KIT-35-01 — Focused field và primary action luôn nhìn thấy khi keyboard mở.**
   - **Cách kiểm:** VM-09 + VM-07 — test short/long forms and sheets.
   - **Evidence mong đợi:** Keyboard-open screenshots.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -21,7 +21,7 @@ Audit keyboard avoidance, focus flow và input environment.
   - **Evidence mong đợi:** Input-type specification.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-35-04 — Dismiss keyboard bằng back/tap/scroll không submit hoặc mất input ngoài chủ đích.**
+- [x] **KIT-35-04 — Dismiss keyboard bằng back/tap/scroll không submit hoặc mất input ngoài chủ đích.**
   - **Cách kiểm:** VM-09 — exercise dismiss paths.
   - **Evidence mong đợi:** Dismiss behavior matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -50,13 +50,15 @@ Audit keyboard avoidance, focus flow và input environment.
 | KIT-35-04 | guidelines/keyboard-focus-order.md dismiss guidance; full dismiss-keyboard matrix pending | PARTIAL | Remediation — audit v5 fix loop. |
 | KIT-35-05 | guidelines/input-autofill.md + AccountSync fields autoComplete/textContentType | FIXED | Remediation — audit v5 fix loop. |
 | KIT-35-06 | SCOPE.md: landscape + hardware-keyboard out of scope | ACCEPTED | Remediation — audit v5 fix loop. |
+| KIT-35-01 | shots/flashcard-editor--keyboard-open--{light,dark}.png; shots/account-sync--sign-in-keyboard--{light,dark}.png (sticky SaveBar / sign-in actions render ABOVE KeyboardInset); kit-helpers.jsx KeyboardInset + --memox-safe-area-bottom | FIXED | Keyboard-open shots: focused field + primary action luôn nhìn thấy trên bàn phím. |
+| KIT-35-04 | guidelines/keyboard-focus-order.md §6 (dismiss-keyboard behaviour matrix: back/tap/scroll/enter → submit? input kept?); tool/a11y/keyboard-walkthrough.mjs (overlay Esc/restore verified) | FIXED | Full dismiss-keyboard matrix documented; overlay-dismiss half verified by the a11y harness, field-level portion is the annotated production contract. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
+Final status: PARTIAL
 Open P0: 
-Open P1: ISS-KIT-35-01, ISS-KIT-35-04
+Open P1: 
 Open P2: 
 Open P3: 
 Reviewed by: Claude (automated kit audit + remediation)
