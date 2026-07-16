@@ -40,7 +40,7 @@
       'reminder.permission.cta': 'Open Settings',
       'reminder.permission.dismiss': 'Not now',
       // subdeck-list / shared
-      'subdeck.offline': 'Offline · showing saved subdecks. Last synced {rel}.',
+      'subdeck.offline': 'Offline · showing saved decks. Last synced {rel}.',
       'subdeck.notFound.title': 'This deck no longer exists',
       'subdeck.notFound.body': 'It may have been deleted or moved on another device. Head back to your library to keep studying.',
       'subdeck.notFound.cta': 'Back to Library',

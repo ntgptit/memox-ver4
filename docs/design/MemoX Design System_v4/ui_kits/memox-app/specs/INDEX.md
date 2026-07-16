@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | dashboard | Today | `dashboard.md` | 8 |
 | library | Library | `library.md` | 12 |
-| subdeck-list | Subdeck List | `subdeck-list.md` | 15 |
+| subdeck-list | Nested Decks | `subdeck-list.md` | 15 |
 | flashcard-list | Flashcard List | `flashcard-list.md` | 16 |
 | deck-settings | Deck Settings | `deck-settings.md` | 5 |
 | deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 1 |

@@ -1,14 +1,15 @@
-/* Subdeck List fixtures. Domain: Deck › Subdeck (NO cards on this screen).
-   Reuses the same subdeck shape as the Library so the shared SubdeckCard renders
-   identically: { name, cards, due|new|upToDate, progress }. */
+/* Fixtures for the child-deck list screen (NO cards on this screen).
+   ONE Deck model: these are child decks (parentId = their parent deck's id) — the SAME Deck
+   shape as a root deck, so the shared DeckCard renders them identically:
+   { id, parentId, name, cards, due|new|upToDate, children, progress }. */
 (function () {
-// A subdeck IS a deck one level down — same shape as a top-level deck (icon + tone + …).
+// Child decks one level down — same Deck shape as a root deck, with parentId set.
 const SUBDECKS = [
-  { icon: 'waving_hand', tone: 'accent', name: 'Greetings & introductions', cards: 42, due: 8, progress: 82 },
-  { icon: 'numbers', tone: 'accent', name: 'Numbers & counting', cards: 55, upToDate: true, progress: 100 },
-  { icon: 'diversity_3', tone: 'accent', name: 'Family & relationships', cards: 38, new: 6, progress: 24 },
-  { icon: 'restaurant', tone: 'accent', name: 'Food & dining', cards: 47, due: 15, progress: 51 },
-  { icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, progress: 100 },
+  { id: 'd-topik1-greetings', parentId: 'd-topik1', icon: 'waving_hand', tone: 'accent', name: 'Greetings & introductions', cards: 42, due: 8, children: 0, progress: 82 },
+  { id: 'd-topik1-numbers', parentId: 'd-topik1', icon: 'numbers', tone: 'accent', name: 'Numbers & counting', cards: 55, upToDate: true, children: 0, progress: 100 },
+  { id: 'd-topik1-family', parentId: 'd-topik1', icon: 'diversity_3', tone: 'accent', name: 'Family & relationships', cards: 38, new: 6, children: 0, progress: 24 },
+  { id: 'd-topik1-food', parentId: 'd-topik1', icon: 'restaurant', tone: 'accent', name: 'Food & dining', cards: 47, due: 15, children: 0, progress: 51 },
+  { id: 'd-topik1-directions', parentId: 'd-topik1', icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, children: 0, progress: 100 },
 ];
 const DENSE = Array.from({ length: 20 }, (_, i) => {
   const b = SUBDECKS[i % SUBDECKS.length];

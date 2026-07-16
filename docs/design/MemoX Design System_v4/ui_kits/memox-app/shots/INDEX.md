@@ -37,7 +37,7 @@ always matches the 178-state matrix (26 screens).
 | loading | `library--loading--light.png` | `library--loading--dark.png` |
 | offline | `library--offline--light.png` | `library--offline--dark.png` |
 
-## subdeck-list — Subdeck List
+## subdeck-list — Nested Decks
 
 | State | Light | Dark |
 | --- | --- | --- |

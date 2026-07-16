@@ -1,12 +1,16 @@
-/* Library fixtures + status helpers (domain: Deck › Subdeck › Card). */
+/* Library fixtures + status helpers.
+   ONE Deck model (domain: Library › Deck › Card). A deck's `parentId` is `null` at the root
+   and its parent deck's `id` one level down (what the UI shows as a nested deck). There is NO
+   separate "Subdeck" object — a "subdeck" is just a Deck with a non-null parentId. `children`
+   is the count of child decks. id/parentId/children are not rendered (parity-neutral data). */
 (function () {
 const DECKS = [
-  { icon: 'translate', tone: 'accent', name: 'Korean TOPIK I', cards: 486, due: 48, subdecks: 5, progress: 64 },
-  { icon: 'menu_book', tone: 'accent', name: 'Basic Grammar', cards: 180, new: 23, subdecks: 0, progress: 40 },
-  { icon: 'record_voice_over', tone: 'accent', name: 'Daily Conversation', cards: 150, upToDate: true, subdecks: 3, progress: 100 },
-  { icon: 'history_edu', tone: 'accent', name: 'Hanja Roots', cards: 320, due: 12, subdecks: 0, progress: 72 },
-  { icon: 'travel_explore', tone: 'accent', name: 'Travel Phrases', cards: 96, new: 8, subdecks: 2, progress: 30 },
-  { icon: 'work', tone: 'accent', name: 'Business Korean', cards: 210, upToDate: true, subdecks: 0, progress: 100 },
+  { id: 'd-topik1', parentId: null, icon: 'translate', tone: 'accent', name: 'Korean TOPIK I', cards: 486, due: 48, children: 5, progress: 64 },
+  { id: 'd-grammar', parentId: null, icon: 'menu_book', tone: 'accent', name: 'Basic Grammar', cards: 180, new: 23, children: 0, progress: 40 },
+  { id: 'd-conversation', parentId: null, icon: 'record_voice_over', tone: 'accent', name: 'Daily Conversation', cards: 150, upToDate: true, children: 3, progress: 100 },
+  { id: 'd-hanja', parentId: null, icon: 'history_edu', tone: 'accent', name: 'Hanja Roots', cards: 320, due: 12, children: 0, progress: 72 },
+  { id: 'd-travel', parentId: null, icon: 'travel_explore', tone: 'accent', name: 'Travel Phrases', cards: 96, new: 8, children: 2, progress: 30 },
+  { id: 'd-business', parentId: null, icon: 'work', tone: 'accent', name: 'Business Korean', cards: 210, upToDate: true, children: 0, progress: 100 },
 ];
 const DENSE = Array.from({ length: 22 }, (_, i) => {
   const b = DECKS[i % DECKS.length];
@@ -16,13 +20,14 @@ const DENSE = Array.from({ length: 22 }, (_, i) => {
     cards: i === 1 ? 1280 : b.cards, due: i === 0 ? 128 : b.due,
   };
 });
-// A subdeck IS a deck one level down — same shape as a top-level deck (icon + tone + …).
+// Child decks one level down — the SAME Deck shape, just parentId set to their parent deck.
+// (The `SUBDECKS` export name is kept for the frozen subdeck-list feature wiring / node ids.)
 const SUBDECKS = [
-  { icon: 'waving_hand', tone: 'accent', name: 'Greetings & introductions', cards: 42, due: 8, progress: 82 },
-  { icon: 'numbers', tone: 'accent', name: 'Numbers & counting', cards: 55, upToDate: true, progress: 100 },
-  { icon: 'diversity_3', tone: 'accent', name: 'Family & relationships', cards: 38, new: 6, progress: 24 },
-  { icon: 'restaurant', tone: 'accent', name: 'Food & dining', cards: 47, due: 15, progress: 51 },
-  { icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, progress: 100 },
+  { id: 'd-topik1-greetings', parentId: 'd-topik1', icon: 'waving_hand', tone: 'accent', name: 'Greetings & introductions', cards: 42, due: 8, children: 0, progress: 82 },
+  { id: 'd-topik1-numbers', parentId: 'd-topik1', icon: 'numbers', tone: 'accent', name: 'Numbers & counting', cards: 55, upToDate: true, children: 0, progress: 100 },
+  { id: 'd-topik1-family', parentId: 'd-topik1', icon: 'diversity_3', tone: 'accent', name: 'Family & relationships', cards: 38, new: 6, children: 0, progress: 24 },
+  { id: 'd-topik1-food', parentId: 'd-topik1', icon: 'restaurant', tone: 'accent', name: 'Food & dining', cards: 47, due: 15, children: 0, progress: 51 },
+  { id: 'd-topik1-directions', parentId: 'd-topik1', icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, children: 0, progress: 100 },
 ];
 
 // Semantic status text: Due→warning, New→info(accent), Up-to-date→success.

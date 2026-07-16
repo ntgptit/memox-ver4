@@ -6,7 +6,7 @@ function DeckDeleteConfirmDialog() {
   return (
     <window.ConfirmDialog align="center" scrimNode="deck-settings/delete-scrim"
       icon="delete" tone="error" title="Delete this deck?"
-      text="Deleting removes every subdeck, card and review state inside. This can't be undone."
+      text="Deleting removes every nested deck, card and review state inside. This can't be undone."
       dialogNode="deck-settings/delete-dialog"
       actions={<React.Fragment>
         <MxButton variant="ghost" block node="deck-settings/delete-cancel">Cancel</MxButton>
