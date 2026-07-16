@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `MxSearchDock`, `window.Breadcrumb`, `window.Note`, `window.StatusCardRow`
+`MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `MxSearchDock`, `MxTextField`, `window.ActionCallout`, `window.Breadcrumb`, `window.Note`, `window.StatusCardRow`
 
-## State matrix (contract §6) — 16 states, each rendered light + dark
+## State matrix (contract §6) — 19 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -40,10 +40,13 @@ composition; the component map below is the authoritative set of pieces in play.
 | 10 | `add-sheet` |
 | 11 | `card-actions` |
 | 12 | `delete-confirm` |
-| 13 | `loading` |
-| 14 | `offline` |
-| 15 | `error` |
-| 16 | `not-found` |
+| 13 | `convert-dialog` |
+| 14 | `convert-submitting` |
+| 15 | `convert-failure` |
+| 16 | `loading` |
+| 17 | `offline` |
+| 18 | `error` |
+| 19 | `not-found` |
 
 ## Handoff notes
 

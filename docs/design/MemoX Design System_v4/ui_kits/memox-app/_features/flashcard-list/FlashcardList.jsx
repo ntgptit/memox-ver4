@@ -5,7 +5,7 @@
    Reuses shared StatusCardRow for every card row. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink, MxSearchDock, MxChip } = NS;
+const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink, MxSearchDock, MxChip, MxTextField } = NS;
 const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton, ConfirmDialog } = window;
 
 function FlashcardList({ state = 'loaded' }) {
@@ -287,6 +287,39 @@ function FlashcardList({ state = 'loaded' }) {
             <MxButton variant="ghost" block node="flashcard-list/delete-cancel">Cancel</MxButton>
             <MxButton variant="primary" danger block node="flashcard-list/delete-ok">Delete</MxButton>
           </React.Fragment>} />
+      </React.Fragment>
+    );
+  }
+
+  /* convert-* — Leaf → Parent conversion (§14). A leaf that already holds cards can't get a child
+     directly; the overflow "Organise into nested decks" opens a dialog that moves the existing
+     cards into a first nested deck. On success the deck becomes a Parent (card list gone). The
+     dialog carries a name field, so it's a Scrim+Sheet (not the icon/text ConfirmDialog). */
+  if (state === 'convert-dialog' || state === 'convert-submitting' || state === 'convert-failure') {
+    const submitting = state === 'convert-submitting';
+    const failure = state === 'convert-failure';
+    return (
+      <React.Fragment>{base}
+        <Scrim align="center" node="flashcard-list/convert-scrim">
+          <Sheet title="Organise into nested decks?" node="flashcard-list/convert-dialog">
+            {failure ? (
+              <window.ActionCallout node="flashcard-list/convert-error" tone="error" icon="error"
+                text="Couldn’t organise the deck. Your nested deck name is still here."
+                action={<MxButton variant="primary" size="sm" node="flashcard-list/convert-retry">Try again</MxButton>} />
+            ) : null}
+            <p style={{ margin: 0, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>This deck currently contains 42 cards. Create a nested deck to keep those cards together.</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', marginTop: 'var(--memox-space-3)' }}>
+              <SectionLabel>Nested deck name *</SectionLabel>
+              <div style={{ display: 'flex', alignItems: 'center', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+                <MxTextField placeholder="Name the nested deck" defaultValue="Vocabulary" autoFocus node="flashcard-list/convert-name" />
+              </div>
+            </div>
+            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-4)' }}>
+              <MxButton variant="ghost" disabled={submitting} node="flashcard-list/convert-cancel">Cancel</MxButton>
+              <MxButton variant="primary" disabled={submitting} node="flashcard-list/convert-ok">{submitting ? 'Organising…' : 'Create and organise'}</MxButton>
+            </div>
+          </Sheet>
+        </Scrim>
       </React.Fragment>
     );
   }

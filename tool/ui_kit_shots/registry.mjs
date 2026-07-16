@@ -33,7 +33,7 @@ export const SCREENS = [
   { id: 'flashcard-list', title: 'Flashcard List', group: 'FlashcardList',
     archetype: 'List', objective: 'Browse, filter and manage the cards in a final deck.', cta: 'Add card',
     note: 'Browse, filter and manage flashcards in the current final deck (cards only).',
-    states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'loading', 'offline', 'error', 'not-found'],
+    states: ['loaded', 'dense', 'minimum-data', 'long-text', 'empty', 'search', 'no-results', 'filter-applied', 'selection', 'add-sheet', 'card-actions', 'delete-confirm', 'convert-dialog', 'convert-submitting', 'convert-failure', 'loading', 'offline', 'error', 'not-found'],
     sample: null },
   { id: 'deck-settings', title: 'Deck Settings', group: 'DeckSettings',
     archetype: 'Settings', objective: 'Manage a deck’s metadata and lifecycle actions.', cta: 'Save',
