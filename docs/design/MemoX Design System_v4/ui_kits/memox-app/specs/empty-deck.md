@@ -22,7 +22,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxIconTile`, `MxLink`, `MxScaffold`, `window.CreateDeckDialog`
+`MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxLink`, `MxScaffold`, `window.CreateDeckDialog`
 
 ## State matrix (contract §6) — 3 states, each rendered light + dark
 

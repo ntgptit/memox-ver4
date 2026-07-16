@@ -68,7 +68,7 @@ function CreateDeckDialog({ state = 'root-default' }) {
   return (
     <React.Fragment>
       {backdrop}
-      <Scrim align={keyboard ? 'end' : 'center'} node="create-deck-dialog/scrim">
+      <Scrim align="end" node="create-deck-dialog/scrim">
         <Sheet title="Create deck" node="create-deck-dialog/sheet">
           <div style={{ marginTop: 'calc(-1 * var(--memox-space-2))', marginBottom: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }} data-mx-node="create-deck-dialog/context">
             {nested ? 'Inside Korean TOPIK I' : 'Inside Library'}

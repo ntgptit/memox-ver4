@@ -300,7 +300,7 @@ function FlashcardList({ state = 'loaded' }) {
     const failure = state === 'convert-failure';
     return (
       <React.Fragment>{base}
-        <Scrim align="center" node="flashcard-list/convert-scrim">
+        <Scrim align="end" node="flashcard-list/convert-scrim">
           <Sheet title="Organise into nested decks?" node="flashcard-list/convert-dialog">
             {failure ? (
               <window.ActionCallout node="flashcard-list/convert-error" tone="error" icon="error"

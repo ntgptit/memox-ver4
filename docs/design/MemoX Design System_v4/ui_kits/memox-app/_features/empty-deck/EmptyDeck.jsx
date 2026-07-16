@@ -7,8 +7,8 @@
    States: default · create-nested-dialog · import-target. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxButton, MxIconButton, MxIconTile, MxLink } = NS;
-const { Scrim, Sheet, MenuItem } = window;
+const { MxScaffold, MxContextualAppBar, MxButton, MxIconButton, MxLink } = NS;
+const { Scrim, Sheet, MenuItem, EmptyState } = window;
 
 const nestedBar = (
   <MxContextualAppBar variant="nested" node="empty-deck/appbar" title="Korean TOPIK I"
@@ -19,21 +19,17 @@ const nestedBar = (
 );
 
 function Content() {
+  // Shared EmptyState (proven at 200% font / narrow width — scrolls rather than clipping).
   return (
-    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: 'var(--memox-space-5)', textAlign: 'center', padding: '0 var(--memox-space-4)' }}>
-      <MxIconTile icon="inbox" tone="accent" size="lg" />
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
-        <h1 data-mx-node="empty-deck/heading" style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>This deck is empty</h1>
-        <p style={{ margin: 0, fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', maxWidth: 'var(--memox-size-4xl)' }}>Add cards directly, or organise this deck into smaller decks.</p>
-      </div>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: '100%', maxWidth: 'var(--memox-size-4xl)' }}>
+    <EmptyState node="empty-deck/empty" icon="inbox" title="This deck is empty"
+      text="Add cards directly, or organise this deck into smaller decks."
+      action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: '100%', maxWidth: 'var(--memox-size-4xl)' }}>
         <MxButton variant="primary" icon="add" block node="empty-deck/add-card">Add card</MxButton>
         <MxButton variant="secondary" icon="account_tree" block node="empty-deck/create-nested">Create nested deck</MxButton>
         <div style={{ display: 'flex', justifyContent: 'center', marginTop: 'var(--memox-space-1)' }}>
           <MxLink size="sm" icon="upload_file" trailingIcon={null} node="empty-deck/import">Import cards</MxLink>
         </div>
-      </div>
-    </div>
+      </div>} />
   );
 }
 
