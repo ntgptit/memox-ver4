@@ -243,6 +243,35 @@ function DialogInput({ label, placeholder, value }) {
   );
 }
 
+/* Centered modal FORM dialog (create deck / organise / rename). Unlike a bottom Sheet it stays a
+   centered card; unlike the icon/text Dialog it hosts a left-aligned form body. Caps at 85% of the
+   frame and scrolls its own body on overflow (large font / long content) so it never grows past the
+   viewport — the correct fix for a tall dialog, not switching to a bottom sheet. Title is a real
+   heading (title-case), NOT an ALL-CAPS label. */
+function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDismiss, keyboard = false }) {
+  const card = (
+    <div data-mx-node={node} role="dialog" aria-modal="true" style={{ width: '100%', maxWidth: 'var(--memox-size-5xl)', maxHeight: '100%', overflowY: 'auto', background: 'var(--memox-surface)', color: 'var(--memox-text)', borderRadius: 'var(--memox-radius-xl)', padding: 'var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
+        <div role="heading" aria-level={1} style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
+        {subtitle ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{subtitle}</div> : null}
+      </div>
+      {children}
+      {actions ? <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-1)' }}>{actions}</div> : null}
+    </div>
+  );
+  // keyboard-open: card centered in the space ABOVE a pinned on-screen keyboard (proves the CTA
+  // is never covered). Otherwise a plain centered modal that caps at the frame and scrolls.
+  if (keyboard) {
+    return (
+      <div data-mx-node={scrimNode} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--memox-space-5)', overflow: 'hidden' }}>{card}</div>
+        <KeyboardInset node={(node || 'dialog') + '-keyboard'} />
+      </div>
+    );
+  }
+  return <Scrim align="center" node={scrimNode} onDismiss={onDismiss}>{card}</Scrim>;
+}
+
 /* Inline tinted callout — icon + text on a soft tonal background. */
 function Note({ icon, text, tone = 'accent' }) {
   const map = {
@@ -295,4 +324,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, FormDialog, Note, SectionLabel, Ring, ChoiceOption });

@@ -8,16 +8,17 @@
    Node prefix: create-deck-firstrun/*. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxButton, MxTextField, MxLink, MxIconButton } = NS;
+const { MxScaffold, MxContextualAppBar, MxButton, MxLink, MxIconButton } = NS;
 const { SectionLabel, EmptyState } = window;
 
-// A labelled field: bare MxTextField seated in the kit's control container (MxTextField is bare).
-function Field({ label, value, placeholder, error, autoFocus, node, trailing }) {
+// A labelled field: a single control box holding the value/placeholder (static in the kit — no
+// forced focus ring); long text truncates with an ellipsis. Optional error line + trailing icon.
+function Field({ label, value, placeholder, error, node, trailing }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
       <SectionLabel>{label}</SectionLabel>
-      <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: error ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
-        <MxTextField placeholder={placeholder} defaultValue={value} autoFocus={autoFocus} node={node} />
+      <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: error ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+        <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: value ? 'var(--memox-text)' : 'var(--memox-text-tertiary)' }}>{value || placeholder}</span>
         {trailing ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>{trailing}</span> : null}
       </div>
       {error ? <div className="field-group__error" data-mx-node={node + '-error'} role="alert">{error}</div> : null}
@@ -102,8 +103,8 @@ function CreateDeckFirstRun({ state = 'landing' }) {
         {invalid ? <div className="field-group__error" data-mx-node="create-deck-firstrun/s1-learn-error" role="alert">Choose a language to learn.</div> : null}
         <SelectRow label="Show meanings in *" value="Vietnamese" node="create-deck-firstrun/s1-native" />
         <p style={{ margin: 0, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>You can add more language pairs later.</p>
-        <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
-          <MxButton variant="primary" disabled={invalid} node="create-deck-firstrun/s1-continue">Continue</MxButton>
+        <div style={{ marginTop: 'auto' }}>
+          <MxButton variant="primary" block disabled={invalid} node="create-deck-firstrun/s1-continue">Continue</MxButton>
         </div>
       </MxScaffold>
     );
@@ -158,7 +159,7 @@ function CreateDeckFirstRun({ state = 'landing' }) {
       </div>
 
       <SectionLabel>REQUIRED</SectionLabel>
-      <Field label="Deck name *" value={deckName} placeholder="Name your deck" error={nameError} autoFocus node="create-deck-firstrun/name" />
+      <Field label="Deck name *" value={deckName} placeholder="Name your deck" error={nameError} node="create-deck-firstrun/name" />
 
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <SectionLabel>OPTIONAL</SectionLabel>
@@ -168,8 +169,8 @@ function CreateDeckFirstRun({ state = 'landing' }) {
         <Field label="Description" value="Vocabulary and grammar for TOPIK I" placeholder="Add a description" node="create-deck-firstrun/description" />
       ) : null}
 
-      <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'flex-end' }}>
-        <MxButton variant="primary" icon={submitting ? undefined : 'add'} disabled={submitting} node="create-deck-firstrun/create-deck">
+      <div style={{ marginTop: 'auto' }}>
+        <MxButton variant="primary" icon={submitting ? undefined : 'add'} block disabled={submitting} node="create-deck-firstrun/create-deck">
           {submitting ? 'Creating…' : 'Create deck'}
         </MxButton>
       </div>

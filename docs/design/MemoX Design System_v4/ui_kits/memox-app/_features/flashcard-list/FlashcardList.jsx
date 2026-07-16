@@ -5,8 +5,8 @@
    Reuses shared StatusCardRow for every card row. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink, MxSearchDock, MxChip, MxTextField } = NS;
-const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton, ConfirmDialog } = window;
+const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink, MxSearchDock, MxChip } = NS;
+const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton, ConfirmDialog, FormDialog } = window;
 
 function FlashcardList({ state = 'loaded' }) {
   const FL = window.MemoXFlashcardList;
@@ -298,28 +298,29 @@ function FlashcardList({ state = 'loaded' }) {
   if (state === 'convert-dialog' || state === 'convert-submitting' || state === 'convert-failure') {
     const submitting = state === 'convert-submitting';
     const failure = state === 'convert-failure';
+    const actions = (
+      <React.Fragment>
+        <MxButton variant="ghost" disabled={submitting} node="flashcard-list/convert-cancel">Cancel</MxButton>
+        <MxButton variant="primary" disabled={submitting} node="flashcard-list/convert-ok">{submitting ? 'Organising…' : 'Create and organise'}</MxButton>
+      </React.Fragment>
+    );
     return (
       <React.Fragment>{base}
-        <Scrim align="end" node="flashcard-list/convert-scrim">
-          <Sheet title="Organise into nested decks?" node="flashcard-list/convert-dialog">
-            {failure ? (
-              <window.ActionCallout node="flashcard-list/convert-error" tone="error" icon="error"
-                text="Couldn’t organise the deck. Your nested deck name is still here."
-                action={<MxButton variant="primary" size="sm" node="flashcard-list/convert-retry">Try again</MxButton>} />
-            ) : null}
-            <p style={{ margin: 0, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>This deck currently contains 42 cards. Create a nested deck to keep those cards together.</p>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', marginTop: 'var(--memox-space-3)' }}>
-              <SectionLabel>Nested deck name *</SectionLabel>
-              <div style={{ display: 'flex', alignItems: 'center', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
-                <MxTextField placeholder="Name the nested deck" defaultValue="Vocabulary" autoFocus node="flashcard-list/convert-name" />
-              </div>
+        <FormDialog title="Organise into nested decks?" node="flashcard-list/convert-dialog"
+          scrimNode="flashcard-list/convert-scrim" actions={actions}>
+          {failure ? (
+            <window.ActionCallout node="flashcard-list/convert-error" tone="error" icon="error"
+              text="Couldn’t organise the deck. Your nested deck name is still here."
+              action={<MxButton variant="primary" size="sm" node="flashcard-list/convert-retry">Try again</MxButton>} />
+          ) : null}
+          <p style={{ margin: 0, fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', lineHeight: 'var(--memox-line-height-normal)' }}>This deck currently contains 42 cards. Create a nested deck to keep those cards together.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)', color: 'var(--memox-text-secondary)' }}>Nested deck name *</div>
+            <div data-mx-node="flashcard-list/convert-name" style={{ display: 'flex', alignItems: 'center', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface-sunken)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+              <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Vocabulary</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-4)' }}>
-              <MxButton variant="ghost" disabled={submitting} node="flashcard-list/convert-cancel">Cancel</MxButton>
-              <MxButton variant="primary" disabled={submitting} node="flashcard-list/convert-ok">{submitting ? 'Organising…' : 'Create and organise'}</MxButton>
-            </div>
-          </Sheet>
-        </Scrim>
+          </div>
+        </FormDialog>
       </React.Fragment>
     );
   }

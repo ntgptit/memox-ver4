@@ -16,13 +16,13 @@ Form
 
 ## Composition map (contract §3)
 
-Top → bottom: **primary MxContextualAppBar** → primary content → primary action (Create deck).
+Top → bottom: **ghost MxContextualAppBar** → primary content → primary action (Create deck).
 Exact layout order is owned by the source (`../_features/create-deck-dialog/CreateDeckDialog.jsx`) and the reference PNGs — read those for pixel
 composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxCard`, `MxContextualAppBar`, `MxLink`, `MxScaffold`, `MxTextField`, `window.ActionCallout`
+`MxButton`, `MxCard`, `MxContextualAppBar`, `MxLink`, `MxScaffold`, `window.ActionCallout`, `window.FormDialog`
 
 ## State matrix (contract §6) — 12 states, each rendered light + dark
 
