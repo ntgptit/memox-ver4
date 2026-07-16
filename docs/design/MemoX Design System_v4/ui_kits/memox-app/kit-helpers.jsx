@@ -38,10 +38,15 @@ function Skeleton({ w = '100%', h = 16, r = 8, style }) {
   return <div className="mxg-skel" style={{ width: w, height: h, borderRadius: r, ...style }} />;
 }
 
-function EmptyState({ icon, tone, title, text, action, node }) {
+/* `announce` (optional) turns this full-screen result into an aria-live announcement
+   region so screen readers speak it when it replaces prior content (KIT-42-04): pass
+   'status' for success/neutral outcomes (polite) or 'alert' for failures (assertive).
+   Attribute-only — never affects layout/pixels, so existing shots are unchanged. */
+function EmptyState({ icon, tone, title, text, action, node, announce }) {
   const { MxIconTile } = NS;
+  const liveProps = announce ? { role: announce, 'aria-live': announce === 'alert' ? 'assertive' : 'polite' } : {};
   return (
-    <div data-mx-node={node} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-4)' }}>
+    <div data-mx-node={node} {...liveProps} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-4)' }}>
       <MxIconTile icon={icon} tone={tone} size="lg" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', maxWidth: 'var(--memox-size-3xl)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
@@ -103,19 +108,34 @@ function Stat({ n, l, tone, size = 'md', align = 'center', onTint = false, node 
   );
 }
 
-/* Modal scrim — absolute over the device frame; align 'end' (sheet) or 'center' (dialog). */
-function Scrim({ children, align = 'end', node }) {
+/* Modal scrim — absolute over the device frame; align 'end' (sheet) or 'center' (dialog).
+   Dismiss contract (KIT-29-05): this scrim is the topmost overlay layer. Hardware/gesture
+   BACK and a tap on the backdrop (the area OUTSIDE the sheet/dialog) both close ONLY this
+   top overlay — never the underlying screen. On close, production MUST return focus to the
+   control that opened the overlay (pass the trigger's ref/onDismiss so focus is restored,
+   preventing a focus-lost-to-top trap). `onDismiss` is invoked on backdrop tap and on the
+   Escape key here; the static kit leaves it undefined (no-op, pixel-identical to before).
+   Attribute/handler-only additions — no layout or pixel change. */
+function Scrim({ children, align = 'end', node, onDismiss }) {
+  // Only a tap on the backdrop itself (currentTarget), not on the sheet/dialog children.
+  const onBackdrop = (e) => { if (onDismiss && e.target === e.currentTarget) onDismiss(e); };
+  const onKeyDown = (e) => { if (onDismiss && e.key === 'Escape') { e.preventDefault(); onDismiss(e); } };
   return (
-    <div data-mx-node={node} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
+    <div data-mx-node={node} data-dismiss="back" onClick={onBackdrop} onKeyDown={onKeyDown} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
       {children}
     </div>
   );
 }
 
-/* Bottom action sheet surface. */
+/* Bottom action sheet surface.
+   Long-content guard (KIT-29-02): the sheet is capped at 85% of the frame height and scrolls
+   its own body when content (a long menu, or a sheet-form with the keyboard open) exceeds that,
+   so it can never grow taller than the viewport or push its actions off-screen. Parity-safe —
+   every current sheet is far shorter than the cap, so no scrollbar appears and pixels are
+   unchanged; the cap only engages on overflow. */
 function Sheet({ title, children, node }) {
   return (
-    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-3) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
+    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-3) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)', maxHeight: '85%', overflowY: 'auto' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-text-tertiary)', margin: '0 auto var(--memox-space-3)' }} />
       {title ? <SectionLabel uppercase style={{ margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</SectionLabel> : null}
       {children}
@@ -123,17 +143,74 @@ function Sheet({ title, children, node }) {
   );
 }
 
-/* Full-width row button inside a Sheet. */
-function MenuItem({ icon, label, tone, danger, trailing, selected, node, onClick }) {
-  const color = danger ? 'var(--memox-error)' : 'inherit';
+/* Full-width row button inside a Sheet.
+   `disabled` (KIT-29-03): an unavailable action — dimmed to muted opacity, the
+   native button `disabled` (clicks blocked, removed from the tab order) plus
+   `aria-disabled` for AT, and a not-allowed cursor. Additive: no existing
+   MenuItem passes `disabled`, so `disabled` stays undefined (React omits the
+   attribute), opacity stays 1 and the cursor stays pointer — pixel-identical to
+   before. For a MENU that can grow past the frame, wrap the items in a
+   <Sheet> (capped at 85% height + own scroll) or a `<MenuList>` (below). */
+function MenuItem({ icon, label, tone, danger, trailing, selected, disabled, node, onClick }) {
+  const color = disabled ? 'var(--memox-text-tertiary)' : danger ? 'var(--memox-error)' : 'inherit';
+  const iconColor = disabled ? 'var(--memox-text-tertiary)' : danger ? 'var(--memox-error)' : (tone || 'var(--memox-text-secondary)');
   // `selected` renders the primary-tinted check; an explicit `trailing` still wins.
   const mark = selected ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-primary)' }}>check</span> : trailing;
   return (
-    <button data-mx-node={node} onClick={onClick} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: 'pointer', font: 'inherit', color, padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left' }}>
-      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: danger ? 'var(--memox-error)' : (tone || 'var(--memox-text-secondary)') }}>{icon}</span>
+    <button data-mx-node={node} onClick={disabled ? undefined : onClick} disabled={disabled || undefined} aria-disabled={disabled ? 'true' : undefined} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', width: '100%', border: 'none', background: 'transparent', cursor: disabled ? 'not-allowed' : 'pointer', font: 'inherit', color, opacity: disabled ? 'var(--memox-opacity-muted)' : 1, padding: 'var(--memox-space-3) var(--memox-space-2)', borderRadius: 'var(--memox-radius-control)', textAlign: 'left' }}>
+      <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: iconColor }}>{icon}</span>
       <span style={{ flex: 1, fontWeight: 'var(--memox-font-weight-semibold)', fontSize: 'var(--memox-font-size-base)' }}>{label}</span>
       {mark}
     </button>
+  );
+}
+
+/* Scrollable menu container for a LONG menu (KIT-29-03) — caps its height and
+   scrolls its own body so a menu that would exceed the frame can never push its
+   items off-screen or grow taller than the viewport. Parity-safe: only used by
+   new long-menu fixtures; short menus never reach the cap so no scrollbar shows.
+   `max` defaults to 60% of the frame; inside a <Sheet> the Sheet's own 85% cap
+   still applies on top. Additive helper — nothing existing renders it. */
+function MenuList({ children, max = '60vh', node }) {
+  return (
+    <div data-mx-node={node} style={{ maxHeight: max, overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
+      {children}
+    </div>
+  );
+}
+
+/* Faux on-screen keyboard inset (KIT-25-04 / KIT-35-01) — a static block sized
+   like the software keyboard, used ONLY by `keyboard-open` fixture states to
+   verify keyboard-avoidance: the sticky SaveBar / primary action is rendered
+   ABOVE this inset (pass both in MxScaffold's bottomNav slot, SaveBar first)
+   so it stays visible and reachable while the keyboard is up. Additive helper —
+   no existing state renders it, so no existing shot changes. Height ~44% of the
+   390×780 frame approximates a portrait phone keyboard. */
+function KeyboardInset({ node }) {
+  const keys = ['q','w','e','r','t','y','u','i','o','p','a','s','d','f','g','h','j','k','l','z','x','c','v','b','n','m'];
+  const Key = ({ ch, grow }) => (
+    <div style={{ flex: grow || 1, minWidth: 0, height: 'var(--memox-space-9)', display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'var(--memox-surface)', borderRadius: 'var(--memox-radius-sm)', boxShadow: 'var(--memox-shadow-sm)', fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text)' }}>{ch}</div>
+  );
+  const row = (from, to, pad) => (
+    <div style={{ display: 'flex', gap: 'var(--memox-space-1)', padding: pad ? '0 var(--memox-space-6)' : 0 }}>
+      {keys.slice(from, to).map((c) => <Key key={c} ch={c} />)}
+    </div>
+  );
+  return (
+    <div data-mx-node={node} aria-hidden="true" style={{ background: 'var(--memox-surface-sunken)', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-safe-area-bottom)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', borderTop: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+      {row(0, 10)}
+      {row(10, 19, true)}
+      <div style={{ display: 'flex', gap: 'var(--memox-space-1)' }}>
+        <Key ch="⇧" grow={1.5} />
+        {keys.slice(19).map((c) => <Key key={c} ch={c} />)}
+        <Key ch="⌫" grow={1.5} />
+      </div>
+      <div style={{ display: 'flex', gap: 'var(--memox-space-1)' }}>
+        <Key ch="123" grow={1.5} />
+        <Key ch="space" grow={5} />
+        <Key ch="return" grow={1.5} />
+      </div>
+    </div>
   );
 }
 
@@ -147,7 +224,7 @@ function Dialog({ icon, tone, title, text, actions, node }) {
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
         {text ? <div style={{ fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', lineHeight: 'var(--memox-line-height-normal)' }}>{text}</div> : null}
       </div>
-      <div style={{ display: 'flex', gap: 'var(--memox-space-3)', width: '100%', marginTop: 'var(--memox-space-1)' }}>{actions}</div>
+      <div className="mx-dialog-actions" style={{ display: 'flex', flexWrap: 'wrap', gap: 'var(--memox-space-3)', width: '100%', marginTop: 'var(--memox-space-1)' }}>{actions}</div>
     </div>
   );
 }
@@ -218,4 +295,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });

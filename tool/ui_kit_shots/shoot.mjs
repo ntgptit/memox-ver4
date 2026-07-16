@@ -26,11 +26,11 @@ import { SCREENS, sampleOf } from './registry.mjs';
 const HERE = dirname(fileURLToPath(import.meta.url));
 const KIT = normalize(join(HERE, '..', '..', 'docs', 'design', 'MemoX Design System_v4'));
 const OUT = join(HERE, 'out');
-const PORT = 5178;
+const PORT = Number(process.env.MXH_PORT) || 5178;
 
 // contract step 7 matrix
 const WIDTHS = [320, 360, 390, 430];
-const FONT_SCALES = [1.0, 1.3, 1.5];
+const FONT_SCALES = [1.0, 1.3, 1.5, 2.0];
 const THEMES = ['light', 'dark'];
 
 // Canonical mode (MXH_CANON=1): one representative image per state×theme at the 390px
@@ -80,7 +80,9 @@ const run = async () => {
   await mkdir(OUT, { recursive: true });
   if (CANON) await mkdir(SHOTS_DIR, { recursive: true });
   const server = serve(KIT).listen(PORT);
-  const browser = await chromium.launch();
+  // MXH_CHROME lets a prebuilt-browser environment point at an existing Chromium
+  // (e.g. /opt/pw-browsers/chromium) instead of a version-pinned download. Unset → default.
+  const browser = await chromium.launch(process.env.MXH_CHROME ? { executablePath: process.env.MXH_CHROME } : {});
   const page = await browser.newPage({ deviceScaleFactor: 2 });
   page.on('pageerror', (e) => console.warn('page error:', e.message));
 
@@ -145,7 +147,12 @@ const run = async () => {
               return null; // measured after paint below
             }, { g, state, theme, w, fs });
 
-            await page.waitForTimeout(250); // let it paint (babel + fonts)
+            // Deterministic paint wait: React commit (frame gets content) + two animation frames
+            // (layout + paint). Fonts are warmed once up-front, so this replaces the old fixed 250ms
+            // guess — faster AND more correct (was ~250ms × every combo ≈ the dominant cost). A genuine
+            // blank still resolves via the short timeout and is reported by the measure pass below.
+            await page.waitForFunction(() => { const f = document.getElementById('mxh-frame'); return !!(f && f.firstElementChild); }, null, { timeout: 3000 }).catch(() => {});
+            await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
 
             const measured = await page.evaluate(() => {
               const frame = document.getElementById('mxh-frame');
@@ -228,8 +235,13 @@ const run = async () => {
             const name = CANON
               ? `${id}--${state}--${theme}`
               : `${id}--${state}--${theme}--w${w}--fs${String(fs).replace('.', '_')}`;
-            await page.locator('#mxh-frame').screenshot({ path: join(CANON ? SHOTS_DIR : OUT, name + '.png') });
             const hasIssue = measured.hOverflow.length || measured.vOverflow.length || measured.clipped.length || measured.renderError;
+            // Canonical mode always writes the reference PNG. The gate (non-canon) is DOM-measurement
+            // based, so a clean combo needs no image — write a PNG only for a FINDING (kept for review),
+            // unless MXH_ALL_SHOTS=1 forces every combo. Skips ~all of the ~5.7k PNG encodes on a clean run.
+            if (CANON || hasIssue || process.env.MXH_ALL_SHOTS) {
+              await page.locator('#mxh-frame').screenshot({ path: join(CANON ? SHOTS_DIR : OUT, name + '.png') });
+            }
             if (hasIssue) report.push({ shot: name, ...measured });
             if (findings?.error) report.push({ shot: name, error: findings.error });
           }

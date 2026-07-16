@@ -3,11 +3,14 @@
    Progressive disclosure: the default view shows only Term → Meaning (+ tags); Example,
    translation and advanced options are one tap away, so a blank card fits one screen with
    no scroll.
-   9 states: create · edit · validation · duplicate · additional-translation ·
-   audio-generating · submitting · submit-error · submit-success.
+   10 states: create · edit · validation · duplicate · additional-translation ·
+   audio-generating · submitting · submit-error · submit-success · discard-confirm.
    Language labels are DECK-DRIVEN (never hard-coded) so every language pair reads correctly.
    Runtime keyboard/focus intent is annotated on the fields (see Field.jsx) for production.
-   (Dirty-cancel uses the shared ConfirmDialog — same reference as Deck Settings.)
+   Dirty-cancel (KIT-25-06): production tracks `isDirty` = "any field diverged from the loaded
+   card". Cancel (X) and hardware BACK are GUARDED — if isDirty they open the discard-confirm
+   overlay (the shared ConfirmDialog, same reference as Deck Settings) instead of closing; if
+   clean they close immediately. The `discard-confirm` state renders that overlay.
    Feature-local components: components/{Field,DupBanner,AudioRow}.jsx */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
@@ -108,33 +111,55 @@ function SaveBar({ label, disabled, keepAdding }) {
 }
 
 function FlashcardEditor({ state = 'create' }) {
-  const blank = state === 'create' || state === 'validation';
-  const invalid = state === 'validation';
-  const submitting = state === 'submitting';
-  const success = state === 'submit-success';
-  const submitError = state === 'submit-error';
-  const title = state === 'create' ? 'New card' : 'Edit card';
+  // discard-confirm renders the form as 'edit' (overlay on top); keyboard-open renders the
+  // populated edit form with a simulated software keyboard raised (KIT-25-04/35-01/36-01).
+  // registry-state: keyboard-open
+  const keyboardOpen = state === 'keyboard-open';
+  const view = state === 'discard-confirm' || keyboardOpen ? 'edit' : state;
+  const blank = view === 'create' || view === 'validation';
+  const invalid = view === 'validation';
+  const submitting = view === 'submitting';
+  const success = view === 'submit-success';
+  const submitError = view === 'submit-error';
+  const title = view === 'create' ? 'New card' : 'Edit card';
   const disabledForm = submitting;                                   // freeze editable controls while saving
-  const saveDisabled = state === 'create' || invalid || submitting || success; // never active on blank/invalid/pristine
+  const saveDisabled = view === 'create' || invalid || submitting || success; // never active on blank/invalid/pristine
   const saveLabel = submitting ? 'Saving…' : success ? 'Done' : 'Save';
+  // isDirty (KIT-25-06): true once any field diverges from the loaded card. Editing an existing
+  // card is the dirty case here; a pristine blank create is clean. Cancel/back consult this.
+  const isDirty = view === 'edit';
 
   const term = blank ? '' : '안녕하세요';
   const meaning = blank ? '' : 'Hello (formal)';
   const tags = blank ? [] : ['#TOPIK_I', '#인사'];
-  const [moreOpen, setMoreOpen] = React.useState(state === 'edit');
+  const [moreOpen, setMoreOpen] = React.useState(view === 'edit');
 
   // Focused app bar: Close (X) · title · (no top-right — Save moved to the sticky bottom bar).
+  // Cancel is the GUARDED exit (KIT-25-06): data-guard="dirty" → when isDirty the handler opens
+  // discard-confirm instead of closing; when clean it closes straight away. Same guard applies
+  // to hardware/gesture back. (Static kit annotates intent; Flutter wires the handler.)
   const bar = (
     <MxContextualAppBar variant="modal" node="flashcard-editor/appbar" title={title}
-      leading={<MxIconButton icon="close" size="sm" node="flashcard-editor/cancel" ariaLabel="Cancel" disabled={submitting} />}
+      leading={<MxIconButton icon="close" size="sm" node="flashcard-editor/cancel" ariaLabel="Cancel"
+        data-guard="dirty" data-is-dirty={isDirty ? 'true' : 'false'} disabled={submitting} />}
       actions={<span aria-hidden="true" />} />
   );
 
-  return (
-    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={<SaveBar label={saveLabel} disabled={saveDisabled} keepAdding={state === 'edit'} />}>
+  // Keyboard-avoidance layout (KIT-25-04/35-01): the SaveBar is the first child of the
+  // bottomNav slot and the faux keyboard is BELOW it, so the sticky primary action stays
+  // pinned directly above the keyboard and never gets covered. Short-portrait stress
+  // (KIT-36-01): the body scrolls under the app bar so on the shortest supported portrait
+  // (~640px tall) Term + Meaning + SaveBar remain reachable — the keyboard only ever
+  // overlays the scrolling body, never the SaveBar.
+  const bottomBar = keyboardOpen
+    ? <React.Fragment><SaveBar label={saveLabel} disabled={saveDisabled} keepAdding /><window.KeyboardInset node="flashcard-editor/keyboard" /></React.Fragment>
+    : <SaveBar label={saveLabel} disabled={saveDisabled} keepAdding={view === 'edit'} />;
+
+  const screen = (
+    <MxScaffold node="flashcard-editor/screen" appBar={bar} bottomNav={bottomBar}>
       <DeckContext />
 
-      {state === 'duplicate' ? <DupBanner /> : null}
+      {view === 'duplicate' ? <DupBanner /> : null}
       {submitError ? <Banner node="flashcard-editor/save-error" tone="error" icon="error_outline" text="Couldn’t save the card. Your changes are still here." action={<MxButton variant="secondary" size="sm" node="flashcard-editor/save-retry">Try again</MxButton>} /> : null}
       {success ? <Banner node="flashcard-editor/save-success" tone="success" icon="check_circle" text="Card saved." /> : null}
 
@@ -143,9 +168,10 @@ function FlashcardEditor({ state = 'create' }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
         <Field label={'Term · ' + DECK.term.label} required node="flashcard-editor/term"
           value={term} placeholder="Enter a term"
-          lang={DECK.term.code} inputMode="text" autoFocus={state === 'create'} enterKeyHint="next"
+          lang={DECK.term.code} inputMode="text" autoFocus={view === 'create'} enterKeyHint="next"
+          focused={keyboardOpen}
           error={invalid ? 'Enter a term.' : null} disabled={disabledForm}
-          trailing={<AudioRow status={state === 'audio-generating' ? 'generating' : 'auto'} />} />
+          trailing={<AudioRow status={view === 'audio-generating' ? 'generating' : 'auto'} />} />
 
         <Field label={'Meaning · ' + DECK.meaning.label} required multiline node="flashcard-editor/meaning"
           value={meaning} placeholder="Enter the meaning"
@@ -154,7 +180,7 @@ function FlashcardEditor({ state = 'create' }) {
           error={invalid ? 'Enter a meaning.' : null} disabled={disabledForm} />
 
         {/* Additional translation — expands under Meaning; language-scoped, with a Remove action */}
-        {state === 'additional-translation'
+        {view === 'additional-translation'
           ? <Field label={'Translation · ' + DECK.alt.label} node="flashcard-editor/translation"
               value="Xin chào" placeholder="Enter a translation" lang={DECK.alt.code}
               labelAction={<MxIconButton icon="close" size="sm" node="flashcard-editor/translation-remove" ariaLabel="Remove translation" />} />
@@ -166,13 +192,17 @@ function FlashcardEditor({ state = 'create' }) {
       {/* MORE OPTIONS — collapsed by default so the base form stays Term → Meaning. Holds the
           optional Example pair and the advanced Hide-during-study switch. */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+        {/* Collapsible show-more control (KIT-21-03): aria-expanded exposes the
+            open/closed state to AT, aria-controls points at the region it toggles.
+            Attribute-only — no pixel change to the existing shots. */}
         <button type="button" onClick={() => setMoreOpen((v) => !v)} data-mx-node="flashcard-editor/more-toggle"
+          aria-expanded={moreOpen} aria-controls="flashcard-editor/more-region"
           style={{ alignSelf: 'flex-start', display: 'inline-flex', alignItems: 'center', gap: 'var(--memox-space-1)', padding: 'var(--memox-space-2) 0', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-bold)', color: 'var(--memox-text-secondary)' }}>
           <span className="material-symbols-rounded" aria-hidden="true" style={{ fontSize: 'var(--memox-icon-size-sm)' }}>{moreOpen ? 'expand_less' : 'expand_more'}</span>
           More options
         </button>
         {moreOpen ? (
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
+          <div id="flashcard-editor/more-region" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
             <Field label="Example" multiline node="flashcard-editor/example"
               value={blank ? '' : '오늘 날씨가 좋네요.'} placeholder="Add an example sentence"
               lang={DECK.term.code} disabled={disabledForm} />
@@ -185,6 +215,28 @@ function FlashcardEditor({ state = 'create' }) {
       </div>
     </MxScaffold>
   );
+
+  // Dirty-cancel overlay (KIT-25-06): reuses the shared ConfirmDialog. Copy names the loss
+  // ("Discard changes?"), keeps the safe path as the ghost default, and makes Discard the
+  // destructive action. Dismiss returns to the still-populated editor (nothing is lost).
+  if (state === 'discard-confirm') {
+    const ConfirmDialog = window.ConfirmDialog;
+    return (
+      <React.Fragment>
+        {screen}
+        <ConfirmDialog align="center" scrimNode="flashcard-editor/discard-scrim"
+          icon="delete_outline" tone="error" title="Discard changes?"
+          text="You’ve edited this card. If you leave now, your changes won’t be saved."
+          dialogNode="flashcard-editor/discard-dialog"
+          actions={<React.Fragment>
+            <MxButton variant="ghost" block node="flashcard-editor/discard-cancel">Keep editing</MxButton>
+            <MxButton variant="primary" danger block node="flashcard-editor/discard-ok">Discard</MxButton>
+          </React.Fragment>} />
+      </React.Fragment>
+    );
+  }
+
+  return screen;
 }
 
 window.FlashcardEditor = FlashcardEditor;

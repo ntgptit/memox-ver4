@@ -31,7 +31,7 @@ Kiểm tra nguồn chuẩn duy nhất và khả năng truy ngược; không audi
   - **Evidence mong đợi:** Danh sách source conflict bằng 0 hoặc quyết định canonical.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-02-06 — Phiên bản release cũ được đóng băng và không bị dùng làm workspace chỉnh sửa.**
+- [x] **KIT-02-06 — Phiên bản release cũ được đóng băng và không bị dùng làm workspace chỉnh sửa.**
   - **Cách kiểm:** VM-13 — kiểm tra version history, permissions và release notes.
   - **Evidence mong đợi:** Link release snapshot và workspace hiện hành; lịch sử không có sửa ngầm.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Kiểm tra nguồn chuẩn duy nhất và khả năng truy ngược; không audi
 | KIT-02-04 | `readme.md:71-85` index liên kết tokens/components/guidelines; `_ds_manifest.json` cards[] link preview↔component, tokens[].definedIn + globalCssPaths link token↔file; các đường dẫn tham chiếu đều tồn tại | PASS | Forward link giải bằng 0 broken; đồ thị hai chiều cung cấp qua manifest (component↔source↔preview↔token) thay vì backlink nội dòng. |
 | KIT-02-05 | `styles.css` là entry đơn; một `_ds_manifest.json`; `tokens/colors.css:7` tự khai báo là single source | PASS | Không có nhiều file cùng gắn nhãn master/final/current gây xung đột. |
 | KIT-02-06 | Thư mục `MemoX Design System_v4/` (đặt tên theo version); header token "Names frozen / additive-only"; tìm changelog/release-notes/version-history trong kit | FAIL | Không có artifact changelog/release-notes/version-history để chứng minh snapshot v4 đã đóng băng và không bị sửa ngầm; chỉ có version trong tên thư mục và chính sách frozen. |
+| KIT-02-06 | CHANGELOG.md (v4 baseline + remediation entry) | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-02-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

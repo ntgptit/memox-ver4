@@ -43,7 +43,31 @@ function parseTokens() {
   }
   // dark inherits light for anything it does not override (matches CSS cascade)
   out.dark = { ...out.light, ...out.dark };
+
+  // High-contrast profile (KIT-08-06 / KIT-39-05): additive [data-hc='true'] overrides
+  // layered onto the light and dark bases from tokens/high-contrast.css. Optional file.
+  try {
+    const hcPath = join(KIT, 'tokens/high-contrast.css');
+    const hcCss = readFileSync(hcPath, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
+    const hcLight = {}, hcDark = {};
+    let h;
+    const hcBlock = /([^{}]+)\{([^{}]*)\}/g;
+    while ((h = hcBlock.exec(hcCss))) {
+      const sel = h[1];
+      const target = /\[data-theme=['"]dark['"]\]/.test(sel) ? hcDark : hcLight;
+      const decl = /(--memox-[a-z0-9-]+)\s*:\s*([^;]+);/g;
+      let d;
+      while ((d = decl.exec(h[2]))) target[d[1].trim()] = d[2].trim();
+    }
+    out['hc-light'] = { ...out.light, ...hcLight };
+    out['hc-dark'] = { ...out.dark, ...hcDark };
+  } catch { /* high-contrast profile optional */ }
   return out;
+}
+
+// Profiles gated by the contrast run. hc-* present only when high-contrast.css exists.
+function profilesOf(tokens) {
+  return ['light', 'dark', 'hc-light', 'hc-dark'].filter((p) => tokens[p]);
 }
 
 // ── colour parsing + WCAG maths ──────────────────────────────────────────────
@@ -122,8 +146,9 @@ const tokens = parseTokens();
 const short = (t) => t.replace('--memox-', '');
 const rows = [];
 let failures = 0;
+const PROFILES = profilesOf(tokens);
 
-for (const theme of ['light', 'dark']) {
+for (const theme of PROFILES) {
   const T = tokens[theme];
   for (const p of PAIRS) {
     const need = THRESH[p.cat];
@@ -154,9 +179,9 @@ for (const theme of ['light', 'dark']) {
 }
 
 // ── report ───────────────────────────────────────────────────────────────────
-console.log('contrast gate — WCAG 2.x over tokens/colors.css (light + dark)\n');
+console.log(`contrast gate — WCAG 2.x over tokens/colors.css (profiles: ${PROFILES.join(' + ')})\n`);
 const fmt = (n) => n.toFixed(2).padStart(5);
-for (const theme of ['light', 'dark']) {
+for (const theme of PROFILES) {
   console.log(`  ${theme.toUpperCase()}`);
   for (const r of rows.filter((x) => x.theme === theme)) {
     if (r.error) { console.log(`    ✗ ${r.error}  [${r.cat} — required]`); continue; }
@@ -181,4 +206,4 @@ if (failing.length) {
   }
   process.exit(1);
 }
-console.log('✓ contrast gate PASSED — all required pairs meet WCAG thresholds (light + dark).');
+console.log(`✓ contrast gate PASSED — all required pairs meet WCAG thresholds (${PROFILES.join(' + ')}).`);

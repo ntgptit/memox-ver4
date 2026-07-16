@@ -11,12 +11,12 @@ Audit dialog, sheet, menu, popover và stacking.
   - **Evidence mong đợi:** Dialog matrix and recording.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-29-02 — Bottom sheet xử lý safe area, drag, scroll và keyboard không xung đột.**
+- [x] **KIT-29-02 — Bottom sheet xử lý safe area, drag, scroll và keyboard không xung đột.**
   - **Cách kiểm:** VM-09 + VM-07 — test long content and keyboard.
   - **Evidence mong đợi:** Sheet stress evidence.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-29-03 — Menu/action sheet có selected, disabled, destructive và overflow rules.**
+- [x] **KIT-29-03 — Menu/action sheet có selected, disabled, destructive và overflow rules.**
   - **Cách kiểm:** VM-04 + VM-05 — render menu states.
   - **Evidence mong đợi:** Menu state matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -26,12 +26,12 @@ Audit dialog, sheet, menu, popover và stacking.
   - **Evidence mong đợi:** Popover accessibility evidence.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-29-05 — Back đóng đúng overlay trên cùng và focus trở về trigger.**
+- [x] **KIT-29-05 — Back đóng đúng overlay trên cùng và focus trở về trigger.**
   - **Cách kiểm:** VM-09 + VM-10 — stack allowed overlays then dismiss.
   - **Evidence mong đợi:** Stack/focus recording.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-29-06 — Nested overlay bị cấm trừ combination có trong approved matrix.**
+- [x] **KIT-29-06 — Nested overlay bị cấm trừ combination có trong approved matrix.**
   - **Cách kiểm:** VM-04 + VM-12 — enumerate overlay combinations.
   - **Evidence mong đợi:** Approved/forbidden overlay matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,19 @@ Audit dialog, sheet, menu, popover và stacking.
 | KIT-29-04 | grep (không có `Tooltip`/`Popover`/`window.Toast` trong kit); `kit-helpers.jsx:170-183` (Note inline); `_features/*` dùng banner/label inline | PASS | Kit không có surface tooltip/popover; mọi thông tin trình bày inline/persistent, nên không có thông tin bắt buộc duy nhất bị giấu trong popover tạm thời. Anti-pattern không phát sinh. |
 | KIT-29-05 | `kit-helpers.jsx:107-113` (Scrim); `_features/*` overlay states | FAIL | Kit tĩnh — back đóng overlay trên cùng và focus trở về trigger không được render/document (readme: no navigation logic). Overlay có affordance dismiss (X, Cancel) nhưng focus-return + back-key không được đặc tả. |
 | KIT-29-06 | `kit-helpers.jsx:107-113` (Scrim zIndex 60); toàn bộ overlay states trong `_features/*` | FAIL | Không có approved/forbidden overlay matrix được document. Thực tế mọi fixture chỉ render 1 overlay/lúc (Scrim bọc đúng 1 Sheet hoặc Dialog), no-nesting giữ trong thực hành; chỉ thiếu ma trận liệt kê tường minh. |
+| KIT-29-02 | kit-helpers.jsx Sheet maxHeight 85% + overflow scroll | FIXED | Remediation — audit v5 fix loop. |
+| KIT-29-03 | components/feedback/MxMenu (disabled item) + kit-helpers.jsx MenuItem disabled + long-menu fixture | FIXED | Remediation — audit v5 fix loop. |
+| KIT-29-05 | kit-helpers.jsx Scrim onDismiss + focus-return contract | FIXED | Remediation — audit v5 fix loop. |
+| KIT-29-06 | guidelines/navigation-overlays.md §4 overlay-combination matrix | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-29-02, ISS-KIT-29-05
-Open P2: ISS-KIT-29-03, ISS-KIT-29-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

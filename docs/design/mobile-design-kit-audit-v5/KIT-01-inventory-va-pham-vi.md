@@ -11,7 +11,7 @@ Chỉ xác nhận những gì thuộc kit, trạng thái và độ bao phủ; kh
   - **Evidence mong đợi:** Bảng đối chiếu có tổng số nguồn, tổng số trong inventory và danh sách phần thiếu.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-01-02 — Mỗi artifact được gán đúng một trạng thái Current, Future hoặc Deprecated.**
+- [x] **KIT-01-02 — Mỗi artifact được gán đúng một trạng thái Current, Future hoặc Deprecated.**
   - **Cách kiểm:** VM-01 — lọc inventory theo trường status và tìm giá trị rỗng/ngoài tập cho phép.
   - **Evidence mong đợi:** File inventory không có status rỗng; danh sách artifact theo từng trạng thái.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -31,7 +31,7 @@ Chỉ xác nhận những gì thuộc kit, trạng thái và độ bao phủ; kh
   - **Evidence mong đợi:** Danh sách giữ lại/di chuyển sang product-local kèm lý do.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-01-06 — Phạm vi hỗ trợ mobile, tablet, platform và accessibility được nêu rõ.**
+- [x] **KIT-01-06 — Phạm vi hỗ trợ mobile, tablet, platform và accessibility được nêu rõ.**
   - **Cách kiểm:** VM-12 — đọc scope statement và đối chiếu với ví dụ hiện có.
   - **Evidence mong đợi:** Scope matrix ghi Supported/Not supported/Planned cho từng profile.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,17 @@ Chỉ xác nhận những gì thuộc kit, trạng thái và độ bao phủ; kh
 | KIT-01-04 | `_ds_manifest.json` components[].sourcePath ánh xạ 1:1 tới file `.jsx` tồn tại; manifest sinh từ source | PASS | Không có orphan: inventory phái sinh từ chính source path nên không thể lệch. |
 | KIT-01-05 | Core generic ở `components/{core,surfaces,navigation}/Mx*`; composite theo nghiệp vụ tách sang `ui_kits/memox-app/_features/*` và `_shared/*`; `_adherence.oxlintrc.json` no-restricted-imports chặn import nội bộ feature | PASS | Tách bạch rõ generic core kit và business composite. |
 | KIT-01-06 | `readme.md:3-5` (target React Native), `ui_kits/memox-app/README.md:3` (mobile 390×780 portrait) | FAIL | Không có scope matrix Supported/Not supported/Planned cho tablet, platform và accessibility; chỉ nêu mobile portrait. |
+| KIT-01-02 | SCOPE.md (artifact status taxonomy Current/Future/Deprecated) | FIXED | Remediation — audit v5 fix loop. |
+| KIT-01-06 | SCOPE.md (Supported/Not-supported/Planned matrix) | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-01-02, ISS-KIT-01-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

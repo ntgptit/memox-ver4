@@ -58,8 +58,7 @@
   padding-bottom: calc(var(--memox-bottom-nav-height) + var(--memox-space-4) + var(--memox-fab-size) + var(--memox-space-6));
 }
 .app__body--flush {
-  padding-left: 0;
-  padding-right: 0;
+  padding-inline: 0;
 }
 /* mobile: no visible scrollbars on any scroller inside the app shell */
 .app,
@@ -146,32 +145,32 @@
 }
 .cappbar__badge {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  min-width: 16px;
-  height: 16px;
-  padding: 0 4px;
+  top: 5px;              /* raw-ok: off-scale nudge to seat the badge over the bell glyph */
+  inset-inline-end: 5px; /* raw-ok: off-scale nudge to seat the badge over the bell glyph */
+  min-width: var(--memox-space-4);
+  height: var(--memox-space-4);
+  padding: 0 var(--memox-space-1);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   border-radius: var(--memox-radius-pill);
   background: var(--memox-error);
   color: var(--memox-on-error);
-  font-size: 10px;
+  font-size: 10px;       /* raw-ok: below the type scale — count digits on a 16px badge */
   font-weight: var(--memox-font-weight-bold);
   line-height: 1;
-  border: 2px solid var(--memox-surface); /* rings the badge off the bell */
+  border: var(--memox-stroke-emphasis) solid var(--memox-surface); /* rings the badge off the bell */
   pointer-events: none;
 }
 .cappbar--top .cappbar__badge {
   border-color: var(--memox-bg);
 }
 .cappbar__badge--dot {
-  min-width: 10px;
-  height: 10px;
+  min-width: var(--memox-comp-badge-dot);
+  height: var(--memox-comp-badge-dot);
   padding: 0;
-  top: 7px;
-  right: 7px;
+  top: 7px;              /* raw-ok: off-scale nudge to seat the dot over the bell glyph */
+  inset-inline-end: 7px; /* raw-ok: off-scale nudge to seat the dot over the bell glyph */
 }
 /* search variant */
 .cappbar__search {
@@ -179,7 +178,7 @@
   display: flex;
   align-items: center;
   gap: var(--memox-space-2);
-  height: 40px;
+  height: var(--memox-space-8);
   padding: 0 var(--memox-space-3);
   background: var(--memox-surface-sunken);
   border-radius: var(--memox-radius-pill);
@@ -202,6 +201,11 @@
   /* text-secondary (not tertiary): the search field sits on surface-sunken, where tertiary
      is only 4.24:1 — below AA. text-secondary clears 4.5:1 on that container. */
   color: var(--memox-text-secondary);
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.cappbar__search-input:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
 }
 @media (prefers-reduced-motion: reduce) {
   .cappbar { transition: none; }
@@ -344,6 +348,33 @@
 .btn--block {
   width: 100%;
 }
+/* Dialog action row (KIT-09-05 / KIT-21-06 / KIT-42-05 — 200% text scaling): the two
+   confirm/cancel buttons sit side by side, but their labels are `white-space: nowrap`, so at
+   200% text on the narrowest 320px phone their combined min-width exceeds the dialog and used
+   to overflow it. Give them a content-based flex basis inside the wrapping `.mx-dialog-actions`
+   row: at ≤150% they still fit and stay side by side (basis grows to a 50/50 split — pixel-
+   identical to the previous `width:100%` + shrink), and only the 200%×320 extreme wraps them to
+   stacked full-width buttons. Parity-safe: the canonical 390px / 100% render is unchanged. */
+.mx-dialog-actions > .btn {
+  flex: 1 1 auto;
+  width: auto;
+}
+/* loading / submitting — inert while a spinner replaces the press affordance. The button
+   keeps its label so width/height are stable; the spinner rides on currentColor so it works
+   on every variant. Announced via aria-busy + the spinner's role="status" (set in JSX). */
+.btn--loading {
+  pointer-events: none;
+}
+.btn__spinner {
+  width: var(--memox-font-size-lg);
+  height: var(--memox-font-size-lg);
+  flex-shrink: 0;
+  border: var(--memox-stroke-emphasis) solid currentColor;
+  border-top-color: transparent;
+  border-radius: var(--memox-radius-full);
+  opacity: 0.9;
+  animation: mx-spin 0.8s linear infinite; /* raw-ok: animation duration, not a visual token */
+}
 .btn--sm {
   min-height: var(--memox-size-sm);
   padding: 0 var(--memox-space-4);
@@ -429,6 +460,11 @@
 }
 .link:active {
   opacity: 0.7;
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.link:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
 }
 .link--sm {
   font-size: var(--memox-font-size-sm);
@@ -618,6 +654,11 @@
 .search-dock__input::placeholder {
   color: var(--memox-text-tertiary);
 }
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.search-dock__input:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
 .search-dock--focused {
   box-shadow: var(--memox-shadow-sm), var(--memox-ring-focus);
 }
@@ -631,15 +672,16 @@
    ============================================================ */
 .bottom-nav {
   position: absolute;
-  left: 0;
-  right: 0;
+  inset-inline: 0;
   bottom: 0;
   display: flex;
   align-items: stretch;
   justify-content: space-around;
   height: var(--memox-bottom-nav-height);
+  /* safe-area token folds env(safe-area-inset-bottom) with the fixed nav pad; in the kit
+     frame it resolves to the same 4px, so rendered pixels are unchanged. */
   padding: var(--memox-space-2) var(--memox-space-2)
-    calc(var(--memox-space-2) + var(--memox-comp-nav-safe-pad));
+    calc(var(--memox-space-2) + var(--memox-safe-area-bottom));
   background: var(--memox-surface);
   box-shadow: var(--memox-shadow-nav);
   z-index: 10;
@@ -660,6 +702,11 @@
   font-weight: var(--memox-font-weight-semibold);
   cursor: pointer;
   transition: color var(--memox-duration-fast) var(--memox-ease-standard);
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.bottom-nav__item:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
 }
 .bottom-nav__item .material-symbols-rounded {
   font-size: var(--memox-icon-size-lg);
@@ -717,6 +764,16 @@
 }
 .chip:hover {
   background: var(--memox-state-hover);
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.chip:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
+/* unavailable / disabled — inert and dimmed (no fixture sets it → parity-neutral) */
+.chip--disabled {
+  opacity: var(--memox-opacity-disabled);
+  pointer-events: none;
 }
 .chip--selected {
   background: var(--memox-primary-soft);
@@ -808,7 +865,7 @@
 }
 .switch__thumb {
   position: absolute;
-  left: var(--memox-comp-switch-thumb-inset);
+  inset-inline-start: var(--memox-comp-switch-thumb-inset);
   width: var(--memox-comp-switch-thumb);
   height: var(--memox-comp-switch-thumb);
   border-radius: var(--memox-radius-full);
@@ -823,13 +880,18 @@
 .switch--on .switch__thumb {
   width: var(--memox-comp-switch-thumb-on);
   height: var(--memox-comp-switch-thumb-on);
-  left: var(--memox-comp-switch-thumb-inset-on);
+  inset-inline-start: var(--memox-comp-switch-thumb-inset-on);
   transform: translateX(var(--memox-comp-switch-thumb-travel));
   background: var(--memox-on-primary);
 }
 .switch--disabled {
   opacity: var(--memox-opacity-disabled);
   pointer-events: none;
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.switch:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
 }
 
 /* ============================================================
@@ -862,6 +924,17 @@
 }
 .segmented__seg .material-symbols-rounded {
   font-size: var(--memox-icon-size-sm);
+}
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.segmented__seg:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
+/* unavailable / disabled option — inert and dimmed (no fixture sets it → parity-neutral) */
+.segmented__seg:disabled {
+  opacity: var(--memox-opacity-disabled);
+  pointer-events: none;
+  cursor: default;
 }
 .segmented__seg--active {
   background: var(--memox-surface);
@@ -935,6 +1008,11 @@
 .field::placeholder {
   color: var(--memox-text-tertiary);
 }
+/* keyboard focus: branded ring (only :focus-visible → no change to static/pointer shots) */
+.field:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
 .field--center {
   text-align: center;
 }
@@ -949,6 +1027,13 @@
 .field--disabled {
   color: var(--memox-text-tertiary);
   cursor: not-allowed;
+}
+/* read-only — value is shown but not editable: distinct from disabled (still selectable/
+   focusable), muted to secondary with no caret. New modifier, no fixture sets it → parity-neutral. */
+.field--readonly {
+  color: var(--memox-text-secondary);
+  caret-color: transparent;
+  cursor: default;
 }
 /* Labelled field group — wraps .field with a label, helper and error message. */
 .field-group {
@@ -1096,3 +1181,337 @@
 }
 @keyframes mx-spin { to { transform: rotate(360deg); } }
 @media (prefers-reduced-motion: reduce) { .spinner { animation: none; } }
+
+/* ============================================================
+   Reduced motion — global honor of prefers-reduced-motion across
+   EVERY design-system surface (KIT-38-06 / KIT-04-05 / KIT-21-06).
+   Neutralizes all transitions AND animations, including infinite
+   loops the per-component rules above miss (skeleton shimmer,
+   spinners). Uses a near-zero duration token (0.01ms) rather than
+   `none` so animation/transition end events still fire, and caps
+   iteration to 1 so looping animations settle immediately.
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  .app *,
+  .app *::before,
+  .app *::after {
+    animation-duration: var(--memox-duration-none) !important;
+    animation-delay: var(--memox-duration-none) !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: var(--memox-duration-none) !important;
+    transition-delay: var(--memox-duration-none) !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================================
+   RTL directional-icon mirror (KIT-13-05) — opt-in hook. Tag a
+   Material Symbol that ENCODES direction (chevron_right, arrow_back,
+   arrow_forward) with `mx-icon--directional`; it flips only under
+   [dir='rtl']. Additive and LTR-neutral: no effect unless the
+   document is RTL AND the class is present, so existing shots are
+   unchanged. Non-directional glyphs must NOT carry this class.
+   ============================================================ */
+[dir='rtl'] .material-symbols-rounded.mx-icon--directional {
+  transform: scaleX(-1);
+}
+
+/* ============================================================
+   FEEDBACK / OVERLAY family (KIT-15-05) — frozen Mx* components
+   promoted out of ad-hoc feature composites. One STABLE base class
+   each; all values reference Layer-1 tokens; variants are modifiers.
+   These classes are NOT used by any existing fixture, so adding them
+   changes no rendered pixel of any current state (parity-neutral).
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   MxDialog  ·  .dialog   (centered modal decision surface)
+   The overlay host centers the panel and paints the scrim; the panel
+   is the surface that carries title / body / actions.
+   ------------------------------------------------------------ */
+.dialog-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--memox-space-6);
+}
+.dialog__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--memox-overlay);
+}
+.dialog {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-4);
+  width: 100%;
+  max-width: var(--memox-size-5xl); /* caps the panel on wide screens */
+  padding: var(--memox-space-6);
+  background: var(--memox-surface-raised);
+  border-radius: var(--memox-radius-2xl);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.dialog:focus {
+  outline: none; /* panel takes programmatic focus for the trap; no visible ring on the container */
+}
+.dialog__title {
+  font-size: var(--memox-font-size-md);
+  font-weight: var(--memox-font-weight-bold);
+  letter-spacing: var(--memox-letter-spacing-tight);
+  color: var(--memox-text);
+}
+.dialog__body {
+  font-size: var(--memox-font-size-base);
+  line-height: var(--memox-line-height-relaxed);
+  color: var(--memox-text-secondary);
+}
+.dialog__actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: var(--memox-space-2);
+  margin-top: var(--memox-space-2);
+}
+
+/* ------------------------------------------------------------
+   MxSheet  ·  .sheet   (bottom sheet with drag handle)
+   Host pins the sheet to the bottom edge and paints the scrim; the
+   sheet honours the bottom safe-area and caps height with an inner
+   scroll region.
+   ------------------------------------------------------------ */
+.sheet-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.sheet__scrim {
+  position: absolute;
+  inset: 0;
+  background: var(--memox-overlay);
+}
+.sheet {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  max-height: 88%; /* leave the top of the screen visible behind the sheet */
+  padding: var(--memox-space-6);
+  padding-bottom: var(--memox-safe-area-bottom);
+  background: var(--memox-surface-raised);
+  border-top-left-radius: var(--memox-radius-2xl);
+  border-top-right-radius: var(--memox-radius-2xl);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.sheet__handle {
+  flex-shrink: 0;
+  width: var(--memox-space-9); /* 48 — comfortable grab width */
+  height: var(--memox-space-1); /* 4 */
+  margin: 0 auto var(--memox-space-4);
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-border-strong);
+}
+.sheet__title {
+  flex-shrink: 0;
+  margin-bottom: var(--memox-space-3);
+  font-size: var(--memox-font-size-md);
+  font-weight: var(--memox-font-weight-bold);
+  letter-spacing: var(--memox-letter-spacing-tight);
+}
+.sheet__body {
+  min-height: 0;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-3);
+}
+
+/* ------------------------------------------------------------
+   MxMenu  ·  .menu   (action menu / list of items)
+   Supersedes the ad-hoc MenuItem for the frozen layer, including the
+   item disabled state (closes KIT-29-03 for the frozen component).
+   ------------------------------------------------------------ */
+.menu {
+  display: flex;
+  flex-direction: column;
+  min-width: var(--memox-size-3xl); /* 220 */
+  max-height: var(--memox-size-4xl); /* 280 — overflow scrolls */
+  overflow-y: auto;
+  padding: var(--memox-space-2);
+  background: var(--memox-surface-raised);
+  border-radius: var(--memox-radius-lg);
+  box-shadow: var(--memox-shadow-lg);
+  color: var(--memox-text);
+}
+.menu__item {
+  display: flex;
+  align-items: center;
+  gap: var(--memox-space-3);
+  width: 100%;
+  min-height: var(--memox-touch-min);
+  padding: 0 var(--memox-space-3);
+  border: none;
+  border-radius: var(--memox-radius-control);
+  background: transparent;
+  color: var(--memox-text);
+  font-family: inherit;
+  font-size: var(--memox-font-size-base);
+  font-weight: var(--memox-font-weight-medium);
+  text-align: start;
+  cursor: pointer;
+  transition: background var(--memox-duration-fast) var(--memox-ease-standard);
+}
+.menu__item:hover {
+  background: var(--memox-state-hover);
+}
+.menu__item:active {
+  background: var(--memox-state-pressed);
+}
+.menu__item:focus-visible {
+  outline: none;
+  box-shadow: var(--memox-ring-focus);
+}
+.menu__item .material-symbols-rounded {
+  font-size: var(--memox-icon-size-md);
+  flex-shrink: 0;
+}
+.menu__item-label {
+  flex: 1;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.menu__item--selected {
+  background: var(--memox-state-selected);
+  color: var(--memox-on-primary-soft);
+  font-weight: var(--memox-font-weight-bold);
+}
+.menu__item--destructive {
+  color: var(--memox-error);
+}
+.menu__item--destructive:hover {
+  background: var(--memox-error-soft);
+}
+.menu__item[disabled],
+.menu__item--disabled {
+  pointer-events: none;
+  opacity: var(--memox-opacity-disabled);
+}
+
+/* ------------------------------------------------------------
+   MxBanner  ·  .banner   (inline tone banner; info base)
+   ------------------------------------------------------------ */
+.banner {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--memox-space-3);
+  padding: var(--memox-space-4);
+  border-radius: var(--memox-radius-card);
+  background: var(--memox-info-soft);
+  color: var(--memox-on-info-soft);
+}
+.banner__icon {
+  flex-shrink: 0;
+  font-size: var(--memox-icon-size-md);
+  color: inherit;
+}
+.banner__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--memox-space-05);
+}
+.banner__title {
+  font-size: var(--memox-font-size-base);
+  font-weight: var(--memox-font-weight-bold);
+}
+.banner__body {
+  font-size: var(--memox-font-size-sm);
+  line-height: var(--memox-line-height-normal);
+  color: inherit;
+}
+.banner__action {
+  flex-shrink: 0;
+  align-self: center;
+}
+.banner--success {
+  background: var(--memox-success-soft);
+  color: var(--memox-on-success-soft);
+}
+.banner--warning {
+  background: var(--memox-warning-soft);
+  color: var(--memox-on-warning-soft);
+}
+.banner--error {
+  background: var(--memox-error-soft);
+  color: var(--memox-on-error-soft);
+}
+
+/* ------------------------------------------------------------
+   MxProgress  ·  .progress   (determinate bar + indeterminate + spinner)
+   Honours prefers-reduced-motion: the looping animations settle.
+   ------------------------------------------------------------ */
+.progress {
+  display: block;
+  width: 100%;
+}
+.progress__track {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: var(--memox-space-1); /* 4 */
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-surface-muted);
+}
+.progress__fill {
+  height: 100%;
+  border-radius: var(--memox-radius-full);
+  background: var(--memox-primary);
+  transition: width var(--memox-duration-base) var(--memox-ease-standard);
+}
+.progress--indeterminate .progress__fill {
+  width: 40%;
+  animation: mx-progress-slide var(--memox-duration-slow) var(--memox-ease-standard) infinite;
+}
+@keyframes mx-progress-slide {
+  from {
+    transform: translateX(-110%);
+  }
+  to {
+    transform: translateX(260%);
+  }
+}
+/* spinner form — inline circular indeterminate indicator */
+.progress--spinner {
+  display: inline-flex;
+  width: auto;
+}
+.progress__spinner {
+  width: var(--memox-icon-size-lg);
+  height: var(--memox-icon-size-lg);
+  border-radius: var(--memox-radius-full);
+  border: var(--memox-stroke-focus) solid var(--memox-surface-muted);
+  border-top-color: var(--memox-primary);
+  animation: mx-progress-spin var(--memox-duration-slow) linear infinite;
+}
+@keyframes mx-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .progress--indeterminate .progress__fill,
+  .progress__spinner {
+    animation-duration: var(--memox-duration-none);
+  }
+}

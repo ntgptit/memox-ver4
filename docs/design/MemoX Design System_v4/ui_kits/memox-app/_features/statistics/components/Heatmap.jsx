@@ -8,7 +8,7 @@ function Heatmap() {
         <div key={w} style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
           {Array.from({ length: 7 }).map((_, d) => {
             const op = [0.08, 0.25, 0.45, 0.7, 1][(w * 7 + d * 3) % 5];
-            return <div key={d} style={{ width: 'var(--memox-size-xs)', height: 'var(--memox-size-xs)', borderRadius: 'var(--memox-radius-xs)', background: 'var(--memox-primary)', opacity: op }} />;
+            return <div key={d} style={{ width: 'var(--memox-size-xs)', height: 'var(--memox-size-xs)', borderRadius: 'var(--memox-radius-xs)', background: 'var(--memox-viz-1)', opacity: op }} />;
           })}
         </div>
       ))}

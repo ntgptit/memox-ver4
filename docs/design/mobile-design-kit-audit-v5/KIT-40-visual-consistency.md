@@ -31,7 +31,7 @@ Audit đồng nhất cross-component/cross-pattern, không thay thế từng che
   - **Evidence mong đợi:** Override-cluster report.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-40-06 — Known exceptions có reason, owner và target thay vì bị coi là chuẩn mới.**
+- [x] **KIT-40-06 — Known exceptions có reason, owner và target thay vì bị coi là chuẩn mới.**
   - **Cách kiểm:** VM-13 — review exception register.
   - **Evidence mong đợi:** Danh sách ngoại lệ hiện hành.
   - **Severity mặc định nếu không đạt:** `P3`
@@ -46,15 +46,16 @@ Audit đồng nhất cross-component/cross-pattern, không thay thế từng che
 | KIT-40-04 | `ui_kits/memox-app/shots/` (337 shot, mọi state có cặp `--light`/`--dark`) | PASS | State parity giữ đủ giữa light và dark; kit đơn platform. |
 | KIT-40-05 | `ui_kits/memox-app/_features/**/*.jsx` (0 raw hex; inline style dùng `var(--memox-*)`) | PASS | Không có raw-value dialect ở screen; `.card.html` là specimen tài liệu cô lập. |
 | KIT-40-06 | `readme.md` KNOWN CAVEATS (no logo asset, placeholder data); không có exception register có owner/target | FAIL | Ngoại lệ ghi lý do nhưng thiếu owner/target/governance metadata. |
+| KIT-40-06 | governance/exception-register.md (caveats given owner/target/expiry) | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2:
-Open P3: ISS-KIT-40-06
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

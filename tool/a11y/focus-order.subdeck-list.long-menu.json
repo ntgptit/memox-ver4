@@ -1,0 +1,511 @@
+{
+  "screen": "subdeck-list",
+  "state": "long-menu",
+  "note": "executableFocusOrder = real Tab stops (buttons/switches/checkboxes). Text Fields are non-focusable design-intent spans in the static kit (see Field.jsx / keyboard-focus-order.md); they appear in readingOrder with annotatedField=true and map to real inputs in production.",
+  "executableFocusOrder": [
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Back",
+      "node": "shell/back",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Search subdecks",
+      "node": "subdeck-list/search-open",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Deck settings",
+      "node": "subdeck-list/more",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Library",
+      "node": "subdeck-list/crumb-library",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Study Greetings & introductions",
+      "node": "subdeck-list/sub-study-0",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Study Numbers & counting",
+      "node": "subdeck-list/sub-study-1",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Study Family & relationships",
+      "node": "subdeck-list/sub-study-2",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Study Food & dining",
+      "node": "subdeck-list/sub-study-3",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Study Directions & transport",
+      "node": "subdeck-list/sub-study-4",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Create subdeck",
+      "node": "subdeck-list/create",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "boltStudy subdeck",
+      "node": "subdeck-list/lm-study",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "editRename subdeck",
+      "node": "subdeck-list/lm-rename",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "content_copyDuplicate subdeck",
+      "node": "subdeck-list/lm-duplicate",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "push_pinPin to top",
+      "node": "subdeck-list/lm-pin",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "labelManage tags",
+      "node": "subdeck-list/lm-tags",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "ios_shareShare subdeck",
+      "node": "subdeck-list/lm-share",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "downloadExport subdeck",
+      "node": "subdeck-list/lm-export",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "archiveArchive subdeck",
+      "node": "subdeck-list/lm-archive",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "deleteDelete subdeck",
+      "node": "subdeck-list/lm-delete",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    }
+  ],
+  "readingOrder": [
+    {
+      "node": "subdeck-list/screen",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "arrow_backKorean TOPIK Isearchmore_vertLibrarychev"
+    },
+    {
+      "node": "subdeck-list/appbar",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "arrow_backKorean TOPIK Isearchmore_vert"
+    },
+    {
+      "node": "shell/back",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Back"
+    },
+    {
+      "node": null,
+      "role": "heading",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Korean TOPIK I"
+    },
+    {
+      "node": "subdeck-list/search-open",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Search subdecks"
+    },
+    {
+      "node": "subdeck-list/more",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Deck settings"
+    },
+    {
+      "node": "subdeck-list/breadcrumb",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Breadcrumb"
+    },
+    {
+      "node": "subdeck-list/crumb-library",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Library"
+    },
+    {
+      "node": "subdeck-list/subdeck-0",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "waving_handGreetings & introductions42 cards · 8 d"
+    },
+    {
+      "node": "subdeck-list/sub-study-0",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Study Greetings & introductions"
+    },
+    {
+      "node": "subdeck-list/subdeck-1",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "numbersNumbers & counting55 cards · Up to datebolt"
+    },
+    {
+      "node": "subdeck-list/sub-study-1",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Study Numbers & counting"
+    },
+    {
+      "node": "subdeck-list/subdeck-2",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "diversity_3Family & relationships38 cards · 6 newb"
+    },
+    {
+      "node": "subdeck-list/sub-study-2",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Study Family & relationships"
+    },
+    {
+      "node": "subdeck-list/subdeck-3",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "restaurantFood & dining47 cards · 15 duebolt"
+    },
+    {
+      "node": "subdeck-list/sub-study-3",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Study Food & dining"
+    },
+    {
+      "node": "subdeck-list/subdeck-4",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "directionsDirections & transport35 cards · Up to d"
+    },
+    {
+      "node": "subdeck-list/sub-study-4",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Study Directions & transport"
+    },
+    {
+      "node": "subdeck-list/create",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Create subdeck"
+    },
+    {
+      "node": "subdeck-list/long-menu-scrim",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Greetings & introductionsboltStudy subdeckeditRena"
+    },
+    {
+      "node": "subdeck-list/long-menu-sheet",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Greetings & introductionsboltStudy subdeckeditRena"
+    },
+    {
+      "node": "subdeck-list/long-menu-list",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "boltStudy subdeckeditRename subdeckdrive_file_move"
+    },
+    {
+      "node": "subdeck-list/lm-study",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "boltStudy subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-rename",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "editRename subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-move",
+      "role": "button",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "drive_file_moveMove subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-duplicate",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "content_copyDuplicate subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-pin",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "push_pinPin to top"
+    },
+    {
+      "node": "subdeck-list/lm-tags",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "labelManage tags"
+    },
+    {
+      "node": "subdeck-list/lm-share",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "ios_shareShare subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-export",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "downloadExport subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-archive",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "archiveArchive subdeck"
+    },
+    {
+      "node": "subdeck-list/lm-delete",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "deleteDelete subdeck"
+    }
+  ],
+  "annotatedFieldStops": [],
+  "checks": [
+    {
+      "check": "no-forward-trap",
+      "pass": true
+    },
+    {
+      "check": "reversible-shift-tab",
+      "pass": true,
+      "forward": 19,
+      "backward": 19
+    },
+    {
+      "check": "all-stops-named",
+      "pass": true,
+      "unnamed": 0
+    }
+  ]
+}

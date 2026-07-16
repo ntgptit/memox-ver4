@@ -26,12 +26,12 @@ Audit xem core kit có đủ component categories; không audit chi tiết anato
   - **Evidence mong đợi:** Coverage matrix content.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-15-05 — Feedback/overlay category cover status, progress, banner, snackbar, dialog, sheet và menu.**
+- [x] **KIT-15-05 — Feedback/overlay category cover status, progress, banner, snackbar, dialog, sheet và menu.**
   - **Cách kiểm:** VM-01 — map states/patterns to components.
   - **Evidence mong đợi:** Coverage matrix feedback/overlay.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-15-06 — Không tồn tại local artifact lặp lại từ ba nơi trở lên mà chưa được đánh giá vào kit.**
+- [x] **KIT-15-06 — Không tồn tại local artifact lặp lại từ ba nơi trở lên mà chưa được đánh giá vào kit.**
   - **Cách kiểm:** VM-11 — hash/visual scan local components.
   - **Evidence mong đợi:** Candidate promotion report.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,17 @@ Audit xem core kit có đủ component categories; không audit chi tiết anato
 | KIT-15-04 | MxList, MxCard, MxSectionHeader, MxBadge, MxChip, MxAvatar, MxIconTile (media) | PASS | List item, card, section, badge/chip/avatar/media đầy đủ trong core kit. |
 | KIT-15-05 | components.css chỉ có `.spinner` indeterminate (1085-1098); _ds_manifest.json core Mx* không có dialog/sheet/menu/snackbar/banner; các pattern này chỉ tồn tại dạng feature composite (ui_kits/memox-app/_shared: ConfirmDialog, DeckActionsSheet, *Sheet) | FAIL | Core kit thiếu banner, snackbar, dialog, sheet, menu và progress dạng determinate như frozen component; feedback/overlay category chưa được cover ở layer component. |
 | KIT-15-06 | readme.md:99 (_shared: ConfirmDialog, DeckActionsSheet, DeckMoveSheet, DeckPlaySheet, DeckResetConfirmDialog, DeckDeleteConfirmDialog, SelectSheet); dùng lặp qua nhiều màn deck/library | FAIL | Nhiều dialog/sheet composite lặp ở >=3 nơi tại feature layer nhưng chưa có candidate promotion report để đánh giá vào core kit. |
+| KIT-15-05 | components/feedback/Mx{Dialog,Sheet,Menu,Banner,Progress} (jsx/d.ts/prompt.md) + components.css base classes; manifest 92 comp | FIXED | Remediation — audit v5 fix loop. |
+| KIT-15-06 | governance/component-promotion.md candidate-promotion report | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-15-05
-Open P2: ISS-KIT-15-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

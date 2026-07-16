@@ -25,15 +25,24 @@ deck-delete; languages remove-pair).
 - `title` / `text` — heading + body copy.
 - `actions` — the button row (typically a ghost cancel + a primary/`danger` confirm).
 
-## States
-The dialog itself is static; its meaning comes from `tone` + `actions`:
-- **warning** — reversible-but-significant (leave session, reset progress).
-- **error / destructive** — data loss (delete card/deck, remove pair); confirm
-  button uses `danger`.
+## States — risk classification (KIT-31-01)
+The dialog itself is static; its meaning comes from `tone` + `actions`. Three risk tiers,
+each with a fixed tone so the rubric and the shipped dialogs stay in sync:
+
+| Tier | Meaning | `tone` | Confirm button | Examples in the kit |
+|---|---|---|---|---|
+| **undoable** | Fully reversible; the confirm exists only to prevent an accidental tap. Recoverable with no data loss. | `null` (neutral) or `warning` | `variant="primary"` (no `danger`) | discard unsaved edits (draft only) |
+| **destructive-recoverable** | Significant but the underlying data is not erased — state can be re-derived or resumed. | `error` | `variant="primary" danger` | leave the session (progress lost for this run), reset progress (scheduling erased, cards kept) |
+| **destructive** | Permanent data loss; nothing to re-derive. | `error` | `variant="primary" danger` | delete card/deck, remove language pair |
+
+Note: leave-session and reset-progress ship as `tone="error"` + `danger` (see
+`study-session/components/ExitDialog.jsx`, `_shared/DeckResetConfirmDialog.jsx`) because they
+destroy run/scheduling state — the rubric row above matches that implementation. The `warning`
+tone is reserved for the undoable tier when a softer cue than neutral is wanted.
 
 ## Rules
-- Exactly one primary/confirm action; cancel is always `variant="ghost"`.
-- Destructive confirm → `tone="error"` + `danger` on the confirm button.
+- Exactly one primary/confirm action; cancel is always `variant="ghost"` (the always-safe exit).
+- Any destructive or destructive-recoverable confirm → `tone="error"` + `danger` on the confirm button.
 - Never hardcode copy inside `ConfirmDialog`; pass it from the calling screen so
   l10n and node ids stay owned by that screen.
 

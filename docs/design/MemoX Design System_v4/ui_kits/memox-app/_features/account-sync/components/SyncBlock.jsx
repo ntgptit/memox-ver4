@@ -9,7 +9,9 @@ function SyncBlock({ state }) {
     return (
       <MxCard node="account/sync">
         <window.ListRow icon="sync" tone="accent" title="Syncing…" sub="Uploading changes" last node="account/sync-status" />
-        <div style={{ marginTop: 'var(--memox-space-3)' }}><window.ProgressBar value={60} height={8} node="account/sync-bar" /></div>
+        {/* Standalone progress surface announced to AT (KIT-21-03): polite live region
+            + aria-busy while the sync runs. Attribute-only — no pixel change. */}
+        <div role="status" aria-live="polite" aria-busy="true" style={{ marginTop: 'var(--memox-space-3)' }}><window.ProgressBar value={60} height={8} node="account/sync-bar" /></div>
       </MxCard>
     );
   }

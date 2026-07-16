@@ -22,15 +22,17 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxCard`, `MxChip`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `MxSwitch`, `window.ListRow`, `window.SectionLabel`
+`MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `MxSwitch`, `window.EmptyState`, `window.ListRow`, `window.SectionLabel`
 
-## State matrix (contract §6) — 3 states, each rendered light + dark
+## State matrix (contract §6) — 5 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
 | 1 | `on` |
 | 2 | `off` |
 | 3 | `time-picker` |
+| 4 | `permission-denied` |
+| 5 | `permission-denied-expansion` |
 
 ## Handoff notes
 

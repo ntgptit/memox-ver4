@@ -8,7 +8,7 @@ export function MxSectionHeader({ title, caption, action, onAction, actionLabel,
   return (
     <div className="section-head" data-mx-node={node}>
       <div className="section-head__text">
-        <div className="section-head__title">{title}</div>
+        <div className="section-head__title" role="heading" aria-level={2}>{title}</div>
         {caption ? <div className="section-head__caption">{caption}</div> : null}
       </div>
       {action ? (

@@ -26,7 +26,7 @@ Audit role semantics và alias; không lặp primitive scale, contrast measureme
   - **Evidence mong đợi:** Action-role matrix và sample usages.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-05-05 — Feedback success, warning, error, info tách khỏi data-visualization palette.**
+- [x] **KIT-05-05 — Feedback success, warning, error, info tách khỏi data-visualization palette.**
   - **Cách kiểm:** VM-03 — trace usages và token collection ownership.
   - **Evidence mong đợi:** Usage report không có chart token dùng làm feedback hoặc ngược lại.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Audit role semantics và alias; không lặp primitive scale, contrast measureme
 | KIT-05-04 | `components/core/MxButton.d.ts` variant primary/secondary/outline/ghost + `danger`; alias tương ứng `--memox-primary` (filled), `--memox-surface-muted`/tonal (secondary), `--memox-primary-strong` (ghost/tertiary), `--memox-error` (destructive) | PASS | Bốn cấp action giữ semantic khác nhau qua variant + token nền. |
 | KIT-05-05 | `_features/statistics/components/Donut.jsx:7` dùng `tone="var(--memox-success)"` làm chart tone; `tokens/colors.css:48` `--memox-success` là feedback role | FAIL | Feedback token `--memox-success` được tái dùng làm data-viz tone trong Donut — đúng case "ngược lại" mà mục yêu cầu phải vắng. Không có data-viz palette riêng; chart mượn feedback token. Tác động thấp (vòng completion xanh success hợp semantic) → P3. Xem ISS-KIT-05-05. |
 | KIT-05-06 | Grep tên/mô tả semantic trong `tokens/colors.css` cho screen/business terms (deck/flashcard/study…): 0 kết quả | PASS | Role semantic không gắn screen/business entity cụ thể. |
+| KIT-05-05 | tokens/colors.css --memox-viz-1..6; Donut/Bars/Heatmap repointed off feedback tokens | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2:
-Open P3: ISS-KIT-05-05
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

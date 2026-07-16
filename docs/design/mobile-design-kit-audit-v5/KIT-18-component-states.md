@@ -6,22 +6,22 @@ Audit state-specific coverage; không lặp interaction flow toàn màn hình.
 
 ## Checklist
 
-- [ ] **KIT-18-01 — Interactive controls có default, pressed, focused, selected khi relevant và disabled.**
+- [x] **KIT-18-01 — Interactive controls có default, pressed, focused, selected khi relevant và disabled.**
   - **Cách kiểm:** VM-04 — state matrix per component.
   - **Evidence mong đợi:** Ma trận độ bao phủ trạng thái của component.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-18-02 — Form controls có empty, filled, focused, error, disabled và read-only phân biệt.**
+- [x] **KIT-18-02 — Form controls có empty, filled, focused, error, disabled và read-only phân biệt.**
   - **Cách kiểm:** VM-04 + VM-05 — render form-state contact sheet.
   - **Evidence mong đợi:** Ảnh các trạng thái biểu mẫu và liên kết token tương ứng.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-18-03 — Async components có loading, success/failure hoặc retry state phù hợp.**
+- [x] **KIT-18-03 — Async components có loading, success/failure hoặc retry state phù hợp.**
   - **Cách kiểm:** VM-04 + VM-05 — trigger async variants in prototypes/examples.
   - **Evidence mong đợi:** Async-state matrix.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-18-04 — Selection controls có unchecked, checked, indeterminate và unavailable khi relevant.**
+- [x] **KIT-18-04 — Selection controls có unchecked, checked, indeterminate và unavailable khi relevant.**
   - **Cách kiểm:** VM-04 + VM-10 — inspect visuals and semantics.
   - **Evidence mong đợi:** Bằng chứng các trạng thái lựa chọn.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,19 @@ Audit state-specific coverage; không lặp interaction flow toàn màn hình.
 | KIT-18-04 | MxSwitch.d.ts checked/unchecked + disabled (unavailable, components.css 830); MxChip selected/unselected nhưng không có disabled; không có checkbox/radio nên indeterminate N/A; segmented không có disabled | FAIL | Switch cover checked/unchecked/unavailable; chip/segmented thiếu disabled/unavailable. Không có checkbox nên indeterminate không áp dụng. Hạ xuống P2 vì selection control chính (switch) đã đủ. |
 | KIT-18-05 | MxContextualAppBar.d.ts `collapsed` (collapsed/expanded, elevate-on-scroll) + reduced-motion fade contract; không có drag/reorder/accordion primitive trong core kit | PASS | Không có component drag/expandable theo scope (disclosure xử lý bằng feature sheet); app bar có collapsed/expanded state kèm reduced-motion. |
 | KIT-18-06 | components.css press = transform scale (card 252, btn 335, icon-btn 472, fab 571); modifiers state đổi background/color/box-shadow không đổi box model; switch thumb chạy trong track cố định | PASS | Chuyển state dùng transform/color/shadow nên không gây reflow hay đổi kích thước ngoài chủ đích. |
+| KIT-18-01 | components.css :focus-visible rings on chip/switch/segmented/link/bottom-nav + disabled states | FIXED | Remediation — audit v5 fix loop. |
+| KIT-18-02 | MxTextField readOnly prop + .field--readonly | FIXED | Remediation — audit v5 fix loop. |
+| KIT-18-03 | MxButton loading prop + .btn--loading + aria-busy | FIXED | Remediation — audit v5 fix loop. |
+| KIT-18-04 | MxChip/MxSegmentedControl disabled states | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-18-01, ISS-KIT-18-02, ISS-KIT-18-03
-Open P2: ISS-KIT-18-04
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

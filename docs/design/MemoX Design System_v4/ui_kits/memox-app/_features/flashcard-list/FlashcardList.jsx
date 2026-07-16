@@ -81,6 +81,25 @@ function FlashcardList({ state = 'loaded' }) {
     );
   }
 
+  /* not-found — the parent deck was deleted/moved on another device while open
+     (KIT-23-02, deleted-entity detail state). Friendly copy + a safe back action;
+     the nested app bar drops search/more since the entity is gone. */
+  // registry-state: not-found
+  if (state === 'not-found') {
+    const goneBar = (
+      <MxContextualAppBar variant="nested" node="flashcard-list/appbar" title="Numbers & counting"
+        actions={<span aria-hidden="true" />} />
+    );
+    return (
+      <MxScaffold node="flashcard-list/screen" appBar={goneBar}>
+        <EmptyState node="flashcard-list/not-found" icon="folder_off" tone="warning"
+          title="This deck no longer exists"
+          text="It may have been deleted or moved on another device. Head back to your library to keep studying."
+          action={<MxButton variant="primary" icon="arrow_back" node="flashcard-list/not-found-back">Back to Library</MxButton>} />
+      </MxScaffold>
+    );
+  }
+
   /* search / no-results — CARDS only, placeholder "Search cards" */
   if (state === 'search' || state === 'no-results') {
     const q = state === 'search' ? '하' : 'zzz';
@@ -105,6 +124,99 @@ function FlashcardList({ state = 'loaded' }) {
         {filterRow(2)}
         <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{due.length} due cards</div>
         <SectionLabel>CARDS</SectionLabel>{cardList(due)}
+      </MxScaffold>
+    );
+  }
+
+  /* SELECTION MODE — contract notes (static kit annotates intent; Flutter wires handlers):
+     · Entry trigger (KIT-27-01): long-press any card row, OR "Select" in the card-actions
+       sheet, enters selection mode; the app bar swaps to the `selection` variant. Hardware
+       BACK exits selection mode first (restores the nested app bar) and only navigates away on
+       a second BACK — it never leaves the deck straight from selection.
+     · Persistence (KIT-27-05): the selection is keyed by card id, not row index. Changing the
+       filter/search/sort re-scopes the visible rows but KEEPS ids already selected; select-all
+       and the count reflect only the CURRENT (post-filter) set. Hidden cards are out of scope
+       and are never swept in by select-all. */
+
+  // Tri-state select-all affordance (KIT-27-02): reflects scope over the current set —
+  // 'none' → empty box (tap = select all), 'some' → indeterminate, 'all' → filled (tap = clear).
+  const selAllAction = (scope) => {
+    const map = { none: ['check_box_outline_blank', 'Select all'], some: ['indeterminate_check_box', 'Select all'], all: ['check_box', 'Deselect all'] };
+    const [icon, label] = map[scope] || map.none;
+    return <MxIconButton icon={icon} size="sm" node="flashcard-list/sel-all" ariaLabel={label} />;
+  };
+  // Selection app bar: count + tri-state select-all + bulk more_vert. more_vert is DISABLED at
+  // zero selected (KIT-27-03) — no bulk action can target an empty selection.
+  const selBar = (count, scope) => (
+    <MxContextualAppBar variant="selection" node="flashcard-list/appbar" count={count}
+      actions={<React.Fragment>
+        {selAllAction(scope)}
+        <MxIconButton icon="more_vert" size="sm" node="flashcard-list/sel-more" ariaLabel="More actions" disabled={count === 0} />
+      </React.Fragment>} />
+  );
+  const selList = (sel) => (
+    <MxList>{CARDS.map((c, i) => (
+      <MxCard key={i} padding="sm" interactive variant={sel[i] ? 'primary-soft' : undefined} node={'flashcard-list/sel-card-' + i}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', gap: 'var(--memox-space-4)' }}>
+          <span className="material-symbols-rounded" style={{ flexShrink: 0, fontSize: 'var(--memox-icon-size-lg)', color: sel[i] ? 'var(--memox-accent)' : 'var(--memox-text-tertiary)' }}>{sel[i] ? 'check_circle' : 'radio_button_unchecked'}</span>
+          <div style={{ flex: 1, minWidth: 0 }}><window.StatusCardRow {...c} tightTerm clampMeaning /></div>
+        </div>
+      </MxCard>
+    ))}</MxList>
+  );
+
+  /* selection-all — every visible card selected; select-all shows the filled (tri-state 'all') box */
+  if (state === 'selection-all') {
+    return (
+      <MxScaffold node="flashcard-list/screen" appBar={selBar(6, 'all')}>
+        <SectionLabel>CARDS</SectionLabel>{selList([true, true, true, true, true, true])}
+      </MxScaffold>
+    );
+  }
+
+  /* selection-empty — zero selected (KIT-27-03): count 0, bulk more_vert disabled, hint shown */
+  if (state === 'selection-empty') {
+    return (
+      <MxScaffold node="flashcard-list/screen" appBar={selBar(0, 'none')}>
+        {/* Nothing selected → bulk actions disabled; production may also auto-exit selection mode. */}
+        <window.Note icon="info" text="Select cards to move, hide, or delete." tone="accent" />
+        <SectionLabel>CARDS</SectionLabel>{selList([false, false, false, false, false, false])}
+      </MxScaffold>
+    );
+  }
+
+  /* bulk-delete-confirm — destructive bulk action confirm that NAMES the count (KIT-27-04) */
+  if (state === 'bulk-delete-confirm') {
+    const sel = [true, false, true, false, false, false]; // 2 selected
+    const screen = (
+      <MxScaffold node="flashcard-list/screen" appBar={selBar(2, 'some')}>
+        <SectionLabel>CARDS</SectionLabel>{selList(sel)}
+      </MxScaffold>
+    );
+    return (
+      <React.Fragment>{screen}
+        <ConfirmDialog align="center" scrimNode="flashcard-list/bulk-delete-scrim"
+          icon="delete" tone="error" title="Delete 2 cards?"
+          text="The 2 selected cards will be permanently removed from this deck. This can’t be undone."
+          dialogNode="flashcard-list/bulk-delete-dialog"
+          actions={<React.Fragment>
+            <MxButton variant="ghost" block node="flashcard-list/bulk-delete-cancel">Cancel</MxButton>
+            <MxButton variant="primary" danger block node="flashcard-list/bulk-delete-ok">Delete 2</MxButton>
+          </React.Fragment>} />
+      </React.Fragment>
+    );
+  }
+
+  /* bulk-outcome — bulk op result (KIT-27-06): partial success announced via a live region; the
+     failed item stays selected so the user can retry just that one */
+  if (state === 'bulk-outcome') {
+    const sel = [true, false, true, true, false, true]; // 4 attempted, 1 failed still selected
+    return (
+      <MxScaffold node="flashcard-list/screen" appBar={selBar(4, 'some')}>
+        <div role="status" aria-live="polite" data-mx-node="flashcard-list/bulk-outcome">
+          <window.Note icon="info" text="Moved 3 of 4 cards. 1 couldn’t be moved — still selected to retry." tone="warning" />
+        </div>
+        <SectionLabel>CARDS</SectionLabel>{selList(sel)}
       </MxScaffold>
     );
   }

@@ -26,7 +26,7 @@ Audit icon system, semantics và placement.
   - **Evidence mong đợi:** Semantic icon glossary và conflict list.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-13-05 — Directional icon mirror đúng RTL; non-directional icon không bị mirror sai.**
+- [x] **KIT-13-05 — Directional icon mirror đúng RTL; non-directional icon không bị mirror sai.**
   - **Cách kiểm:** VM-08 — render RTL samples.
   - **Evidence mong đợi:** LTR/RTL comparison screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Audit icon system, semantics và placement.
 | KIT-13-04 | readme.md:65 (common glyphs); MxIconButton.d.ts (Back=arrow_back, Close=close, More options=more_horiz); MxContextualAppBar.d.ts leading contract (back cho nested/search, close cho modal/selection) | PASS | Back, close và overflow dùng glyph phân biệt; không thấy conflict. Glossary hiện gom theo screen chứ chưa gom theo semantic action. |
 | KIT-13-05 | Grep `rtl\|direction\|dir=\|mirror\|scaleX` toàn kit (trừ shots) = 0 kết quả; chevron_right/arrow_back trong MxLink/MxContextualAppBar không có logic mirror; không có RTL sample | FAIL | Không có xử lý RTL hoặc sample LTR/RTL; directional icon sẽ không mirror. MemoX hiện là sản phẩm LTR (Vietnamese/English) nên hạ mức xuống P2. |
 | KIT-13-06 | MxIconButton.d.ts (`ariaLabel: string` REQUIRED, không optional); components.css icon-btn base = touch-min 48px (457-458), hit-area ::after cho icon-btn--sm (1010); fab 56px; MxFab.d.ts ariaLabel cho icon-only | PASS | Icon-only action bắt buộc accessible name (icon button) và touch target >=48; compact size mở rộng hit area qua ::after. |
+| KIT-13-05 | components.css [dir=rtl] mirror hook + SCOPE.md RTL scope | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-13-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

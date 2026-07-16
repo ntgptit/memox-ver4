@@ -6,6 +6,8 @@ export interface MxChipProps {
   icon?: string;
   /** Selected (filled) state. */
   selected?: boolean;
+  /** Unavailable / disabled: inert and dimmed. */
+  disabled?: boolean;
   variant?: 'accent' | 'ghost';
   node?: string;
   onClick?: () => void;

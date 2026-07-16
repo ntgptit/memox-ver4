@@ -76,6 +76,22 @@
   --memox-focus-ring: #4b3a8c;
   --memox-overlay: rgba(28, 24, 45, 0.42);
   --memox-scrim: rgba(28, 24, 45, 0.04);
+
+  /* --- data-visualization palette (Layer 1) · a dedicated categorical
+         namespace for CHART tones, kept SEPARATE from the feedback/semantic
+         roles so charts never borrow success/error/etc. semantics (KIT-05-05).
+         Declared in BOTH theme roots as theme-aware aliases so each viz slot
+         resolves to the same value the charts render today — parity-neutral.
+           viz-1 = weekly bars + study-calendar heatmap  (brand primary)
+           viz-2 = Leitner-box bars                      (brand accent)
+           viz-3 = accuracy donut ring                   (success green)
+           viz-4..6 = spare categorical slots for future series. --- */
+  --memox-viz-1: var(--memox-primary);
+  --memox-viz-2: var(--memox-accent);
+  --memox-viz-3: var(--memox-success);
+  --memox-viz-4: var(--memox-warning);
+  --memox-viz-5: var(--memox-info);
+  --memox-viz-6: var(--memox-error);
 }
 
 [data-theme='dark'] {
@@ -142,6 +158,16 @@
   --memox-focus-ring: #b4aadd;
   --memox-overlay: rgba(8, 6, 16, 0.7);
   --memox-scrim: rgba(255, 255, 255, 0.04);
+
+  /* --- data-visualization palette (dark) · same theme-aware aliases as light,
+         re-declared at the dark root so each slot substitutes the dark value of
+         its source token. Charts render identically to before (KIT-05-05). --- */
+  --memox-viz-1: var(--memox-primary);
+  --memox-viz-2: var(--memox-accent);
+  --memox-viz-3: var(--memox-success);
+  --memox-viz-4: var(--memox-warning);
+  --memox-viz-5: var(--memox-info);
+  --memox-viz-6: var(--memox-error);
 }
 
 /* --- accent palette · the selectable accent colours offered by the Theme
@@ -155,3 +181,7 @@
   --memox-palette-amber: #ff9f43;
   --memox-palette-cyan: #22a3c3;
 }
+
+/* High-contrast profile (KIT-08-06 / KIT-39-05) lives in tokens/high-contrast.css —
+   additive [data-hc='true'] overrides kept out of this base file so the light/dark
+   snapshot here stays the single source the manifest parity tooling reads. */

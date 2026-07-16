@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxButton`, `MxCard`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `window.EmptyState`, `window.ListRow`, `window.SectionLabel`
 
-## State matrix (contract §6) — 5 states, each rendered light + dark
+## State matrix (contract §6) — 6 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -33,6 +33,7 @@ composition; the component map below is the authoritative set of pieces in play.
 | 3 | `empty` |
 | 4 | `add` |
 | 5 | `remove` |
+| 6 | `scripts` |
 
 ## Handoff notes
 

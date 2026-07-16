@@ -10,6 +10,7 @@ export function MxBottomNav({ items = [], value, onChange, node }) {
           <button
             key={it.id}
             type="button"
+            aria-current={active ? 'page' : undefined}
             className={['bottom-nav__item', active ? 'bottom-nav__item--active' : ''].filter(Boolean).join(' ')}
             onClick={() => onChange && onChange(it.id)}
           >

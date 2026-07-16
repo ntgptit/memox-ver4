@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.Breadcrumb`, `window.DeckPlaySheet`
 
-## State matrix (contract §6) — 13 states, each rendered light + dark
+## State matrix (contract §6) — 15 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -37,10 +37,12 @@ composition; the component map below is the authoritative set of pieces in play.
 | 7 | `selection` |
 | 8 | `create-sheet` |
 | 9 | `subdeck-actions` |
-| 10 | `play` |
-| 11 | `loading` |
-| 12 | `offline` |
-| 13 | `error` |
+| 10 | `long-menu` |
+| 11 | `play` |
+| 12 | `loading` |
+| 13 | `offline` |
+| 14 | `error` |
+| 15 | `not-found` |
 
 ## Handoff notes
 

@@ -21,6 +21,8 @@ function Import({ state = 'source' }) {
   if (state === 'importing') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
+        {/* KIT-42-04: import progress is a polite live region (aria-busy while running). */}
+        <div role="status" aria-live="polite" aria-busy="true">
         <MxCard node="import/importing">
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)' }}>
             <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>Importing…</div>
@@ -28,6 +30,7 @@ function Import({ state = 'source' }) {
             <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>77 / 124 cards · don’t close this screen</div>
           </div>
         </MxCard>
+        </div>
       </MxScaffold>
     );
   }
@@ -35,7 +38,7 @@ function Import({ state = 'source' }) {
   if (state === 'import-error') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
-        <window.EmptyState node="import/error" icon="error" tone="error" title="Import failed"
+        <window.EmptyState announce="alert" node="import/error" icon="error" tone="error" title="Import failed"
           text="Couldn’t read the file at row 78. Check the format and try again."
           action={<MxButton variant="primary" icon="refresh" node="import/retry">Try again</MxButton>} />
       </MxScaffold>
@@ -45,7 +48,7 @@ function Import({ state = 'source' }) {
   if (state === 'done') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
-        <window.EmptyState node="import/done" icon="task_alt" tone="success" title="Imported 124 cards"
+        <window.EmptyState announce="status" node="import/done" icon="task_alt" tone="success" title="Imported 124 cards"
           text="The new cards were added to “TOPIK I — Vocabulary”."
           action={<MxButton variant="primary" icon="arrow_forward" node="import/go-deck">Back to deck</MxButton>} />
       </MxScaffold>

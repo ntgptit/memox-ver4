@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxChip`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `MxSwitch`
+`MxButton`, `MxChip`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`, `MxSwitch`, `window.ConfirmDialog`, `window.KeyboardInset`
 
-## State matrix (contract §6) — 9 states, each rendered light + dark
+## State matrix (contract §6) — 10 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -34,9 +34,10 @@ composition; the component map below is the authoritative set of pieces in play.
 | 4 | `duplicate` |
 | 5 | `additional-translation` |
 | 6 | `audio-generating` |
-| 7 | `submitting` |
-| 8 | `submit-error` |
-| 9 | `submit-success` |
+| 7 | `keyboard-open` |
+| 8 | `submitting` |
+| 9 | `submit-error` |
+| 10 | `submit-success` |
 
 ## Handoff notes
 

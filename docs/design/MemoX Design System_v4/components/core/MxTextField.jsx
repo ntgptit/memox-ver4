@@ -7,7 +7,7 @@ export function MxTextField({
   value, defaultValue, placeholder,
   label, helper, error,
   multiline = false, rows = 3, align = 'start', autoFocus = false,
-  type = 'text', inputMode, disabled = false, required = false,
+  type = 'text', inputMode, disabled = false, readOnly = false, required = false,
   id, name, ariaLabel, node, className = '', onChange,
 }) {
   const cls = ['field'];
@@ -15,13 +15,14 @@ export function MxTextField({
   if (multiline) cls.push('field--multiline');
   if (error) cls.push('field--error');
   if (disabled) cls.push('field--disabled');
+  if (readOnly) cls.push('field--readonly');
   if (className) cls.push(className);
 
   const fieldId = id || (node ? String(node).replace(/[^\w-]+/g, '-') : undefined);
   const helpId = (helper || error) && fieldId ? fieldId + '-help' : undefined;
   const control = {
     className: cls.join(' '), placeholder, value, defaultValue, autoFocus, onChange,
-    disabled, required, id: fieldId, name,
+    disabled, readOnly, required, id: fieldId, name,
     'aria-invalid': error ? true : undefined,
     'aria-required': required || undefined,
     'aria-describedby': helpId,

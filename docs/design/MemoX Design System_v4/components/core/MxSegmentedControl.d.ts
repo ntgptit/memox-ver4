@@ -3,6 +3,8 @@ export interface MxSegment {
   label: string;
   /** Material Symbols Rounded ligature name. */
   icon?: string;
+  /** Unavailable / disabled option: inert and dimmed. */
+  disabled?: boolean;
 }
 
 export interface MxSegmentedControlProps {

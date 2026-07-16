@@ -75,7 +75,9 @@
     } else if (variant === 'selection') {
       main = <div className="cappbar__title" role="status">{count} selected</div>;
     } else {
-      main = <div className="cappbar__title">{title}</div>;
+      // The bar title is the screen's top-level heading — expose it as a heading landmark
+      // so screens have a reachable H1 for AT. (role/aria-level add no pixels.)
+      main = <div className="cappbar__title" role="heading" aria-level={1}>{title}</div>;
     }
 
     // Right cluster: generic actions, then notification, then avatar.

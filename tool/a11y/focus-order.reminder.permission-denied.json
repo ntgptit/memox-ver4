@@ -1,0 +1,119 @@
+{
+  "screen": "reminder",
+  "state": "permission-denied",
+  "note": "executableFocusOrder = real Tab stops (buttons/switches/checkboxes). Text Fields are non-focusable design-intent spans in the static kit (see Field.jsx / keyboard-focus-order.md); they appear in readingOrder with annotatedField=true and map to real inputs in production.",
+  "executableFocusOrder": [
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "arrow_back",
+      "node": "reminder/back",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "settingsOpen Settings",
+      "node": "reminder/permission-settings",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    },
+    {
+      "end": false,
+      "inFrame": true,
+      "sentinel": false,
+      "tag": "button",
+      "role": "button",
+      "name": "Not now",
+      "node": "reminder/permission-dismiss",
+      "ariaDisabled": null,
+      "ariaExpanded": null,
+      "ariaChecked": null
+    }
+  ],
+  "readingOrder": [
+    {
+      "node": "reminder/screen",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "arrow_backRemindersnotifications_offNotifications "
+    },
+    {
+      "node": "reminder/appbar",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "arrow_backReminders"
+    },
+    {
+      "node": "reminder/back",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "arrow_back"
+    },
+    {
+      "node": null,
+      "role": "heading",
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "Reminders"
+    },
+    {
+      "node": "reminder/permission-denied",
+      "role": null,
+      "focusable": false,
+      "annotatedField": null,
+      "live": null,
+      "name": "notifications_offNotifications are turned offMemoX"
+    },
+    {
+      "node": "reminder/permission-settings",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "settingsOpen Settings"
+    },
+    {
+      "node": "reminder/permission-dismiss",
+      "role": "button",
+      "focusable": true,
+      "annotatedField": null,
+      "live": null,
+      "name": "Not now"
+    }
+  ],
+  "annotatedFieldStops": [],
+  "checks": [
+    {
+      "check": "no-forward-trap",
+      "pass": true
+    },
+    {
+      "check": "reversible-shift-tab",
+      "pass": true,
+      "forward": 3,
+      "backward": 3
+    },
+    {
+      "check": "all-stops-named",
+      "pass": true,
+      "unnamed": 0
+    }
+  ]
+}

@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `MxSearchDock`, `window.Breadcrumb`, `window.StatusCardRow`
+`MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `MxSearchDock`, `window.Breadcrumb`, `window.Note`, `window.StatusCardRow`
 
-## State matrix (contract §6) — 15 states, each rendered light + dark
+## State matrix (contract §6) — 16 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -43,6 +43,7 @@ composition; the component map below is the authoritative set of pieces in play.
 | 13 | `loading` |
 | 14 | `offline` |
 | 15 | `error` |
+| 16 | `not-found` |
 
 ## Handoff notes
 
