@@ -250,8 +250,11 @@ async function run() {
   }
 
   // ---- axe-core component sweep ----
-  const axePath = require.resolve('axe-core');
-  const axeSource = await readFile(axePath, 'utf-8');
+  // axe-core is VENDORED (tool/a11y/vendor/axe.min.js), not an npm dependency — so this harness
+  // never perturbs package.json / the lockfile / `npm ci`. Falls back to node_modules if present.
+  let axeSource;
+  try { axeSource = await readFile(join(HERE, 'vendor', 'axe.min.js'), 'utf-8'); }
+  catch { axeSource = await readFile(require.resolve('axe-core'), 'utf-8'); }
   const axeResults = [];
   // Rules that only make sense at whole-PAGE scope — disabled because we mount a single component
   // fragment (no <html lang>, no landmarks, no <title>). Component-level rules stay ON.
@@ -286,7 +289,7 @@ async function run() {
   }
 
   await writeFile(join(OUT, 'axe-report.json'), JSON.stringify({
-    tool: 'axe-core', version: require('axe-core/package.json').version,
+    tool: 'axe-core', version: '4.12.1 (vendored: tool/a11y/vendor/axe.min.js)',
     scope: 'component fragment mounted in isolation; page-scope rules disabled: ' + PAGE_SCOPE_OFF.join(', '),
     gate: 'role/name/aria (KIT-42-02 lane) hard-fails; color-contrast recorded as observations only '
       + '(contrast is the contrast.mjs token gate + KIT-08/21/39 lane). Observed contrast spots are '

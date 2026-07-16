@@ -1,6 +1,6 @@
 {
   "tool": "axe-core",
-  "version": "4.12.1",
+  "version": "4.12.1 (vendored: tool/a11y/vendor/axe.min.js)",
   "scope": "component fragment mounted in isolation; page-scope rules disabled: region, landmark-one-main, page-has-heading-one, html-has-lang, html-lang-valid, document-title, bypass, landmark-no-duplicate-banner, landmark-unique, meta-viewport",
   "gate": "role/name/aria (KIT-42-02 lane) hard-fails; color-contrast recorded as observations only (contrast is the contrast.mjs token gate + KIT-08/21/39 lane). Observed contrast spots are text-tertiary on surface-sunken (~4.2:1 vs AA 4.5) — filed for the contrast lane, not this harness.",
   "results": [
