@@ -24,17 +24,18 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxButton`, `MxCard`, `MxChip`, `MxContextualAppBar`, `MxIconButton`, `MxList`, `MxScaffold`, `window.ActionCallout`, `window.EmptyState`, `window.ListRow`, `window.ProgressBar`, `window.SectionLabel`
 
-## State matrix (contract §6) — 7 states, each rendered light + dark
+## State matrix (contract §6) — 8 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
 | 1 | `source` |
-| 2 | `mapping` |
-| 3 | `preview` |
-| 4 | `dup-warning` |
-| 5 | `importing` |
-| 6 | `import-error` |
-| 7 | `done` |
+| 2 | `parent-target` |
+| 3 | `mapping` |
+| 4 | `preview` |
+| 5 | `dup-warning` |
+| 6 | `importing` |
+| 7 | `import-error` |
+| 8 | `done` |
 
 ## Handoff notes
 

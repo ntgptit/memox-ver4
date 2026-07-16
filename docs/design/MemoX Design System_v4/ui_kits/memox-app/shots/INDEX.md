@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 215-state matrix (29 screens).
+always matches the 216-state matrix (29 screens).
 
 ## dashboard — Today
 
@@ -300,6 +300,7 @@ always matches the 215-state matrix (29 screens).
 | State | Light | Dark |
 | --- | --- | --- |
 | source | `import--source--light.png` | `import--source--dark.png` |
+| parent target | `import--parent-target--light.png` | `import--parent-target--dark.png` |
 | mapping | `import--mapping--light.png` | `import--mapping--dark.png` |
 | preview | `import--preview--light.png` | `import--preview--dark.png` |
 | dup warning | `import--dup-warning--light.png` | `import--dup-warning--dark.png` |

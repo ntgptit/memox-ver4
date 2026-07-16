@@ -31,10 +31,10 @@
 | reminder | Reminders | `reminder.md` | 5 |
 | account-sync | Account & Sync | `account-sync.md` | 8 |
 | theme | Theme | `theme.md` | 3 |
-| import | Import | `import.md` | 7 |
+| import | Import | `import.md` | 8 |
 | export | Export | `export.md` | 4 |
 | languages | Language Pairs | `languages.md` | 6 |
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 28 screens · 207 states.
+Total: 28 screens · 208 states.

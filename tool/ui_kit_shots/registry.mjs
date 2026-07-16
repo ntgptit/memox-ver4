@@ -123,7 +123,7 @@ export const SCREENS = [
     sample: ['light', 'accent-size'] },
   { id: 'import', title: 'Import', group: 'Import',
     archetype: 'Form', objective: 'Import cards from a file or pasted text into a deck.', cta: 'Import',
-    states: ['source', 'mapping', 'preview', 'dup-warning', 'importing', 'import-error', 'done'],
+    states: ['source', 'parent-target', 'mapping', 'preview', 'dup-warning', 'importing', 'import-error', 'done'],
     sample: ['source', 'mapping', 'importing', 'import-error', 'done'] },
   { id: 'export', title: 'Export', group: 'Export',
     archetype: 'Form', objective: 'Export a deck’s cards to a shareable file format.', cta: 'Export',

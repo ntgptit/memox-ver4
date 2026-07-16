@@ -55,6 +55,28 @@ function Import({ state = 'source' }) {
     );
   }
 
+  /* parent-target (§17) — importing flat cards while a PARENT deck is the context. Cards can't
+     land directly on a parent (§13), so choose/create a nested deck to receive them. Sheet over
+     the source picker. */
+  if (state === 'parent-target') {
+    const { Scrim, Sheet, MenuItem } = window;
+    return (
+      <React.Fragment>
+        <MxScaffold node="import/screen" appBar={bar}>
+          <SectionLabel>CHOOSE SOURCE</SectionLabel>
+          <MxList node="import/sources">{SOURCES.map((s, i) => <SourceCard key={i} source={s} index={i} />)}</MxList>
+        </MxScaffold>
+        <Scrim align="end" node="import/parent-scrim">
+          <Sheet title="Choose where to import" node="import/parent-sheet">
+            <div style={{ marginTop: 'calc(-1 * var(--memox-space-2))', marginBottom: 'var(--memox-space-2)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>Korean TOPIK I is a parent deck — pick a nested deck to receive these cards.</div>
+            <MenuItem icon="account_tree" label="Select a nested deck" node="import/parent-select-nested" />
+            <MenuItem icon="library_add" label="Create a new nested deck" node="import/parent-create-nested" />
+          </Sheet>
+        </Scrim>
+      </React.Fragment>
+    );
+  }
+
   if (state === 'source') {
     return (
       <MxScaffold node="import/screen" appBar={bar}>
