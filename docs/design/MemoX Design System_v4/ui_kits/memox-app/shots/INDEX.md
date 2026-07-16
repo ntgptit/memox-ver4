@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 210-state matrix (28 screens).
+always matches the 212-state matrix (29 screens).
 
 ## dashboard — Today
 
@@ -135,6 +135,13 @@ always matches the 210-state matrix (28 screens).
 | default | `empty-deck--default--light.png` | `empty-deck--default--dark.png` |
 | create nested dialog | `empty-deck--create-nested-dialog--light.png` | `empty-deck--create-nested-dialog--dark.png` |
 | import target | `empty-deck--import-target--light.png` | `empty-deck--import-target--dark.png` |
+
+## add-card-target — Add Card · target
+
+| State | Light | Dark |
+| --- | --- | --- |
+| picker | `add-card-target--picker--light.png` | `add-card-target--picker--dark.png` |
+| no target | `add-card-target--no-target--light.png` | `add-card-target--no-target--dark.png` |
 
 ## flashcard-editor — Card Editor
 

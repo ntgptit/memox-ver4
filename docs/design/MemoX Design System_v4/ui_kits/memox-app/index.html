@@ -124,6 +124,7 @@
 <script type="text/babel-src" src="_features/create-deck-firstrun/CreateDeckFirstRun.jsx"></script>
 <script type="text/babel-src" src="_features/create-deck-dialog/CreateDeckDialog.jsx"></script>
 <script type="text/babel-src" src="_features/empty-deck/EmptyDeck.jsx"></script>
+<script type="text/babel-src" src="_features/add-card-target/AddCardTarget.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/libFixtures.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/DeckRowCard.jsx"></script>
 <script type="text/babel-src" src="_features/library/components/FilterRow.jsx"></script>
@@ -216,6 +217,8 @@ const SCREENS = [
   { id: 'create-deck-dialog', title: 'Create Deck · Dialog', Comp: () => window.CreateDeckDialog, states: ['root-default', 'root-multi-pair', 'root-missing-pair', 'nested', 'optional-expanded', 'validation', 'duplicate-root', 'duplicate-sibling', 'submitting', 'submit-failure', 'long-name', 'keyboard-open'] },
   // Content-first (§11): the cards-vs-nested choice lives HERE, after creation. Add card (primary) / Create nested deck / Import cards. Also the state a leaf reaches after its last card, or a parent after its last child, is removed.
   { id: 'empty-deck', title: 'Empty Deck', Comp: () => window.EmptyDeck, states: ['default', 'create-nested-dialog', 'import-target'] },
+  // Global Add-Card deck picker (§16). Only leaf + empty decks are selectable; parent decks are disabled with a helper pointing to their nested decks. no-target = nowhere valid yet → Create deck.
+  { id: 'add-card-target', title: 'Add Card · target', Comp: () => window.AddCardTarget, states: ['picker', 'no-target'] },
   { id: 'flashcard-editor', title: 'Card Editor', Comp: () => window.FlashcardEditor, states: ['create', 'edit', 'validation', 'duplicate', 'additional-translation', 'audio-generating', 'keyboard-open', 'submitting', 'submit-error', 'submit-success'] },
   { id: 'mode-picker', title: 'Mode Picker', Comp: () => window.ModePicker, states: ['default', 'scope-dropdown', 'not-enough'] },
   { id: 'review-mode', title: 'Review', Comp: () => window.ReviewMode, states: ['browsing', 'editing', 'audio', 'loading', 'error', 'end'] },

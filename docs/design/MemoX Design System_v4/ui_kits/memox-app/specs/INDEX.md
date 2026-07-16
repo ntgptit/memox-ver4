@@ -16,6 +16,7 @@
 | create-deck-firstrun | Create Deck · First run | `create-deck-firstrun.md` | 12 |
 | create-deck-dialog | Create Deck · Dialog | `create-deck-dialog.md` | 12 |
 | empty-deck | Empty Deck | `empty-deck.md` | 3 |
+| add-card-target | Add Card · target | `add-card-target.md` | 2 |
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 10 |
 | mode-picker | Mode Picker | `mode-picker.md` | 3 |
 | review-mode | Review | `review-mode.md` | 6 |
@@ -36,4 +37,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 27 screens · 202 states.
+Total: 28 screens · 204 states.
