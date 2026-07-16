@@ -46,15 +46,17 @@ Chỉ audit baseline grid/keyline trên phone; tablet/large-screen/breakpoint th
 | KIT-11-04 | components.css:276-283; shots dashboard--empty vs --loaded | PASS | Section wrapper ép order cột header→content; shot empty vs loaded giữ order khi section ẩn/hiện. |
 | KIT-11-05 | grep landscape/orientation = 0; tokens/size.css (chỉ modal max-width) | FAIL | Không có evidence phone landscape và không có max-readable-width cho reading/form (single full-width column); portrait-first nhưng scope chưa tài liệu hóa. |
 | KIT-11-06 | components.css:18-31,632-646,654 | PASS | Layout fluid (.app 100%, flex, guard min-width:0); không tọa độ tuyệt đối cho content chính; bottom-nav absolute nhưng width fluid left:0/right:0 (chỉ chrome). |
+| KIT-11-01 | SCOPE.md phone viewport documented; min/default/max width grid shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-11-05 | SCOPE.md: landscape unsupported; single readable column documented | ACCEPTED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-11-01, ISS-KIT-11-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: 
+Open P2: ISS-KIT-11-01
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

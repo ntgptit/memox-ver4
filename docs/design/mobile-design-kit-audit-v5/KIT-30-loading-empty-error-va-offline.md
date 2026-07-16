@@ -51,10 +51,10 @@ Audit state surfaces cấp screen/section.
 
 ```text
 Final status: PASS
-Open P0:
-Open P1:
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

@@ -31,7 +31,7 @@ Audit copy structure, length và locale-sensitive content.
   - **Evidence mong đợi:** Long-copy screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-20-06 — Không ghép câu từ fragments khiến localization sai grammar.**
+- [x] **KIT-20-06 — Không ghép câu từ fragments khiến localization sai grammar.**
   - **Cách kiểm:** VM-12 — inspect content templates/string composition spec.
   - **Evidence mong đợi:** Fragment-risk report and rewritten examples.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,17 @@ Audit copy structure, length và locale-sensitive content.
 | KIT-20-04 | Hardcoded formats in fixtures: `account-sync/components/SyncBlock.jsx:33` "Last: 14:02 today", `library/Library.jsx:68` "Last synced 2 hours ago", appbar `context="Saturday · 27 Jun"`; no `Intl`/locale-format layer; VM-08 locale switch unsupported (static kit). Partial mitigation: language labels are deck-driven (`flashcard-editor/FlashcardEditor.jsx:8`) | FAIL | Date/time/relative-time formats are hardcoded literals with no locale-format guideline. P2 (down from P1): kit is placeholder-data/prototyping layer per `readme.md:93` caveat; production i18n deferred; language labels already deck-driven. |
 | KIT-20-05 | Overflow behavior: `components.css:933-937` field ellipsis, `:1020-1029` breadcrumb horizontal scroll, `:654` bottom-nav `min-width:0` shrink-to-320; long-copy renders exist: `shots/flashcard-list--long-text--{light,dark}.png`, `shots/guess-mode--long-text--{light,dark}.png` | PASS | Overflow is handled (ellipsis/scroll/shrink) and verified with dedicated long-text state shots. |
 | KIT-20-06 | Number+noun/plural fragment composition without a plural or composition spec: `MxContextualAppBar.jsx:76` `{count} selected`, `:24` `${count} unread`, dashboard "142 cards due"; `readme.md:38` "Numbers lead" documents the number+noun pattern but no plural rule | FAIL | Count+noun strings assembled from fragments with no pluralization/composition spec (localization grammar risk). P2 (default). |
+| KIT-20-04 | guidelines/i18n-localization.md §4 locale-format rules; Intl format-layer code pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-20-06 | guidelines/i18n-localization.md §5 ICU plural + count+noun composition spec | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-20-04, ISS-KIT-20-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: 
+Open P2: ISS-KIT-20-04
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

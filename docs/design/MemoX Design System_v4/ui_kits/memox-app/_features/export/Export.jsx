@@ -24,7 +24,8 @@ function Export({ state = 'config' }) {
   if (state === 'export-error') {
     return (
       <MxScaffold node="export/screen" appBar={bar}>
-        <window.EmptyState node="export/error" icon="error" tone="error" title="Export failed"
+        {/* KIT-42-04: failure is announced assertively so it interrupts the reader. */}
+        <window.EmptyState announce="alert" node="export/error" icon="error" tone="error" title="Export failed"
           text="Something went wrong creating the file. Check available storage and try again."
           action={<MxButton variant="primary" icon="refresh" block node="export/retry">Try again</MxButton>} />
       </MxScaffold>
@@ -34,7 +35,8 @@ function Export({ state = 'config' }) {
   if (state === 'done') {
     return (
       <MxScaffold node="export/screen" appBar={bar}>
-        <window.EmptyState node="export/done" icon="ios_share" tone="success" title="Exported 320 cards"
+        {/* KIT-42-04: success announced politely. */}
+        <window.EmptyState announce="status" node="export/done" icon="ios_share" tone="success" title="Exported 320 cards"
           text="Your file is ready to share or save."
           action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="share" block node="export/share">Share file</MxButton>

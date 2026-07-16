@@ -26,7 +26,7 @@ function StudyResult({ state = 'standard' }) {
   if (state === 'finalize-error') {
     return (
       <MxScaffold node="study-result/screen" appBar={bar}>
-        <window.EmptyState node="study-result/finalize-error" icon="cloud_off" tone="error" title="Couldn't save your results"
+        <window.EmptyState announce="alert" node="study-result/finalize-error" icon="cloud_off" tone="error" title="Couldn't save your results"
           text="Your session finished, but we couldn't update your schedule. Retry so this session counts."
           action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
             <MxButton variant="primary" icon="refresh" block node="study-result/finalize-retry">Retry</MxButton>
@@ -38,7 +38,9 @@ function StudyResult({ state = 'standard' }) {
 
   return (
     <MxScaffold node="study-result/screen" appBar={bar}>
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-4)' }}>
+      {/* KIT-42-04: the finished-session summary is a polite live region so the reader
+          announces the result when this replaces the study session. Attribute-only. */}
+      <div role="status" aria-live="polite" style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-4)' }}>
         <ResultHero icon={h.icon} tone={h.tone} title={h.title} text={h.text} />
 
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--memox-space-3)' }}>

@@ -12,6 +12,12 @@
   --memox-duration-base: 220ms; /* @kind other */    /* default: card, fade, sheet content */
   --memox-duration-slow: 320ms; /* @kind other */    /* large / overlay: dialog, drawer, page */
 
+  /* reduced-motion primitive — a near-zero duration (not exactly 0 so that
+     transitionend/animationend still fire) for the components.css
+     prefers-reduced-motion reset to swap in. Additive; nothing references it
+     by default, so default motion is unchanged. (KIT-04-05 / KIT-38-06) */
+  --memox-duration-none: 0.01ms; /* @kind other */
+
   /* loop / feedback timings — not on the transition scale above */
   --memox-duration-flash: 300ms; /* @kind other */   /* feedback reveal: correct-match tile flash before it clears */
   --memox-duration-pulse: 1300ms; /* @kind other */  /* ambient loop period: skeleton shimmer (opacity .5↔1, infinite) */

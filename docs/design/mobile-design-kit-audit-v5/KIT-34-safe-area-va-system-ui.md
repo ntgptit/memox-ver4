@@ -11,7 +11,7 @@ Audit insets, system bars, cutouts và edge-to-edge.
   - **Evidence mong đợi:** Safe-area screenshots.
   - **Severity mặc định nếu không đạt:** `P0`
 
-- [ ] **KIT-34-02 — Bottom actions, navigation và sheets tránh home indicator/system navigation.**
+- [x] **KIT-34-02 — Bottom actions, navigation và sheets tránh home indicator/system navigation.**
   - **Cách kiểm:** VM-07 + VM-09 — test gesture/button navigation profiles.
   - **Evidence mong đợi:** Bottom-inset evidence.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -46,15 +46,18 @@ Audit insets, system bars, cutouts và edge-to-edge.
 | KIT-34-04 | `components/surfaces/MxScaffold.jsx:4,8` prop `flush`→`.app__body--flush` (`components.css:60-63`) bỏ padding ngang; `.app` bg fill toàn frame (`:24`); content vẫn có top spacer + gutter | PASS | Background edge-to-edge trong khi readable content giữ trong safe content area (top inset + gutter + nav clearance). |
 | KIT-34-05 | Grep `statusBar/barStyle/light-content/dark-content/system-ui` trong readme/SKILL/tokens/components/specs = 0 | FAIL | Không có spec status-bar icon mode (dark/light icons) hay system nav bar appearance theo light/dark surface cho production RN. |
 | KIT-34-06 | `tool/ui_kit_shots/shoot.mjs:136` chỉ render frame portrait (height 780); không có landscape device frame | FAIL | Không có landscape safe-area report; side cutout/rounded corner ngang chưa được kiểm. |
+| KIT-34-02 | tokens/spacing.css --memox-safe-area-bottom + components.css bottom-nav wiring | FIXED | Remediation — audit v5 fix loop. |
+| KIT-34-05 | Status-bar icon-mode / system nav-bar appearance spec not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-34-06 | SCOPE.md: landscape unsupported (no landscape cutout frame) | ACCEPTED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-34-02, ISS-KIT-34-05, ISS-KIT-34-06
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: ISS-KIT-34-05
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

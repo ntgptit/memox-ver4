@@ -6,7 +6,7 @@ Audit risk, confirmation, undo và failure recovery.
 
 ## Checklist
 
-- [ ] **KIT-31-01 — Mỗi destructive action được phân loại reversible, undoable hoặc irreversible.**
+- [x] **KIT-31-01 — Mỗi destructive action được phân loại reversible, undoable hoặc irreversible.**
   - **Cách kiểm:** VM-12 — review action catalog against risk rubric.
   - **Evidence mong đợi:** Risk classification table.
   - **Severity mặc định nếu không đạt:** `P0`
@@ -46,15 +46,16 @@ Audit risk, confirmation, undo và failure recovery.
 | KIT-31-04 | `_shared/DeckActionsSheet.jsx:15` (Delete deck ở cuối + `danger`, tách khỏi row khác); `kit-helpers.jsx:150` (Dialog actions row gap `--memox-space-3`), `kit-helpers.jsx:128,133` (MenuItem `danger` tint `--memox-error`) | PASS | Ghost cancel (trái) + danger confirm (đỏ, phải), 12px gap, cả hai ≥44px; destructive ở MenuItem là dòng cuối, đỏ, tách biệt. |
 | KIT-31-05 | `ConfirmDialog.md` Rules ("cancel is always ghost"); mọi dialog actions có ghost Cancel/Stay/Back; destructive chỉ kích hoạt trên nút `danger` | PASS | Không đường dismiss nào (cancel/back/outside) kích hoạt action destructive; Scrim backdrop trung tính. |
 | KIT-31-06 | `_features/study-session/components/AnswerSaveErrorDialog.jsx` (giữ kết quả + Retry); `_features/flashcard-editor/FlashcardEditor.jsx:138` ("Your changes are still here" + Try again); shots `study-session--answer-save-error--*`, `flashcard-editor--submit-error--*`, `export--export-error--*`, `study-result--finalize-error--*` | PASS | Failure states giữ input và cung cấp retry. Idempotency (no double-execute) là ràng buộc app-integration runtime, kit tĩnh không thể vi phạm. |
+| KIT-31-01 | ConfirmDialog.md 3-tier risk rubric (undoable/destructive-recoverable/destructive) aligned to code | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-31-01
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

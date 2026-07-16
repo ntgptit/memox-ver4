@@ -26,7 +26,7 @@ Audit khả năng bàn giao từ design kit, không kiểm code implementation.
   - **Evidence mong đợi:** Checklist truy vết thông tin bàn giao.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-45-05 — Assets có format, dimensions, scale và fallback specs.**
+- [x] **KIT-45-05 — Assets có format, dimensions, scale và fallback specs.**
   - **Cách kiểm:** VM-14 — inspect export panel/asset manifest.
   - **Evidence mong đợi:** Bảng thông tin bàn giao asset.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,16 @@ Audit khả năng bàn giao từ design kit, không kiểm code implementation.
 | KIT-45-04 | `specs/*.md` (state matrix + handoff), `components/core/MxTextField.prompt.md:24` (a11y/keyboard), `.d.ts` (inputMode/type) | PASS | Behavior (prompt.md rules), state (specs), accessibility + keyboard (prompt.md/.d.ts) truy được từ component/spec; coverage responsive/RTL thưa nhưng thông tin bàn giao lõi tìm được. |
 | KIT-45-05 | `_ds_manifest.json` fonts block, `readme.md:63-67,91` | FAIL | Font có format/weight/files trong manifest; nhưng không có bảng asset export (dimensions/scale/@2x@3x/fallback) và không có logo/app-icon asset (caveat readme.md:91). |
 | KIT-45-06 | `tokens/*.css` (single source of truth), `readme.md:25`, `specs/dashboard.md:42` ("tokens only") | PASS | Mọi giá trị chuẩn đọc trực tiếp từ tokens/*.css; specs khẳng định tokens-only nên người nhận không phải đo tay. |
+| KIT-45-05 | governance/asset-export-spec.md export spec table | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-45-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

@@ -26,7 +26,7 @@ Audit hành vi input/gesture/back ở cấp component.
   - **Evidence mong đợi:** Dismiss behavior matrix.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-19-05 — Keyboard/pointer profile có focus activation bằng Enter/Space và visible focus.**
+- [x] **KIT-19-05 — Keyboard/pointer profile có focus activation bằng Enter/Space và visible focus.**
   - **Cách kiểm:** VM-09 + VM-10 — hardware keyboard walkthrough.
   - **Evidence mong đợi:** Focus-order recording and control checklist.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,17 @@ Audit hành vi input/gesture/back ở cấp component.
 | KIT-19-04 | `ui_kits/memox-app/kit-helpers.jsx:107` Scrim backdrop (outside-tap area), `:116-119` Sheet grabber (swipe affordance), `components/surfaces/MxContextualAppBar.jsx:62-64` modal/nested close+back, `_shared/ConfirmDialog.jsx` explicit dialog actions | PASS | Each overlay type has one coherent, non-conflicting dismiss affordance set (sheet=grabber+scrim, dialog=buttons, modal=appbar close). |
 | KIT-19-05 | Enter/Space OK: native `<button>` for btn/icon-btn/fab/bottom-nav/segmented; ARIA buttons add keydown (`MxCard.jsx:14`, `MxSectionHeader.jsx:7`). Visible focus rings on `.btn`/`.icon-btn`/`.fab` (`components.css:337-339,474-476,573-575`) BUT text inputs suppress it: `.field` `:928` `outline:none` with no `:focus` ring, `.cappbar__search-input:196`, `.search-dock__input:612` | FAIL | Keyboard activation is fine, but text inputs show no visible focus indicator (only caret); `search-dock--focused` is prop-driven, not `:focus`-driven. P1 (a11y floor). |
 | KIT-19-06 | `readme.md:40` "No emoji … meaning is carried by Material Symbols icons and color"; all feedback is visual/text (state-copy matrices in `_features/*`, semantic color tones); grep: no `haptic`/`vibrate`/`sound` in kit | PASS | No sensory-only signal exists; feedback is always visual + text. |
+| KIT-19-03 | No drag/reorder in product scope; ordering via SortSheet (documented) | ACCEPTED | Remediation — audit v5 fix loop. |
+| KIT-19-05 | components.css .field/.cappbar__search-input/.search-dock__input :focus-visible ring | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-19-05
-Open P2: ISS-KIT-19-03
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PARTIAL
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

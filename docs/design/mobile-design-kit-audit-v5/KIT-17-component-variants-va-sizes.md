@@ -26,7 +26,7 @@ Audit purpose, combinations và density của variants.
   - **Evidence mong đợi:** Compact target report.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-17-05 — Property combinations hợp lệ được liệt kê; combination vô nghĩa bị loại.**
+- [x] **KIT-17-05 — Property combinations hợp lệ được liệt kê; combination vô nghĩa bị loại.**
   - **Cách kiểm:** VM-04 — enumerate component property combinations.
   - **Evidence mong đợi:** Supported-combination matrix.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Audit purpose, combinations và density của variants.
 | KIT-17-04 | components.css hit-area ::after (988-1013): chip34/switch32/btn--sm/icon-btn--sm36/segmented40/section-action mở rộng lên 48 | PASS | Compact control giữ hit area >=48 qua overlay ::after; visual nhỏ nhưng target không dưới minimum. |
 | KIT-17-05 | .d.ts prop union (giới hạn value hợp lệ); .prompt.md ví dụ; không có supported/excluded-combination matrix | FAIL | TS union chặn value sai nhưng combo vô nghĩa (vd danger+contrast, block cho icon-only) chưa được liệt kê là loại trừ. Hạ xuống P2 vì tác động chức năng thấp, chỉ thiếu artifact matrix. |
 | KIT-17-06 | Grep `deprecated\|experimental\|future` trong .d.ts/_ds_manifest.json = 0; readme.md:13 "legacy" chỉ nói giá trị màu Tokyo đã migrate, không phải variant | PASS | Không có Future/Deprecated variant; mọi variant đều là Current. |
+| KIT-17-05 | guidelines/component-constraints-matrix.md §2 combination matrix | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-17-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

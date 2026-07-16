@@ -9,9 +9,14 @@ function FinalizingView({ bar, retry }) {
   const S = window.Skeleton;
   return (
     <MxScaffold node="study-result/screen" appBar={bar}>
-      <ResultHero icon={retry ? 'refresh' : 'cloud_sync'} tone="accent"
-        title={retry ? 'Retrying…' : 'Saving your results…'}
-        text={retry ? 'Trying again to update your review schedule and streak.' : 'Updating your review schedule and streak.'} />
+      {/* KIT-42-04: saving/finalizing progress is a polite live region (aria-busy while
+          committing) so the reader hears the saving state and its later resolution. The
+          announce wrapper holds only the hero text, so scaffold gaps stay unchanged. */}
+      <div role="status" aria-live="polite" aria-busy="true">
+        <ResultHero icon={retry ? 'refresh' : 'cloud_sync'} tone="accent"
+          title={retry ? 'Retrying…' : 'Saving your results…'}
+          text={retry ? 'Trying again to update your review schedule and streak.' : 'Updating your review schedule and streak.'} />
+      </div>
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr', gap: 'var(--memox-space-3)' }}>
         {[0, 1, 2].map((i) => (
           <MxCard key={i} variant="muted" padding="sm" node={'study-result/finalizing-stat-' + i} style={{ alignItems: 'center' }}>

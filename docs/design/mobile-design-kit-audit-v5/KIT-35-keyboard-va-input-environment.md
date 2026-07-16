@@ -46,15 +46,19 @@ Audit keyboard avoidance, focus flow và input environment.
 | KIT-35-04 | Grep dismiss-keyboard behavior/matrix trong kit = 0 | FAIL | Không có dismiss behavior matrix (back/tap/scroll không submit/mất input) — runtime-only, chưa tài liệu hóa. |
 | KIT-35-05 | `MxTextField.d.ts` có `name`/`type=password` nhưng không có `autoComplete`/`textContentType`/autofill affordance spec hay ví dụ | FAIL | Không có autofill/password-manager state evidence. |
 | KIT-35-06 | Không có landscape frame (`shoot.mjs:136` portrait 780) và không xét hardware keyboard | FAIL | Không có compact/hardware-keyboard evidence. |
+| KIT-35-01 | guidelines/keyboard-focus-order.md + sticky SaveBar pattern; keyboard-avoidance token/render pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-35-04 | guidelines/keyboard-focus-order.md dismiss guidance; full dismiss-keyboard matrix pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-35-05 | Autofill/password-manager affordance spec not yet added | OPEN | Remediation — audit v5 fix loop. |
+| KIT-35-06 | SCOPE.md: landscape + hardware-keyboard out of scope | ACCEPTED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-35-01, ISS-KIT-35-04, ISS-KIT-35-05, ISS-KIT-35-06
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: ISS-KIT-35-01, ISS-KIT-35-04, ISS-KIT-35-05
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

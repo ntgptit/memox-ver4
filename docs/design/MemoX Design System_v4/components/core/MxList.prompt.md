@@ -7,3 +7,15 @@ MxList — the one vertical list wrapper for any stack of cards or rows (decks, 
 ```
 
 Pass `gap` (any spacing token) to override the default, e.g. `gap="var(--memox-space-2)"` for a denser list. Never hard-code a pixel gap.
+
+---
+
+**When not to use** — Not for a single item. Not for form-field stacks (use section spacing). Not a grid.
+
+**States** — default 12px gap (`--memox-space-3`); `gap` override with any spacing token. Non-interactive wrapper. An empty list renders an explicit empty-state child, never an empty `MxList`. RN: `FlatList`/`View` with a virtualised item stack.
+
+**Content limits / i18n** — No inherent max item count — must stay virtualisable in RN for long lists. Direction-neutral (vertical stack); items handle their own i18n/RTL.
+
+**Do / Don't** — Do wrap every card list in `MxList`. Don't hard-code a pixel gap; don't drop cards straight into the scroll body (that uses the larger 24px section gap).
+
+**Meta** — v4 · Owner: Design System team · Status: Current (frozen, additive-only; no deprecation).

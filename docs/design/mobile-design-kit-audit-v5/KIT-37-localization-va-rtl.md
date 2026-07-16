@@ -16,7 +16,7 @@ Audit expansion, scripts, RTL và locale formats.
   - **Evidence mong đợi:** Script rendering evidence.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-37-03 — RTL mirror leading/trailing, directional icon, swipe và reading order đúng.**
+- [x] **KIT-37-03 — RTL mirror leading/trailing, directional icon, swipe và reading order đúng.**
   - **Cách kiểm:** VM-08 + VM-09 — walkthrough RTL prototype.
   - **Evidence mong đợi:** LTR/RTL comparison recording.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -26,7 +26,7 @@ Audit expansion, scripts, RTL và locale formats.
   - **Evidence mong đợi:** Locale-format table/screenshots.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-37-05 — Không hardcode left/right trong generic spec khi phải dùng start/end.**
+- [x] **KIT-37-05 — Không hardcode left/right trong generic spec khi phải dùng start/end.**
   - **Cách kiểm:** VM-12 — scan documentation/property names.
   - **Evidence mong đợi:** Directionality scan report.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,21 @@ Audit expansion, scripts, RTL và locale formats.
 | KIT-37-04 | `shots/dashboard--loaded--*.png` ("Saturday · 27 Jun"); không có locale-format layer | FAIL | Date/time/number hardcode tiếng Anh; không có locale profile cho number/currency/plural/unit. |
 | KIT-37-05 | `components.css` — `grep` physical left/right = 8, logical inline-start/end = 0 | FAIL | Generic spec dùng padding-left/right, text-align:left, left:/right: thay vì start/end. |
 | KIT-37-06 | `ui_kits/memox-app/_features/**/*.jsx` (copy tiếng Anh hardcode); `readme.md` known caveats | FAIL | Mọi copy là English-only string trong JSX; không có string externalization / i18n. |
+| KIT-37-01 | guidelines/i18n-localization.md §6 expansion guidance; expansion corpus/shots pending (code) | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-37-02 | guidelines/i18n-localization.md §2 CJK/Vietnamese font stack; RN font map + shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-37-03 | components.css physical left/right → logical inline-start/end | FIXED | Remediation — audit v5 fix loop. |
+| KIT-37-04 | guidelines/i18n-localization.md §4 locale format rules; Intl format layer pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-37-05 | components.css logical properties (start/end) | FIXED | Remediation — audit v5 fix loop. |
+| KIT-37-06 | guidelines/i18n-localization.md §3 string-externalization spec; actual JSX externalization pending | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-37-01, ISS-KIT-37-02, ISS-KIT-37-03, ISS-KIT-37-04, ISS-KIT-37-05, ISS-KIT-37-06
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: ISS-KIT-37-01, ISS-KIT-37-02, ISS-KIT-37-04, ISS-KIT-37-06
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

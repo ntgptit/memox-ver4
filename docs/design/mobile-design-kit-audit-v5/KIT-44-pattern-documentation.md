@@ -6,17 +6,17 @@ Audit tài liệu flow/composition nhiều component.
 
 ## Checklist
 
-- [ ] **KIT-44-01 — Mỗi pattern nêu problem, scope, entry và exit conditions.**
+- [x] **KIT-44-01 — Mỗi pattern nêu problem, scope, entry và exit conditions.**
   - **Cách kiểm:** VM-12 — inspect pattern template sections.
   - **Evidence mong đợi:** Bảng độ bao phủ metadata của pattern.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-44-02 — Flow steps, back/cancel/retry/success/failure được mô tả.**
+- [x] **KIT-44-02 — Flow steps, back/cancel/retry/success/failure được mô tả.**
   - **Cách kiểm:** VM-12 + VM-09 — compare doc to prototype.
   - **Evidence mong đợi:** Flow doc/prototype diff.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-44-03 — Decision table tồn tại khi có nhiều nhánh hoặc risk.**
+- [x] **KIT-44-03 — Decision table tồn tại khi có nhiều nhánh hoặc risk.**
   - **Cách kiểm:** VM-12 — identify branching patterns and check tables.
   - **Evidence mong đợi:** Bảng độ bao phủ decision table.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -26,7 +26,7 @@ Audit tài liệu flow/composition nhiều component.
   - **Evidence mong đợi:** Pattern-state coverage.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-44-05 — Responsive/platform/localization/accessibility adaptation được link.**
+- [x] **KIT-44-05 — Responsive/platform/localization/accessibility adaptation được link.**
   - **Cách kiểm:** VM-12 — validate required cross-links.
   - **Evidence mong đợi:** Báo cáo liên kết chéo.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,19 @@ Audit tài liệu flow/composition nhiều component.
 | KIT-44-04 | `specs/dashboard.md:29-38` (8 states incl loading/empty), `specs/search.md` (no-results), `ui_kits/memox-app/shots/` (337 PNG light+dark) | PASS | State matrix per screen liệt kê loading/empty/error/success và render đầy đủ light+dark; offline không áp dụng cho app local-first. |
 | KIT-44-05 | `specs/dashboard.md:40-44` handoff notes | FAIL | Handoff notes chỉ nêu spacing/touch-target; responsive/platform/localization/accessibility adaptation không được link per pattern. |
 | KIT-44-06 | `specs/dashboard.md:4-6` ("Source of truth: ../_features/dashboard/Dashboard.jsx"), `_features/README.md` | PASS | Ví dụ được sinh từ source JSX + fixtures + registry, không phải screenshot làm spec duy nhất. |
+| KIT-44-01 | specs/PATTERNS.md §1 entry/exit conditions | FIXED | Remediation — audit v5 fix loop. |
+| KIT-44-02 | specs/PATTERNS.md §2 step-by-step flow (back/cancel/retry) | FIXED | Remediation — audit v5 fix loop. |
+| KIT-44-03 | specs/PATTERNS.md §3 decision tables | FIXED | Remediation — audit v5 fix loop. |
+| KIT-44-05 | specs/PATTERNS.md §4 adaptation cross-links | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-44-01, ISS-KIT-44-02, ISS-KIT-44-03, ISS-KIT-44-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

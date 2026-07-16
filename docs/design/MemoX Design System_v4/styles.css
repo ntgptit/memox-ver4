@@ -15,5 +15,6 @@
 @import url('tokens/icon-size.css');
 @import url('tokens/elevation.css');
 @import url('tokens/motion.css');
+@import url('tokens/high-contrast.css');
 
 @import url('components.css');

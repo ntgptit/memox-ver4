@@ -31,7 +31,7 @@ Audit tokens, navigation/state motion và reduced motion.
   - **Evidence mong đợi:** Motion-risk audit.
   - **Severity mặc định nếu không đạt:** `P2`
 
-- [ ] **KIT-38-06 — Reduced-motion profile giữ đủ feedback và task usability.**
+- [x] **KIT-38-06 — Reduced-motion profile giữ đủ feedback và task usability.**
   - **Cách kiểm:** VM-15 + VM-10 — rerun critical flows with reduced motion.
   - **Evidence mong đợi:** So sánh chế độ chuyển động bình thường và giảm chuyển động.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,18 @@ Audit tokens, navigation/state motion và reduced motion.
 | KIT-38-04 | Toàn kit không có gesture handler; `specs/*` không định nghĩa swipe/drag | FAIL | Không có swipe/drag motion; không thể chứng minh follow-finger/cancel-return. Hạ P2: mọi action đều button-driven nên không có blocker gesture (xem KIT-42-03). |
 | KIT-38-05 | `ui_kits/memox-app/index.html:55-56` (shimmer opacity .5↔1, 1300ms); `components.css:1095` (spinner) | PASS | Chỉ loading indicator lặp, nhẹ, không cạnh tranh vùng đọc. |
 | KIT-38-06 | `components.css:206-210,1098` (chỉ cappbar + spinner honor reduced-motion); `index.html:56` shimmer bỏ qua `prefers-reduced-motion`; `tokens/motion.css` không có reduced-motion token | FAIL | Reduced-motion profile không đủ: skeleton shimmer vẫn chạy, button/chip/fab/list transition không có override, không có global reset. |
+| KIT-38-02 | Push/pop/modal transition clips not produced (P3) | OPEN | Remediation — audit v5 fix loop. |
+| KIT-38-04 | Swipe/drag gesture motion not designed (button-driven kit) | OPEN | Remediation — audit v5 fix loop. |
+| KIT-38-06 | components.css global prefers-reduced-motion reset incl. skeleton shimmer | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-38-06
+Final status: PARTIAL
+Open P0: 
+Open P1: 
 Open P2: ISS-KIT-38-04
 Open P3: ISS-KIT-38-02
-Reviewed by: Claude (automated kit audit)
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

@@ -25,3 +25,15 @@ Rules:
 - Notification: omit the badge at 0; use a dot for "has new", a numeric badge (99+ cap) only when the number is useful.
 - At top = transparent, no divider; scrolled = surface + subtle divider (no heavy shadow). Same anatomy/size in light and dark — only tokens change.
 - Do NOT move a screen's greeting/heading into the bar; the bar holds context + title + actions only.
+
+---
+
+**When not to use** — Never build a per-screen header — always use this. Not for in-body section headings (use `MxSectionHeader`).
+
+**States** — variants `root`/`nested`/`search`/`selection`/`modal` (`root-contextual`/`root-standard`/`focused` are `root`/`modal` compositions); top (transparent) vs scrolled (surface + hairline, fade-only under reduced motion); notification `dot`/`count`; selection `count` announced via `role="status"`. RN: header region, honours top safe-area. Full a11y/reading-order contract lives in `MxContextualAppBar.d.ts`.
+
+**Content limits / i18n** — `title` is single-line and truncates; max 2 right actions (avatar counts as one); `context` label stays short. Title/context expand across locales — truncate the title, never wrap or grow the bar. RTL: back/leading and actions mirror to logical start/end.
+
+**Do / Don't** — Do pass content by semantic slot and pick a `variant`. Don't exceed 2 actions; don't duplicate a FAB or bottom-nav destination as a bar action.
+
+**Meta** — v4 · Owner: Design System team · Status: Current (frozen, additive-only; no deprecation).

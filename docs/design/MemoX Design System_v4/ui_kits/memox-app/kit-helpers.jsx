@@ -38,10 +38,15 @@ function Skeleton({ w = '100%', h = 16, r = 8, style }) {
   return <div className="mxg-skel" style={{ width: w, height: h, borderRadius: r, ...style }} />;
 }
 
-function EmptyState({ icon, tone, title, text, action, node }) {
+/* `announce` (optional) turns this full-screen result into an aria-live announcement
+   region so screen readers speak it when it replaces prior content (KIT-42-04): pass
+   'status' for success/neutral outcomes (polite) or 'alert' for failures (assertive).
+   Attribute-only — never affects layout/pixels, so existing shots are unchanged. */
+function EmptyState({ icon, tone, title, text, action, node, announce }) {
   const { MxIconTile } = NS;
+  const liveProps = announce ? { role: announce, 'aria-live': announce === 'alert' ? 'assertive' : 'polite' } : {};
   return (
-    <div data-mx-node={node} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-4)' }}>
+    <div data-mx-node={node} {...liveProps} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-4)', padding: 'var(--memox-space-7) var(--memox-space-4)' }}>
       <MxIconTile icon={icon} tone={tone} size="lg" />
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', maxWidth: 'var(--memox-size-3xl)' }}>
         <div style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
@@ -103,19 +108,34 @@ function Stat({ n, l, tone, size = 'md', align = 'center', onTint = false, node 
   );
 }
 
-/* Modal scrim — absolute over the device frame; align 'end' (sheet) or 'center' (dialog). */
-function Scrim({ children, align = 'end', node }) {
+/* Modal scrim — absolute over the device frame; align 'end' (sheet) or 'center' (dialog).
+   Dismiss contract (KIT-29-05): this scrim is the topmost overlay layer. Hardware/gesture
+   BACK and a tap on the backdrop (the area OUTSIDE the sheet/dialog) both close ONLY this
+   top overlay — never the underlying screen. On close, production MUST return focus to the
+   control that opened the overlay (pass the trigger's ref/onDismiss so focus is restored,
+   preventing a focus-lost-to-top trap). `onDismiss` is invoked on backdrop tap and on the
+   Escape key here; the static kit leaves it undefined (no-op, pixel-identical to before).
+   Attribute/handler-only additions — no layout or pixel change. */
+function Scrim({ children, align = 'end', node, onDismiss }) {
+  // Only a tap on the backdrop itself (currentTarget), not on the sheet/dialog children.
+  const onBackdrop = (e) => { if (onDismiss && e.target === e.currentTarget) onDismiss(e); };
+  const onKeyDown = (e) => { if (onDismiss && e.key === 'Escape') { e.preventDefault(); onDismiss(e); } };
   return (
-    <div data-mx-node={node} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
+    <div data-mx-node={node} data-dismiss="back" onClick={onBackdrop} onKeyDown={onKeyDown} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column', justifyContent: align === 'center' ? 'center' : 'flex-end', alignItems: align === 'center' ? 'center' : 'stretch', padding: align === 'center' ? 'var(--memox-space-6)' : 0 }}>
       {children}
     </div>
   );
 }
 
-/* Bottom action sheet surface. */
+/* Bottom action sheet surface.
+   Long-content guard (KIT-29-02): the sheet is capped at 85% of the frame height and scrolls
+   its own body when content (a long menu, or a sheet-form with the keyboard open) exceeds that,
+   so it can never grow taller than the viewport or push its actions off-screen. Parity-safe —
+   every current sheet is far shorter than the cap, so no scrollbar appears and pixels are
+   unchanged; the cap only engages on overflow. */
 function Sheet({ title, children, node }) {
   return (
-    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-3) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)' }}>
+    <div data-mx-node={node} style={{ background: 'var(--memox-surface)', color: 'var(--memox-text)', borderTopLeftRadius: 'var(--memox-radius-2xl)', borderTopRightRadius: 'var(--memox-radius-2xl)', padding: 'var(--memox-space-3) var(--memox-gutter) var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)', boxShadow: 'var(--memox-shadow-nav)', maxHeight: '85%', overflowY: 'auto' }}>
       <div style={{ width: 'var(--memox-size-sm)', height: 'var(--memox-size-3xs)', borderRadius: 'var(--memox-radius-pill)', background: 'var(--memox-text-tertiary)', margin: '0 auto var(--memox-space-3)' }} />
       {title ? <SectionLabel uppercase style={{ margin: '0 0 var(--memox-space-2) var(--memox-space-2)' }}>{title}</SectionLabel> : null}
       {children}

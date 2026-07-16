@@ -10,9 +10,10 @@ export function MxSegmentedControl({ segments = [], value, onChange, block = fal
         const v = typeof s === 'string' ? s : s.value;
         const label = typeof s === 'string' ? s : s.label;
         const icon = typeof s === 'object' ? s.icon : null;
+        const disabled = typeof s === 'object' ? !!s.disabled : false;
         const active = v === value;
         return (
-          <button key={v} type="button" role="radio" aria-checked={active} aria-label={label} data-mx-node={node ? `${node}/${v}` : undefined} className={['segmented__seg', active ? 'segmented__seg--active' : ''].filter(Boolean).join(' ')} onClick={() => onChange && onChange(v)}>
+          <button key={v} type="button" role="radio" aria-checked={active} aria-label={label} disabled={disabled} aria-disabled={disabled || undefined} data-mx-node={node ? `${node}/${v}` : undefined} className={['segmented__seg', active ? 'segmented__seg--active' : ''].filter(Boolean).join(' ')} onClick={() => { if (!disabled && onChange) onChange(v); }}>
             {icon ? <span className="material-symbols-rounded">{icon}</span> : null}
             {label}
           </button>

@@ -23,8 +23,23 @@
   /* Status-bar / notch inset above every app bar. Kit renders a fixed 24; on a real device
      the env() inset wins when larger. Production RN maps this to the SafeAreaView top inset. */
   --memox-safe-area-top: max(env(safe-area-inset-top, 0px), 24px);
+  /* Symmetric with safe-area-top: the inset reserved below bottom-nav / sheets.
+     Kit renders max(0px, 4px) = 4px = the current fixed --memox-comp-nav-safe-pad,
+     so pixels are unchanged; on a real device the env() inset wins when larger.
+     Production RN maps this to the SafeAreaView bottom inset. (KIT-34-02) */
+  --memox-safe-area-bottom: max(env(safe-area-inset-bottom, 0px), var(--memox-comp-nav-safe-pad));
   --memox-appbar-height: 56px; /* single compact app-bar height (minimal M3) */
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */
   --memox-fab-size: 56px; /* M3 standard FAB */
   --memox-touch-min: 48px;
+
+  /* --- layout group (additive aliases · KIT-04-06) -----------------------
+     The element-named sizes above (appbar-height / bottom-nav-height / fab-size)
+     are layout metrics that happen to sit in this primitive spacing file. These
+     `--memox-layout-*` aliases group them under a clear layout namespace so
+     their role reads unambiguously, WITHOUT renaming or removing the originals
+     (frozen contract). Same values → parity-neutral. Prefer either name. --- */
+  --memox-layout-appbar-height: var(--memox-appbar-height);
+  --memox-layout-bottom-nav-height: var(--memox-bottom-nav-height);
+  --memox-layout-fab-size: var(--memox-fab-size);
 }

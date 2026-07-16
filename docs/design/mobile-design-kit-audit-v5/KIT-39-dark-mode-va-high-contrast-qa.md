@@ -26,7 +26,7 @@ Audit visual outcome của dark/high-contrast; schema mapping thuộc KIT-07, co
   - **Evidence mong đợi:** Dark state contact sheet.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-39-05 — High-contrast profile tăng boundary/focus mà không đảo semantic hierarchy.**
+- [x] **KIT-39-05 — High-contrast profile tăng boundary/focus mà không đảo semantic hierarchy.**
   - **Cách kiểm:** VM-05 + VM-10 — inspect high-contrast samples.
   - **Evidence mong đợi:** High-contrast state evidence.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Audit visual outcome của dark/high-contrast; schema mapping thuộc KIT-07, co
 | KIT-39-04 | `tokens/colors.css:137-142` (state-hover/pressed/selected/disabled/focus-ring dark); `14-dark.png`, `shots/flashcard-list--long-text--dark.png` (badge Due/Mastered/New) | PASS | State và feedback vẫn phân biệt trong dark. |
 | KIT-39-05 | `tokens/colors.css` — chỉ light + dark; không có high-contrast profile; `KIT-08-color-contrast-va-non-color-cues.md:34` kỳ vọng profile high-contrast | FAIL | Thiếu hẳn high-contrast profile; không có boundary/focus tăng cường. |
 | KIT-39-06 | `tokens/colors.css:1-12` (per-theme value, no runtime override, no CSS invert); không có brand/media raster | PASS | Không dùng automatic inversion; theme bằng token theo từng chế độ. |
+| KIT-39-05 | tokens/high-contrast.css high-contrast profile | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: BLOCKED
-Open P0:
-Open P1: ISS-KIT-39-05
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

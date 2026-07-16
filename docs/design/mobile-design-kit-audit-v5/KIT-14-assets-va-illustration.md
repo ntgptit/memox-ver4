@@ -46,15 +46,16 @@ Audit asset quality, ratio, fallback và brand handling.
 | KIT-14-04 | MxAvatar.jsx (initials fallback khi thiếu `src`); components.css .avatar ô cố định 1:1 (884-895); .spinner loading (1085-1098) | PASS | Fallback initials và ô avatar cố định giữ nguyên layout ratio ở mọi state. Lưu ý: broken URL chưa có onError để swap sang initials (ô vẫn giữ ratio). |
 | KIT-14-05 | readme.md:91 (caveat: "No brand logo / app icon asset was provided"); readme.md:67 (wordmark set bằng Plus Jakarta Sans Extrabold) | FAIL | Không có logo/brand asset; chỉ có wordmark bằng type, chưa định nghĩa clear space, minimum size, dark-background variant. Đây là known caveat của kit. |
 | KIT-14-06 | readme.md:66 (no emoji; Unicode chỉ cho content thật); icon = font glyph không chứa text; không có illustration | PASS | Không có asset nào chứa text cố định cần localization; wordmark "MemoX" là tên thương hiệu (không dịch). |
+| KIT-14-05 | governance/asset-export-spec.md documents target specs; logo/app-icon asset still missing (external) | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: PARTIAL
-Open P0:
-Open P1:
+Open P0: 
+Open P1: 
 Open P2: ISS-KIT-14-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

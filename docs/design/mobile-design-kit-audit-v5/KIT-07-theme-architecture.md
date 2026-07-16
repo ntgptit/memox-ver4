@@ -46,15 +46,16 @@ Audit schema, inheritance và mapping giữa theme; không đo contrast chi ti�
 | KIT-07-04 | tool/ui_kit_shots/contrast.mjs:44-46,136-141; components.css:960; tokens/*.css `:root` | PASS | CSS cascade fallback: dark kế thừa light; scale theme-independent định nghĩa một lần trong `:root`; có literal fallback `var(--memox-opacity-disabled,0.5)`; token thiếu sẽ hard-fail gate nên không có value rỗng. |
 | KIT-07-05 | tool/ui_kit_shots/contrast.mjs (gate light+dark); readme.md:92; SKILL.md | FAIL | Regression gate tồn tại và chạy cho cả hai theme, nhưng không có onboarding checklist cho theme mới và không có sample completed run. |
 | KIT-07-06 | ui_kits/memox-app/shots/*--light.png vs *--dark.png (vd dashboard--loaded); tokens spacing/radius/typography trong `:root` | PASS | Cùng cây component render cả hai theme, chỉ khác `data-theme`; token layout theme-independent nên hierarchy/layout bất biến giữa theme. |
+| KIT-07-05 | governance/CONTRIBUTING.md + acceptance-criteria.md review gates; dedicated new-theme onboarding checklist + sample run still pending | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: PARTIAL
-Open P0:
-Open P1:
+Open P0: 
+Open P1: 
 Open P2: ISS-KIT-07-05
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

@@ -46,15 +46,16 @@ Chỉ audit contrast và việc không phụ thuộc màu; primitive/semantic/th
 | KIT-08-04 | components.css:690-692,866-870,819-828,974-977,445-450,949-952; MxTextField.prompt.md | PASS | Cue ngoài màu tồn tại và sống sót khi grayscale: nav selected icon FILL:1, segmented active shadow (elevation), switch on đổi vị trí+size thumb, field error có message+dấu `*`+role=alert/aria-invalid, disabled dùng opacity+cursor. |
 | KIT-08-05 | components.css:935-937,949-952; tokens/opacity.css:10; contrast.mjs (disabled rows) | PASS | Placeholder dùng text-tertiary (đọc được 4.73/5.13) khác disabled opacity 0.45 + `cursor:not-allowed`; disabled đo 1.72–2.76 (WCAG miễn trừ) rõ ràng mờ hơn enabled. |
 | KIT-08-06 | tool/ui_kit_shots/contrast.mjs (chỉ light+dark); tokens/colors.css (không có high-contrast/forced-colors) | FAIL | Evidence chỉ phủ light+dark; kit không có high-contrast profile nào. Không có cặp contrast fail — light+dark đều đạt AA; chỉ thiếu coverage profile thứ ba. |
+| KIT-08-06 | tokens/high-contrast.css HC profile added; running contrast.mjs across all 3 profiles still pending | PARTIAL | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: BLOCKED
-Open P0:
+Open P0: 
 Open P1: ISS-KIT-08-06
-Open P2:
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

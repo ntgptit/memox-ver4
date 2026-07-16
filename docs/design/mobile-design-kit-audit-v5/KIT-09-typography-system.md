@@ -31,7 +31,7 @@ Audit type roles, metrics và scaling; raw primitive values thuộc KIT-04.
   - **Evidence mong đợi:** Before/after evidence và issue list.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-09-06 — Wrapping, truncation và max-lines được quy định theo component/content importance.**
+- [x] **KIT-09-06 — Wrapping, truncation và max-lines được quy định theo component/content importance.**
   - **Cách kiểm:** VM-12 + VM-08 — test chuỗi dài và đối chiếu content rules.
   - **Evidence mong đợi:** Matrix component × wrapping/truncation behavior.
   - **Severity mặc định nếu không đạt:** `P2`
@@ -46,15 +46,18 @@ Audit type roles, metrics và scaling; raw primitive values thuộc KIT-04.
 | KIT-09-04 | tokens/typography.css:15-16; grep high-contrast/script docs = 0 | FAIL | Stack Plus Jakarta Sans + system fallback phủ Vietnamese, nhưng không có danh sách fallback theo script (CJK/RTL) và không có screenshot từng script; scope script chưa được tài liệu hóa. |
 | KIT-09-05 | tokens/typography.css:20-28 (px cố định); tokens/component.css (chiều cao control cố định); không có before/after 200% | FAIL | Không có evidence text-scaling 200%; kit dùng px cố định + control chiều cao cố định (chip 34/appbar 56/nav 80); chưa kiểm chứng (production map sang RN scalable type) — verification gap. |
 | KIT-09-06 | components.css:118-121,128-129,1020-1059 (nowrap+ellipsis cục bộ) | FAIL | Có truncation cục bộ trong CSS (cappbar title/context nowrap+ellipsis, breadcrumb nowrap) nhưng không có matrix wrapping/truncation/max-lines theo component/content importance. |
+| KIT-09-04 | guidelines/i18n-localization.md per-script fallback list; per-script rendered shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-09-05 | guidelines/i18n-localization.md 200% guidance; rendered 200% before/after shots pending | PARTIAL | Remediation — audit v5 fix loop. |
+| KIT-09-06 | guidelines/component-constraints-matrix.md §1 text-wrap/truncation matrix | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
 Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-09-04, ISS-KIT-09-05, ISS-KIT-09-06
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Open P0: 
+Open P1: 
+Open P2: ISS-KIT-09-04, ISS-KIT-09-05
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

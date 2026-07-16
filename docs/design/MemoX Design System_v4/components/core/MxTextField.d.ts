@@ -26,6 +26,8 @@ export interface MxTextFieldProps {
   /** Virtual-keyboard hint: numeric, decimal, email, tel, search, url. */
   inputMode?: string;
   disabled?: boolean;
+  /** Read-only: value is shown and focusable/selectable but not editable (distinct from `disabled`). */
+  readOnly?: boolean;
   required?: boolean;
   id?: string;
   name?: string;

@@ -11,7 +11,15 @@
    Runtime keyboard intent (production behaviour the static kit can't execute) is recorded as
    design-intent data-* annotations: data-lang, data-input-mode, data-autofocus,
    data-enter-key-hint. Production maps these to the real input's lang/inputMode/autoFocus/
-   enterKeyHint so the OS shows the right keyboard and Next/Done flows field-to-field. */
+   enterKeyHint so the OS shows the right keyboard and Next/Done flows field-to-field.
+
+   Validation timing (KIT-25-03) — the static kit shows one `error` snapshot, but the runtime
+   contract, recorded on `data-validate-on`, is: (1) a REQUIRED/format error surfaces on BLUR,
+   but only once the field has been touched (never while the user is still typing a pristine
+   field); (2) on SUBMIT, every still-invalid field validates at once and focus moves to the
+   first error; (3) ASYNC checks (e.g. duplicate term) resolve after the server responds and
+   render through the same `error` slot. Errors are exposed to AT: the input carries
+   aria-invalid and the message is a role="alert" live region so it is spoken when it appears. */
 (function () {
 function Field({ label, labelAction, value, placeholder, multiline, error, supporting, required, disabled, focused, node, trailing, lang, inputMode, autoFocus, enterKeyHint }) {
   const emphasis = focused || error;
@@ -29,12 +37,14 @@ function Field({ label, labelAction, value, placeholder, multiline, error, suppo
         data-input-mode={inputMode || null}
         data-autofocus={autoFocus ? 'true' : null}
         data-enter-key-hint={enterKeyHint || null}
+        data-validate-on="blur-then-submit"
+        aria-invalid={error ? 'true' : null}
         style={{ display: 'flex', alignItems: multiline ? 'flex-start' : 'center', gap: 'var(--memox-space-2)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: disabled ? 'var(--memox-surface-sunken)' : 'var(--memox-surface)', border: (emphasis ? 'var(--memox-stroke-emphasis)' : 'var(--memox-stroke-hairline)') + ' solid ' + borderColor }}>
         <span style={{ flex: 1, minWidth: 0, fontSize: 'var(--memox-font-size-base)', color: value ? 'var(--memox-text)' : 'var(--memox-text-tertiary)', lineHeight: 'var(--memox-line-height-normal)', whiteSpace: multiline ? 'normal' : 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', overflowWrap: 'anywhere' }}>{value || placeholder}</span>
         {trailing}
       </div>
       {error
-        ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-error)' }}>{error}</div>
+        ? <div role="alert" style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-error)' }}>{error}</div>
         : supporting
           ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-tertiary)' }}>{supporting}</div>
           : null}

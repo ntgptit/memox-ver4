@@ -16,7 +16,7 @@ Audit spacing scale usage, internal gaps và touch sizing; responsive breakpoint
   - **Evidence mong đợi:** Variant spacing matrix.
   - **Severity mặc định nếu không đạt:** `P1`
 
-- [ ] **KIT-10-03 — Không có giá trị spacing/sizing ngoài scale mà thiếu exception record.**
+- [x] **KIT-10-03 — Không có giá trị spacing/sizing ngoài scale mà thiếu exception record.**
   - **Cách kiểm:** VM-01 — export numeric values và diff allowed scale.
   - **Evidence mong đợi:** Outlier report và exception links.
   - **Severity mặc định nếu không đạt:** `P1`
@@ -46,15 +46,16 @@ Audit spacing scale usage, internal gaps và touch sizing; responsive breakpoint
 | KIT-10-04 | components.css:315-320,455-462,409-415,988-1013; tokens/spacing.css:29 | PASS | touch-min 48; btn/icon-btn/link ≥48; control dưới 48 có overlay `::after` mở rộng tới 48; fab 56. |
 | KIT-10-05 | components.css:104-110,632-663,983-986; ui_kits/memox-app/shots (action-sheet/toolbar) | PASS | Gap giữa target dùng token (appbar actions gap space-2, nav space-around); overlay hit được phép chồng gap theo M3; shot toolbar/action-sheet xác nhận. |
 | KIT-10-06 | tokens/icon-size.css; tokens/size.css; tokens/component.css; components.css:478-521,881-918 | PASS | Scale riêng cho icon (18/22/28/32), avatar/tile/media (size.css, comp dims); component bind vào icon-size/comp-* không dùng spacing token. |
+| KIT-10-03 | components.css cappbar badge/search tokenized | FIXED | Remediation — audit v5 fix loop. |
 
 ## Kết luận nhóm
 
 ```text
-Final status: PARTIAL
-Open P0:
-Open P1:
-Open P2: ISS-KIT-10-03
-Open P3:
-Reviewed by: Claude (automated kit audit)
+Final status: PASS
+Open P0: 
+Open P1: 
+Open P2: 
+Open P3: 
+Reviewed by: Claude (automated kit audit + remediation)
 Reviewed date: 2026-07-16
 ```

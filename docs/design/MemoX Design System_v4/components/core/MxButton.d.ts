@@ -16,6 +16,8 @@ export interface MxButtonProps {
   block?: boolean;
   /** Destructive color (composes with variant). */
   danger?: boolean;
+  /** Loading / submitting: shows a spinner, sets `aria-busy`, and makes the button inert. */
+  loading?: boolean;
   disabled?: boolean;
   node?: string;
   className?: string;
