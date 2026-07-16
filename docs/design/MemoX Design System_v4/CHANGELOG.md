@@ -16,10 +16,11 @@ contract. Dates are ISO. The kit's major version is encoded in the folder name
 
 ## [Unreleased] — targeting v4.1 kit freeze
 
-Audit-remediation batch closing governance / release / scope / deprecation gaps from
-`../mobile-design-kit-audit-v5/issue-register.md`. **Additive and documentation only —
-no existing token/`Mx*`/class/`data-mx-node` identifier was renamed or removed, and
-existing 390×780 light+dark shots are pixel-unchanged.**
+Audit-remediation batch (below) closing governance / release / scope / deprecation gaps from
+`../mobile-design-kit-audit-v5/issue-register.md` — **additive and documentation only** — plus a
+**unified Deck-model** workstream (kept additive to the frozen contract: no token / `Mx*` / base
+class / `data-mx-node` id was renamed or removed). Existing 390×780 light+dark shots are
+pixel-unchanged except the newly added `library--nested-*` set.
 
 ### Added — governance & release docs [docs]
 - `governance/OWNERS.md` — ownership index mapping foundation/component/pattern/theme to
@@ -68,10 +69,52 @@ existing 390×780 light+dark shots are pixel-unchanged.**
   transition clips (KIT-38-02), and platform flow recordings (KIT-33-02) recorded as ACCEPTED
   out-of-scope for the button-driven static reference kit, each with rationale + revisit trigger.
 
+### Changed — unified Deck model (2026-07-17) [additive] [docs]
+One `Deck` model, distinguished by `parentId` (`null` = root deck, `<deck id>` = nested deck) —
+there is no separate "Subdeck" object. A "subdeck" is only a Deck one level down.
+- Fixtures carry `id` + `parentId` + `children`; user-facing copy is "Deck" / "nested deck"
+  (section labels DECKS / NESTED DECKS). The list adapter is `_features/library/components/
+  DeckRowCard.jsx` and the create sheet `CreateDeckSheet.jsx` (renamed from the `Subdeck*`
+  variants — these are `_features`-local file names, not `Mx*`/manifest/`data-mx-node`
+  identifiers). `SCOPE.md` §Domain model documents the contract.
+- **Library is now the ONE deck-list screen for every level.** The `library` screen renders the
+  root (`parentId: null`, bottom-nav tab) and **delegates its 15 new `nested-*` states** to the
+  `SubdeckList` render module (a deck's child decks). The nested mode is now **chrome-identical to
+  the root** — same `FilterRow` controls (All decks / Filters / A–Z) and the same bottom nav
+  (passed down from `library`, Library tab active) — differing only by the back button +
+  breadcrumb it adds for navigating up. `FilterRow` gained an additive `prefix` prop so its node
+  ids scope to the host screen (`library/*` at root, `subdeck-list/*` nested). Added
+  `library--nested-*` canonical shots (15 states × light+dark). The `subdeck-list`
+  **registry/spec screen entry was folded into `library`** (its generated `specs/subdeck-list.md`
+  removed).
+- **Frozen contract preserved (golden rule):** the group `SubdeckList`, its render module, and
+  every `subdeck-*` / `subdeck-list/*` `data-mx-node` id are **unchanged** — the delegation
+  renders those exact ids, so no app-mapping identifier moved. The frozen `subdeck-list--*` kit
+  shots are **retained** as the parity reference for the app's still-present subdeck-list screen.
+- **App-alignment follow-ups (tracked, not blocking):** align the app's create-deck copy to the
+  unified model (`deck-content-choice` allowlisted at ~3.3–3.5%), and collapse the app's
+  `library` + `subdeck-list` into one screen, then re-baseline against `library--nested-*` and
+  retire the `subdeck-list--*` shots. See `tool/parity/REMAINING-DIVERGENCES.md`.
+
+### Changed — flat app bar, no elevate-on-scroll (2026-07-17) [value]
+`MxContextualAppBar` no longer changes colour or gains a surface / divider / shadow when the body
+scrolls. root/nested/search now use **one flat background = the screen colour** (`--memox-bg`) at
+every scroll position — `top` and `scrolled` render identically, so the safe area, bar and body
+read as a single unbroken block in both light and dark. Only `selection` / `modal` keep a surface
++ hairline (they are transient MODE bars, not scroll states).
+- `components.css`: `.cappbar` background = `--memox-bg`; `.cappbar--top`/`--scrolled` flat with a
+  transparent bottom border; a new `.cappbar--selection`/`--modal` rule carries the mode surface +
+  divider; the notification-badge ring keys off `.cappbar--root` (always the flat bg).
+- The `collapsed` prop is retained only to pin gallery states — it has no visual effect now.
+- Value-only: no token / `Mx*` / class / `data-mx-node` id changed. Only `app-bar--root-scrolled`
+  re-baselined (it now matches `root-top`); all other shots are pixel-unchanged.
+
 ### Notes
-- These are additive/doc/asset changes. No consumer migration required; no token/`Mx*`/class/
+- The audit batch is additive/doc/asset changes; the Deck-model workstream is additive to the
+  frozen contract (see above). No consumer migration required; no token/`Mx*`/class/
   `data-mx-node` identifier renamed or removed; existing 390×780 light+dark shots unchanged
-  (the new specs govern RN-runtime OS chrome / states that no existing fixture triggers).
+  aside from the added `library--nested-*` set (the new specs govern RN-runtime OS chrome /
+  states that no existing fixture triggers).
 - Open P0/P1 audit items (e.g. RTL/i18n KIT-37, responsive KIT-32, some a11y) remain
   tracked; release stays **BLOCKED** per `governance/release-signoff.md`.
 

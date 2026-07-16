@@ -22,10 +22,16 @@ There is **no separate "Subdeck" model** — a "subdeck" is only a Deck one leve
 holds nested decks (a `children` count) and/or cards. Hierarchy: **Library › Deck (→ nested Deck…)
 › Card** — no Folder / Collection / Category / Workspace / Notebook layer.
 
+Because a nested deck IS a Deck, the kit models **one deck-list screen** — `library` — for every
+level: it renders the root (`parentId: null`, bottom-nav tab) and delegates its `nested-*` states
+(a deck's child decks: pushed chrome, back + breadcrumb) to the same `SubdeckList` render module.
+The standalone `subdeck-list` screen entry is retired (folded into `library`).
+
 User-facing copy and internal component names use "Deck" / "nested deck" (`DeckCard`,
-`DeckRowCard`, `CreateDeckSheet`). Per the AGENTS.md golden rule the `subdeck-list` screen **id**,
-its group `SubdeckList`, and the `subdeck-*` / `subdeck-list/*` `data-mx-node` ids stay **stable**
-(frozen app-mapping contract) even though the display reads "Deck".
+`DeckRowCard`, `CreateDeckSheet`). Per the AGENTS.md golden rule the group `SubdeckList`, its
+render module, and the `subdeck-*` / `subdeck-list/*` `data-mx-node` ids stay **stable** (frozen
+app-mapping contract — the `library` nested delegation renders those exact ids) even though the
+display reads "Deck".
 
 ## Supported (in scope, verified)
 

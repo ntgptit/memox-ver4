@@ -1,9 +1,10 @@
-/* MemoX — Subdeck List. Primary objective: browse and manage the subdecks inside the
-   current deck. SUBDECKS ONLY — never a CARDS section, never Add card. The same screen is
-   reused at every tree level (Korean › TOPIK I › Grammar › …). Nested screen: back +
-   deck title + search + More(→ Deck Settings). Create-subdeck FAB.
-   Reuses shared DeckRowCard (from Library) + MxList + contextual app bar + Breadcrumb
-   (the multi-level deck path). */
+/* MemoX — nested deck list: a deck's child decks, one level down. Rendered as the Library
+   screen's nested mode (Library delegates its nested-* states here). CHROME-IDENTICAL to the
+   Library root — same FilterRow controls, deck cards (DeckRowCard), FAB and bottom nav (passed
+   in as `nav`) — differing only by the back button + Breadcrumb this renderer adds for navigating
+   up. A deck's child decks are still Decks (parentId != null); this is never a CARDS section.
+   The same renderer serves every tree level (Korean › TOPIK I › Grammar › …).
+   Frozen per AGENTS.md golden rule: every subdeck-list/* data-mx-node id stays stable. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink } = NS;
@@ -13,16 +14,18 @@ const { Scrim, Sheet, MenuItem, MenuList, SectionLabel, EmptyState, Skeleton } =
 const t = (window.MemoXI18n && window.MemoXI18n.t) || ((k, fb) => fb);
 const fmt = window.MemoXFormat || { relativeTime: (v, u) => Math.abs(v) + ' ' + u + (Math.abs(v) === 1 ? '' : 's') + (v < 0 ? ' ago' : '') };
 
-const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ariaLabel={'Study ' + name} />;
-
-function SubdeckList({ state = 'loaded' }) {
+function SubdeckList({ state = 'loaded', nav }) {
   const SL = window.MemoXSubdeckList;
-  const { SUBDECKS, DENSE, summary, CreateDeckSheet, TRAIL, TRAIL_DEEP } = SL;
-  const DeckRowCard = window.MemoXLibrary.DeckRowCard;
+  const { SUBDECKS, DENSE, CreateDeckSheet, TRAIL, TRAIL_DEEP } = SL;
+  const LIB = window.MemoXLibrary;
+  const DeckRowCard = LIB.DeckRowCard;
+  const FilterRow = LIB.FilterRow;
   const MxList = NS.MxList;
   const Breadcrumb = window.Breadcrumb;
 
   const fab = <MxFab icon="add" node="subdeck-list/create" ariaLabel="Create deck" />;
+  // The SAME controls row as the Library root — scoped to this screen's node prefix.
+  const filter = <FilterRow prefix="subdeck-list" />;
   const nestedBar = (
     <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Korean TOPIK I"
       actions={<React.Fragment>
@@ -30,28 +33,24 @@ function SubdeckList({ state = 'loaded' }) {
         <MxIconButton icon="more_vert" size="sm" node="subdeck-list/more" ariaLabel="Deck settings" />
       </React.Fragment>} />
   );
-  // SUBDECKS section label carrying the deck aggregate as a compact muted annotation,
-  // instead of a separate full-width summary row.
-  const subHead = (arr) => <SectionLabel>DECKS <span style={{ fontWeight: 'var(--memox-font-weight-medium)', letterSpacing: 'normal', color: 'var(--memox-text-tertiary)' }}>· {summary(arr)}</span></SectionLabel>;
   const crumbs = (trail = TRAIL) => <Breadcrumb items={trail} node="subdeck-list/breadcrumb" />;
   const list = (arr) => <MxList>{arr.map((s, i) => <DeckRowCard key={i} s={s} index={i} nodePrefix="subdeck-list" />)}</MxList>;
 
-  /* loading */
+  /* loading — filter-row + card skeletons (matches the Library root loading), keeps bottom nav */
   if (state === 'loading') {
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
-        <Skeleton w="55%" h={13} />
-        <SectionLabel>DECKS</SectionLabel>
+      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
+        <Skeleton h={40} r={999} />
         <MxList>{[0, 1, 2, 3].map((i) => <MxCard key={i} padding="sm"><div style={{ display: 'flex', gap: 'var(--memox-space-4)', alignItems: 'center' }}><Skeleton w={40} h={40} r={999} /><div style={{ flex: 1 }}><Skeleton w="60%" h={14} /><Skeleton w="40%" h={10} style={{ marginTop: 'var(--memox-space-2)' }} /></div></div></MxCard>)}</MxList>
       </MxScaffold>
     );
   }
 
-  /* empty — deck was organised with subdecks, none created yet (distinct from the
-     undecided Deck Content Choice) */
+  /* empty — deck was organised with nested decks, none created yet (distinct from the
+     undecided Deck Content Choice). Mirrors Library empty: bottom nav, no FAB. */
   if (state === 'empty') {
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
+      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav}>
         <EmptyState node="subdeck-list/empty" icon="account_tree" title="No nested decks yet"
           text="Create a nested deck to organise this deck into topics."
           action={<MxButton variant="primary" icon="library_add" node="subdeck-list/empty-create">Create deck</MxButton>} />
@@ -59,17 +58,17 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* offline — local subdecks still browsable */
+  /* offline — local decks still browsable (banner above the controls, like Library offline) */
   if (state === 'offline') {
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
+      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
         {crumbs()}
         <div data-mx-node="subdeck-list/offline-banner" style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-card)', background: 'var(--memox-warning-soft)', color: 'var(--memox-on-warning-soft)' }}>
           <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)' }}>cloud_off</span>
           <div style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)' }}>{t('subdeck.offline', 'Offline · showing saved decks. Last synced 2 hours ago.', { rel: fmt.relativeTime(-2, 'hour') })}</div>
           <MxLink size="sm" trailingIcon={null} node="subdeck-list/offline-retry">{t('common.retry', 'Retry')}</MxLink>
         </div>
-        {subHead(SUBDECKS)}
+        {filter}
         {list(SUBDECKS)}
       </MxScaffold>
     );
@@ -78,7 +77,7 @@ function SubdeckList({ state = 'loaded' }) {
   /* error — the deck failed to load */
   if (state === 'error') {
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={nestedBar}>
+      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav}>
         <EmptyState node="subdeck-list/error" icon="cloud_off" tone="error" title="Couldn't load decks"
           text="Something went wrong. Check your connection and try again."
           action={<MxButton variant="primary" icon="refresh" node="subdeck-list/retry">Retry</MxButton>} />
@@ -86,7 +85,7 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* search / no-results — SUBDECKS only, placeholder "Search subdecks" */
+  /* search / no-results — search chrome takes over (no bottom nav, mirrors Library search) */
   if (state === 'search' || state === 'no-results') {
     const q = state === 'search' ? 'gr' : 'zzz';
     const bar = (
@@ -107,7 +106,7 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* selection — subdecks only */
+  /* selection — decks only; selection bar + bottom nav (mirrors Library selection) */
   if (state === 'selection') {
     const bar = (
       <MxContextualAppBar variant="selection" node="subdeck-list/appbar" count={2}
@@ -118,28 +117,27 @@ function SubdeckList({ state = 'loaded' }) {
     );
     const sel = [true, false, true, false, false];
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={bar}>
-        <SectionLabel>DECKS</SectionLabel>
+      <MxScaffold node="subdeck-list/screen" appBar={bar} bottomNav={nav}>
         <MxList>{SUBDECKS.map((s, i) => <DeckRowCard key={i} s={s} index={i} selected={sel[i]} nodePrefix="subdeck-list" />)}</MxList>
       </MxScaffold>
     );
   }
 
-  /* create-sheet — subdeck-only create */
+  /* create-sheet — nested-deck create */
   if (state === 'create-sheet') {
     return (
       <React.Fragment>
-        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>{crumbs()}{filter}{list(SUBDECKS)}</MxScaffold>
         <CreateDeckSheet />
       </React.Fragment>
     );
   }
 
-  /* subdeck-actions — a single subdeck's action sheet (subdeck-level, not deck-level) */
+  /* subdeck-actions — a single deck's action sheet (deck-level, over the browse list) */
   if (state === 'subdeck-actions') {
     return (
       <React.Fragment>
-        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>{crumbs()}{filter}{list(SUBDECKS)}</MxScaffold>
         <Scrim align="end" node="subdeck-list/actions-scrim">
           <Sheet title="Greetings & introductions" node="subdeck-list/actions-sheet">
             <MenuItem icon="bolt" label="Study deck" node="subdeck-list/action-study" />
@@ -152,18 +150,18 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* play — the Study chooser (session vs single mode), opened from a subdeck's Study
-     (bolt) action or the "Study subdeck" row; "Single mode" is the entry into Mode Picker */
+  /* play — the Study chooser (session vs single mode), opened from a deck's Study (bolt)
+     action or the "Study deck" row; "Single mode" is the entry into Mode Picker */
   if (state === 'play') {
     return (
       <React.Fragment>
-        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>{crumbs()}{filter}{list(SUBDECKS)}</MxScaffold>
         <window.DeckPlaySheet title="Greetings & introductions" />
       </React.Fragment>
     );
   }
 
-  /* deep — a subdeck several levels down; the breadcrumb collapses its middle */
+  /* deep — a deck several levels down; the breadcrumb collapses its middle */
   if (state === 'deep') {
     const deepBar = (
       <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Irregular verbs"
@@ -173,9 +171,9 @@ function SubdeckList({ state = 'loaded' }) {
         </React.Fragment>} />
     );
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={deepBar} fab={fab}>
+      <MxScaffold node="subdeck-list/screen" appBar={deepBar} bottomNav={nav} fab={fab}>
         {crumbs(TRAIL_DEEP)}
-        {subHead(SUBDECKS)}
+        {filter}
         {list(SUBDECKS)}
       </MxScaffold>
     );
@@ -184,15 +182,15 @@ function SubdeckList({ state = 'loaded' }) {
   /* not-found — the deck was deleted/moved on another device while it was open
      (KIT-23-02, deleted-entity detail state). Friendly copy + a SAFE back action
      to the Library (never a dead nested app bar with actions on a gone entity).
-     App bar drops search/more (there is nothing here to search or configure). */
-  // registry-state: not-found
+     App bar drops search/more (there is nothing here to search or configure);
+     the bottom nav stays so the user can jump back into any tab. */
   if (state === 'not-found') {
     const goneBar = (
       <MxContextualAppBar variant="nested" node="subdeck-list/appbar" title="Korean TOPIK I"
         actions={<span aria-hidden="true" />} />
     );
     return (
-      <MxScaffold node="subdeck-list/screen" appBar={goneBar}>
+      <MxScaffold node="subdeck-list/screen" appBar={goneBar} bottomNav={nav}>
         <EmptyState node="subdeck-list/not-found" icon="folder_off" tone="warning"
           title={t('subdeck.notFound.title', 'This deck no longer exists')}
           text={t('subdeck.notFound.body', 'It may have been deleted or moved on another device. Head back to your library to keep studying.')}
@@ -201,16 +199,14 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* long-menu — a subdeck action sheet grown past the frame (KIT-29-03): the
-     Sheet caps at 85% height and its body scrolls; one action ("Move subdeck")
-     is DISABLED (unavailable — this subdeck can't be moved out of a locked
-     parent) to render the MenuItem disabled state. MenuList adds its own cap so
-     the same overflow rule holds outside a Sheet too. */
-  // registry-state: long-menu
+  /* long-menu — a deck action sheet grown past the frame (KIT-29-03): the Sheet caps at
+     85% height and its body scrolls; one action ("Move deck") is DISABLED (unavailable —
+     this deck can't be moved out of a locked parent) to render the MenuItem disabled state.
+     MenuList adds its own cap so the same overflow rule holds outside a Sheet too. */
   if (state === 'long-menu') {
     return (
       <React.Fragment>
-        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>{crumbs()}{subHead(SUBDECKS)}{list(SUBDECKS)}</MxScaffold>
+        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>{crumbs()}{filter}{list(SUBDECKS)}</MxScaffold>
         <Scrim align="end" node="subdeck-list/long-menu-scrim">
           <Sheet title="Greetings & introductions" node="subdeck-list/long-menu-sheet">
             <MenuList node="subdeck-list/long-menu-list">
@@ -231,12 +227,12 @@ function SubdeckList({ state = 'loaded' }) {
     );
   }
 
-  /* loaded / dense */
+  /* loaded / dense — Library body (controls + deck cards) + bottom nav, plus breadcrumb */
   const arr = state === 'dense' ? DENSE : SUBDECKS;
   return (
-    <MxScaffold node="subdeck-list/screen" appBar={nestedBar} fab={fab}>
+    <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
       {crumbs()}
-      {subHead(arr)}
+      {filter}
       {list(arr)}
     </MxScaffold>
   );

@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 178-state matrix (26 screens).
+always matches the 178-state matrix (25 screens).
 
 ## dashboard — Today
 
@@ -36,26 +36,21 @@ always matches the 178-state matrix (26 screens).
 | selection | `library--selection--light.png` | `library--selection--dark.png` |
 | loading | `library--loading--light.png` | `library--loading--dark.png` |
 | offline | `library--offline--light.png` | `library--offline--dark.png` |
-
-## subdeck-list — Nested Decks
-
-| State | Light | Dark |
-| --- | --- | --- |
-| loaded | `subdeck-list--loaded--light.png` | `subdeck-list--loaded--dark.png` |
-| dense | `subdeck-list--dense--light.png` | `subdeck-list--dense--dark.png` |
-| deep | `subdeck-list--deep--light.png` | `subdeck-list--deep--dark.png` |
-| empty | `subdeck-list--empty--light.png` | `subdeck-list--empty--dark.png` |
-| search | `subdeck-list--search--light.png` | `subdeck-list--search--dark.png` |
-| no results | `subdeck-list--no-results--light.png` | `subdeck-list--no-results--dark.png` |
-| selection | `subdeck-list--selection--light.png` | `subdeck-list--selection--dark.png` |
-| create sheet | `subdeck-list--create-sheet--light.png` | `subdeck-list--create-sheet--dark.png` |
-| subdeck actions | `subdeck-list--subdeck-actions--light.png` | `subdeck-list--subdeck-actions--dark.png` |
-| long menu | `subdeck-list--long-menu--light.png` | `subdeck-list--long-menu--dark.png` |
-| play | `subdeck-list--play--light.png` | `subdeck-list--play--dark.png` |
-| loading | `subdeck-list--loading--light.png` | `subdeck-list--loading--dark.png` |
-| offline | `subdeck-list--offline--light.png` | `subdeck-list--offline--dark.png` |
-| error | `subdeck-list--error--light.png` | `subdeck-list--error--dark.png` |
-| not found | `subdeck-list--not-found--light.png` | `subdeck-list--not-found--dark.png` |
+| nested loaded | `library--nested-loaded--light.png` | `library--nested-loaded--dark.png` |
+| nested dense | `library--nested-dense--light.png` | `library--nested-dense--dark.png` |
+| nested deep | `library--nested-deep--light.png` | `library--nested-deep--dark.png` |
+| nested empty | `library--nested-empty--light.png` | `library--nested-empty--dark.png` |
+| nested search | `library--nested-search--light.png` | `library--nested-search--dark.png` |
+| nested no results | `library--nested-no-results--light.png` | `library--nested-no-results--dark.png` |
+| nested selection | `library--nested-selection--light.png` | `library--nested-selection--dark.png` |
+| nested create sheet | `library--nested-create-sheet--light.png` | `library--nested-create-sheet--dark.png` |
+| nested subdeck actions | `library--nested-subdeck-actions--light.png` | `library--nested-subdeck-actions--dark.png` |
+| nested long menu | `library--nested-long-menu--light.png` | `library--nested-long-menu--dark.png` |
+| nested play | `library--nested-play--light.png` | `library--nested-play--dark.png` |
+| nested loading | `library--nested-loading--light.png` | `library--nested-loading--dark.png` |
+| nested offline | `library--nested-offline--light.png` | `library--nested-offline--dark.png` |
+| nested error | `library--nested-error--light.png` | `library--nested-error--dark.png` |
+| nested not found | `library--nested-not-found--light.png` | `library--nested-not-found--dark.png` |
 
 ## flashcard-list — Flashcard List
 

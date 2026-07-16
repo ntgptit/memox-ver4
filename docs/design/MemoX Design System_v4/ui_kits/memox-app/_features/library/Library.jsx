@@ -1,7 +1,9 @@
-/* MemoX — Library. Domain: Library › Deck › Subdeck › Card — a deck holds subdecks;
-   there is no separate top-level grouping level.
-   12 states, each light+dark. Top-level decks only — opening a deck navigates to the
-   Subdeck List (subdecks) or Flashcard List (cards) screens, not an inline nested view.
+/* MemoX — Library = the ONE deck-list screen, at every level. Domain: Library › Deck (→ nested
+   Deck…) › Card — one Deck model (parentId), no separate Subdeck.
+   Root mode (parentId null): top-level decks, bottom-nav tab. Nested mode (`nested-*` states,
+   parent = a deck): a deck's child decks, pushed (back + breadcrumb + Deck Settings) — delegates
+   to the SubdeckList render module. Opening a deck pushes THIS screen with a parent; a final
+   deck's cards go to the Flashcard List.
    Orchestrates shared chrome (MxContextualAppBar,
    MxBottomNav, MxFab, Scrim/Sheet, EmptyState) + shared DeckCard + MxList (standard
    spacing) + library-local components (DeckRowCard, FilterRow, LibraryCreateSheet,
@@ -21,6 +23,16 @@ const AV = <MxAvatar name="Linh Tran" size="sm" />;
 const study = (node, name) => <MxIconButton icon="bolt" size="sm" node={node} ariaLabel={'Study ' + name} />;
 
 function Library({ state = 'loaded' }) {
+  // ONE deck-list screen for every level. Nested mode (parent = a deck) lists a deck's child
+  // decks one level down — same deck-list, pushed chrome (back + breadcrumb + Deck Settings).
+  // Reuses the SubdeckList render module (retired as a standalone screen, kept as this screen's
+  // nested renderer; its subdeck-list/* node ids stay frozen — app-mapping contract).
+  // state 'nested-<x>' -> SubdeckList state '<x>'. Pass the SAME bottom nav so the nested
+  // deck list is chrome-identical to the root (library body + bottom-nav) — it differs only
+  // by the back button + breadcrumb the nested renderer adds.
+  if (state.indexOf('nested-') === 0) {
+    return window.SubdeckList({ state: state.slice(7), nav: <MxBottomNav items={NAV} value="library" node="shell/bottom-nav" /> });
+  }
   const LIB = window.MemoXLibrary;
   const { DECKS, DENSE, SUBDECKS, deckMeta, Status, DeckRowCard, FilterRow } = LIB;
   const DeckCard = window.DeckCard, MxList = NS.MxList;

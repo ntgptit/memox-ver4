@@ -1,16 +1,19 @@
 /* MxContextualAppBar — the ONE app bar for every screen. Base class: cappbar.
-   Minimal Material-3: a single 56px bar, start-aligned title, flat, transparent at the top
-   and gaining a surface + hairline divider once the body scrolls (elevate-on-scroll). Content
-   is passed by semantic slot, never screen-specific markup.
+   Minimal, FLAT: a single 56px bar, start-aligned title, one flat background = the screen
+   colour. It does NOT change colour or gain a surface / divider / shadow as the body scrolls —
+   the safe area, the bar and the body read as one unbroken block, at any scroll position, in
+   both light and dark. Content is passed by semantic slot, never screen-specific markup.
 
    Variants:
      root      — tab destinations: title + trailing actions (search / notification / avatar).
      nested    — pushed detail screens: back + title + optional actions.
      search    — back + a filled search field.
-     selection — close + "N selected" + selection actions (stays elevated).
-     modal     — full-screen form: close + centered title + a primary action (stays elevated).
-   root / nested / search elevate on scroll; selection / modal always show the surface.
-   Pin the state with the `collapsed` prop (gallery states).
+     selection — close + "N selected" + selection actions (mode bar: surface + hairline).
+     modal     — full-screen form: close + centered title + a primary action (mode bar).
+   root / nested / search are seamless (flat, no scroll change); selection / modal are transient
+   MODE bars that carry a surface + hairline to separate the mode chrome from content.
+   The `collapsed`/scroll state no longer changes root/nested/search visually — top == scrolled;
+   the prop is retained only to pin gallery states.
 
    Runtime-authored (IIFE + global React) so the kit gallery loads it via babel-src without a
    bundle rebuild; ESM-exported for the design-system compiler. */
