@@ -264,7 +264,7 @@ function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDis
   if (keyboard) {
     return (
       <div data-mx-node={scrimNode} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column' }}>
-        <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--memox-space-5)', overflow: 'hidden' }}>{card}</div>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--memox-space-4)', overflow: 'hidden' }}>{card}</div>
         <KeyboardInset node={(node || 'dialog') + '-keyboard'} />
       </div>
     );

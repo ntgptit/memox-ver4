@@ -66,6 +66,14 @@ band-by-band with pixel measurements, not by eye.
 - `deck-content-choice--named` and `shell-dashboard--loaded` have no
   same-named kit reference shot; they are listed by the report but cannot
   be scored. The dashboard is still a placeholder slice (WBS 5.3).
+- **Create-Deck flow screens are kit-only (kit-ahead)** — `create-deck-firstrun`,
+  `create-deck-dialog`, `empty-deck`, `add-card-target` (plus `import--parent-target` and
+  `flashcard-list--convert-*`) have **no app_golden baseline**, so the construction-contract §8/§9
+  parity gate (< 3% per screen) cannot run yet. They implement `docs/prompts/create_deck_change_note.md`
+  ahead of the app. **Follow-up (per screen, when the app builds it):** add its canonical states to
+  `tool/app_golden/shoot.mjs` TARGETS → `npm run golden:update` → `npm run parity:gate`. The app
+  already ships `create-deck-dialog` (screenshot) but at a divergent input height — the kit fixed the
+  field to ~48px (`box-sizing:border-box`); the app must re-sync to match.
 - `library--nested-*` (15 states × 2 themes) are **kit-only** — the merged
   library screen's nested mode has no app baseline yet (the app still ships a
   separate `subdeck-list` screen). They are not scored until the app screen
