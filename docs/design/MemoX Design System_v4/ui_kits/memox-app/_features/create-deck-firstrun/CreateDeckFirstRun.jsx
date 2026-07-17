@@ -103,9 +103,7 @@ function CreateDeckFirstRun({ state = 'landing' }) {
         {invalid ? <div className="field-group__error" data-mx-node="create-deck-firstrun/s1-learn-error" role="alert">Choose a language to learn.</div> : null}
         <SelectRow label="Show meanings in *" value="Vietnamese" node="create-deck-firstrun/s1-native" />
         <p style={{ margin: 0, fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>You can add more language pairs later.</p>
-        <div style={{ marginTop: 'auto' }}>
-          <MxButton variant="primary" block disabled={invalid} node="create-deck-firstrun/s1-continue">Continue</MxButton>
-        </div>
+        <MxButton variant="primary" block disabled={invalid} node="create-deck-firstrun/s1-continue">Continue</MxButton>
       </MxScaffold>
     );
   }
@@ -169,11 +167,9 @@ function CreateDeckFirstRun({ state = 'landing' }) {
         <Field label="Description" value="Vocabulary and grammar for TOPIK I" placeholder="Add a description" node="create-deck-firstrun/description" />
       ) : null}
 
-      <div style={{ marginTop: 'auto' }}>
-        <MxButton variant="primary" icon={submitting ? undefined : 'add'} block disabled={submitting} node="create-deck-firstrun/create-deck">
-          {submitting ? 'Creating…' : 'Create deck'}
-        </MxButton>
-      </div>
+      <MxButton variant="primary" icon={submitting ? undefined : 'add'} block disabled={submitting} node="create-deck-firstrun/create-deck">
+        {submitting ? 'Creating…' : 'Create deck'}
+      </MxButton>
     </MxScaffold>
   );
 }
