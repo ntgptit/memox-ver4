@@ -58,7 +58,7 @@ function SubdeckList({ state = 'loaded', nav }) {
     return (
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
         {crumbs()}{filter}{list(SUBDECKS)}
-        <window.Snackbar text="Deck created" actionLabel="Open" actionNode="subdeck-list/created-open" node="subdeck-list/created-snackbar" />
+        <window.Snackbar tone="success" text="Deck created" actionLabel="Open" actionNode="subdeck-list/created-open" node="subdeck-list/created-snackbar" />
       </MxScaffold>
     );
   }

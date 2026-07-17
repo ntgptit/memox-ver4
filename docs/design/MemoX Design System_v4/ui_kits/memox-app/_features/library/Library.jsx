@@ -153,7 +153,7 @@ function Library({ state = 'loaded' }) {
         <MxList>{decks.map((d, i) => (i === 0 ? hi(d, i) : deckCard(d, i)))}</MxList>
         {first
           ? <window.ActionCallout node="library/first-deck-callout" tone="accent" icon="celebration" title="Your first deck is ready" text="Add cards or organise it into smaller decks whenever you’re ready." action={<MxButton variant="primary" size="sm" node="library/first-deck-open">Open deck</MxButton>} dismissNode="library/first-deck-dismiss" />
-          : <window.Snackbar text="Deck created" actionLabel="Open" actionNode="library/created-open" node="library/created-snackbar" />}
+          : <window.Snackbar tone="success" text="Deck created" actionLabel="Open" actionNode="library/created-open" node="library/created-snackbar" />}
       </MxScaffold>
     );
   }
