@@ -20,7 +20,8 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scopedValues, isDarkScope, isLightScope, normValue as norm, tokenSourceFiles } from './lib/scoped-values.mjs';
+import { scopedValues, tokenSourceFiles } from './lib/scoped-values.mjs';
+import { tokenParity } from './lib/token-parity.mjs';
 
 const KIT = fileURLToPath(new URL('../../docs/design/MemoX Design System_v4/', import.meta.url));
 const MANIFEST = join(KIT, '_ds_manifest.json');
@@ -55,40 +56,16 @@ for (const p of source) if (!manifestPaths.has(p)) fail('A', `source component m
 for (const p of manifestPaths) if (!source.has(p)) fail('A', `dead manifest entry (no source file): ${p}`);
 for (const c of manifest.components) if (c.name !== c.sourcePath.replace(/.*\//, '').replace(/\.jsx$/, '')) fail('A', `manifest name/path mismatch: ${c.name} ↔ ${c.sourcePath}`);
 
-// ── B. manifest token values ↔ scoped source (light/dark), scope sanity ──────
-let lightMismatch = 0, darkMismatch = 0, unknownScope = 0;
+// ── B + B2. manifest ↔ source token parity (BOTH directions) ─────────────────
+// Delegated to the pure, unit-tested tokenParity(): B verifies every manifest token still matches
+// its scoped source value AND its source declaration still exists (deletion ⇒ fail — additive-only);
+// B2 verifies every source token is mirrored in the manifest. Token files are discovered from DISK
+// (minus the allowlist) so a brand-new tokens/*.css is scanned even before it is registered.
 const cache = {};
-for (const t of manifest.tokens || []) {
-  if (!t.definedIn) continue;
-  if (!existsSync(join(KIT, t.definedIn))) { fail('B', `token ${t.name} definedIn missing file: ${t.definedIn}`); continue; }
-  const sv = (cache[t.definedIn] ??= scopedValues(join(KIT, t.definedIn)));
-  let want;
-  if (isDarkScope(t.scope)) want = sv.dark[t.name];
-  else if (isLightScope(t.scope)) want = sv.light[t.name];
-  else { unknownScope++; fail('B', `token ${t.name} has an unrecognised scope: ${JSON.stringify(t.scope)}`); continue; }
-  if (want != null && norm(want) !== norm(t.value)) {
-    (isDarkScope(t.scope) ? (darkMismatch++) : (lightMismatch++));
-    fail('B', `${isDarkScope(t.scope) ? 'dark' : 'light'} token ${t.name}: manifest ${t.value} ≠ source ${want}`);
-  }
-}
-
-// ── B2. source → manifest (additive tokens must be mirrored, not silently ignored) ──
-// Every custom property declared in a tracked token source file must have a manifest entry: a light
-// entry for its :root value, and a dark entry when [data-theme='dark'] overrides it. This is the
-// reverse of check B — it catches source-only tokens (e.g. new component tokens added to colors.css
-// without regenerating the manifest), which the one-way value check above would never notice.
-// Discover token files from DISK (minus the allowlist), NOT from manifest.definedIn — so a whole
-// new tokens/*.css that nobody registered is still scanned, and every token in it that has no
-// manifest entry trips this gate.
-const tokenFiles = tokenSourceFiles(KIT);
-const haveLight = new Set((manifest.tokens || []).filter((t) => isLightScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
-const haveDark = new Set((manifest.tokens || []).filter((t) => isDarkScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
-for (const f of tokenFiles) {
-  if (!existsSync(join(KIT, f))) continue;
-  const sv = (cache[f] ??= scopedValues(join(KIT, f)));
-  for (const name of Object.keys(sv.light)) if (!haveLight.has(f + '|' + name)) fail('B', `source token not mirrored in manifest (light): ${name} in ${f}`);
-  for (const [name, value] of Object.entries(sv.dark)) if (sv.light[name] !== value && !haveDark.has(f + '|' + name)) fail('B', `source token not mirrored in manifest (dark override): ${name} in ${f}`);
-}
+const sourceOf = (f) => (existsSync(join(KIT, f)) ? (cache[f] ??= scopedValues(join(KIT, f))) : null);
+const tp = tokenParity(manifest.tokens, sourceOf, tokenSourceFiles(KIT));
+for (const m of tp.failures) fail('B', m);
+const lightMismatch = tp.light, darkMismatch = tp.dark, unknownScope = tp.unknown;
 
 // ── C. gallery ↔ source (every component has a source <script> tag; no dead tags) ─
 const html = readFileSync(INDEX, 'utf8');
