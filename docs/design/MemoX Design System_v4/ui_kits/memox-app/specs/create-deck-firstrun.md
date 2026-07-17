@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxIconTile`, `MxLink`, `MxScaffold`, `window.ActionCallout`
+`MxBottomNav`, `MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxIconTile`, `MxLink`, `MxScaffold`, `window.ActionCallout`
 
-## State matrix (contract §6) — 12 states, each rendered light + dark
+## State matrix (contract §6) — 13 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -34,12 +34,13 @@ composition; the component map below is the authoritative set of pieces in play.
 | 4 | `step2` |
 | 5 | `step2-optional` |
 | 6 | `duplicate` |
-| 7 | `submitting` |
-| 8 | `submit-failure` |
-| 9 | `resume-draft` |
-| 10 | `success` |
-| 11 | `import-branch` |
-| 12 | `not-now` |
+| 7 | `name-too-long` |
+| 8 | `submitting` |
+| 9 | `submit-failure` |
+| 10 | `resume-draft` |
+| 11 | `success` |
+| 12 | `import-branch` |
+| 13 | `not-now` |
 
 ## Handoff notes
 

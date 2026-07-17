@@ -22,7 +22,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.DeckCard`, `window.SubdeckList`
+`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.CreateDeckDialog`, `window.DeckCard`, `window.SubdeckList`
 
 ## State matrix (contract §6) — 27 states, each rendered light + dark
 

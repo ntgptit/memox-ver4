@@ -66,6 +66,16 @@ band-by-band with pixel measurements, not by eye.
 - `deck-content-choice--named` and `shell-dashboard--loaded` have no
   same-named kit reference shot; they are listed by the report but cannot
   be scored. The dashboard is still a placeholder slice (WBS 5.3).
+- **Create-Deck flow reconnected the entry points (kit-ahead vs the app's current build):**
+  - `library--create-sheet` (~62%): the Library FAB now opens the Create Deck **dialog** directly
+    (§10), replacing `LibraryCreateSheet`. `flashcard-list--empty` (~4%): a leaf that lost its last
+    card is now the unified **Empty Deck** screen (§15). Both allowlisted; the old
+    `LibraryCreateSheet`/`CreateDeckSheet` components + `library/create-*` / `subdeck-list/create-*`
+    node ids are kept for the app's still-shipping build. **Follow-up:** migrate the app, then drop
+    these two allowlist entries.
+  - The nested create sheet + parent-empty are delegated to the same dialog / empty-deck; those kit
+    shots are kit-only (no app pair). New entry to the Leaf→Parent conversion lives in
+    `deck-settings--leaf-actions` ("Organise into nested decks"), kit-only.
 - **Create-Deck flow screens are kit-only (kit-ahead)** — `create-deck-firstrun`,
   `create-deck-dialog`, `empty-deck`, `add-card-target` (plus `import--parent-target` and
   `flashcard-list--convert-*`) have **no app_golden baseline**, so the construction-contract §8/§9

@@ -38,7 +38,7 @@ export const SCREENS = [
   { id: 'deck-settings', title: 'Deck Settings', group: 'DeckSettings',
     archetype: 'Settings', objective: 'Manage a deck’s metadata and lifecycle actions.', cta: 'Save',
     note: 'Manage deck metadata and lifecycle actions (no content list).',
-    states: ['action-sheet', 'rename', 'move', 'reset-confirm', 'delete-confirm'],
+    states: ['action-sheet', 'leaf-actions', 'rename', 'move', 'reset-confirm', 'delete-confirm'],
     sample: null },
   // deck-content-choice RETIRED (spec §1/§22): create no longer asks cards-vs-nested and has no
   // "Default view" — creation is name + language pair (→ create-deck-firstrun / create-deck-dialog)
@@ -49,12 +49,12 @@ export const SCREENS = [
   { id: 'create-deck-firstrun', title: 'Create Deck · First run', group: 'CreateDeckFirstRun',
     archetype: 'Focused task/study flow', objective: 'Create the first deck on a fresh install: learning setup then deck name — full screen, no dialog.', cta: 'Create deck',
     note: 'First-run only (§4–7): landing → Step 1 learning setup → Step 2 first deck. Create makes an EMPTY deck (no card/nested/Default-view). Outcome states compose where the flow lands (Library+callout / Import / Dashboard-empty).',
-    states: ['landing', 'step1', 'step1-validation', 'step2', 'step2-optional', 'duplicate', 'submitting', 'submit-failure', 'resume-draft', 'success', 'import-branch', 'not-now'],
+    states: ['landing', 'step1', 'step1-validation', 'step2', 'step2-optional', 'duplicate', 'name-too-long', 'submitting', 'submit-failure', 'resume-draft', 'success', 'import-branch', 'not-now'],
     sample: ['landing', 'step1', 'step2', 'submitting', 'success'] },
   { id: 'create-deck-dialog', title: 'Create Deck · Dialog', group: 'CreateDeckDialog',
     archetype: 'Form', objective: 'Create another deck once a learning context exists: name + language pair in a modal dialog.', cta: 'Create deck',
     note: 'Dialog (§8) for the 2nd deck onward. Root picks a language pair; nested inherits it (read-only) and shows "Inside <parent>". Creates an EMPTY deck; one primary CTA; no cards-vs-nested question.',
-    states: ['root-default', 'root-multi-pair', 'root-missing-pair', 'nested', 'optional-expanded', 'validation', 'duplicate-root', 'duplicate-sibling', 'submitting', 'submit-failure', 'long-name', 'keyboard-open'],
+    states: ['root-default', 'root-multi-pair', 'root-missing-pair', 'nested', 'optional-expanded', 'validation', 'duplicate-root', 'duplicate-sibling', 'name-too-long', 'submitting', 'submit-failure', 'long-name', 'keyboard-open', 'discard-confirm'],
     sample: ['root-default', 'nested', 'validation', 'submitting'] },
   { id: 'empty-deck', title: 'Empty Deck', group: 'EmptyDeck',
     archetype: 'Detail', objective: 'Let the user pick the first content action for a deck with no cards and no child decks.', cta: 'Add card',

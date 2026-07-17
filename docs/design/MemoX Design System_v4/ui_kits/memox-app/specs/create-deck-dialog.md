@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxButton`, `MxCard`, `MxContextualAppBar`, `MxLink`, `MxScaffold`, `window.ActionCallout`, `window.FormDialog`
 
-## State matrix (contract §6) — 12 states, each rendered light + dark
+## State matrix (contract §6) — 14 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -36,10 +36,12 @@ composition; the component map below is the authoritative set of pieces in play.
 | 6 | `validation` |
 | 7 | `duplicate-root` |
 | 8 | `duplicate-sibling` |
-| 9 | `submitting` |
-| 10 | `submit-failure` |
-| 11 | `long-name` |
-| 12 | `keyboard-open` |
+| 9 | `name-too-long` |
+| 10 | `submitting` |
+| 11 | `submit-failure` |
+| 12 | `long-name` |
+| 13 | `keyboard-open` |
+| 14 | `discard-confirm` |
 
 ## Handoff notes
 

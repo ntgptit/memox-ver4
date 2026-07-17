@@ -48,15 +48,9 @@ function SubdeckList({ state = 'loaded', nav }) {
 
   /* empty — deck was organised with nested decks, none created yet (distinct from the
      undecided Deck Content Choice). Mirrors Library empty: bottom nav, no FAB. */
-  if (state === 'empty') {
-    return (
-      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav}>
-        <EmptyState node="subdeck-list/empty" icon="account_tree" title="No nested decks yet"
-          text="Create a nested deck to organise this deck into topics."
-          action={<MxButton variant="primary" icon="library_add" node="subdeck-list/empty-create">Create deck</MxButton>} />
-      </MxScaffold>
-    );
-  }
+  /* A parent that lost its last child deck is an EMPTY deck again (§15) → the unified Empty Deck
+     screen (Add card / Create nested deck / Import), not a nested-only "no decks" message. */
+  if (state === 'empty') return window.EmptyDeck({ state: 'default' });
 
   /* offline — local decks still browsable (banner above the controls, like Library offline) */
   if (state === 'offline') {
@@ -123,15 +117,9 @@ function SubdeckList({ state = 'loaded', nav }) {
     );
   }
 
-  /* create-sheet — nested-deck create */
-  if (state === 'create-sheet') {
-    return (
-      <React.Fragment>
-        <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>{crumbs()}{filter}{list(SUBDECKS)}</MxScaffold>
-        <CreateDeckSheet />
-      </React.Fragment>
-    );
-  }
+  /* create → Create Deck DIALOG with this parent as context (§13); no nested create sheet.
+     CreateDeckSheet.jsx is kept as a component/node map for the app's current build. */
+  if (state === 'create-sheet') return window.CreateDeckDialog({ state: 'nested' });
 
   /* subdeck-actions — a single deck's action sheet (deck-level, over the browse list) */
   if (state === 'subdeck-actions') {

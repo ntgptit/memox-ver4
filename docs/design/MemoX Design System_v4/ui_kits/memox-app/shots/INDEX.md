@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 210-state matrix (28 screens).
+always matches the 214-state matrix (28 screens).
 
 ## dashboard — Today
 
@@ -81,6 +81,7 @@ always matches the 210-state matrix (28 screens).
 | State | Light | Dark |
 | --- | --- | --- |
 | action sheet | `deck-settings--action-sheet--light.png` | `deck-settings--action-sheet--dark.png` |
+| leaf actions | `deck-settings--leaf-actions--light.png` | `deck-settings--leaf-actions--dark.png` |
 | rename | `deck-settings--rename--light.png` | `deck-settings--rename--dark.png` |
 | move | `deck-settings--move--light.png` | `deck-settings--move--dark.png` |
 | reset confirm | `deck-settings--reset-confirm--light.png` | `deck-settings--reset-confirm--dark.png` |
@@ -96,6 +97,7 @@ always matches the 210-state matrix (28 screens).
 | step2 | `create-deck-firstrun--step2--light.png` | `create-deck-firstrun--step2--dark.png` |
 | step2 optional | `create-deck-firstrun--step2-optional--light.png` | `create-deck-firstrun--step2-optional--dark.png` |
 | duplicate | `create-deck-firstrun--duplicate--light.png` | `create-deck-firstrun--duplicate--dark.png` |
+| name too long | `create-deck-firstrun--name-too-long--light.png` | `create-deck-firstrun--name-too-long--dark.png` |
 | submitting | `create-deck-firstrun--submitting--light.png` | `create-deck-firstrun--submitting--dark.png` |
 | submit failure | `create-deck-firstrun--submit-failure--light.png` | `create-deck-firstrun--submit-failure--dark.png` |
 | resume draft | `create-deck-firstrun--resume-draft--light.png` | `create-deck-firstrun--resume-draft--dark.png` |
@@ -115,10 +117,12 @@ always matches the 210-state matrix (28 screens).
 | validation | `create-deck-dialog--validation--light.png` | `create-deck-dialog--validation--dark.png` |
 | duplicate root | `create-deck-dialog--duplicate-root--light.png` | `create-deck-dialog--duplicate-root--dark.png` |
 | duplicate sibling | `create-deck-dialog--duplicate-sibling--light.png` | `create-deck-dialog--duplicate-sibling--dark.png` |
+| name too long | `create-deck-dialog--name-too-long--light.png` | `create-deck-dialog--name-too-long--dark.png` |
 | submitting | `create-deck-dialog--submitting--light.png` | `create-deck-dialog--submitting--dark.png` |
 | submit failure | `create-deck-dialog--submit-failure--light.png` | `create-deck-dialog--submit-failure--dark.png` |
 | long name | `create-deck-dialog--long-name--light.png` | `create-deck-dialog--long-name--dark.png` |
 | keyboard open | `create-deck-dialog--keyboard-open--light.png` | `create-deck-dialog--keyboard-open--dark.png` |
+| discard confirm | `create-deck-dialog--discard-confirm--light.png` | `create-deck-dialog--discard-confirm--dark.png` |
 
 ## empty-deck — Empty Deck
 

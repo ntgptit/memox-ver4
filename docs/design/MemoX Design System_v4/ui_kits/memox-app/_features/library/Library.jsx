@@ -127,16 +127,10 @@ function Library({ state = 'loaded' }) {
     return <MxScaffold node="library/screen" appBar={bar} bottomNav={nav}><MxList>{DECKS.map((d, i) => deckCard(d, i, sel[i]))}</MxList></MxScaffold>;
   }
 
-  /* LIB-03 create sheet (root context) */
-  if (state === 'create-sheet') {
-    const { LibraryCreateSheet } = LIB;
-    return (
-      <React.Fragment>
-        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><MxList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</MxList></MxScaffold>
-        <LibraryCreateSheet />
-      </React.Fragment>
-    );
-  }
+  /* LIB-03 create → Create Deck DIALOG directly (§10: the Library FAB is "New deck"; no Library
+     create sheet). LibraryCreateSheet.jsx is kept as a component + node map for the app's current
+     build, but is out of the canonical flow. */
+  if (state === 'create-sheet') return window.CreateDeckDialog({ state: 'root-default' });
 
   /* LIB-09 filter applied */
   if (state === 'filter-applied') {
