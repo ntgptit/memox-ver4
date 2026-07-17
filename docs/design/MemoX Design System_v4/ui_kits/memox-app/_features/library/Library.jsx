@@ -132,25 +132,20 @@ function Library({ state = 'loaded' }) {
      build, but is out of the canonical flow. */
   if (state === 'create-sheet') return window.CreateDeckDialog({ state: 'root-default' });
 
-  /* post-create SUCCESS outcomes (§10). first-deck-created: the first deck lands in the Library
-     with a celebratory callout; deck-created: a 2nd+ deck lands highlighted with a "Deck created ·
-     Open" snackbar. The new deck is highlighted once (primary ring + selected tint). */
+  /* post-create SUCCESS outcomes (§10). The just-created deck is EMPTY (0 cards, no due/new/
+     progress) and lands highlighted at the TOP via the shared DeckCard + light `newBadge` "New"
+     pill — never an existing populated deck. first-deck-created: it is the ONLY deck, with a
+     celebratory callout whose "Open deck" is the single primary (the FAB is hidden so there are
+     not two competing primaries). deck-created: the new deck sits above the existing library with
+     a "Deck created · Open" snackbar (the FAB stays — the snackbar action is a text link). */
   if (state === 'deck-created' || state === 'first-deck-created') {
     const first = state === 'first-deck-created';
-    const hi = (d, i) => (
-      <div key={i} data-mx-node={'library/deck-' + i} className="card" style={{ padding: 'var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', background: 'var(--memox-state-selected)' }}>
-        <NS.MxIconTile icon={d.icon} tone={d.tone} />
-        <div style={{ flex: 1, minWidth: 0 }}>
-          <div style={{ fontWeight: 'var(--memox-font-weight-bold)' }}>{d.name}</div>
-          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{deckMeta(d)}</div>
-        </div>
-      </div>
-    );
-    const decks = first ? [DECKS[0]] : DECKS;
+    const NEW = first ? LIB.NEW_DECK : LIB.NEW_DECK_ROOT;
+    const newCard = <DeckCard key="new" icon={NEW.icon} tone={NEW.tone} title={NEW.name} meta={deckMeta(NEW)} newBadge node="library/deck-new" />;
     return (
-      <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}>
+      <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={first ? undefined : fab}>
         <FilterRow />
-        <MxList>{decks.map((d, i) => (i === 0 ? hi(d, i) : deckCard(d, i)))}</MxList>
+        <MxList>{first ? [newCard] : [newCard, ...DECKS.map((d, i) => deckCard(d, i))]}</MxList>
         {first
           ? <window.ActionCallout node="library/first-deck-callout" tone="accent" icon="celebration" title="Your first deck is ready" text="Add cards or organise it into smaller decks whenever you’re ready." action={<MxButton variant="primary" size="sm" node="library/first-deck-open">Open deck</MxButton>} dismissNode="library/first-deck-dismiss" />
           : <window.Snackbar tone="success" text="Deck created" actionLabel="Open" actionNode="library/created-open" node="library/created-snackbar" />}

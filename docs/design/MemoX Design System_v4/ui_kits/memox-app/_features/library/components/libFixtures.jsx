@@ -30,18 +30,29 @@ const SUBDECKS = [
   { id: 'd-topik1-directions', parentId: 'd-topik1', icon: 'directions', tone: 'accent', name: 'Directions & transport', cards: 35, upToDate: true, children: 0, progress: 100 },
 ];
 
+// Post-create OUTCOME decks (§10). A just-created deck is ALWAYS empty — 0 cards, no due/new,
+// no progress — and carries the name the user typed in the create flow. Rendered highlighted
+// (shared DeckCard + `newBadge`) at the TOP of the list; never an existing populated deck.
+// NEW_DECK = first-run success (the only deck); NEW_DECK_ROOT = a 2nd+ deck in the root Library;
+// NEW_DECK_CHILD = a new child deck inside a parent (nested success).
+const NEW_DECK = { id: 'd-new-first', parentId: null, icon: 'style', tone: 'accent', name: 'Korean TOPIK I', cards: 0, children: 0, progress: 0 };
+const NEW_DECK_ROOT = { id: 'd-new-root', parentId: null, icon: 'style', tone: 'accent', name: 'Korean TOPIK II', cards: 0, children: 0, progress: 0 };
+const NEW_DECK_CHILD = { id: 'd-new-child', parentId: 'd-topik1', icon: 'style', tone: 'accent', name: 'Grammar', cards: 0, children: 0, progress: 0 };
+
 // Semantic status text: Due→warning, New→info(accent), Up-to-date→success.
 function Status({ d }) {
   if (d.due > 0) return <span style={{ color: 'var(--memox-on-warning-soft)', fontWeight: 'var(--memox-font-weight-semibold)' }}>{d.due > 99 ? '99+' : d.due} due</span>;
   if (d.new > 0) return <span style={{ color: 'var(--memox-accent)', fontWeight: 'var(--memox-font-weight-semibold)' }}>{d.new} new</span>;
   return <span style={{ color: 'var(--memox-on-success-soft)', fontWeight: 'var(--memox-font-weight-semibold)' }}>Up to date</span>;
 }
-// Exactly TWO metadata groups (§7): card count · status.
+// Exactly TWO metadata groups (§7): card count · status. A brand-new EMPTY deck (0 cards) has
+// no due/new/up-to-date status yet — show the count ALONE, never a misleading "Up to date".
 function deckMeta(d) {
+  if (d.cards === 0) return d.cards + ' cards';
   return <React.Fragment>{d.cards.toLocaleString()} cards · <Status d={d} /></React.Fragment>;
 }
 
-window.MemoXLibrary = Object.assign(window.MemoXLibrary || {}, { DECKS, DENSE, SUBDECKS, Status, deckMeta });
+window.MemoXLibrary = Object.assign(window.MemoXLibrary || {}, { DECKS, DENSE, SUBDECKS, NEW_DECK, NEW_DECK_ROOT, NEW_DECK_CHILD, Status, deckMeta });
 })();
 
 export const libFixtures = window.MemoXLibrary;

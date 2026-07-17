@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 217-state matrix (28 screens).
+always matches the 218-state matrix (28 screens).
 
 ## dashboard — Today
 
@@ -18,6 +18,7 @@ always matches the 217-state matrix (28 screens).
 | caught up | `dashboard--caught-up--light.png` | `dashboard--caught-up--dark.png` |
 | create sheet | `dashboard--create-sheet--light.png` | `dashboard--create-sheet--dark.png` |
 | empty | `dashboard--empty--light.png` | `dashboard--empty--dark.png` |
+| empty after onboarding skip | `dashboard--empty-after-onboarding-skip--light.png` | `dashboard--empty-after-onboarding-skip--dark.png` |
 | loading | `dashboard--loading--light.png` | `dashboard--loading--dark.png` |
 
 ## library — Library

@@ -71,9 +71,10 @@ function CreateDeckFirstRun({ state = 'landing' }) {
     );
   }
 
-  /* §4 outcome — Not now → the REAL Dashboard (empty), composed (not a hand-built copy): the user
-     is back in the app and can navigate freely; onboarding does not run again. */
-  if (state === 'not-now') return window.Dashboard({ state: 'empty' });
+  /* §4 outcome — Not now → the REAL Dashboard in its NEUTRAL post-skip state, composed (not a
+     hand-built copy): the user declined onboarding, so we must NOT drop them into a SECOND
+     onboarding. They land in a normal Today shell and navigate freely. */
+  if (state === 'not-now') return window.Dashboard({ state: 'empty-after-onboarding-skip' });
 
   /* §4 outcome — Import branch (first-run import entry) */
   if (state === 'import-branch') {
@@ -94,7 +95,9 @@ function CreateDeckFirstRun({ state = 'landing' }) {
     const invalid = state === 'step1-validation';
     return (
       <MxScaffold node="create-deck-firstrun/screen" appBar={stepBar('Step 1 of 2', 'create-deck-firstrun/s1-back')}>
-        <h1 style={{ margin: 0, fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>Set up your learning</h1>
+        {/* xl (not 2xl) so this in-flow step heading keeps a comfortable right-edge gutter at 390px
+            — the landing/import hero headings stay 2xl. */}
+        <h1 style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>Set up your learning</h1>
         <SelectRow label="What are you learning? *" value={invalid ? 'Select a language' : 'Korean'} node="create-deck-firstrun/s1-learn" />
         {invalid ? <div className="field-group__error" data-mx-node="create-deck-firstrun/s1-learn-error" role="alert">Choose a language to learn.</div> : null}
         <SelectRow label="Show meanings in *" value="Vietnamese" node="create-deck-firstrun/s1-native" />
@@ -136,7 +139,7 @@ function CreateDeckFirstRun({ state = 'landing' }) {
           action={<MxLink size="sm" trailingIcon={null} node="create-deck-firstrun/start-over">Start over</MxLink>} />
       ) : null}
 
-      <h1 style={{ margin: 0, fontSize: 'var(--memox-font-size-2xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>Create your first deck</h1>
+      <h1 style={{ margin: 0, fontSize: 'var(--memox-font-size-xl)', fontWeight: 'var(--memox-font-weight-extrabold)' }}>Create your first deck</h1>
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-6)', ...(submitting ? DISABLED : {}) }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>

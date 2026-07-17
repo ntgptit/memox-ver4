@@ -23,7 +23,7 @@
 export const SCREENS = [
   { id: 'dashboard', title: 'Today', group: 'Dashboard',
     archetype: 'Dashboard', objective: 'Resume studying: surface what is due and the fastest way back in.', cta: 'Start review',
-    states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'loading'],
+    states: ['loaded', 'not-studied', 'goal-met', 'streak-reset', 'caught-up', 'create-sheet', 'empty', 'empty-after-onboarding-skip', 'loading'],
     sample: null },
   { id: 'library', title: 'Library', group: 'Library',
     archetype: 'List', objective: 'Browse and manage decks at any level: the library root (parentId null) and the decks nested inside a deck.', cta: 'Create deck',

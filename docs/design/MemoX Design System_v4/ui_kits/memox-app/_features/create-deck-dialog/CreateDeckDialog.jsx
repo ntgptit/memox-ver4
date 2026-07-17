@@ -9,7 +9,7 @@
    long-name · keyboard-open · discard-confirm. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxButton, MxCard } = NS;
+const { MxButton } = NS;
 const { FormDialog, ConfirmDialog } = window;
 
 const LONG_NAME = 'Advanced Korean Honorific Speech Registers and Formal Writing — TOPIK II';
@@ -34,7 +34,7 @@ function DField({ label, value, placeholder, error, trailing, muted, node }) {
 
 const chevron = <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>expand_more</span>;
 
-function CreateDeckDialog({ state = 'root-default' }) {
+function CreateDeckDialog({ state = 'root-default', backdrop }) {
   const nested = state === 'nested' || state === 'duplicate-sibling';
   const optional = state === 'optional-expanded';
   const submitting = state === 'submitting';
@@ -56,12 +56,11 @@ function CreateDeckDialog({ state = 'root-default' }) {
     : state === 'name-too-long' || longText ? LONG_NAME
     : nested ? 'Grammar' : 'Korean TOPIK II';
 
-  const backBar = <MxContextualAppBar variant={nested ? 'nested' : 'root'} node="create-deck-dialog/back-appbar" title={nested ? 'Korean TOPIK I' : 'Library'} />;
-  const backdrop = (
-    <MxScaffold node="create-deck-dialog/screen" appBar={backBar}>
-      {[0, 1, 2].map((i) => <MxCard key={i} padding="sm"><div style={{ height: 'var(--memox-space-8)' }} /></MxCard>)}
-    </MxScaffold>
-  );
+  // Compose the dialog OVER the real screen it was opened from (§13), so the app bar / breadcrumb /
+  // filter / deck list / bottom-nav stay visible behind the scrim and context is never lost — not a
+  // fake 3-skeleton placeholder. Root opens over the loaded Library; nested opens over the parent
+  // deck (Library nested-loaded → SubdeckList loaded). Entry points may pass their own `backdrop`.
+  const bg = backdrop || (nested ? window.Library({ state: 'nested-loaded' }) : window.Library({ state: 'loaded' }));
 
   const actions = (
     <React.Fragment>
@@ -113,7 +112,7 @@ function CreateDeckDialog({ state = 'root-default' }) {
 
   return (
     <React.Fragment>
-      {backdrop}
+      {bg}
       <FormDialog title="Create deck" subtitle={nested ? 'Inside Korean TOPIK I' : 'Inside Library'}
         node="create-deck-dialog/dialog" scrimNode="create-deck-dialog/scrim" keyboard={keyboard} actions={actions}>
         {body}

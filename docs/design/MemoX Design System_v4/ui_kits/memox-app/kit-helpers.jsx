@@ -273,23 +273,27 @@ function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDis
 }
 
 /* Snackbar — a transient bottom bar confirming an action, with one optional action button. Sits
-   above the bottom nav. SEMANTIC by tone: success = green, error = red, info = brand; `neutral`
-   is the inverse ground for tone-less confirmations. Uses the solid tone / on-tone token pair
-   (contrast built in). The action inherits the on-tone colour, underlined so it reads as tappable. */
+   above the bottom nav. SEMANTIC by tone but as a TONAL container (best practice for status
+   toasts): a SOFT tinted ground + on-soft text with the strong tone reserved for the icon (and
+   the action), lifted by a shadow — calm and legible, not a heavy saturated block. success =
+   green, error = red, info = brand; `neutral` is a plain surface for tone-less confirmations. */
 function Snackbar({ text, actionLabel, actionNode, tone = 'neutral', node }) {
+  // [ soft ground, on-soft text, strong accent for icon + action ]
   const map = {
-    success: ['var(--memox-success)', 'var(--memox-on-success)'],
-    error: ['var(--memox-error)', 'var(--memox-on-error)'],
-    info: ['var(--memox-info)', 'var(--memox-on-info)'],
-    neutral: ['var(--memox-text)', 'var(--memox-bg)'],
+    success: ['var(--memox-success-soft)', 'var(--memox-on-success-soft)', 'var(--memox-success)'],
+    error: ['var(--memox-error-soft)', 'var(--memox-on-error-soft)', 'var(--memox-error)'],
+    info: ['var(--memox-primary-soft)', 'var(--memox-on-primary-soft)', 'var(--memox-primary)'],
+    neutral: ['var(--memox-surface)', 'var(--memox-text)', 'var(--memox-text-secondary)'],
   };
-  const [bg, fg] = map[tone] || map.neutral;
+  const [bg, fg, accent] = map[tone] || map.neutral;
   const icon = { success: 'check_circle', error: 'error', info: 'info' }[tone];
+  // The soft tone tints are TRANSLUCENT (rgba) — a floating toast must be OPAQUE or content
+  // bleeds through, so composite the tint over an opaque surface (gradient layer over surface).
   return (
-    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: bg, color: fg, boxShadow: 'var(--memox-shadow-lg)' }}>
-      {icon ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)' }}>{icon}</span> : null}
+    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'linear-gradient(' + bg + ', ' + bg + '), var(--memox-surface)', color: fg, boxShadow: 'var(--memox-shadow-lg)', border: 'var(--memox-stroke-hairline) solid ' + accent }}>
+      {icon ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: accent }}>{icon}</span> : null}
       <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-medium)' }}>{text}</span>
-      {actionLabel ? <button type="button" data-mx-node={actionNode} style={{ flexShrink: 0, minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', border: 'none', background: 'transparent', color: 'inherit', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-sm)', textDecoration: 'underline', cursor: 'pointer', padding: '0 var(--memox-space-3)' }}>{actionLabel}</button> : null}
+      {actionLabel ? <button type="button" data-mx-node={actionNode} style={{ flexShrink: 0, minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', border: 'none', background: 'transparent', color: accent, fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-sm)', textDecoration: 'underline', cursor: 'pointer', padding: '0 var(--memox-space-3)' }}>{actionLabel}</button> : null}
     </div>
   );
 }

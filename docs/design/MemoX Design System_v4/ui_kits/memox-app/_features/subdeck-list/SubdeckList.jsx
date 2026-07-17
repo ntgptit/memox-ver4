@@ -52,12 +52,17 @@ function SubdeckList({ state = 'loaded', nav }) {
      screen (Add card / Create nested deck / Import), not a nested-only "no decks" message. */
   if (state === 'empty') return window.EmptyDeck({ state: 'default' });
 
-  /* post-create success in a PARENT deck (§10 nested): the new child deck lands in the list with a
-     "Deck created · Open" snackbar; the user stays in the parent. (library state nested-deck-created) */
+  /* post-create success in a PARENT deck (§10 nested): the just-created EMPTY child deck (0 cards)
+     lands highlighted at the TOP — shared DeckCard + light `newBadge` "New" pill — above the parent's
+     existing children, with a "Deck created · Open" snackbar; the user stays in the parent.
+     (library state nested-deck-created) */
   if (state === 'deck-created') {
+    const { NEW_DECK_CHILD, deckMeta } = LIB;
+    const newRow = <window.DeckCard key="new" icon={NEW_DECK_CHILD.icon} tone={NEW_DECK_CHILD.tone} title={NEW_DECK_CHILD.name} titleWeight="var(--memox-font-weight-semibold)" meta={deckMeta(NEW_DECK_CHILD)} newBadge node="subdeck-list/subdeck-new" />;
     return (
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
-        {crumbs()}{filter}{list(SUBDECKS)}
+        {crumbs()}{filter}
+        <MxList>{[newRow, ...SUBDECKS.map((s, i) => <DeckRowCard key={i} s={s} index={i} nodePrefix="subdeck-list" />)]}</MxList>
         <window.Snackbar tone="success" text="Deck created" actionLabel="Open" actionNode="subdeck-list/created-open" node="subdeck-list/created-snackbar" />
       </MxScaffold>
     );
