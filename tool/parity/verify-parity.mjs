@@ -20,7 +20,7 @@
 import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scopedValues, isDarkScope, isLightScope, normValue as norm } from './lib/scoped-values.mjs';
+import { scopedValues, isDarkScope, isLightScope, normValue as norm, tokenSourceFiles } from './lib/scoped-values.mjs';
 
 const KIT = fileURLToPath(new URL('../../docs/design/MemoX Design System_v4/', import.meta.url));
 const MANIFEST = join(KIT, '_ds_manifest.json');
@@ -77,7 +77,10 @@ for (const t of manifest.tokens || []) {
 // entry for its :root value, and a dark entry when [data-theme='dark'] overrides it. This is the
 // reverse of check B — it catches source-only tokens (e.g. new component tokens added to colors.css
 // without regenerating the manifest), which the one-way value check above would never notice.
-const tokenFiles = [...new Set((manifest.tokens || []).map((t) => t.definedIn).filter(Boolean))];
+// Discover token files from DISK (minus the allowlist), NOT from manifest.definedIn — so a whole
+// new tokens/*.css that nobody registered is still scanned, and every token in it that has no
+// manifest entry trips this gate.
+const tokenFiles = tokenSourceFiles(KIT);
 const haveLight = new Set((manifest.tokens || []).filter((t) => isLightScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
 const haveDark = new Set((manifest.tokens || []).filter((t) => isDarkScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
 for (const f of tokenFiles) {

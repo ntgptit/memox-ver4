@@ -17,7 +17,7 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, relative, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scopedValues, isDarkScope, isLightScope } from './lib/scoped-values.mjs';
+import { scopedValues, isDarkScope, isLightScope, tokenSourceFiles } from './lib/scoped-values.mjs';
 
 const KIT = fileURLToPath(new URL('../../docs/design/MemoX Design System_v4/', import.meta.url));
 const MANIFEST = join(KIT, '_ds_manifest.json');
@@ -70,7 +70,9 @@ if (Array.isArray(manifest.tokens)) {
   // genuinely overrides it. Kind is inferred from the source file. Keeps the manifest a COMPLETE
   // mirror so verify-parity's source↔manifest check can hold both directions.
   const kindOf = (f) => (/colors/.test(f) ? 'color' : /typography/.test(f) ? 'font' : /spacing/.test(f) ? 'spacing' : /radius/.test(f) ? 'radius' : /elevation/.test(f) ? 'shadow' : 'other');
-  const tokenFiles = [...new Set(manifest.tokens.map((t) => t.definedIn).filter(Boolean))];
+  // Discover token files from DISK (minus the allowlist) so tokens in a brand-new tokens/*.css get
+  // mirrored even before it is registered — not just new tokens in already-tracked files.
+  const tokenFiles = tokenSourceFiles(KIT);
   const haveLight = new Set(manifest.tokens.filter((t) => isLightScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
   const haveDark = new Set(manifest.tokens.filter((t) => isDarkScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
   let added = 0;
