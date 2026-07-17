@@ -316,7 +316,7 @@ function FlashcardList({ state = 'loaded' }) {
           <p style={{ margin: 0, fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', lineHeight: 'var(--memox-line-height-normal)' }}>This deck currently contains 42 cards. Create a nested deck to keep those cards together.</p>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
             <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)', color: 'var(--memox-text-secondary)' }}>Nested deck name *</div>
-            <div data-mx-node="flashcard-list/convert-name" style={{ display: 'flex', alignItems: 'center', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface-sunken)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+            <div data-mx-node="flashcard-list/convert-name" style={{ display: 'flex', alignItems: 'center', boxSizing: 'border-box', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface-sunken)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
               <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Vocabulary</span>
             </div>
           </div>

@@ -17,7 +17,7 @@ function Field({ label, value, placeholder, error, node, trailing }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
       <SectionLabel>{label}</SectionLabel>
-      <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: error ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+      <div data-mx-node={node} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', boxSizing: 'border-box', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface)', border: error ? 'var(--memox-stroke-emphasis) solid var(--memox-error)' : 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
         <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', color: value ? 'var(--memox-text)' : 'var(--memox-text-tertiary)' }}>{value || placeholder}</span>
         {trailing ? <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>{trailing}</span> : null}
       </div>
@@ -31,7 +31,7 @@ function SelectRow({ label, value, node, disabled }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
       <SectionLabel>{label}</SectionLabel>
-      <div data-mx-node={node} className={disabled ? '' : 'card--interactive'} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-3) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: disabled ? 'var(--memox-surface-sunken)' : 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', color: disabled ? 'var(--memox-text-secondary)' : 'var(--memox-text)' }}>
+      <div data-mx-node={node} className={disabled ? '' : 'card--interactive'} style={{ display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', boxSizing: 'border-box', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: disabled ? 'var(--memox-surface-sunken)' : 'var(--memox-surface)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)', color: disabled ? 'var(--memox-text-secondary)' : 'var(--memox-text)' }}>
         <span style={{ flex: 1 }}>{value}</span>
         {disabled ? null : <span className="material-symbols-rounded" style={{ color: 'var(--memox-text-secondary)' }}>expand_more</span>}
       </div>
