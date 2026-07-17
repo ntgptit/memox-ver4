@@ -124,6 +124,17 @@ const PAIRS = [
   { fg: '--memox-on-error-soft', bg: '--memox-error-soft', over: '--memox-surface', cat: 'normal' },
   { fg: '--memox-on-info', bg: '--memox-info', cat: 'normal' },
   { fg: '--memox-on-info-soft', bg: '--memox-info-soft', over: '--memox-surface', cat: 'normal' },
+  // component: snackbar / toast — the tonal ground is an OPAQUE literal (per theme), so the fg sits
+  // straight on it. text = normal (≥4.5); accent (the status icon) = ui (≥3). The action link inherits
+  // the text colour (.snackbar-action { color: inherit }), so the text pair also covers the action.
+  { fg: '--memox-snackbar-success-text', bg: '--memox-snackbar-success-bg', cat: 'normal' },
+  { fg: '--memox-snackbar-success-accent', bg: '--memox-snackbar-success-bg', cat: 'ui' },
+  { fg: '--memox-snackbar-error-text', bg: '--memox-snackbar-error-bg', cat: 'normal' },
+  { fg: '--memox-snackbar-error-accent', bg: '--memox-snackbar-error-bg', cat: 'ui' },
+  { fg: '--memox-snackbar-info-text', bg: '--memox-snackbar-info-bg', cat: 'normal' },
+  { fg: '--memox-snackbar-info-accent', bg: '--memox-snackbar-info-bg', cat: 'ui' },
+  { fg: '--memox-snackbar-neutral-text', bg: '--memox-snackbar-neutral-bg', cat: 'normal' },
+  { fg: '--memox-snackbar-neutral-accent', bg: '--memox-snackbar-neutral-bg', cat: 'ui' },
   // UI: focus ring, control boundary, selected-nav pill, links, ghost-button fg
   { fg: '--memox-focus-ring', bg: '--memox-surface', cat: 'ui' },
   { fg: '--memox-focus-ring', bg: '--memox-bg', cat: 'ui' },

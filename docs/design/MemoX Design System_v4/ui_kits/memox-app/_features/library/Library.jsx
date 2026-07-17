@@ -127,15 +127,36 @@ function Library({ state = 'loaded' }) {
     return <MxScaffold node="library/screen" appBar={bar} bottomNav={nav}><MxList>{DECKS.map((d, i) => deckCard(d, i, sel[i]))}</MxList></MxScaffold>;
   }
 
-  /* LIB-03 create sheet (root context) */
-  if (state === 'create-sheet') {
-    const { LibraryCreateSheet } = LIB;
+  /* LIB-03 create → Create Deck DIALOG directly (§10: the Library FAB is "New deck"; no Library
+     create sheet). LibraryCreateSheet.jsx is kept as a component + node map for the app's current
+     build, but is out of the canonical flow. */
+  if (state === 'create-sheet') return window.CreateDeckDialog({ state: 'root-default' });
+
+  /* post-create SUCCESS outcomes (§10). The just-created deck is EMPTY (0 cards, no due/new/
+     progress) and lands highlighted at the TOP via the shared DeckCard + light `newBadge` "New"
+     pill — never an existing populated deck. first-deck-created: it is the ONLY deck, with a
+     celebratory callout whose "Open deck" is the single primary (the FAB is hidden so there are
+     not two competing primaries). deck-created: the new deck sits above the existing library with
+     a "Deck created · Open" snackbar (the FAB stays — the snackbar action is a text link). */
+  if (state === 'deck-created') {
+    const NEW = LIB.NEW_DECK_ROOT;
+    const newCard = <DeckCard key="new" icon={NEW.icon} tone={NEW.tone} title={NEW.name} meta={deckMeta(NEW)} newBadge node="library/deck-new" />;
     return (
-      <React.Fragment>
-        <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}><FilterRow /><MxList>{DECKS.slice(0, 3).map((d, i) => deckCard(d, i))}</MxList></MxScaffold>
-        <LibraryCreateSheet />
-      </React.Fragment>
+      <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}>
+        <FilterRow />
+        <MxList>{[newCard, ...DECKS.map((d, i) => deckCard(d, i))]}</MxList>
+        <window.Snackbar tone="success" text="Deck created" action={<MxLink size="sm" trailingIcon={null} className="snackbar-action" node="library/created-open">Open</MxLink>} node="library/created-snackbar" />
+      </MxScaffold>
     );
+  }
+
+  /* first-deck success is STATEFUL so the dismiss (×) actually works (like FlashcardEditor's local
+     toggles): `first-deck-created` mounts with the celebratory callout up + FAB hidden (single
+     primary = "Open deck"); ActionCallout onDismiss flips local `dismissed` → the callout + "New"
+     badge disappear and the FAB RETURNS. `first-deck-created-dismissed` is the same component mounted
+     already-dismissed (the canonical "after" shot). The just-created deck stays either way (0 cards). */
+  if (state === 'first-deck-created' || state === 'first-deck-created-dismissed') {
+    return <FirstDeckSuccess NEW={LIB.NEW_DECK} rootBar={rootBar} nav={nav} fab={fab} filter={<FilterRow />} deckMeta={deckMeta} initialDismissed={state === 'first-deck-created-dismissed'} />;
   }
 
   /* LIB-09 filter applied */
@@ -186,6 +207,28 @@ function Library({ state = 'loaded' }) {
     <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}>
       <FilterRow />
       <MxList>{decks.map((d, i) => deckCard(d, i))}</MxList>
+    </MxScaffold>
+  );
+}
+
+// first-deck success as a small STATEFUL component so the callout's × performs a real transition
+// (local `dismissed`): callout up + FAB hidden → dismiss → callout/badge gone + FAB restored. The
+// just-created empty deck (0 cards) stays in the Library throughout.
+function FirstDeckSuccess({ NEW, rootBar, nav, fab, filter, deckMeta, initialDismissed }) {
+  const { MxScaffold, MxButton, MxList } = NS;
+  const DeckCard = window.DeckCard;
+  const [dismissed, setDismissed] = React.useState(!!initialDismissed);
+  return (
+    <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={dismissed ? fab : undefined}>
+      {filter}
+      <MxList>{[<DeckCard key="new" icon={NEW.icon} tone={NEW.tone} title={NEW.name} meta={deckMeta(NEW)} newBadge={!dismissed} node="library/deck-new" />]}</MxList>
+      {dismissed ? null : (
+        <window.ActionCallout node="library/first-deck-callout" tone="accent" icon="celebration"
+          title="Your first deck is ready"
+          text="Add cards or organise it into smaller decks whenever you’re ready."
+          action={<MxButton variant="primary" size="sm" node="library/first-deck-open">Open deck</MxButton>}
+          dismissNode="library/first-deck-dismiss" onDismiss={() => setDismissed(true)} />
+      )}
     </MxScaffold>
   );
 }

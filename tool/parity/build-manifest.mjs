@@ -17,7 +17,7 @@ import { readFile, writeFile, readdir } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
 import { join, relative, basename, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { scopedValues, isDarkScope, isLightScope } from './lib/scoped-values.mjs';
+import { scopedValues, isDarkScope, isLightScope, tokenSourceFiles } from './lib/scoped-values.mjs';
 
 const KIT = fileURLToPath(new URL('../../docs/design/MemoX Design System_v4/', import.meta.url));
 const MANIFEST = join(KIT, '_ds_manifest.json');
@@ -64,6 +64,29 @@ if (Array.isArray(manifest.tokens)) {
     if (vals[t.name] != null && vals[t.name] !== t.value) { t.value = vals[t.name]; refreshed++; }
   }
   if (refreshed || unknown) console.log(`manifest tokens: refreshed ${refreshed} value(s) from scoped source CSS${unknown ? ` · ${unknown} unknown-scope left unchanged` : ''}`);
+
+  // ADD any source token missing from the manifest, so additive tokens (e.g. new component tokens)
+  // are mirrored: a light entry for every :root value, and a dark entry when [data-theme='dark']
+  // genuinely overrides it. Kind is inferred from the source file. Keeps the manifest a COMPLETE
+  // mirror so verify-parity's source↔manifest check can hold both directions.
+  const kindOf = (f) => (/colors/.test(f) ? 'color' : /typography/.test(f) ? 'font' : /spacing/.test(f) ? 'spacing' : /radius/.test(f) ? 'radius' : /elevation/.test(f) ? 'shadow' : 'other');
+  // Discover token files from DISK (minus the allowlist) so tokens in a brand-new tokens/*.css get
+  // mirrored even before it is registered — not just new tokens in already-tracked files.
+  const tokenFiles = tokenSourceFiles(KIT);
+  const haveLight = new Set(manifest.tokens.filter((t) => isLightScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
+  const haveDark = new Set(manifest.tokens.filter((t) => isDarkScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
+  let added = 0;
+  for (const f of tokenFiles) {
+    const sv = (cache[f] ??= scopedValues(join(KIT, f)));
+    for (const [name, value] of Object.entries(sv.light)) {
+      if (!haveLight.has(f + '|' + name)) { manifest.tokens.push({ name, value, kind: kindOf(f), definedIn: f }); added++; }
+    }
+    for (const [name, value] of Object.entries(sv.dark)) {
+      if (sv.light[name] === value) continue; // inherited, not overridden → no dark entry
+      if (!haveDark.has(f + '|' + name)) { manifest.tokens.push({ name, value, kind: kindOf(f), definedIn: f, scope: "[data-theme='dark']" }); added++; }
+    }
+  }
+  if (added) console.log(`manifest tokens: added ${added} missing source token entr(y|ies)`);
 }
 const prev = new Set(manifest.components.map((c) => c.sourcePath));
 const next = new Set(components.map((c) => c.sourcePath));

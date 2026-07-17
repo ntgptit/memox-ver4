@@ -29,6 +29,10 @@
      Production RN maps this to the SafeAreaView bottom inset. (KIT-34-02) */
   --memox-safe-area-bottom: max(env(safe-area-inset-bottom, 0px), var(--memox-comp-nav-safe-pad));
   --memox-appbar-height: 56px; /* single compact app-bar height (minimal M3) */
+  /* DEPRECATED (kept for compatibility until v5 — see governance/deprecation-policy.md): the
+     large/hero app bar was retired for the single compact MxContextualAppBar. New screens use
+     --memox-appbar-height. The name stays (token names are additive-only) until a usage=0 scan. */
+  --memox-appbar-lg-height: 112px;
   --memox-bottom-nav-height: 80px; /* M3 navigation bar spec (Đ-M3-2) */
   --memox-fab-size: 56px; /* M3 standard FAB */
   --memox-touch-min: 48px;

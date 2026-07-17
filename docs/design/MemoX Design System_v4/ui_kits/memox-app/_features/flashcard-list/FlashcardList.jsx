@@ -6,7 +6,7 @@
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
 const { MxScaffold, MxContextualAppBar, MxCard, MxIconButton, MxFab, MxButton, MxLink, MxSearchDock, MxChip } = NS;
-const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton, ConfirmDialog } = window;
+const { Scrim, Sheet, MenuItem, SectionLabel, EmptyState, Skeleton, ConfirmDialog, FormDialog } = window;
 
 function FlashcardList({ state = 'loaded' }) {
   const FL = window.MemoXFlashcardList;
@@ -43,19 +43,9 @@ function FlashcardList({ state = 'loaded' }) {
     );
   }
 
-  /* empty — final deck with no cards yet */
-  if (state === 'empty') {
-    return (
-      <MxScaffold node="flashcard-list/screen" appBar={nestedBar} fab={fab}>
-        <EmptyState node="flashcard-list/empty" icon="playing_cards" title="No cards yet"
-          text="Add your first card or import a set to start studying this deck."
-          action={<div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-3)', width: 'var(--memox-size-3xl)' }}>
-            <MxButton variant="primary" icon="note_add" block node="flashcard-list/empty-add">Add card</MxButton>
-            <MxButton variant="secondary" icon="upload_file" block node="flashcard-list/empty-import">Import cards</MxButton>
-          </div>} />
-      </MxScaffold>
-    );
-  }
+  /* A leaf that lost its last card is an EMPTY deck again (§15) → the unified Empty Deck screen
+     (Add card / Create nested deck / Import) — the first content added decides leaf vs parent. */
+  if (state === 'empty') return window.EmptyDeck({ state: 'default' });
 
   /* offline / error */
   if (state === 'offline') {
@@ -287,6 +277,41 @@ function FlashcardList({ state = 'loaded' }) {
             <MxButton variant="ghost" block node="flashcard-list/delete-cancel">Cancel</MxButton>
             <MxButton variant="primary" danger block node="flashcard-list/delete-ok">Delete</MxButton>
           </React.Fragment>} />
+      </React.Fragment>
+    );
+  }
+
+  /* convert-* — Leaf → Parent conversion (§14). A leaf that already holds cards can't get a child
+     directly; the overflow "Organise into nested decks" opens a dialog that moves the existing
+     cards into a first nested deck. On success the deck becomes a Parent (card list gone). The
+     dialog carries a name field, so it's a Scrim+Sheet (not the icon/text ConfirmDialog). */
+  if (state === 'convert-dialog' || state === 'convert-submitting' || state === 'convert-failure') {
+    const submitting = state === 'convert-submitting';
+    const failure = state === 'convert-failure';
+    // ONE primary CTA: on failure the callout only reports the error and the bottom CTA becomes
+    // "Try again"; while submitting the name field is locked.
+    const actions = (
+      <React.Fragment>
+        <MxButton variant="ghost" disabled={submitting} node="flashcard-list/convert-cancel">Cancel</MxButton>
+        <MxButton variant="primary" disabled={submitting} node={failure ? 'flashcard-list/convert-retry' : 'flashcard-list/convert-ok'}>{submitting ? 'Organising…' : failure ? 'Try again' : 'Create and organise'}</MxButton>
+      </React.Fragment>
+    );
+    return (
+      <React.Fragment>{base}
+        <FormDialog title="Organise into nested decks?" node="flashcard-list/convert-dialog"
+          scrimNode="flashcard-list/convert-scrim" actions={actions}>
+          {failure ? (
+            <window.ActionCallout node="flashcard-list/convert-error" tone="error" icon="error"
+              text="Couldn’t organise the deck. Your nested deck name is still here." />
+          ) : null}
+          <p style={{ margin: 0, fontSize: 'var(--memox-font-size-base)', color: 'var(--memox-text-secondary)', lineHeight: 'var(--memox-line-height-normal)' }}>This deck currently contains 42 cards. Create a nested deck to keep those cards together.</p>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)', ...(submitting ? { opacity: 'var(--memox-opacity-disabled, 0.5)', pointerEvents: 'none' } : {}) }}>
+            <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)', color: 'var(--memox-text-secondary)' }}>Nested deck name *</div>
+            <div data-mx-node="flashcard-list/convert-name" style={{ display: 'flex', alignItems: 'center', boxSizing: 'border-box', minHeight: 'var(--memox-touch-min)', padding: 'var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-surface-sunken)', border: 'var(--memox-stroke-hairline) solid var(--memox-divider)' }}>
+              <span style={{ flex: 1, minWidth: 0, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>Vocabulary</span>
+            </div>
+          </div>
+        </FormDialog>
       </React.Fragment>
     );
   }

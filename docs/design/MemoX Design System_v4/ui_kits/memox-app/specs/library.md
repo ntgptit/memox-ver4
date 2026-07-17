@@ -22,9 +22,9 @@ composition; the component map below is the authoritative set of pieces in play.
 
 ## Component map (contract §3) — auto-derived from source
 
-`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.DeckCard`, `window.SubdeckList`
+`MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.ActionCallout`, `window.CreateDeckDialog`, `window.DeckCard`, `window.Snackbar`, `window.SubdeckList`
 
-## State matrix (contract §6) — 27 states, each rendered light + dark
+## State matrix (contract §6) — 31 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -32,29 +32,33 @@ composition; the component map below is the authoritative set of pieces in play.
 | 2 | `dense` |
 | 3 | `empty` |
 | 4 | `create-sheet` |
-| 5 | `search-active` |
-| 6 | `search-results` |
-| 7 | `search-no-results` |
-| 8 | `filter-applied` |
-| 9 | `filter-sheet` |
-| 10 | `selection` |
-| 11 | `loading` |
-| 12 | `offline` |
-| 13 | `nested-loaded` |
-| 14 | `nested-dense` |
-| 15 | `nested-deep` |
-| 16 | `nested-empty` |
-| 17 | `nested-search` |
-| 18 | `nested-no-results` |
-| 19 | `nested-selection` |
-| 20 | `nested-create-sheet` |
-| 21 | `nested-subdeck-actions` |
-| 22 | `nested-long-menu` |
-| 23 | `nested-play` |
-| 24 | `nested-loading` |
-| 25 | `nested-offline` |
-| 26 | `nested-error` |
-| 27 | `nested-not-found` |
+| 5 | `deck-created` |
+| 6 | `first-deck-created` |
+| 7 | `first-deck-created-dismissed` |
+| 8 | `search-active` |
+| 9 | `search-results` |
+| 10 | `search-no-results` |
+| 11 | `filter-applied` |
+| 12 | `filter-sheet` |
+| 13 | `selection` |
+| 14 | `loading` |
+| 15 | `offline` |
+| 16 | `nested-loaded` |
+| 17 | `nested-dense` |
+| 18 | `nested-deep` |
+| 19 | `nested-empty` |
+| 20 | `nested-deck-created` |
+| 21 | `nested-search` |
+| 22 | `nested-no-results` |
+| 23 | `nested-selection` |
+| 24 | `nested-create-sheet` |
+| 25 | `nested-subdeck-actions` |
+| 26 | `nested-long-menu` |
+| 27 | `nested-play` |
+| 28 | `nested-loading` |
+| 29 | `nested-offline` |
+| 30 | `nested-error` |
+| 31 | `nested-not-found` |
 
 ## Handoff notes
 

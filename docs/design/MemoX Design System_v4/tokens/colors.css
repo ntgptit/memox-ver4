@@ -68,6 +68,29 @@
   --memox-info-soft: rgba(75, 58, 140, 0.1);
   --memox-on-info-soft: #4b3a8c;
 
+  /* --- component: snackbar / toast --- a floating status toast needs an OPAQUE ground, but the
+         `*-soft` tints are translucent rgba. These are FLAT, per-theme LITERALS (the opaque `bg`
+         is the soft tint pre-composited over the surface, computed once here at the token layer),
+         declared in FULL under both themes — NOT `var()` aliases, which freeze at the light value
+         when [data-theme='dark'] sits below :root and would break dark contrast. `text` = on-soft
+         (≥4.5 on bg), `accent` = the icon tone (≥3), `border` = a soft edge. --- */
+  --memox-snackbar-success-bg: #e2efe9;                    /* success-soft 12% over #ffffff */
+  --memox-snackbar-success-text: #0d6e42;                  /* = on-success-soft (light) */
+  --memox-snackbar-success-accent: #0f7d4b;                /* = success (light) */
+  --memox-snackbar-success-border: rgba(15, 125, 75, 0.35);
+  --memox-snackbar-error-bg: #fbecec;                      /* error-soft 10% over #ffffff */
+  --memox-snackbar-error-text: #c1272d;                    /* = on-error-soft (light) */
+  --memox-snackbar-error-accent: #d63a40;                  /* = error (light) */
+  --memox-snackbar-error-border: rgba(219, 62, 68, 0.35);
+  --memox-snackbar-info-bg: #f1eff9;                       /* = primary-soft (opaque, light) */
+  --memox-snackbar-info-text: #4b3a8c;                     /* = on-primary-soft (light) */
+  --memox-snackbar-info-accent: #4b3a8c;                   /* = primary (light) */
+  --memox-snackbar-info-border: rgba(75, 58, 140, 0.35);
+  --memox-snackbar-neutral-bg: #ffffff;                    /* = surface (light) */
+  --memox-snackbar-neutral-text: #1b1a26;                  /* = text (light) */
+  --memox-snackbar-neutral-accent: #67647a;                /* = text-secondary (light) */
+  --memox-snackbar-neutral-border: rgba(28, 24, 45, 0.08); /* = divider (light) */
+
   /* --- interaction states --- */
   --memox-state-hover: rgba(28, 24, 45, 0.05);
   --memox-state-pressed: rgba(28, 24, 45, 0.07);
@@ -149,6 +172,26 @@
   --memox-on-info: #141220;
   --memox-info-soft: rgba(138, 121, 224, 0.18);
   --memox-on-info-soft: #b4a7ec;
+
+  /* --- component: snackbar / toast — dark grounds (soft tint over the dark surface #252338);
+         FULL per-theme literals so dark text/accent are the light-on-dark values (contrast-correct),
+         never inherited light-theme foregrounds. --- */
+  --memox-snackbar-success-bg: #253a41;                    /* success-soft 16% over #252338 */
+  --memox-snackbar-success-text: #4fd08f;                  /* = on-success-soft (dark) → 6.11:1 on bg */
+  --memox-snackbar-success-accent: #4fd08f;                /* = success (dark) */
+  --memox-snackbar-success-border: rgba(79, 208, 143, 0.35);
+  --memox-snackbar-error-bg: #452b3d;                      /* error-soft 16% over #252338 */
+  --memox-snackbar-error-text: #ff8a8a;                    /* = on-error-soft (dark) → 5.55:1 on bg */
+  --memox-snackbar-error-accent: #ff8a8a;                  /* = error (dark) */
+  --memox-snackbar-error-border: rgba(255, 138, 138, 0.35);
+  --memox-snackbar-info-bg: #302d46;                       /* = primary-soft (dark) */
+  --memox-snackbar-info-text: #cbc3ee;                     /* = on-primary-soft (dark) */
+  --memox-snackbar-info-accent: #cbc3ee;                   /* light-on-dark violet */
+  --memox-snackbar-info-border: rgba(203, 195, 238, 0.35);
+  --memox-snackbar-neutral-bg: #252338;                    /* = surface (dark) */
+  --memox-snackbar-neutral-text: #f4f2fb;                  /* = text (dark) */
+  --memox-snackbar-neutral-accent: #bdb9d2;                /* = text-secondary (dark) */
+  --memox-snackbar-neutral-border: rgba(255, 255, 255, 0.1);
 
   /* --- interaction states --- */
   --memox-state-hover: rgba(255, 255, 255, 0.06);

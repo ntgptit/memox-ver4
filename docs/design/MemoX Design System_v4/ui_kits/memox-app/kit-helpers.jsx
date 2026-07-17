@@ -243,6 +243,56 @@ function DialogInput({ label, placeholder, value }) {
   );
 }
 
+/* Centered modal FORM dialog (create deck / organise / rename). Unlike a bottom Sheet it stays a
+   centered card; unlike the icon/text Dialog it hosts a left-aligned form body. Caps at 85% of the
+   frame and scrolls its own body on overflow (large font / long content) so it never grows past the
+   viewport — the correct fix for a tall dialog, not switching to a bottom sheet. Title is a real
+   heading (title-case), NOT an ALL-CAPS label. */
+function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDismiss, keyboard = false }) {
+  const card = (
+    <div data-mx-node={node} role="dialog" aria-modal="true" style={{ width: '100%', maxWidth: 'var(--memox-size-5xl)', maxHeight: '100%', overflowY: 'auto', background: 'var(--memox-surface)', color: 'var(--memox-text)', borderRadius: 'var(--memox-radius-xl)', padding: 'var(--memox-space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-4)', boxShadow: 'var(--memox-shadow-lg)' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-1)' }}>
+        <div role="heading" aria-level={1} style={{ fontSize: 'var(--memox-font-size-lg)', fontWeight: 'var(--memox-font-weight-extrabold)', letterSpacing: 'var(--memox-letter-spacing-tight)' }}>{title}</div>
+        {subtitle ? <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>{subtitle}</div> : null}
+      </div>
+      {children}
+      {actions ? <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 'var(--memox-space-3)', marginTop: 'var(--memox-space-1)' }}>{actions}</div> : null}
+    </div>
+  );
+  // keyboard-open: card centered in the space ABOVE a pinned on-screen keyboard (proves the CTA
+  // is never covered). Otherwise a plain centered modal that caps at the frame and scrolls.
+  if (keyboard) {
+    return (
+      <div data-mx-node={scrimNode} style={{ position: 'absolute', inset: 0, zIndex: 60, background: 'var(--memox-overlay)', display: 'flex', flexDirection: 'column' }}>
+        <div style={{ flex: 1, minHeight: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 'var(--memox-space-4)', overflow: 'hidden' }}>{card}</div>
+        <KeyboardInset node={(node || 'dialog') + '-keyboard'} />
+      </div>
+    );
+  }
+  return <Scrim align="center" node={scrimNode} onDismiss={onDismiss}>{card}</Scrim>;
+}
+
+/* Snackbar — a transient bottom bar confirming an action, with one optional action button. Sits
+   above the bottom nav. SEMANTIC by tone as a TONAL container (best practice for status toasts):
+   a soft OPAQUE ground + on-soft text with the strong tone on the icon, lifted by a shadow — calm
+   and legible, not a heavy saturated block. Every colour comes from the component's own flat token
+   set (`--memox-snackbar-<tone>-*`, pre-composited opaque at the token layer) — no gradient /
+   color-mix / raw composition here. The `action` is a caller-supplied ReactNode (an `MxLink`) so it
+   carries a real callback, the branded focus ring, and a ≥44px target — the helper never builds a
+   raw action button. success = green, error = red, info = brand; `neutral` for tone-less. */
+function Snackbar({ text, action, tone = 'neutral', node }) {
+  const t = ['success', 'error', 'info'].indexOf(tone) >= 0 ? tone : 'neutral';
+  const v = (role) => 'var(--memox-snackbar-' + t + '-' + role + ')';
+  const icon = { success: 'check_circle', error: 'error', info: 'info' }[t];
+  return (
+    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-3) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: v('bg'), color: v('text'), boxShadow: 'var(--memox-shadow-lg)', border: 'var(--memox-stroke-hairline) solid ' + v('border') }}>
+      {icon ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: v('accent') }}>{icon}</span> : null}
+      <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-medium)' }}>{text}</span>
+      {action}
+    </div>
+  );
+}
+
 /* Inline tinted callout — icon + text on a soft tonal background. */
 function Note({ icon, text, tone = 'accent' }) {
   const map = {
@@ -295,4 +345,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, FormDialog, Snackbar, Note, SectionLabel, Ring, ChoiceOption });

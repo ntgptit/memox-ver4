@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxAvatar`, `MxBadge`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxFabAdd`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `MxSectionHeader`, `window.DeckCard`, `window.Note`, `window.Skeleton`
 
-## State matrix (contract §6) — 8 states, each rendered light + dark
+## State matrix (contract §6) — 9 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -35,7 +35,8 @@ composition; the component map below is the authoritative set of pieces in play.
 | 5 | `caught-up` |
 | 6 | `create-sheet` |
 | 7 | `empty` |
-| 8 | `loading` |
+| 8 | `empty-after-onboarding-skip` |
+| 9 | `loading` |
 
 ## Handoff notes
 

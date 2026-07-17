@@ -12,6 +12,9 @@ export interface MxLinkProps {
   size?: 'sm';
   node?: string;
   onClick?: () => void;
+  /** Disabled: muted, removed from the tab order and non-activatable (real `disabled` on the
+   *  <button>; `aria-disabled` + `tabIndex -1` on the <a> form). @default false */
+  disabled?: boolean;
   className?: string;
 }
 

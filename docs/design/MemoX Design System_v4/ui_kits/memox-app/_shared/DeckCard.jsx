@@ -4,12 +4,15 @@
    - visual: an MxIconTile (icon+tone) OR a progress Ring (pass `ring`) OR, in selection
      mode, a check/radio indicator (pass `selected`).
    - trailing: any node (a due MxBadge, a quick-study MxIconButton…). Hidden in selection.
+   - newBadge: light "just created" marker — a soft "New" pill takes the trailing slot; the card
+     stays a STANDARD deck row (no thick border, no full selected tint, same layout) so it reads
+     as newly-created, not selected/focused.
    Registered on window for the runtime gallery; ESM-exported for the compiler. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxCard, MxIconTile } = NS;
+const { MxCard, MxIconTile, MxBadge } = NS;
 
-function DeckCard({ icon, tone = 'accent', ring, title, titleWeight, meta, progress, trailing, selected, node }) {
+function DeckCard({ icon, tone = 'accent', ring, title, titleWeight, meta, progress, trailing, selected, newBadge, node }) {
   let visual;
   if (selected != null) {
     visual = <span className="material-symbols-rounded" style={{ flexShrink: 0, fontSize: 'var(--memox-icon-size-lg)', color: selected ? 'var(--memox-accent)' : 'var(--memox-text-tertiary)' }}>{selected ? 'check_circle' : 'radio_button_unchecked'}</span>;
@@ -29,7 +32,7 @@ function DeckCard({ icon, tone = 'accent', ring, title, titleWeight, meta, progr
           <div style={{ marginTop: 'var(--memox-space-1)', fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{meta}</div>
           {progress != null ? <div style={{ marginTop: 'var(--memox-space-2)' }}><window.ProgressBar value={progress} height={6} /></div> : null}
         </div>
-        {selected == null && trailing ? trailing : null}
+        {selected != null ? null : (newBadge ? <MxBadge soft node={node ? node + '-new' : undefined}>New</MxBadge> : (trailing || null))}
       </div>
     </MxCard>
   );

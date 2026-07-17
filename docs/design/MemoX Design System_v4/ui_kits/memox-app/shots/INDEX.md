@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 183-state matrix (25 screens).
+always matches the 219-state matrix (28 screens).
 
 ## dashboard — Today
 
@@ -18,6 +18,7 @@ always matches the 183-state matrix (25 screens).
 | caught up | `dashboard--caught-up--light.png` | `dashboard--caught-up--dark.png` |
 | create sheet | `dashboard--create-sheet--light.png` | `dashboard--create-sheet--dark.png` |
 | empty | `dashboard--empty--light.png` | `dashboard--empty--dark.png` |
+| empty after onboarding skip | `dashboard--empty-after-onboarding-skip--light.png` | `dashboard--empty-after-onboarding-skip--dark.png` |
 | loading | `dashboard--loading--light.png` | `dashboard--loading--dark.png` |
 
 ## library — Library
@@ -28,6 +29,9 @@ always matches the 183-state matrix (25 screens).
 | dense | `library--dense--light.png` | `library--dense--dark.png` |
 | empty | `library--empty--light.png` | `library--empty--dark.png` |
 | create sheet | `library--create-sheet--light.png` | `library--create-sheet--dark.png` |
+| deck created | `library--deck-created--light.png` | `library--deck-created--dark.png` |
+| first deck created | `library--first-deck-created--light.png` | `library--first-deck-created--dark.png` |
+| first deck created dismissed | `library--first-deck-created-dismissed--light.png` | `library--first-deck-created-dismissed--dark.png` |
 | search active | `library--search-active--light.png` | `library--search-active--dark.png` |
 | search results | `library--search-results--light.png` | `library--search-results--dark.png` |
 | search no results | `library--search-no-results--light.png` | `library--search-no-results--dark.png` |
@@ -40,6 +44,7 @@ always matches the 183-state matrix (25 screens).
 | nested dense | `library--nested-dense--light.png` | `library--nested-dense--dark.png` |
 | nested deep | `library--nested-deep--light.png` | `library--nested-deep--dark.png` |
 | nested empty | `library--nested-empty--light.png` | `library--nested-empty--dark.png` |
+| nested deck created | `library--nested-deck-created--light.png` | `library--nested-deck-created--dark.png` |
 | nested search | `library--nested-search--light.png` | `library--nested-search--dark.png` |
 | nested no results | `library--nested-no-results--light.png` | `library--nested-no-results--dark.png` |
 | nested selection | `library--nested-selection--light.png` | `library--nested-selection--dark.png` |
@@ -68,6 +73,9 @@ always matches the 183-state matrix (25 screens).
 | add sheet | `flashcard-list--add-sheet--light.png` | `flashcard-list--add-sheet--dark.png` |
 | card actions | `flashcard-list--card-actions--light.png` | `flashcard-list--card-actions--dark.png` |
 | delete confirm | `flashcard-list--delete-confirm--light.png` | `flashcard-list--delete-confirm--dark.png` |
+| convert dialog | `flashcard-list--convert-dialog--light.png` | `flashcard-list--convert-dialog--dark.png` |
+| convert submitting | `flashcard-list--convert-submitting--light.png` | `flashcard-list--convert-submitting--dark.png` |
+| convert failure | `flashcard-list--convert-failure--light.png` | `flashcard-list--convert-failure--dark.png` |
 | loading | `flashcard-list--loading--light.png` | `flashcard-list--loading--dark.png` |
 | offline | `flashcard-list--offline--light.png` | `flashcard-list--offline--dark.png` |
 | error | `flashcard-list--error--light.png` | `flashcard-list--error--dark.png` |
@@ -78,21 +86,63 @@ always matches the 183-state matrix (25 screens).
 | State | Light | Dark |
 | --- | --- | --- |
 | action sheet | `deck-settings--action-sheet--light.png` | `deck-settings--action-sheet--dark.png` |
+| leaf actions | `deck-settings--leaf-actions--light.png` | `deck-settings--leaf-actions--dark.png` |
 | rename | `deck-settings--rename--light.png` | `deck-settings--rename--dark.png` |
 | move | `deck-settings--move--light.png` | `deck-settings--move--dark.png` |
 | reset confirm | `deck-settings--reset-confirm--light.png` | `deck-settings--reset-confirm--dark.png` |
 | delete confirm | `deck-settings--delete-confirm--light.png` | `deck-settings--delete-confirm--dark.png` |
 
-## deck-content-choice — Deck Content Choice
+## create-deck-firstrun — Create Deck · First run
 
 | State | Light | Dark |
 | --- | --- | --- |
-| default | `deck-content-choice--default--light.png` | `deck-content-choice--default--dark.png` |
-| subdecks | `deck-content-choice--subdecks--light.png` | `deck-content-choice--subdecks--dark.png` |
-| validation | `deck-content-choice--validation--light.png` | `deck-content-choice--validation--dark.png` |
-| duplicate | `deck-content-choice--duplicate--light.png` | `deck-content-choice--duplicate--dark.png` |
-| submitting | `deck-content-choice--submitting--light.png` | `deck-content-choice--submitting--dark.png` |
-| submit error | `deck-content-choice--submit-error--light.png` | `deck-content-choice--submit-error--dark.png` |
+| landing | `create-deck-firstrun--landing--light.png` | `create-deck-firstrun--landing--dark.png` |
+| step1 | `create-deck-firstrun--step1--light.png` | `create-deck-firstrun--step1--dark.png` |
+| step1 validation | `create-deck-firstrun--step1-validation--light.png` | `create-deck-firstrun--step1-validation--dark.png` |
+| step2 | `create-deck-firstrun--step2--light.png` | `create-deck-firstrun--step2--dark.png` |
+| step2 optional | `create-deck-firstrun--step2-optional--light.png` | `create-deck-firstrun--step2-optional--dark.png` |
+| duplicate | `create-deck-firstrun--duplicate--light.png` | `create-deck-firstrun--duplicate--dark.png` |
+| name too long | `create-deck-firstrun--name-too-long--light.png` | `create-deck-firstrun--name-too-long--dark.png` |
+| submitting | `create-deck-firstrun--submitting--light.png` | `create-deck-firstrun--submitting--dark.png` |
+| submit failure | `create-deck-firstrun--submit-failure--light.png` | `create-deck-firstrun--submit-failure--dark.png` |
+| resume draft | `create-deck-firstrun--resume-draft--light.png` | `create-deck-firstrun--resume-draft--dark.png` |
+| success | `create-deck-firstrun--success--light.png` | `create-deck-firstrun--success--dark.png` |
+| import branch | `create-deck-firstrun--import-branch--light.png` | `create-deck-firstrun--import-branch--dark.png` |
+| not now | `create-deck-firstrun--not-now--light.png` | `create-deck-firstrun--not-now--dark.png` |
+
+## create-deck-dialog — Create Deck · Dialog
+
+| State | Light | Dark |
+| --- | --- | --- |
+| root default | `create-deck-dialog--root-default--light.png` | `create-deck-dialog--root-default--dark.png` |
+| root multi pair | `create-deck-dialog--root-multi-pair--light.png` | `create-deck-dialog--root-multi-pair--dark.png` |
+| root missing pair | `create-deck-dialog--root-missing-pair--light.png` | `create-deck-dialog--root-missing-pair--dark.png` |
+| nested | `create-deck-dialog--nested--light.png` | `create-deck-dialog--nested--dark.png` |
+| optional expanded | `create-deck-dialog--optional-expanded--light.png` | `create-deck-dialog--optional-expanded--dark.png` |
+| validation | `create-deck-dialog--validation--light.png` | `create-deck-dialog--validation--dark.png` |
+| duplicate root | `create-deck-dialog--duplicate-root--light.png` | `create-deck-dialog--duplicate-root--dark.png` |
+| duplicate sibling | `create-deck-dialog--duplicate-sibling--light.png` | `create-deck-dialog--duplicate-sibling--dark.png` |
+| name too long | `create-deck-dialog--name-too-long--light.png` | `create-deck-dialog--name-too-long--dark.png` |
+| submitting | `create-deck-dialog--submitting--light.png` | `create-deck-dialog--submitting--dark.png` |
+| submit failure | `create-deck-dialog--submit-failure--light.png` | `create-deck-dialog--submit-failure--dark.png` |
+| long name | `create-deck-dialog--long-name--light.png` | `create-deck-dialog--long-name--dark.png` |
+| keyboard open | `create-deck-dialog--keyboard-open--light.png` | `create-deck-dialog--keyboard-open--dark.png` |
+| discard confirm | `create-deck-dialog--discard-confirm--light.png` | `create-deck-dialog--discard-confirm--dark.png` |
+
+## empty-deck — Empty Deck
+
+| State | Light | Dark |
+| --- | --- | --- |
+| default | `empty-deck--default--light.png` | `empty-deck--default--dark.png` |
+| create nested dialog | `empty-deck--create-nested-dialog--light.png` | `empty-deck--create-nested-dialog--dark.png` |
+| import target | `empty-deck--import-target--light.png` | `empty-deck--import-target--dark.png` |
+
+## add-card-target — Add Card · target
+
+| State | Light | Dark |
+| --- | --- | --- |
+| picker | `add-card-target--picker--light.png` | `add-card-target--picker--dark.png` |
+| no target | `add-card-target--no-target--light.png` | `add-card-target--no-target--dark.png` |
 
 ## flashcard-editor — Card Editor
 
@@ -248,6 +298,7 @@ always matches the 183-state matrix (25 screens).
 | State | Light | Dark |
 | --- | --- | --- |
 | source | `import--source--light.png` | `import--source--dark.png` |
+| parent target | `import--parent-target--light.png` | `import--parent-target--dark.png` |
 | mapping | `import--mapping--light.png` | `import--mapping--dark.png` |
 | preview | `import--preview--light.png` | `import--preview--dark.png` |
 | dup warning | `import--dup-warning--light.png` | `import--dup-warning--dark.png` |

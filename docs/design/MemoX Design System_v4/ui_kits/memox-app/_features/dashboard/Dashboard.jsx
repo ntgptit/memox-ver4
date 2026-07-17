@@ -65,6 +65,23 @@ function Dashboard({ state = 'loaded' }) {
     );
   }
 
+  /* Neutral post-skip Today (§4 "Not now"): the user declined onboarding, so it must NOT run
+     again. A normal Today shell — greeting + bottom nav + Add FAB — with a quiet "nothing due"
+     note (no onboarding hero, no "How MemoX works", no step cards). The user creates a deck from
+     the FAB or the Library tab whenever they’re ready. */
+  if (state === 'empty-after-onboarding-skip') {
+    return (
+      <MxScaffold node="dashboard/screen" appBar={bar} bottomNav={nav} fab={<MxFabAdd />}>
+        {greeting}
+        <div data-mx-node="dashboard/nothing-due" style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', textAlign: 'center', gap: 'var(--memox-space-3)', padding: 'var(--memox-space-8) var(--memox-space-4)' }}>
+          <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-xl)', color: 'var(--memox-text-tertiary)' }}>inbox</span>
+          <div style={{ fontSize: 'var(--memox-font-size-md)', fontWeight: 'var(--memox-font-weight-bold)' }}>Nothing due yet</div>
+          <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)', maxWidth: 'var(--memox-size-3xl)' }}>Add a deck to start studying — new cards you add will show up here.</div>
+        </div>
+      </MxScaffold>
+    );
+  }
+
   if (state === 'empty') {
     const { OnboardingHero, OnboardingStep } = window.MemoXDashboard;
     return (

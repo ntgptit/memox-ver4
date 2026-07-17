@@ -8,11 +8,14 @@
 
 | ID | Screen | Spec file | States |
 | --- | --- | --- | --- |
-| dashboard | Today | `dashboard.md` | 8 |
-| library | Library | `library.md` | 27 |
-| flashcard-list | Flashcard List | `flashcard-list.md` | 16 |
-| deck-settings | Deck Settings | `deck-settings.md` | 5 |
-| deck-content-choice | Deck Content Choice | `deck-content-choice.md` | 6 |
+| dashboard | Today | `dashboard.md` | 9 |
+| library | Library | `library.md` | 31 |
+| flashcard-list | Flashcard List | `flashcard-list.md` | 19 |
+| deck-settings | Deck Settings | `deck-settings.md` | 6 |
+| create-deck-firstrun | Create Deck · First run | `create-deck-firstrun.md` | 13 |
+| create-deck-dialog | Create Deck · Dialog | `create-deck-dialog.md` | 14 |
+| empty-deck | Empty Deck | `empty-deck.md` | 3 |
+| add-card-target | Add Card · target | `add-card-target.md` | 2 |
 | flashcard-editor | Card Editor | `flashcard-editor.md` | 10 |
 | mode-picker | Mode Picker | `mode-picker.md` | 3 |
 | review-mode | Review | `review-mode.md` | 6 |
@@ -27,10 +30,10 @@
 | reminder | Reminders | `reminder.md` | 5 |
 | account-sync | Account & Sync | `account-sync.md` | 8 |
 | theme | Theme | `theme.md` | 3 |
-| import | Import | `import.md` | 7 |
+| import | Import | `import.md` | 8 |
 | export | Export | `export.md` | 4 |
 | languages | Language Pairs | `languages.md` | 6 |
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 24 screens · 175 states.
+Total: 27 screens · 211 states.

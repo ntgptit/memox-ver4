@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
 import { scopedValues, isDarkScope, isLightScope } from '../parity/lib/scoped-values.mjs';
+import { tokenParity } from '../parity/lib/token-parity.mjs';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const KIT = join(ROOT, 'docs/design/MemoX Design System_v4');
@@ -66,6 +67,36 @@ const bgDark = manifest.tokens.find((t) => t.name === '--memox-bg' && isDarkScop
 const bgLight = manifest.tokens.find((t) => t.name === '--memox-bg' && isLightScope(t.scope));
 ok('manifest: dark --memox-bg = #141220', bgDark && bgDark.value === '#141220');
 ok('manifest: light --memox-bg = #f6f5fc', bgLight && bgLight.value === '#f6f5fc');
+
+// ── 3b. TOKEN PARITY (both directions) — pure tokenParity() on synthetic inputs ──────
+// source: colors.css has --a (same light/dark) and --b (dark override). No filesystem, no mutation.
+const SRC = { 'tokens/colors.css': { light: { '--a': '#111', '--b': '#222' }, dark: { '--a': '#111', '--b': '#999' } } };
+const srcOf = (f) => SRC[f] || null;
+const FILES = ['tokens/colors.css'];
+const CLEAN = [
+  { name: '--a', value: '#111', definedIn: 'tokens/colors.css' },
+  { name: '--b', value: '#222', definedIn: 'tokens/colors.css' },
+  { name: '--b', value: '#999', definedIn: 'tokens/colors.css', scope: "[data-theme='dark']" },
+];
+ok('token-parity: a fully-mirrored manifest passes', tokenParity(CLEAN, srcOf, FILES).failures.length === 0);
+
+// (i) manifest token whose source declaration is GONE ⇒ must FAIL (was the silent-pass bug)
+const DELETED = [...CLEAN, { name: '--gone', value: '#333', definedIn: 'tokens/colors.css' }];
+{
+  const f = tokenParity(DELETED, srcOf, FILES).failures;
+  ok('token-parity: deleted source token (manifest keeps it) fails', f.some((m) => /no longer in source/.test(m) && /--gone/.test(m)));
+}
+
+// (ii) a value drift is still caught
+ok('token-parity: drifted value fails',
+  tokenParity([{ name: '--a', value: '#000', definedIn: 'tokens/colors.css' }], srcOf, FILES).failures.some((m) => /≠ source/.test(m)));
+
+// (iii) a brand-new token file with a token absent from the manifest ⇒ must FAIL (source→manifest)
+const SRC2 = { 'tokens/colors.css': { light: { '--a': '#111' }, dark: { '--a': '#111' } }, 'tokens/feedback.css': { light: { '--new': '#abc' }, dark: { '--new': '#abc' } } };
+{
+  const f = tokenParity([{ name: '--a', value: '#111', definedIn: 'tokens/colors.css' }], (x) => SRC2[x] || null, ['tokens/colors.css', 'tokens/feedback.css']).failures;
+  ok('token-parity: token in a new/unregistered file (not in manifest) fails', f.some((m) => /not mirrored/.test(m) && /--new/.test(m) && /feedback\.css/.test(m)));
+}
 
 // ── 1. BUNDLE RETIRED (no stale compiled body possible) ──────────────────────
 ok('bundle: _ds_bundle.js does not exist', !existsSync(join(KIT, '_ds_bundle.js')));

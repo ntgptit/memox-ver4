@@ -24,15 +24,16 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxButton`, `MxContextualAppBar`, `MxIconButton`, `MxScaffold`
 
-## State matrix (contract §6) — 5 states, each rendered light + dark
+## State matrix (contract §6) — 6 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
 | 1 | `action-sheet` |
-| 2 | `rename` |
-| 3 | `move` |
-| 4 | `reset-confirm` |
-| 5 | `delete-confirm` |
+| 2 | `leaf-actions` |
+| 3 | `rename` |
+| 4 | `move` |
+| 5 | `reset-confirm` |
+| 6 | `delete-confirm` |
 
 ## Handoff notes
 
