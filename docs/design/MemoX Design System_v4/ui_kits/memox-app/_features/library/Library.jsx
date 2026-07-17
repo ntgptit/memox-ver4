@@ -148,7 +148,21 @@ function Library({ state = 'loaded' }) {
         <MxList>{first ? [newCard] : [newCard, ...DECKS.map((d, i) => deckCard(d, i))]}</MxList>
         {first
           ? <window.ActionCallout node="library/first-deck-callout" tone="accent" icon="celebration" title="Your first deck is ready" text="Add cards or organise it into smaller decks whenever you’re ready." action={<MxButton variant="primary" size="sm" node="library/first-deck-open">Open deck</MxButton>} dismissNode="library/first-deck-dismiss" />
-          : <window.Snackbar tone="success" text="Deck created" actionLabel="Open" actionNode="library/created-open" node="library/created-snackbar" />}
+          : <window.Snackbar tone="success" text="Deck created" action={<MxLink size="sm" trailingIcon={null} node="library/created-open">Open</MxLink>} node="library/created-snackbar" />}
+      </MxScaffold>
+    );
+  }
+
+  /* post-dismiss of the first-deck success callout (transition target of library/first-deck-dismiss →
+     ActionCallout onDismiss): the celebratory callout is gone and the FAB RETURNS, so a single
+     primary is restored. The just-created empty deck stays as a normal Library row — no "New" badge
+     (the success feedback has ended), no due/progress (still 0 cards). */
+  if (state === 'first-deck-created-dismissed') {
+    const NEW = LIB.NEW_DECK;
+    return (
+      <MxScaffold node="library/screen" appBar={rootBar} bottomNav={nav} fab={fab}>
+        <FilterRow />
+        <MxList>{[<DeckCard key="new" icon={NEW.icon} tone={NEW.tone} title={NEW.name} meta={deckMeta(NEW)} node="library/deck-new" />]}</MxList>
       </MxScaffold>
     );
   }

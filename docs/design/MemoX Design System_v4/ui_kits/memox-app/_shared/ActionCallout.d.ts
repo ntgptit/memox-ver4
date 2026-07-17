@@ -11,8 +11,11 @@ export interface ActionCalloutProps {
   text: ReactNode;
   /** Optional trailing action, usually a small `MxButton`. In the titled layout it sits under the text. */
   action?: ReactNode;
-  /** When set, renders a trailing dismiss (×) button carrying this `data-mx-node`. */
+  /** When set, renders a trailing dismiss (×) button (MxIconButton) carrying this `data-mx-node`. */
   dismissNode?: string;
+  /** Handler run when the dismiss (×) is activated — e.g. hide the callout and restore the FAB.
+   *  Wired to the dismiss MxIconButton's `onClick`; only meaningful alongside `dismissNode`. */
+  onDismiss?: () => void;
   node?: string;
 }
 

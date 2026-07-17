@@ -273,27 +273,22 @@ function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDis
 }
 
 /* Snackbar — a transient bottom bar confirming an action, with one optional action button. Sits
-   above the bottom nav. SEMANTIC by tone but as a TONAL container (best practice for status
-   toasts): a SOFT tinted ground + on-soft text with the strong tone reserved for the icon (and
-   the action), lifted by a shadow — calm and legible, not a heavy saturated block. success =
-   green, error = red, info = brand; `neutral` is a plain surface for tone-less confirmations. */
-function Snackbar({ text, actionLabel, actionNode, tone = 'neutral', node }) {
-  // [ soft ground, on-soft text, strong accent for icon + action ]
-  const map = {
-    success: ['var(--memox-success-soft)', 'var(--memox-on-success-soft)', 'var(--memox-success)'],
-    error: ['var(--memox-error-soft)', 'var(--memox-on-error-soft)', 'var(--memox-error)'],
-    info: ['var(--memox-primary-soft)', 'var(--memox-on-primary-soft)', 'var(--memox-primary)'],
-    neutral: ['var(--memox-surface)', 'var(--memox-text)', 'var(--memox-text-secondary)'],
-  };
-  const [bg, fg, accent] = map[tone] || map.neutral;
-  const icon = { success: 'check_circle', error: 'error', info: 'info' }[tone];
-  // The soft tone tints are TRANSLUCENT (rgba) — a floating toast must be OPAQUE or content
-  // bleeds through, so composite the tint over an opaque surface (gradient layer over surface).
+   above the bottom nav. SEMANTIC by tone as a TONAL container (best practice for status toasts):
+   a soft OPAQUE ground + on-soft text with the strong tone on the icon, lifted by a shadow — calm
+   and legible, not a heavy saturated block. Every colour comes from the component's own flat token
+   set (`--memox-snackbar-<tone>-*`, pre-composited opaque at the token layer) — no gradient /
+   color-mix / raw composition here. The `action` is a caller-supplied ReactNode (an `MxLink`) so it
+   carries a real callback, the branded focus ring, and a ≥44px target — the helper never builds a
+   raw action button. success = green, error = red, info = brand; `neutral` for tone-less. */
+function Snackbar({ text, action, tone = 'neutral', node }) {
+  const t = ['success', 'error', 'info'].indexOf(tone) >= 0 ? tone : 'neutral';
+  const v = (role) => 'var(--memox-snackbar-' + t + '-' + role + ')';
+  const icon = { success: 'check_circle', error: 'error', info: 'info' }[t];
   return (
-    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'linear-gradient(' + bg + ', ' + bg + '), var(--memox-surface)', color: fg, boxShadow: 'var(--memox-shadow-lg)', border: 'var(--memox-stroke-hairline) solid color-mix(in srgb, ' + accent + ' 35%, transparent)' }}>
-      {icon ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: accent }}>{icon}</span> : null}
+    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: v('bg'), color: v('text'), boxShadow: 'var(--memox-shadow-lg)', border: 'var(--memox-stroke-hairline) solid ' + v('border') }}>
+      {icon ? <span className="material-symbols-rounded" style={{ fontSize: 'var(--memox-icon-size-md)', color: v('accent') }}>{icon}</span> : null}
       <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-medium)' }}>{text}</span>
-      {actionLabel ? <button type="button" data-mx-node={actionNode} style={{ flexShrink: 0, minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', border: 'none', background: 'transparent', color: accent, fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-sm)', textDecoration: 'underline', cursor: 'pointer', padding: '0 var(--memox-space-3)' }}>{actionLabel}</button> : null}
+      {action}
     </div>
   );
 }

@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 218-state matrix (28 screens).
+always matches the 219-state matrix (28 screens).
 
 ## dashboard — Today
 
@@ -31,6 +31,7 @@ always matches the 218-state matrix (28 screens).
 | create sheet | `library--create-sheet--light.png` | `library--create-sheet--dark.png` |
 | deck created | `library--deck-created--light.png` | `library--deck-created--dark.png` |
 | first deck created | `library--first-deck-created--light.png` | `library--first-deck-created--dark.png` |
+| first deck created dismissed | `library--first-deck-created-dismissed--light.png` | `library--first-deck-created-dismissed--dark.png` |
 | search active | `library--search-active--light.png` | `library--search-active--dark.png` |
 | search results | `library--search-results--light.png` | `library--search-results--dark.png` |
 | search no results | `library--search-no-results--light.png` | `library--search-no-results--dark.png` |

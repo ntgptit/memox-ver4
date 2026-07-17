@@ -68,6 +68,28 @@
   --memox-info-soft: rgba(75, 58, 140, 0.1);
   --memox-on-info-soft: #4b3a8c;
 
+  /* --- component: snackbar / toast --- a floating status toast needs an OPAQUE ground, but the
+         `*-soft` tints are translucent rgba. These pre-composite the soft tint over the surface
+         into a flat opaque fill (computed once, here at the token layer) so the component uses a
+         plain `background: var(--memox-snackbar-<tone>-bg)` — no gradient / color-mix / percentage
+         composition in the helper. text = on-soft, accent = strong tone (icon), border = soft edge. --- */
+  --memox-snackbar-success-bg: #e2efe9;                    /* success-soft 12% over #ffffff */
+  --memox-snackbar-success-text: var(--memox-on-success-soft);
+  --memox-snackbar-success-accent: var(--memox-success);
+  --memox-snackbar-success-border: rgba(15, 125, 75, 0.35);
+  --memox-snackbar-error-bg: #fbecec;                      /* error-soft 10% over #ffffff */
+  --memox-snackbar-error-text: var(--memox-on-error-soft);
+  --memox-snackbar-error-accent: var(--memox-error);
+  --memox-snackbar-error-border: rgba(219, 62, 68, 0.35);
+  --memox-snackbar-info-bg: var(--memox-primary-soft);     /* already opaque */
+  --memox-snackbar-info-text: var(--memox-on-primary-soft);
+  --memox-snackbar-info-accent: var(--memox-primary);
+  --memox-snackbar-info-border: rgba(75, 58, 140, 0.35);
+  --memox-snackbar-neutral-bg: var(--memox-surface);
+  --memox-snackbar-neutral-text: var(--memox-text);
+  --memox-snackbar-neutral-accent: var(--memox-text-secondary);
+  --memox-snackbar-neutral-border: var(--memox-divider);
+
   /* --- interaction states --- */
   --memox-state-hover: rgba(28, 24, 45, 0.05);
   --memox-state-pressed: rgba(28, 24, 45, 0.07);
@@ -149,6 +171,13 @@
   --memox-on-info: #141220;
   --memox-info-soft: rgba(138, 121, 224, 0.18);
   --memox-on-info-soft: #b4a7ec;
+
+  /* --- component: snackbar / toast — dark grounds (soft tint over the dark surface #252338);
+         aliased text/accent/opaque-container tokens resolve per theme automatically. --- */
+  --memox-snackbar-success-bg: #253a41;                    /* success-soft 16% over #252338 */
+  --memox-snackbar-success-border: rgba(79, 208, 143, 0.35);
+  --memox-snackbar-error-bg: #452b3d;                      /* error-soft 16% over #252338 */
+  --memox-snackbar-error-border: rgba(255, 138, 138, 0.35);
 
   /* --- interaction states --- */
   --memox-state-hover: rgba(255, 255, 255, 0.06);

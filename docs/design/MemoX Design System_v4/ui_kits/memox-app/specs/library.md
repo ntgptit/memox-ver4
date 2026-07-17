@@ -24,7 +24,7 @@ composition; the component map below is the authoritative set of pieces in play.
 
 `MxAvatar`, `MxBottomNav`, `MxButton`, `MxCard`, `MxContextualAppBar`, `MxFab`, `MxIconButton`, `MxLink`, `MxList`, `MxScaffold`, `window.ActionCallout`, `window.CreateDeckDialog`, `window.DeckCard`, `window.Snackbar`, `window.SubdeckList`
 
-## State matrix (contract §6) — 30 states, each rendered light + dark
+## State matrix (contract §6) — 31 states, each rendered light + dark
 
 | # | state |
 | --- | --- |
@@ -34,30 +34,31 @@ composition; the component map below is the authoritative set of pieces in play.
 | 4 | `create-sheet` |
 | 5 | `deck-created` |
 | 6 | `first-deck-created` |
-| 7 | `search-active` |
-| 8 | `search-results` |
-| 9 | `search-no-results` |
-| 10 | `filter-applied` |
-| 11 | `filter-sheet` |
-| 12 | `selection` |
-| 13 | `loading` |
-| 14 | `offline` |
-| 15 | `nested-loaded` |
-| 16 | `nested-dense` |
-| 17 | `nested-deep` |
-| 18 | `nested-empty` |
-| 19 | `nested-deck-created` |
-| 20 | `nested-search` |
-| 21 | `nested-no-results` |
-| 22 | `nested-selection` |
-| 23 | `nested-create-sheet` |
-| 24 | `nested-subdeck-actions` |
-| 25 | `nested-long-menu` |
-| 26 | `nested-play` |
-| 27 | `nested-loading` |
-| 28 | `nested-offline` |
-| 29 | `nested-error` |
-| 30 | `nested-not-found` |
+| 7 | `first-deck-created-dismissed` |
+| 8 | `search-active` |
+| 9 | `search-results` |
+| 10 | `search-no-results` |
+| 11 | `filter-applied` |
+| 12 | `filter-sheet` |
+| 13 | `selection` |
+| 14 | `loading` |
+| 15 | `offline` |
+| 16 | `nested-loaded` |
+| 17 | `nested-dense` |
+| 18 | `nested-deep` |
+| 19 | `nested-empty` |
+| 20 | `nested-deck-created` |
+| 21 | `nested-search` |
+| 22 | `nested-no-results` |
+| 23 | `nested-selection` |
+| 24 | `nested-create-sheet` |
+| 25 | `nested-subdeck-actions` |
+| 26 | `nested-long-menu` |
+| 27 | `nested-play` |
+| 28 | `nested-loading` |
+| 29 | `nested-offline` |
+| 30 | `nested-error` |
+| 31 | `nested-not-found` |
 
 ## Handoff notes
 
