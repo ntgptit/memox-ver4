@@ -104,7 +104,7 @@ function CreateDeckDialog({ state = 'root-default' }) {
           : (
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
               <div style={{ fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-semibold)', color: 'var(--memox-text-secondary)' }}>Add a description</div>
-              <NS.MxLink size="sm" trailingIcon={null} node="create-deck-dialog/optional-toggle">Add</NS.MxLink>
+              <NS.MxLink size="sm" trailingIcon={null} disabled={submitting} node="create-deck-dialog/optional-toggle">Add</NS.MxLink>
             </div>
           )}
       </div>

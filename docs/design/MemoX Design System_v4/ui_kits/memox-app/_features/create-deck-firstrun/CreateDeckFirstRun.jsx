@@ -8,16 +8,9 @@
    Node prefix: create-deck-firstrun/*. */
 (function () {
 const NS = window.MemoXDesignSystem_2ffa54;
-const { MxScaffold, MxContextualAppBar, MxButton, MxLink, MxIconButton, MxBottomNav } = NS;
-const { SectionLabel, EmptyState } = window;
+const { MxScaffold, MxContextualAppBar, MxButton, MxLink, MxIconButton } = NS;
+const { SectionLabel } = window;
 
-const NAV = [
-  { id: 'home', label: 'Today', icon: 'today' },
-  { id: 'library', label: 'Library', icon: 'style' },
-  { id: 'stats', label: 'Stats', icon: 'insights' },
-  { id: 'me', label: 'Profile', icon: 'person' },
-];
-const shell = (v) => <MxBottomNav items={NAV} value={v} node="shell/bottom-nav" />;
 const LONG_NAME = 'Advanced Korean Honorific Speech Registers and Formal Writing for the Full TOPIK II Band';
 const DISABLED = { opacity: 'var(--memox-opacity-disabled, 0.5)', pointerEvents: 'none' };
 
@@ -78,19 +71,9 @@ function CreateDeckFirstRun({ state = 'landing' }) {
     );
   }
 
-  /* §4 outcome — Not now → the real Dashboard (empty), with bottom nav: the user is back in the
-     app and can navigate freely; onboarding does not run again. */
-  if (state === 'not-now') {
-    return (
-      <MxScaffold node="create-deck-firstrun/screen"
-        appBar={<MxContextualAppBar variant="root" node="create-deck-firstrun/dash-appbar" title="Today" />}
-        bottomNav={shell('home')}>
-        <EmptyState node="create-deck-firstrun/dash-empty" icon="school" title="No decks yet"
-          text="Create a deck whenever you’re ready — MemoX starts scheduling reviews once you study."
-          action={<MxButton variant="primary" icon="stacks" node="create-deck-firstrun/dash-create">Create deck</MxButton>} />
-      </MxScaffold>
-    );
-  }
+  /* §4 outcome — Not now → the REAL Dashboard (empty), composed (not a hand-built copy): the user
+     is back in the app and can navigate freely; onboarding does not run again. */
+  if (state === 'not-now') return window.Dashboard({ state: 'empty' });
 
   /* §4 outcome — Import branch (first-run import entry) */
   if (state === 'import-branch') {
@@ -134,27 +117,9 @@ function CreateDeckFirstRun({ state = 'landing' }) {
     : (state === 'duplicate' || resume || state === 'step2' || optional || submitting || failure) ? 'Korean TOPIK I'
     : '';
 
-  /* §7 success — lands in the real Library (bottom nav) with the first-deck callout (title + ×) */
-  if (state === 'success') {
-    return (
-      <MxScaffold node="create-deck-firstrun/screen"
-        appBar={<MxContextualAppBar variant="root" node="create-deck-firstrun/lib-appbar" title="Library" />}
-        bottomNav={shell('library')}>
-        <div data-mx-node="create-deck-firstrun/lib-deck" className="card" style={{ padding: 'var(--memox-space-4)', display: 'flex', alignItems: 'center', gap: 'var(--memox-space-4)', border: 'var(--memox-stroke-emphasis) solid var(--memox-primary)', background: 'var(--memox-state-selected)' }}>
-          <NS.MxIconTile icon="translate" tone="accent" />
-          <div style={{ flex: 1 }}>
-            <div style={{ fontWeight: 'var(--memox-font-weight-bold)' }}>Korean TOPIK I</div>
-            <div style={{ fontSize: 'var(--memox-font-size-sm)', color: 'var(--memox-text-secondary)' }}>0 cards · empty</div>
-          </div>
-        </div>
-        <window.ActionCallout node="create-deck-firstrun/callout" tone="accent" icon="celebration"
-          title="Your first deck is ready"
-          text="Add cards or organise it into smaller decks whenever you’re ready."
-          action={<MxButton variant="primary" size="sm" node="create-deck-firstrun/callout-open">Open deck</MxButton>}
-          dismissNode="create-deck-firstrun/callout-dismiss" />
-      </MxScaffold>
-    );
-  }
+  /* §7 success — lands in the REAL Library with the first-deck callout, composed (not a hand-built
+     copy). Library's first-deck-created state owns the deck highlight + celebratory callout. */
+  if (state === 'success') return window.Library({ state: 'first-deck-created' });
 
   // Submit lifecycle: exactly ONE primary CTA. On failure the callout only reports the error and
   // the bottom CTA becomes "Try again"; while submitting the whole form is locked (back + fields
@@ -176,7 +141,7 @@ function CreateDeckFirstRun({ state = 'landing' }) {
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-6)', ...(submitting ? DISABLED : {}) }}>
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 'var(--memox-space-3)' }}>
           <span style={{ fontSize: 'var(--memox-font-size-base)', fontWeight: 'var(--memox-font-weight-medium)' }}>Korean → Vietnamese</span>
-          <MxLink size="sm" trailingIcon={null} node="create-deck-firstrun/change-pair">Change</MxLink>
+          <MxLink size="sm" trailingIcon={null} disabled={submitting} node="create-deck-firstrun/change-pair">Change</MxLink>
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
@@ -187,7 +152,7 @@ function CreateDeckFirstRun({ state = 'landing' }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: 'var(--memox-space-2)' }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
             <SectionLabel>OPTIONAL</SectionLabel>
-            <MxLink size="sm" trailingIcon={null} node="create-deck-firstrun/optional-toggle">{optional ? 'Hide' : 'Show'}</MxLink>
+            <MxLink size="sm" trailingIcon={null} disabled={submitting} node="create-deck-firstrun/optional-toggle">{optional ? 'Hide' : 'Show'}</MxLink>
           </div>
           {optional ? (
             <Field label="Description" value="Vocabulary and grammar for TOPIK I" placeholder="Add a description" node="create-deck-firstrun/description" />

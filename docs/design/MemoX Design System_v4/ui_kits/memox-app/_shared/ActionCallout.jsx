@@ -8,8 +8,10 @@
 
 function ActionCallout({ tone = 'warning', node, icon, text, title, action, dismissNode }) {
   const wrap = { background: 'var(--memox-' + tone + '-soft)', color: 'var(--memox-on-' + tone + '-soft)', borderRadius: 'var(--memox-radius-control)', padding: 'var(--memox-space-3) var(--memox-space-4)', display: 'flex', gap: 'var(--memox-space-3)' };
+  // ≥44×44 hit area (--memox-touch-min) even though the glyph is ~24px; negative margins keep it
+  // from bloating the banner past its own padding.
   const dismiss = dismissNode
-    ? <button type="button" aria-label="Dismiss" data-mx-node={dismissNode} style={{ flexShrink: 0, border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', display: 'inline-flex', padding: 0, lineHeight: 0 }}><span className="material-symbols-rounded">close</span></button>
+    ? <button type="button" aria-label="Dismiss" data-mx-node={dismissNode} style={{ flexShrink: 0, boxSizing: 'border-box', minWidth: 'var(--memox-touch-min)', minHeight: 'var(--memox-touch-min)', margin: 'calc(-1 * var(--memox-space-2)) calc(-1 * var(--memox-space-2)) calc(-1 * var(--memox-space-2)) 0', border: 'none', background: 'transparent', color: 'inherit', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0 }}><span className="material-symbols-rounded">close</span></button>
     : null;
   // No title → the original single-row layout (parity-neutral for existing callers).
   if (!title) {

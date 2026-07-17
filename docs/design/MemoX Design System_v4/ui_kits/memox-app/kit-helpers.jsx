@@ -272,6 +272,17 @@ function FormDialog({ title, subtitle, children, actions, node, scrimNode, onDis
   return <Scrim align="center" node={scrimNode} onDismiss={onDismiss}>{card}</Scrim>;
 }
 
+/* Snackbar — a transient bottom bar confirming an action, with one optional action button. Sits
+   above the bottom nav. Inverse ground (--memox-text bg / --memox-bg fg) so it inverts per theme. */
+function Snackbar({ text, actionLabel, actionNode, node }) {
+  return (
+    <div data-mx-node={node} role="status" aria-live="polite" style={{ position: 'absolute', left: 'var(--memox-gutter)', right: 'var(--memox-gutter)', bottom: 'calc(var(--memox-bottom-nav-height) + var(--memox-space-3))', zIndex: 50, display: 'flex', alignItems: 'center', gap: 'var(--memox-space-3)', minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', padding: 'var(--memox-space-2) var(--memox-space-2) var(--memox-space-2) var(--memox-space-4)', borderRadius: 'var(--memox-radius-control)', background: 'var(--memox-text)', color: 'var(--memox-bg)', boxShadow: 'var(--memox-shadow-lg)' }}>
+      <span style={{ flex: 1, fontSize: 'var(--memox-font-size-sm)', fontWeight: 'var(--memox-font-weight-medium)' }}>{text}</span>
+      {actionLabel ? <button type="button" data-mx-node={actionNode} style={{ flexShrink: 0, minHeight: 'var(--memox-touch-min)', boxSizing: 'border-box', border: 'none', background: 'transparent', color: 'inherit', fontWeight: 'var(--memox-font-weight-bold)', fontSize: 'var(--memox-font-size-sm)', cursor: 'pointer', padding: '0 var(--memox-space-3)' }}>{actionLabel}</button> : null}
+    </div>
+  );
+}
+
 /* Inline tinted callout — icon + text on a soft tonal background. */
 function Note({ icon, text, tone = 'accent' }) {
   const map = {
@@ -324,4 +335,4 @@ function ChoiceOption({ text, tone, node, onClick }) {
   );
 }
 
-Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, FormDialog, Note, SectionLabel, Ring, ChoiceOption });
+Object.assign(window, { ProgressBar, ProgressHeader, Skeleton, EmptyState, DeckRow, ListRow, Stat, Scrim, Sheet, MenuItem, MenuList, KeyboardInset, Dialog, DialogInput, FormDialog, Snackbar, Note, SectionLabel, Ring, ChoiceOption });

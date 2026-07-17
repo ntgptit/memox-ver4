@@ -52,6 +52,17 @@ function SubdeckList({ state = 'loaded', nav }) {
      screen (Add card / Create nested deck / Import), not a nested-only "no decks" message. */
   if (state === 'empty') return window.EmptyDeck({ state: 'default' });
 
+  /* post-create success in a PARENT deck (§10 nested): the new child deck lands in the list with a
+     "Deck created · Open" snackbar; the user stays in the parent. (library state nested-deck-created) */
+  if (state === 'deck-created') {
+    return (
+      <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
+        {crumbs()}{filter}{list(SUBDECKS)}
+        <window.Snackbar text="Deck created" actionLabel="Open" actionNode="subdeck-list/created-open" node="subdeck-list/created-snackbar" />
+      </MxScaffold>
+    );
+  }
+
   /* offline — local decks still browsable (banner above the controls, like Library offline) */
   if (state === 'offline') {
     return (

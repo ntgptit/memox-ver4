@@ -475,6 +475,15 @@
   outline: none;
   box-shadow: var(--memox-ring-focus);
 }
+/* disabled link — not activatable / out of the tab order (button gets the disabled attr; the <a>
+   form gets aria-disabled + tabIndex -1). No opacity here: when a link is disabled inside a locked
+   form the wrapper already dims it, and stacking a second opacity would over-fade it. Parity-neutral:
+   no existing fixture disables a link. */
+.link:disabled,
+.link[aria-disabled="true"] {
+  cursor: not-allowed;
+  pointer-events: none;
+}
 .link--sm {
   font-size: var(--memox-font-size-sm);
 }

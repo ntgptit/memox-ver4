@@ -11,14 +11,18 @@
 (function () {
   const NS = (window.MemoXDesignSystem_2ffa54 = window.MemoXDesignSystem_2ffa54 || {});
 
-  function MxLink({ children, icon, trailingIcon = 'chevron_right', href, size, node, onClick, className = '' }) {
+  function MxLink({ children, icon, trailingIcon = 'chevron_right', href, size, node, onClick, disabled = false, className = '' }) {
     const cls = ['link'];
     if (size) cls.push('link--' + size);
     if (className) cls.push(className);
     const Tag = href ? 'a' : 'button';
-    const extra = href ? { href } : { type: 'button' };
+    // Disabled: a real `disabled` <button> (removed from the tab order, activation blocked); an <a>
+    // link takes aria-disabled + tabIndex -1 since <a> has no disabled attribute.
+    const extra = href
+      ? { href, ...(disabled ? { 'aria-disabled': true, tabIndex: -1 } : {}) }
+      : { type: 'button', disabled };
     return (
-      <Tag className={cls.join(' ')} data-mx-node={node} onClick={onClick} {...extra}>
+      <Tag className={cls.join(' ')} data-mx-node={node} onClick={disabled ? undefined : onClick} {...extra}>
         {icon ? <span className="material-symbols-rounded">{icon}</span> : null}
         <span>{children}</span>
         {trailingIcon ? <span className="material-symbols-rounded">{trailingIcon}</span> : null}

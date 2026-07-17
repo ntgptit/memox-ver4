@@ -5,7 +5,7 @@
 The canonical visual reference: every screen state ships as a light + dark PNG pair at 390px width
 (`<screen-id>--<state>--<theme>.png`) under this folder. Read the PNG, not the kit JSX. The images
 are rendered by `tool/ui_kit_shots/shoot.mjs`; this index is generated from the registry so it
-always matches the 214-state matrix (28 screens).
+always matches the 217-state matrix (28 screens).
 
 ## dashboard — Today
 
@@ -28,6 +28,8 @@ always matches the 214-state matrix (28 screens).
 | dense | `library--dense--light.png` | `library--dense--dark.png` |
 | empty | `library--empty--light.png` | `library--empty--dark.png` |
 | create sheet | `library--create-sheet--light.png` | `library--create-sheet--dark.png` |
+| deck created | `library--deck-created--light.png` | `library--deck-created--dark.png` |
+| first deck created | `library--first-deck-created--light.png` | `library--first-deck-created--dark.png` |
 | search active | `library--search-active--light.png` | `library--search-active--dark.png` |
 | search results | `library--search-results--light.png` | `library--search-results--dark.png` |
 | search no results | `library--search-no-results--light.png` | `library--search-no-results--dark.png` |
@@ -40,6 +42,7 @@ always matches the 214-state matrix (28 screens).
 | nested dense | `library--nested-dense--light.png` | `library--nested-dense--dark.png` |
 | nested deep | `library--nested-deep--light.png` | `library--nested-deep--dark.png` |
 | nested empty | `library--nested-empty--light.png` | `library--nested-empty--dark.png` |
+| nested deck created | `library--nested-deck-created--light.png` | `library--nested-deck-created--dark.png` |
 | nested search | `library--nested-search--light.png` | `library--nested-search--dark.png` |
 | nested no results | `library--nested-no-results--light.png` | `library--nested-no-results--dark.png` |
 | nested selection | `library--nested-selection--light.png` | `library--nested-selection--dark.png` |

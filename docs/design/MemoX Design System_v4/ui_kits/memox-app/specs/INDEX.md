@@ -9,7 +9,7 @@
 | ID | Screen | Spec file | States |
 | --- | --- | --- | --- |
 | dashboard | Today | `dashboard.md` | 8 |
-| library | Library | `library.md` | 27 |
+| library | Library | `library.md` | 30 |
 | flashcard-list | Flashcard List | `flashcard-list.md` | 19 |
 | deck-settings | Deck Settings | `deck-settings.md` | 6 |
 | create-deck-firstrun | Create Deck · First run | `create-deck-firstrun.md` | 13 |
@@ -36,4 +36,4 @@
 | study-session | Study Session (5 stages) | `study-session.md` | 10 |
 | settings | Settings | `settings.md` | 7 |
 
-Total: 27 screens · 206 states.
+Total: 27 screens · 209 states.
