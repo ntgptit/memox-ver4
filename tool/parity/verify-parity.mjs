@@ -72,6 +72,21 @@ for (const t of manifest.tokens || []) {
   }
 }
 
+// ── B2. source → manifest (additive tokens must be mirrored, not silently ignored) ──
+// Every custom property declared in a tracked token source file must have a manifest entry: a light
+// entry for its :root value, and a dark entry when [data-theme='dark'] overrides it. This is the
+// reverse of check B — it catches source-only tokens (e.g. new component tokens added to colors.css
+// without regenerating the manifest), which the one-way value check above would never notice.
+const tokenFiles = [...new Set((manifest.tokens || []).map((t) => t.definedIn).filter(Boolean))];
+const haveLight = new Set((manifest.tokens || []).filter((t) => isLightScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
+const haveDark = new Set((manifest.tokens || []).filter((t) => isDarkScope(t.scope)).map((t) => t.definedIn + '|' + t.name));
+for (const f of tokenFiles) {
+  if (!existsSync(join(KIT, f))) continue;
+  const sv = (cache[f] ??= scopedValues(join(KIT, f)));
+  for (const name of Object.keys(sv.light)) if (!haveLight.has(f + '|' + name)) fail('B', `source token not mirrored in manifest (light): ${name} in ${f}`);
+  for (const [name, value] of Object.entries(sv.dark)) if (sv.light[name] !== value && !haveDark.has(f + '|' + name)) fail('B', `source token not mirrored in manifest (dark override): ${name} in ${f}`);
+}
+
 // ── C. gallery ↔ source (every component has a source <script> tag; no dead tags) ─
 const html = readFileSync(INDEX, 'utf8');
 const tagSrcs = [...html.matchAll(/<script type="text\/babel-src" src="([^"]+)"><\/script>/g)].map((m) => m[1]);

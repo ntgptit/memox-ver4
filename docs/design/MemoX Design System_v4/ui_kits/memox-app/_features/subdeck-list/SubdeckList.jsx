@@ -63,7 +63,7 @@ function SubdeckList({ state = 'loaded', nav }) {
       <MxScaffold node="subdeck-list/screen" appBar={nestedBar} bottomNav={nav} fab={fab}>
         {crumbs()}{filter}
         <MxList>{[newRow, ...SUBDECKS.map((s, i) => <DeckRowCard key={i} s={s} index={i} nodePrefix="subdeck-list" />)]}</MxList>
-        <window.Snackbar tone="success" text="Deck created" action={<MxLink size="sm" trailingIcon={null} node="subdeck-list/created-open">Open</MxLink>} node="subdeck-list/created-snackbar" />
+        <window.Snackbar tone="success" text="Deck created" action={<MxLink size="sm" trailingIcon={null} className="snackbar-action" node="subdeck-list/created-open">Open</MxLink>} node="subdeck-list/created-snackbar" />
       </MxScaffold>
     );
   }

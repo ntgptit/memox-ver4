@@ -490,6 +490,11 @@
 .link .material-symbols-rounded {
   font-size: var(--memox-font-size-md);
 }
+/* MxLink used as a Snackbar action: inherit the toast's on-tone TEXT colour (guaranteed ≥4.5 on the
+   tonal ground — the brand accent can dip just under 4.5 on a light tint) and keep a PERSISTENT
+   underline so it still reads as the action. Tap target + :focus-visible ring stay from .link. */
+.snackbar-action.link { color: inherit; }
+.snackbar-action.link span:not(.material-symbols-rounded) { text-decoration: underline; }
 /* destructive modifier (composes with above) */
 .btn.danger {
   background: var(--memox-error);
